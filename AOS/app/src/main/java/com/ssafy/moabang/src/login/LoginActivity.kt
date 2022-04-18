@@ -39,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun kakaoLogin(view : View) {
-        Log.d("AAAAA","kakaoL ogin")
+        Log.d("AAAAA","kakaoLogin")
         val context = this
         // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
         if (UserApiClient.instance.isKakaoTalkLoginAvailable(context)) {
