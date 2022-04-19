@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -7,9 +9,7 @@
             type="com.ssafy.moabang.src.login.LoginActivity" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/moabang_lightPink"
@@ -55,12 +55,13 @@
             android:id="@+id/kakao_login_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/moabang_lightPink"
             android:contentDescription="카카오 로그인 버튼"
+            android:onClick="@{activity.kakaoLogin}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_loginA"
-            app:srcCompat="@drawable/kakao_login_medium_narrow"
-            android:onClick="@{activity.kakaoLogin}"/>
+            app:srcCompat="@drawable/kakao_login_medium_narrow" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
