@@ -22,10 +22,14 @@ dependencies {
 
 	// mysql
 	implementation 'mysql:mysql-connector-java'
-	// jpa 의존성
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.4'
+//	// jpa 의존성
+//	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+//	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa
+//	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.4'
+
+	//JSON객체 파싱 라이브러리
+	// https://mvnrepository.com/artifact/com.google.code.gson/gson
+	implementation 'com.google.code.gson:gson:2.8.5'
 
 }
 
