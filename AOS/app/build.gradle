@@ -19,6 +19,8 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "native_app_key", properties["native_app_key"]
+        buildConfigField "String", "naver_client_id", properties["naver_client_id"]
+        buildConfigField "String", "naver_client_secret", properties["naver_client_secret"]
     }
 
     buildTypes {
@@ -57,5 +59,6 @@ dependencies {
     implementation 'androidx.activity:activity-ktx:1.4.0'
 
     implementation "com.kakao.sdk:v2-user:2.9.0" // 카카오 로그인
+    implementation 'com.naver.nid:naveridlogin-android-sdk:4.2.6' // 네이버 로그인
 
 }
