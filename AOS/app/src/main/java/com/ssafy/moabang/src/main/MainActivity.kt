@@ -18,7 +18,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun init(){
-
+        // setFragment만 설정하면 하단 아이콘?은 안바뀜. selectedItemId도 같이 정해줘야함
+        setFragment(HomeFragment())
+        binding.bottomNavMain.selectedItemId = R.id.nav_home
 
         binding.bottomNavMain.setOnItemSelectedListener { item ->
             when(item.itemId) {
