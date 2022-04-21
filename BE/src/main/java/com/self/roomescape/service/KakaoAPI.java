@@ -5,6 +5,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -16,6 +19,9 @@ import java.util.HashMap;
 public class KakaoAPI {
 
     public static final Logger logger = LoggerFactory.getLogger(KakaoAPI.class);
+
+    @Value("${kakao.key}")
+    private String kakaoApiKey;
 
     public String getAccessToken(String authorize_code) {
         String access_Token = "";
@@ -32,7 +38,7 @@ public class KakaoAPI {
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
             StringBuilder sb = new StringBuilder();
             sb.append("grant_type=authorization_code");
-            sb.append("&client_id=b7cf8e5eced9409911501f60ec0bab10");
+            sb.append("&client_id="+kakaoApiKey);
             sb.append("&redirect_uri=http://114.129.238.28/user/login");
             sb.append("&code=" + authorize_code);
             bw.write(sb.toString());
@@ -112,8 +118,11 @@ public class KakaoAPI {
             userInfo.put("birthday", birthday);
             userInfo.put("gender", gender);
             userInfo.put("profile_img", profile_img);
+            userInfo.put("resCode",true);
         } catch (IOException e) {
             e.printStackTrace();
+            userInfo.put("resCode",false);
+            return userInfo;
         }
         return userInfo;
     }

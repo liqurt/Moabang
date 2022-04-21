@@ -6,12 +6,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @CrossOrigin("*")
 @RequestMapping("/user")
@@ -23,19 +21,23 @@ public class UserController {
 
     public static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    @RequestMapping(value = "/login")
-    public ResponseEntity<?> login(@RequestParam("code") String code) {
-        logger.info(code);
-        String access_Token = kakaoAPI.getAccessToken(code); // 여기까지가 액세스 토큰 받는 부분
-        logger.info("controller access_token : " + access_Token);
+    @PostMapping(value = "/login")
+    public ResponseEntity<?> login(@RequestHeader Map<String,String> requestHeader) {
+//        logger.info(code);
+//        String access_Token = kakaoAPI.getAccessToken(code); // 여기까지가 액세스 토큰 받는 부분
+        logger.info("read header : "+requestHeader);
+        logger.info("controller access_token : " + requestHeader.get("token"));
         //토큰을 이용해 정보 받아오기
-        HashMap<String, Object> userInfo = kakaoAPI.getUserInfo(access_Token);
+        HashMap<String, Object> userInfo = kakaoAPI.getUserInfo(requestHeader.get("token"));
         System.out.println("login Controller : " + userInfo);
 
 //        if(userInfo.get("email")!=null){
 //            System.out.println("있네");
 //        }
-        return new ResponseEntity<>("로그인 성공", HttpStatus.OK);
+        if( !(boolean)userInfo.get("resCode") ){
+            return new ResponseEntity<>(false,HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/logout")
