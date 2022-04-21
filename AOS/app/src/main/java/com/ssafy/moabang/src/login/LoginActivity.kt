@@ -1,5 +1,7 @@
 package com.ssafy.moabang.src.login
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,11 +14,27 @@ import com.kakao.sdk.user.UserApiClient
 import com.ssafy.moabang.databinding.ActivityLoginBinding
 import com.ssafy.moabang.src.main.MainActivity
 import androidx.activity.viewModels
+import com.nhn.android.naverlogin.OAuthLogin
+import com.ssafy.moabang.BuildConfig
+import com.ssafy.moabang.config.GlobalApplication
+import android.widget.Toast
+
+import com.nhn.android.naverlogin.OAuthLoginHandler
+import org.json.JSONException
+
+import org.json.JSONObject
+
+import android.os.AsyncTask
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private val model: KakaoLoginViewModel by viewModels()
+    private lateinit var mOAuthLoginModule:OAuthLogin
 
     private val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
         if (error != null) {
@@ -32,14 +50,28 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.activity = this
 
+        init()
+
         // 로그인 구현 전이라 우선 요 버튼 누르면 메인 화면으로 넘어가게 구현
         binding.tvLoginATmp.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
         }
     }
 
-    fun kakaoLogin(view : View) {
-        Log.d("AAAAA","kakaoLogin")
+    private fun init(){
+        mOAuthLoginModule = OAuthLogin.getInstance()
+        mOAuthLoginModule.init(this, BuildConfig.naver_client_id, BuildConfig.naver_client_secret, "모아방")
+    }
+
+    fun naverLogin(view: View) {
+        mOAuthLoginModule.startOauthLoginActivity(
+            this,
+            mOAuthLoginHandler
+        )
+    }
+
+    fun kakaoLogin(view: View) {
+        Log.d("AAAAA", "kakaoLogin")
         val context = this
         // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
         if (UserApiClient.instance.isKakaoTalkLoginAvailable(context)) {
@@ -64,4 +96,63 @@ class LoginActivity : AppCompatActivity() {
             UserApiClient.instance.loginWithKakaoAccount(context, callback = callback)
         }
     }
+
+    private val mOAuthLoginHandler: OAuthLoginHandler = @SuppressLint("HandlerLeak")
+    object : OAuthLoginHandler() {
+        override fun run(success: Boolean) {
+            if (success) {
+                val accessToken: String =
+                    mOAuthLoginModule.getAccessToken(this@LoginActivity)
+                val refreshToken: String =
+                    mOAuthLoginModule.getRefreshToken(this@LoginActivity)
+                val expiresAt: Long =
+                    mOAuthLoginModule.getExpiresAt(this@LoginActivity)
+                val tokenType: String =
+                    mOAuthLoginModule.getTokenType(this@LoginActivity)
+                CoroutineScope(Dispatchers.Main).launch{
+                    requestApiTask(this@LoginActivity, mOAuthLoginModule)
+                }
+                startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+            } else {
+                val errorCode: String =
+                    mOAuthLoginModule.getLastErrorCode(this@LoginActivity).code
+                val errorDesc: String =
+                    mOAuthLoginModule.getLastErrorDesc(this@LoginActivity)
+                Toast.makeText(
+                    this@LoginActivity, "errorCode:" + errorCode
+                            + ", errorDesc:" + errorDesc, Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
+    private fun requestApiTask(mContext: Context, mOAuthLoginModule: OAuthLogin) {
+
+        val mContext: Context = mContext
+        val mOAuthLoginModule: OAuthLogin = mOAuthLoginModule
+
+        val url = "https://openapi.naver.com/v1/nid/me"
+        var res: String? = null
+        Thread {
+            val at: String = mOAuthLoginModule.getAccessToken(mContext)
+            res = mOAuthLoginModule.requestApi(mContext, at, url)
+        }.start()
+
+
+        if(res != null) {
+            Log.d("NAVER_LOGIN", "requestApiTask: API CALLED")
+            try {
+                val loginResult = JSONObject(res)
+                if (loginResult.getString("resultcode") == "00") {
+                    val response = loginResult.getJSONObject("response")
+                    val id = response.getString("id")
+                    val email = response.getString("email")
+                    Toast.makeText(mContext, "id : $id email : $email", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+        }
+    }
 }
+
