@@ -62,7 +62,6 @@ class LoginActivity : AppCompatActivity() {
                     UserApiClient.instance.loginWithKakaoAccount(context, callback = callback)
                 } else if (token != null) {
                     sendTokenToBackend(token)
-                    startActivity(Intent(this, MainActivity::class.java))
                 }
             }
         } else {
@@ -80,6 +79,8 @@ class LoginActivity : AppCompatActivity() {
             override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
                 if(response.isSuccessful){
                     Log.d("AAAAA","${response.body()}") // true == 로그인 성공
+                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                    startActivity(intent)
                 }else{
                     Log.e("AAAAA","네트워킹 성공, 하지만 원하는 결과가 아님. ${response.errorBody()}")
                     Toast.makeText(this@LoginActivity, "네트워크 성공,  : ${response.errorBody()}", Toast.LENGTH_SHORT).show()
