@@ -1,4 +1,4 @@
-import KakaoLogin from "./components/kakaologin/KakaoLogin"
+import KakaoLogin from "./components/KakaoLogin/KakaoLogin"
 
 
 function App() {
