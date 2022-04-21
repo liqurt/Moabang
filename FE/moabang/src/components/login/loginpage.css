@@ -7,15 +7,15 @@ div {
     pointer-events: none;
   } */
 
-.home {
-    background-color: #282c34;
+.login {
+    background-color: #FFE2E2;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     font-size: calc(10px + 2vmin);
-    color: white;
+    color: #8785A2;
 }
   
   

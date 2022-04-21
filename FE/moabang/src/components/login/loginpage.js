@@ -2,64 +2,79 @@ import React from 'react';
 import './loginpage.css'
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import axios from "axios";
+import logo from '../login/모아방 로고.png';
 
-export const Google_clinet_Id = process.env.REACT_APP_GOOGLE_CLIENT_ID;
-
+const Google_clinet_id = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 const loginpage = () => {
 
     const onSuccessGoogle = async (response) => {
         console.log(response);
-
         const { googleId, profileObj: { email, name }, accessToken } = response;
-
-        // await onSocial({
-        //     socialId: googleId,
-        //     socialType: 'google',
-        //     email,
-        //     nickname: name
-        // });
         const data = {
-            socialId: googleId,
-            socialType: 'google',
-            email,
-            nickname: name
-        };
-        // axios.post('/login', data).then(response => {
-        //     const { accessToken } = response.access_token;
+            accessToken: accessToken
+        }
+        console.log(data);
 
-        //     // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
-        //     axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+        // 로그인 성공한 경우 access토큰을 백으로 보내 
+        await axios.get('/test/login',
+            {
+                headers: {
+                    code: `${accessToken}`
+                }
+            })
+            .then(response => {
 
-        //     // accessToken을 localStorage, cookie 등에 저장하지 않는다!
+                console.log("로그인 성공 : ", response)
 
-        // }).catch(error => {
-        //     // ... 에러 처리
-        // });
+            }).catch(error => {
+                // ... 에러 처리
+                console.log("Error : ", error)
+            });
     }
-
+    //로그인 실패 시
     const onFailureGoogle = (error) => {
         console.log(error);
     }
 
+    //로그아웃
+    const onLogoutSuccess = () => {
+        alert("로그아웃 되었습니다!");
+    };
 
-
+    const onLogout = () => {
+        if (window.gapi) {
+            const auth2 = window.gapi.auth2.getAuthInstance();
+            if (auth2 !== null) {
+                auth2
+                    .signOut()
+                    .then(auth2.disconnect().then(() => onLogoutSuccess()))
+                    .catch(e => console.log(e));
+            }
+        }
+    };
 
     return (
-        <div className='home'>
-            <h2>Landing_page</h2>
+        <div className='login'>
+            <img src={logo}></img>
+            <h2>모아방</h2>
+            <p>카카오 로그인</p>
+            <p>네이버 로그인</p>
             <GoogleLogin
-                clientId={Google_clinet_Id}
+                className="google-button"
+                clientId={Google_clinet_id}
+                buttonText="구글 로그인" // 버튼에 뜨는 텍스트
                 onSuccess={onSuccessGoogle}
                 onFailure={onFailureGoogle}
-                cookiePolicy='single_host_origin'
+                isSignedIn={true}
+            // cookiePolicy={"single_host_origin"}
             />
             <p></p>
-            <GoogleLogout />
-        </div >
+            {/* <button onClick={onLogout}>로그아웃</button> */}
+            <button type="button" onClick={onLogout}>
+                logout
+            </button>
+        </div>
     );
-
-
 };
-
 
 export default loginpage;

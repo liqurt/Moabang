@@ -1,16 +1,21 @@
-import { Route, Routes } from 'react-router-dom';
+import {
+  Routes,
+  Navigate,
+  Route,
+} from 'react-router-dom';
 import './App.css';
-import Home from './components/login/loginpage';
-
+import Login from './components/login/loginpage';
+import Home from './components/main/mainpage';
+// import Error from './components/error/error';
 
 function App() {
-
-
 
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Login />} />
+        {/* <Route path="/*" element={<Error />} /> */}
       </Routes>
     </div>
   );
