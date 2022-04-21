@@ -1,9 +1,11 @@
+import KakaoLogin from "./components/kakaologin/KakaoLogin"
 
 
 function App() {
   return (
     <div className="App">
-      <h1>Hi</h1>
+      <KakaoLogin />
+      
     </div>
   );
 }
