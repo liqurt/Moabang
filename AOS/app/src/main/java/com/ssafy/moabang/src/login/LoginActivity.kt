@@ -108,6 +108,7 @@ class LoginActivity : AppCompatActivity() {
         override fun run(success: Boolean) {
             if (success) {
                 startActivity(Intent(this@LoginActivity, NaverLogin::class.java))
+                finish()
             } else {
                 val errorCode: String =
                     mNaverLoginModule.getLastErrorCode(this@LoginActivity).code
@@ -125,6 +126,16 @@ class LoginActivity : AppCompatActivity() {
         return !(OAuthLoginState.NEED_LOGIN == mNaverLoginModule.getState(applicationContext) || OAuthLoginState.NEED_INIT == mNaverLoginModule.getState(
             applicationContext
         ))
+    }
+
+    fun directToMainActivity(result: Boolean) {
+        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        if (result) {
+            Toast.makeText(applicationContext, "로그인 성공!", Toast.LENGTH_SHORT).show()
+            startActivity(intent)
+            finish()
+        }
     }
 }
 

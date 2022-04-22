@@ -119,7 +119,7 @@ class NaverLogin: Activity() {
         }
     }
 
-    inner class DeleteTokenTask(mContext: Context, mActivity: MainActivity) : AsyncTask<Context?, Void?, Boolean>() {
+    internal class DeleteTokenTask(mContext: Context, mActivity: MainActivity) : AsyncTask<Context?, Void?, Boolean>() {
         var context: Context
         var mainActivity: MainActivity
         override fun doInBackground(vararg p0: Context?): Boolean? {

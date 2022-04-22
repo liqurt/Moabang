@@ -5,10 +5,15 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.ssafy.moabang.R
 import com.ssafy.moabang.databinding.ActivityMainBinding
+import android.content.Intent
+
+import android.widget.Toast
+import com.ssafy.moabang.src.login.LoginActivity
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val userInfo: List<String> = ArrayList()
+    val userInfo: List<String> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,5 +59,17 @@ class MainActivity : AppCompatActivity() {
     private fun setFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.frameLayout_main_container, fragment).commit()
+    }
+
+    fun directToLoginActivity(result: Boolean) {
+        val intent = Intent(this@MainActivity, LoginActivity::class.java)
+        if (result) {
+            Toast.makeText(applicationContext, "성공!", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(applicationContext, "실패! 다시 로그인해주세요.", Toast.LENGTH_SHORT).show()
+        }
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(intent)
+        finish()
     }
 }
