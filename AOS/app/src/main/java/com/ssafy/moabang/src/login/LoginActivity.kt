@@ -1,7 +1,6 @@
 package com.ssafy.moabang.src.login
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -19,13 +18,6 @@ import com.ssafy.moabang.BuildConfig
 import android.widget.Toast
 
 import com.nhn.android.naverlogin.OAuthLoginHandler
-import org.json.JSONException
-
-import org.json.JSONObject
-
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import com.nhn.android.naverlogin.data.OAuthLoginState
 
 
@@ -68,7 +60,7 @@ class LoginActivity : AppCompatActivity() {
         mNaverLoginModule = OAuthLogin.getInstance()
         mNaverLoginModule.init(this, BuildConfig.naver_client_id, BuildConfig.naver_client_secret, "모아방")
 
-        if (HasNaverSession()) {
+        if (hasNaverSession()) {
             val intent = Intent(this@LoginActivity, NaverLogin::class.java)
             startActivity(intent)
             finish()
@@ -115,19 +107,7 @@ class LoginActivity : AppCompatActivity() {
     object : OAuthLoginHandler() {
         override fun run(success: Boolean) {
             if (success) {
-                val accessToken: String =
-                    mNaverLoginModule.getAccessToken(this@LoginActivity)
-                val refreshToken: String =
-                    mNaverLoginModule.getRefreshToken(this@LoginActivity)
-                val expiresAt: Long =
-                    mNaverLoginModule.getExpiresAt(this@LoginActivity)
-                val tokenType: String =
-                    mNaverLoginModule.getTokenType(this@LoginActivity)
-//                CoroutineScope(Dispatchers.Main).launch{
-//                    requestApiTask(this@LoginActivity, mNaverLoginModule)
-//                }
                 startActivity(Intent(this@LoginActivity, NaverLogin::class.java))
-                Log.d("NAVER_LOGIN_TOKEN", "run: $accessToken")
             } else {
                 val errorCode: String =
                     mNaverLoginModule.getLastErrorCode(this@LoginActivity).code
@@ -141,37 +121,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun requestApiTask(mContext: Context, mOAuthLoginModule: OAuthLogin) {
-
-        val mContext: Context = mContext
-        val mOAuthLoginModule: OAuthLogin = mOAuthLoginModule
-
-        val url = "https://openapi.naver.com/v1/nid/me"
-        var res: String? = null
-        Thread {
-            val at: String = mOAuthLoginModule.getAccessToken(mContext)
-            res = mOAuthLoginModule.requestApi(mContext, at, url)
-        }.start()
-
-
-        if(res != null) {
-            Log.d("NAVER_LOGIN", "requestApiTask: API CALLED")
-            try {
-                val loginResult = JSONObject(res)
-                if (loginResult.getString("resultcode") == "00") {
-                    val response = loginResult.getJSONObject("response")
-                    val id = response.getString("id")
-                    val email = response.getString("email")
-                    Toast.makeText(mContext, "id : $id email : $email", Toast.LENGTH_SHORT).show()
-                }
-            } catch (e: JSONException) {
-                e.printStackTrace()
-            }
-        }
-    }
-
-
-    private fun HasNaverSession(): Boolean {
+    private fun hasNaverSession(): Boolean {
         return !(OAuthLoginState.NEED_LOGIN == mNaverLoginModule.getState(applicationContext) || OAuthLoginState.NEED_INIT == mNaverLoginModule.getState(
             applicationContext
         ))

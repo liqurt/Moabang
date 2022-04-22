@@ -33,6 +33,7 @@ class NaverLogin: Activity() {
         super.onCreate(savedInstanceState)
         val mNaverLoginModule = OAuthLogin.getInstance()
         val accessToken = mNaverLoginModule.getAccessToken(this)
+        Log.d("NAV_LOGIN_TAG", "onCreate: $accessToken")
         if (accessToken != null && OAuthLoginState.OK == mNaverLoginModule.getState(this)) {
             val reqNaverUserInfo = ReqNHNUserInfo()
             reqNaverUserInfo.execute(accessToken)
@@ -48,8 +49,7 @@ class NaverLogin: Activity() {
         }
     }
 
-    internal class RefreshNHNToken :
-        AsyncTask<Void?, Void?, Boolean>() {
+    internal class RefreshNHNToken : AsyncTask<Void?, Void?, Boolean>() {
         override fun doInBackground(vararg p0: Void?): Boolean? {
             try {
                 val mNaverLoginModule = OAuthLogin.getInstance()
@@ -59,7 +59,6 @@ class NaverLogin: Activity() {
             }
             return true
         }
-
     }
 
     inner class ReqNHNUserInfo : AsyncTask<String?, Void?, String?>() {
@@ -108,7 +107,6 @@ class NaverLogin: Activity() {
                             jsonObject.getString(NAVER_JSON_KEY.get(0))
                         )
                     )
-//                    userInfo.add(jsonObject.getString(NAVER_JSON_KEY.get(1)))
                     val mGlobalHelper = GlobalApplication()
                     mGlobalHelper.setGlobalUserLoginInfo(userInfo)
                     val intent = Intent(this@NaverLogin, MainActivity::class.java)
@@ -121,8 +119,7 @@ class NaverLogin: Activity() {
         }
     }
 
-    inner class DeleteTokenTask(mContext: Context, mActivity: MainActivity) :
-        AsyncTask<Context?, Void?, Boolean>() {
+    inner class DeleteTokenTask(mContext: Context, mActivity: MainActivity) : AsyncTask<Context?, Void?, Boolean>() {
         var context: Context
         var mainActivity: MainActivity
         override fun doInBackground(vararg p0: Context?): Boolean? {
