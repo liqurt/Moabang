@@ -9,7 +9,21 @@ import com.ssafy.moabang.R
 import com.ssafy.moabang.src.login.LoginActivity
 
 class GlobalApplication : Application() {
+    private var instance: GlobalApplication? = null
+    private var mGlobalUserLoginInfo: List<String?> = ArrayList()
 
+    fun getGlobalApplicationContext(): GlobalApplication? {
+        checkNotNull(instance) { "This Application does not GlobalAuthHelper" }
+        return instance
+    }
+
+    fun getGlobalUserLoginInfo(): List<String?>? {
+        return mGlobalUserLoginInfo
+    }
+
+    fun setGlobalUserLoginInfo(userLoginInfo: List<String?>) {
+        mGlobalUserLoginInfo = userLoginInfo
+    }
 
     override fun onCreate() {
         super.onCreate()
@@ -18,8 +32,4 @@ class GlobalApplication : Application() {
         KakaoSdk.init(this, BuildConfig.native_app_key)
     }
 
-    companion object {
-        lateinit var instance: GlobalApplication
-            private set
-    }
 }

@@ -16,7 +16,6 @@ import com.ssafy.moabang.src.main.MainActivity
 import androidx.activity.viewModels
 import com.nhn.android.naverlogin.OAuthLogin
 import com.ssafy.moabang.BuildConfig
-import com.ssafy.moabang.config.GlobalApplication
 import android.widget.Toast
 
 import com.nhn.android.naverlogin.OAuthLoginHandler
@@ -24,17 +23,24 @@ import org.json.JSONException
 
 import org.json.JSONObject
 
-import android.os.AsyncTask
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import com.nhn.android.naverlogin.data.OAuthLoginState
+
+
+
+
+
+
 
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private val model: KakaoLoginViewModel by viewModels()
-    private lateinit var mOAuthLoginModule:OAuthLogin
+    private lateinit var mNaverLoginModule:OAuthLogin
+
 
     private val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
         if (error != null) {
@@ -59,12 +65,18 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun init(){
-        mOAuthLoginModule = OAuthLogin.getInstance()
-        mOAuthLoginModule.init(this, BuildConfig.naver_client_id, BuildConfig.naver_client_secret, "모아방")
+        mNaverLoginModule = OAuthLogin.getInstance()
+        mNaverLoginModule.init(this, BuildConfig.naver_client_id, BuildConfig.naver_client_secret, "모아방")
+
+        if (HasNaverSession()) {
+            val intent = Intent(this@LoginActivity, NaverLogin::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     fun naverLogin(view: View) {
-        mOAuthLoginModule.startOauthLoginActivity(
+        mNaverLoginModule.startOauthLoginActivity(
             this,
             mOAuthLoginHandler
         )
@@ -97,27 +109,30 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+
+
     private val mOAuthLoginHandler: OAuthLoginHandler = @SuppressLint("HandlerLeak")
     object : OAuthLoginHandler() {
         override fun run(success: Boolean) {
             if (success) {
                 val accessToken: String =
-                    mOAuthLoginModule.getAccessToken(this@LoginActivity)
+                    mNaverLoginModule.getAccessToken(this@LoginActivity)
                 val refreshToken: String =
-                    mOAuthLoginModule.getRefreshToken(this@LoginActivity)
+                    mNaverLoginModule.getRefreshToken(this@LoginActivity)
                 val expiresAt: Long =
-                    mOAuthLoginModule.getExpiresAt(this@LoginActivity)
+                    mNaverLoginModule.getExpiresAt(this@LoginActivity)
                 val tokenType: String =
-                    mOAuthLoginModule.getTokenType(this@LoginActivity)
-                CoroutineScope(Dispatchers.Main).launch{
-                    requestApiTask(this@LoginActivity, mOAuthLoginModule)
-                }
-                startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                    mNaverLoginModule.getTokenType(this@LoginActivity)
+//                CoroutineScope(Dispatchers.Main).launch{
+//                    requestApiTask(this@LoginActivity, mNaverLoginModule)
+//                }
+                startActivity(Intent(this@LoginActivity, NaverLogin::class.java))
+                Log.d("NAVER_LOGIN_TOKEN", "run: $accessToken")
             } else {
                 val errorCode: String =
-                    mOAuthLoginModule.getLastErrorCode(this@LoginActivity).code
+                    mNaverLoginModule.getLastErrorCode(this@LoginActivity).code
                 val errorDesc: String =
-                    mOAuthLoginModule.getLastErrorDesc(this@LoginActivity)
+                    mNaverLoginModule.getLastErrorDesc(this@LoginActivity)
                 Toast.makeText(
                     this@LoginActivity, "errorCode:" + errorCode
                             + ", errorDesc:" + errorDesc, Toast.LENGTH_SHORT
@@ -153,6 +168,13 @@ class LoginActivity : AppCompatActivity() {
                 e.printStackTrace()
             }
         }
+    }
+
+
+    private fun HasNaverSession(): Boolean {
+        return !(OAuthLoginState.NEED_LOGIN == mNaverLoginModule.getState(applicationContext) || OAuthLoginState.NEED_INIT == mNaverLoginModule.getState(
+            applicationContext
+        ))
     }
 }
 
