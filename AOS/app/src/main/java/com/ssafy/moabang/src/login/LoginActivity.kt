@@ -123,9 +123,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun hasNaverSession(): Boolean {
-        return !(OAuthLoginState.NEED_LOGIN == mNaverLoginModule.getState(applicationContext) || OAuthLoginState.NEED_INIT == mNaverLoginModule.getState(
-            applicationContext
-        ))
+        return !(OAuthLoginState.NEED_LOGIN == mNaverLoginModule.getState(applicationContext) || OAuthLoginState.NEED_INIT == mNaverLoginModule.getState(applicationContext))
     }
 
     fun directToMainActivity(result: Boolean) {

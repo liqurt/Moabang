@@ -14,8 +14,9 @@ import com.nhn.android.naverlogin.data.OAuthLoginState
 
 import android.os.Bundle
 import android.util.Log
-import androidx.test.core.app.ApplicationProvider
+import android.widget.Toast
 import com.ssafy.moabang.config.GlobalApplication
+import com.ssafy.moabang.config.GlobalAuthHelper
 import com.ssafy.moabang.src.main.MainActivity
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -49,11 +50,11 @@ class NaverLogin: Activity() {
         }
     }
 
-    internal class RefreshNHNToken : AsyncTask<Void?, Void?, Boolean>() {
+    inner class RefreshNHNToken : AsyncTask<Void?, Void?, Boolean>() {
         override fun doInBackground(vararg p0: Void?): Boolean? {
             try {
                 val mNaverLoginModule = OAuthLogin.getInstance()
-                mNaverLoginModule.refreshAccessToken(ApplicationProvider.getApplicationContext<Context>())
+                mNaverLoginModule.refreshAccessToken(applicationContext)
             } catch (e: Exception) {
                 Log.e("Error RefreshNHNToken", e.toString())
             }
@@ -83,6 +84,7 @@ class NaverLogin: Activity() {
                 val response = StringBuilder()
                 while (br.readLine().also { inputLine = it } != null) {
                     response.append(inputLine)
+                    Log.d("RESPONSE_INFO", "doInBackground: $inputLine")
                 }
                 result = response.toString()
                 br.close()
@@ -109,8 +111,14 @@ class NaverLogin: Activity() {
                     )
                     val mGlobalHelper = GlobalApplication()
                     mGlobalHelper.setGlobalUserLoginInfo(userInfo)
+                    Log.d("USER_INFO", "onPostExecute: ${userInfo.toString()}")
                     val intent = Intent(this@NaverLogin, MainActivity::class.java)
                     startActivity(intent)
+                    finish()
+                } else {
+                    Toast.makeText(this@NaverLogin, "로그인 실패", Toast.LENGTH_SHORT).show()
+                    val mGlobalAuthHelper = GlobalAuthHelper()
+                    mGlobalAuthHelper.accountSignOut(this@NaverLogin, MainActivity())
                     finish()
                 }
             } catch (e: Exception) {
@@ -128,7 +136,7 @@ class NaverLogin: Activity() {
 
         override fun onPostExecute(result: Boolean) {
             super.onPostExecute(result)
-//            mainActivity.directToMainActivity(result)
+            mainActivity.directToLoginActivity(result)
         }
 
         init {
