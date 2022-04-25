@@ -1,6 +1,6 @@
 import loginWithKakao from './login';
 
-function App() {
+function KakaoLogin() {
     return (
       <div>
       <a id="custom-login-btn" onClick={loginWithKakao}>
@@ -13,4 +13,4 @@ function App() {
     );
   }
   
-  export default App;
+  export default KakaoLogin;
