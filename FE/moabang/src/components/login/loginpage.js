@@ -12,6 +12,7 @@ import { GoogleLogin } from 'react-google-login';
 import KakaoLogin from "../KakaoLogin/KakaoLogin"
 import axios from "axios";
 import logo from '../login/모아방 로고.png';
+import NaverLogin from '../NaverLogin/NaverLogin';
 
 //보안 상의 이유로 .env에 저장된 구글 클라이언트 아이디 값 불러오기
 const Google_clinet_id = process.env.REACT_APP_GOOGLE_CLIENT_ID;
@@ -69,7 +70,7 @@ const loginpage = () => {
             <img src={logo}></img>
             <h2>모아방</h2>
             <KakaoLogin />
-            <p>네이버 로그인</p>
+            <NaverLogin />
             <GoogleLogin
                 className="google-button"
                 clientId={Google_clinet_id}

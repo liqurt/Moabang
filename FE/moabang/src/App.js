@@ -20,6 +20,8 @@ function App() {
         <Route path="/" element={<Login />} />
         {/* <Route path="/*" element={<Error />} /> */}
       </Routes>
+  
+      
     </div>
   );
 }
