@@ -1,9 +1,7 @@
 package com.ssafy.moabang.util
 
-import android.content.Intent
 import com.ssafy.moabang.config.GlobalApplication
 import com.ssafy.moabang.data.model.dto.UserInfo
-import com.ssafy.moabang.src.login.LoginActivity
 
 object LoginUtil {
     private const val LOGIN_TYPE = "loginType"
