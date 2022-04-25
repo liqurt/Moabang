@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">moabang</string>
     <string name="app_name_kor">모아방</string>
+    <string name="default_web_client_id">534094293820-sjj19c5ublhm4c1ieigfn6c115uodhs9.apps.googleusercontent.com</string>
 </resources>

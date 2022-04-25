@@ -1,28 +1,35 @@
 package com.ssafy.moabang.src.login
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
+import com.ssafy.moabang.R
+import com.ssafy.moabang.config.GlobalApplication
 import com.ssafy.moabang.databinding.ActivityLoginBinding
 import com.ssafy.moabang.src.main.MainActivity
-import androidx.activity.viewModels
-import com.ssafy.moabang.config.GlobalApplication
 import com.ssafy.moabang.src.retrofitInterface.loginService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
-    private val model: KakaoLoginViewModel by viewModels()
 
     private val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
         if (error != null) {
@@ -32,16 +39,42 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        .requestEmail()
+        .build()
+    private lateinit var mGoogleSignInClient : GoogleSignInClient
+    val RC_SIGN_IN = 111
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.activity = this
 
+
+
         // 로그인 구현 전이라 우선 요 버튼 누르면 메인 화면으로 넘어가게 구현
         binding.tvLoginATmp.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
         }
+
+        binding.signInButton.setOnClickListener {
+            googleLogin()
+        }
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val account = GoogleSignIn.getLastSignedInAccount(this)
+        if(account != null) {
+            Log.d("AAAAA","이미 로그인 됨.")
+//            startActivity(Intent(this, MainActivity::class.java))
+        }else{
+            Log.d("AAAAA","아직 로그인 안 됨.")
+        }
+        Log.d("AAAAA", account.toString())
+
     }
 
     fun kakaoLogin(view : View) {
@@ -84,7 +117,6 @@ class LoginActivity : AppCompatActivity() {
                 }else{
                     Log.e("AAAAA","네트워킹 성공, 하지만 원하는 결과가 아님. ${response.errorBody()}")
                     Toast.makeText(this@LoginActivity, "네트워크 성공,  : ${response.errorBody()}", Toast.LENGTH_SHORT).show()
-
                 }
             }
 
@@ -94,4 +126,45 @@ class LoginActivity : AppCompatActivity() {
 
         })
     }
+
+    fun googleLogin(){
+        Log.d("AAAAA","googleLogin")
+        val signInIntent: Intent = mGoogleSignInClient.getSignInIntent()
+        startActivityForResult(signInIntent, RC_SIGN_IN)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.d("AAAAA","onActivityResult")
+        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            // The Task returned from this call is always completed, no need to attach
+            // a listener.
+            val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
+            handleSignInResult(task)
+        }
+    }
+
+    private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
+        Log.d("AAAAA","handleSignInResult")
+        try {
+            val account = completedTask.getResult(ApiException::class.java)
+            val idToken = account?.idToken
+            Log.d("AAAAA","$account")
+            Log.d("AAAAA","${account.email}")
+            Log.d("AAAAA","${account.displayName}")
+            Log.d("AAAAA","${account.id}")
+            Log.d("AAAAA","${account.idToken}") // 이거 전달해야되는데, 이거 전달하려면 redirect URL이 있어야함! 내일 경훈이가 손본다고 하더라~
+            Log.d("AAAAA","${account.serverAuthCode}")
+            // Signed in successfully, show authenticated UI.
+            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+            startActivity(intent)
+        } catch (e: ApiException) {
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            Log.w("AAAAA", "signInResult:failed code=" + e.statusCode)
+            Toast.makeText(this,"로그인 실패",Toast.LENGTH_SHORT).show()
+        }
+    }
+
 }

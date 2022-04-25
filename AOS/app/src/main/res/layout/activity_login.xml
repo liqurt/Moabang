@@ -57,11 +57,19 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/moabang_lightPink"
             android:contentDescription="카카오 로그인 버튼"
-            android:onClick="@{activity.kakaoLogin}"
+            android:onClick="@{activity::kakaoLogin}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_loginA"
             app:srcCompat="@drawable/kakao_login_medium_narrow" />
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/sign_in_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@+id/kakao_login_button"
+            app:layout_constraintStart_toStartOf="@+id/kakao_login_button"
+            app:layout_constraintTop_toBottomOf="@+id/kakao_login_button" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
