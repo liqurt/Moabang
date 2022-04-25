@@ -6,14 +6,14 @@ import com.ssafy.moabang.data.model.dto.UserInfo
 import com.ssafy.moabang.src.login.LoginActivity
 
 object LoginUtil {
-    val LOGIN_TYPE = "loginType"
-    val USER_EMAIL = "userEmail"
-    val USER_ID = "userId"
-    val USER_NAME = "userName"
-    val IMAGE_URL = "imageUrl"
-    val PREF_AREA = "prefArea"
-    val PREF_GENRE = "prefGenre"
-    val PREF_DIFF = "prefDifficulty"
+    private const val LOGIN_TYPE = "loginType"
+    private const val USER_EMAIL = "userEmail"
+    private const val USER_ID = "userId"
+    private const val USER_NAME = "userName"
+    private const val IMAGE_URL = "imageUrl"
+    private const val PREF_AREA = "prefArea"
+    private const val PREF_GENRE = "prefGenre"
+    private const val PREF_DIFF = "prefDifficulty"
 
 
     private val preferences = GlobalApplication.sSharedPreferences
@@ -32,7 +32,7 @@ object LoginUtil {
 
     }
 
-    fun deleteUserInfo() {
+    private fun deleteUserInfo() {
         preferences.deleteString(LOGIN_TYPE)
         preferences.deleteString(USER_NAME)
         preferences.deleteString(USER_EMAIL)

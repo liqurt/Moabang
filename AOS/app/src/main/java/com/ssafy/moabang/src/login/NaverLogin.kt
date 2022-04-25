@@ -15,7 +15,6 @@ import com.nhn.android.naverlogin.data.OAuthLoginState
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import com.ssafy.moabang.config.GlobalApplication
 import com.ssafy.moabang.config.GlobalAuthHelper
 import com.ssafy.moabang.data.model.dto.UserInfo
 import com.ssafy.moabang.src.main.MainActivity
@@ -30,7 +29,6 @@ import java.net.URL
 
 class NaverLogin: Activity() {
     val NAVER_RESPONSE_CODE = "00" // 정상 반환 시 코드
-    val NAVER_JSON_KEY = arrayOf("id", "profile_image", "email", "name")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,10 +102,6 @@ class NaverLogin: Activity() {
                 if (`object`.getString("resultcode") == NAVER_RESPONSE_CODE) {
                     val jsonObject = JSONObject(`object`.getString("response"))
                     var userInfo = UserInfo("NAVER", jsonObject.getString("id"), jsonObject.getString("email"), jsonObject.getString("name"), jsonObject.getString("profile_image"), ArrayList(), ArrayList(), ArrayList())
-//                    userInfo.loginType = "NAVER"
-//                    for(item in NAVER_JSON_KEY){
-//                        userInfo.add(jsonObject.getString(item))
-//                    }
                     LoginUtil.saveUserInfo(userInfo)
                     Log.d("USER_INFO", "onPostExecute: ${userInfo.toString()}")
                     val intent = Intent(this@NaverLogin, MainActivity::class.java)
