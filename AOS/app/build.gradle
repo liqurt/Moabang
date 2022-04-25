@@ -60,6 +60,9 @@ dependencies {
 
     implementation 'androidx.activity:activity-ktx:1.4.0'
 
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0' // 레트로핏
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0' // Json 컨버터
+
     implementation "com.kakao.sdk:v2-user:2.9.0" // 카카오 로그인
     implementation 'com.naver.nid:naveridlogin-android-sdk:4.2.6' // 네이버 로그인
 

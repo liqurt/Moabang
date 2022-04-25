@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ssafy.moabang">
-    <!--  인터넷 사용 권한 설정  -->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -11,6 +10,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/Theme.Moabang">
         <activity
             android:name=".src.login.LoginActivity"
@@ -32,3 +32,9 @@
     </application>
 
 </manifest>
+
+<!--
+<uses-permission android:name="android.permission.INTERNET" /> // 인터넷!
+
+android:usesCleartextTraffic="true" // http에 접근 가능하도록!
+-->
