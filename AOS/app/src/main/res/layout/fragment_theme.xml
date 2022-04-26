@@ -59,5 +59,84 @@
         app:layout_constraintStart_toEndOf="@+id/et_themeF_search"
         app:layout_constraintTop_toTopOf="@+id/iv_themeF_search" />
 
+    <ImageView
+        android:id="@+id/iv_themeF_filter"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/icon_filter"
+        app:layout_constraintEnd_toStartOf="@+id/tv_themeF_filter"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_themeF_search" />
+
+    <TextView
+        android:id="@+id/tv_themeF_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="필터"
+        android:textColor="@color/moabang_gray"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_themeF_filter"
+        app:layout_constraintEnd_toStartOf="@+id/iv_themeF_sort"
+        app:layout_constraintStart_toEndOf="@+id/iv_themeF_filter"
+        app:layout_constraintTop_toTopOf="@+id/iv_themeF_filter" />
+
+    <ImageView
+        android:id="@+id/iv_themeF_sort"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="4dp"
+        android:src="@drawable/icon_sort"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_themeF_filter"
+        app:layout_constraintEnd_toStartOf="@+id/tv_themeF_sort"
+        app:layout_constraintStart_toEndOf="@+id/tv_themeF_filter"
+        app:layout_constraintTop_toTopOf="@+id/tv_themeF_filter" />
+
+    <TextView
+        android:id="@+id/tv_themeF_sort"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="정렬"
+        android:textColor="@color/moabang_gray"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_themeF_sort"
+        app:layout_constraintEnd_toStartOf="@+id/blank_themeF"
+        app:layout_constraintStart_toEndOf="@id/iv_themeF_sort"
+        app:layout_constraintTop_toTopOf="@+id/iv_themeF_sort" />
+
+    <View
+        android:id="@+id/blank_themeF"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_themeF_sort"
+        app:layout_constraintEnd_toStartOf="@+id/switch_themeF"
+        app:layout_constraintStart_toEndOf="@+id/tv_themeF_sort"
+        app:layout_constraintTop_toTopOf="@+id/tv_themeF_sort" />
+
+    <Switch
+        android:id="@+id/switch_themeF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_weight="1"
+        android:switchPadding="10dp"
+        android:text="탈출한 테마 숨기기"
+        android:textColor="@color/moabang_gray"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:thumb="@drawable/switch_thumb_selector"
+        android:track="@drawable/switch_track_selector"
+        app:layout_constraintBottom_toBottomOf="@+id/blank_themeF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/blank_themeF"
+        app:layout_constraintTop_toTopOf="@+id/blank_themeF"
+        tools:checked="false" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
