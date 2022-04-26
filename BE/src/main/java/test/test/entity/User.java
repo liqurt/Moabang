@@ -1,19 +1,32 @@
 package test.test.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
+
+@Builder
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
-public class User{
+@Table(name="user")
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long userid;
 
     @Column(nullable = false)
     private String name;
@@ -24,26 +37,48 @@ public class User{
     @Column
     private String picture;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Role role;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Builder.Default
+    private List<String> roles = new ArrayList<>();
 
-    @Builder
-    public User(String name, String email, String picture, Role role) {
-        this.name = name;
-        this.email = email;
-        this.picture = picture;
-        this.role = role;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
-    public User update(String name, String picture) {
-        this.name = name;
-        this.picture = picture;
-
-        return this;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
-    public String getRoleKey() {
-        return this.role.getKey();
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
     }
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Override
+    public String getUsername() {
+        return String.valueOf(this.userid);
+    }
+
+    @Override
+    public String getPassword() {
+        return null;
+    }
+
 }
