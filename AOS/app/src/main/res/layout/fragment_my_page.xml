@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="USER NAME"
-            android:textSize="24sp"
+            android:textSize="24dp"
             app:layout_constraintBottom_toTopOf="@+id/tv_mypageF_userEmail"
             app:layout_constraintStart_toEndOf="@+id/civ_mypageF"
             app:layout_constraintStart_toStartOf="@+id/tv_mypageF_userEmail"
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:text="useremail@email.com"
             android:textColor="@color/moabang_pink"
-            android:textSize="16sp"
+            android:textSize="16dp"
             app:layout_constraintBottom_toTopOf="@+id/ll_mypageF"
             app:layout_constraintStart_toEndOf="@+id/civ_mypageF"
             app:layout_constraintStart_toStartOf="@+id/ll_mypageF"
@@ -83,7 +83,7 @@
                 android:text="선호정보"
                 android:paddingEnd="10dp"
                 android:textColor="@color/moabang_gray"
-                android:textSize="16sp"
+                android:textSize="16dp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -99,7 +99,7 @@
                     android:text="강남, 홍대"
                     android:paddingBottom="4dp"
                     android:textColor="@color/moabang_pink"
-                    android:textSize="16sp" />
+                    android:textSize="16dp" />
 
                 <TextView
                     android:id="@+id/tv_mypageF_prefer_genre"
@@ -108,7 +108,7 @@
                     android:text="공포"
                     android:paddingBottom="4dp"
                     android:textColor="@color/moabang_pink"
-                    android:textSize="16sp" />
+                    android:textSize="16dp" />
 
                 <TextView
                     android:id="@+id/tv_mypageF_prefer_difficulty"
@@ -116,7 +116,7 @@
                     android:layout_height="wrap_content"
                     android:text="난이도 3, 4"
                     android:textColor="@color/moabang_pink"
-                    android:textSize="16sp" />
+                    android:textSize="16dp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -145,7 +145,7 @@
             android:layout_weight="1"
             android:text="선호정보 수정"
             android:textColor="@color/moabang_gray"
-            android:textSize="20sp" />
+            android:textSize="16dp" />
 
         <TextView
             android:id="@+id/tv_mypageF_menu2"
@@ -154,7 +154,7 @@
             android:layout_weight="1"
             android:text="찜한 테마"
             android:textColor="@color/moabang_gray"
-            android:textSize="20sp" />
+            android:textSize="16dp" />
 
         <TextView
             android:id="@+id/tv_mypageF_menu3"
@@ -163,7 +163,7 @@
             android:layout_weight="1"
             android:text="테마 비교"
             android:textColor="@color/moabang_gray"
-            android:textSize="20sp" />
+            android:textSize="16dp" />
 
         <TextView
             android:id="@+id/tv_mypageF_menu4"
@@ -172,7 +172,7 @@
             android:layout_weight="1"
             android:text="이용한 테마"
             android:textColor="@color/moabang_gray"
-            android:textSize="20sp" />
+            android:textSize="16dp" />
 
         <TextView
             android:id="@+id/tv_mypageF_menu5"
@@ -181,7 +181,7 @@
             android:layout_weight="1"
             android:text="나의 방탈출 통계"
             android:textColor="@color/moabang_gray"
-            android:textSize="20sp" />
+            android:textSize="16dp" />
 
         <TextView
             android:id="@+id/tv_mypageF_menu6"
@@ -190,16 +190,16 @@
             android:layout_weight="1"
             android:text="작성글 관리"
             android:textColor="@color/moabang_gray"
-            android:textSize="20sp" />
+            android:textSize="16dp" />
 
         <TextView
             android:id="@+id/tv_mypageF_blank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:text=""
             android:textColor="@color/moabang_gray"
-            android:textSize="16sp"/>
+            android:textSize="16dp"/>
 
         <TextView
             android:id="@+id/tv_mypageF_logout"
@@ -208,7 +208,7 @@
             android:layout_weight="1"
             android:text="로그아웃"
             android:textColor="@color/moabang_gray"
-            android:textSize="16sp"/>
+            android:textSize="12dp"/>
 
     </LinearLayout>
 
