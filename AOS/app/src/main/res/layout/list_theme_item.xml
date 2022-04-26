@@ -23,10 +23,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:text="테마 이름"
         android:textColor="@color/moabang_gray"
-        android:textSize="20sp"
+        android:textSize="28dp"
         app:layout_constraintStart_toEndOf="@+id/iv_themeL_img"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,20 +33,19 @@
         android:id="@+id/tv_themeL_cafe_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="4dp"
         android:text="카페이름"
         android:textColor="@color/moabang_pink"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/themeL_blank"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/themeL_blank" />
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="@+id/tv_themeL_theme_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_themeL_theme_name" />
 
     <View
         android:id="@+id/themeL_blank"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="@id/tv_themeL_rating"
-        app:layout_constraintEnd_toStartOf="@+id/tv_themeL_cafe_name"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tv_themeL_rating" />
 
 
@@ -70,7 +68,7 @@
         android:layout_marginBottom="8dp"
         android:text="장르"
         android:textColor="@color/moabang_gray"
-        android:textSize="14sp"
+        android:textSize="16dp"
         app:layout_constraintBottom_toTopOf="@+id/themeL_diff"
 
         app:layout_constraintEnd_toStartOf="@+id/tv_themeL_time"
@@ -83,7 +81,7 @@
         android:layout_marginEnd="8dp"
         android:text="시간"
         android:textColor="@color/moabang_gray"
-        android:textSize="14sp"
+        android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_themeL_genre"
         app:layout_constraintEnd_toStartOf="@+id/tv_themeL_star"
         app:layout_constraintStart_toEndOf="@+id/tv_themeL_genre" />
@@ -95,7 +93,7 @@
         android:layout_marginEnd="4dp"
         android:text="★"
         android:textColor="@color/moabang_pink"
-        android:textSize="14sp"
+        android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_themeL_time"
         app:layout_constraintEnd_toStartOf="@+id/tv_themeL_rating"
         app:layout_constraintStart_toEndOf="@+id/tv_themeL_time" />
@@ -106,7 +104,7 @@
         android:layout_height="wrap_content"
         android:text="별점"
         android:textColor="@color/moabang_gray"
-        android:textSize="14sp"
+        android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_themeL_star"
         app:layout_constraintEnd_toStartOf="@+id/themeL_blank"
         app:layout_constraintStart_toEndOf="@+id/tv_themeL_star" />
@@ -116,24 +114,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="4dp"
+        android:layout_marginEnd="3dp"
         android:layout_marginBottom="16dp"
         android:text="난이도"
         android:textColor="@color/moabang_pink"
-        android:textSize="14sp"
+        android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/tv_themeL_diff"
-        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toEndOf="@+id/iv_themeL_img" />
 
     <TextView
         android:id="@+id/tv_themeL_diff"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="6dp"
         android:text="5"
         android:textColor="@color/moabang_gray"
-        android:textSize="14sp"
+        android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/themeL_diff"
         app:layout_constraintEnd_toStartOf="@+id/themeL_player"
         app:layout_constraintStart_toEndOf="@+id/themeL_diff" />
@@ -142,10 +139,10 @@
         android:id="@+id/themeL_player"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
+        android:layout_marginEnd="3dp"
         android:text="인원"
         android:textColor="@color/moabang_pink"
-        android:textSize="14sp"
+        android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_themeL_diff"
         app:layout_constraintEnd_toStartOf="@+id/tv_themeL_player"
         app:layout_constraintHorizontal_bias="0.5"
@@ -155,10 +152,10 @@
         android:id="@+id/tv_themeL_player"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="6dp"
         android:text="2~4"
         android:textColor="@color/moabang_gray"
-        android:textSize="14sp"
+        android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/themeL_player"
         app:layout_constraintEnd_toStartOf="@+id/themeL_type"
         app:layout_constraintHorizontal_bias="0.5"
@@ -168,10 +165,10 @@
         android:id="@+id/themeL_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
+        android:layout_marginEnd="3dp"
         android:text="타입"
         android:textColor="@color/moabang_pink"
-        android:textSize="14sp"
+        android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_themeL_player"
         app:layout_constraintEnd_toStartOf="@+id/tv_themeL_type"
         app:layout_constraintHorizontal_bias="0.5"
@@ -181,10 +178,10 @@
         android:id="@+id/tv_themeL_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="6dp"
         android:text="자물쇠"
         android:textColor="@color/moabang_gray"
-        android:textSize="14sp"
+        android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/themeL_type"
         app:layout_constraintEnd_toStartOf="@+id/themeL_active"
         app:layout_constraintHorizontal_bias="0.5"
@@ -194,26 +191,36 @@
         android:id="@+id/themeL_active"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
+        android:layout_marginEnd="3dp"
         android:text="활동성"
         android:textColor="@color/moabang_pink"
-        android:textSize="14sp"
+        android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_themeL_type"
         app:layout_constraintEnd_toStartOf="@+id/tv_themeL_active"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/tv_themeL_type" />
 
     <TextView
         android:id="@+id/tv_themeL_active"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="6dp"
         android:text="보통"
         android:textColor="@color/moabang_gray"
-        android:textSize="14sp"
+        android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/themeL_active"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/themeL_blank2"
         app:layout_constraintStart_toEndOf="@+id/themeL_active" />
+
+    <View
+        android:id="@+id/themeL_blank2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_themeL_active"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_themeL_active"
+        app:layout_constraintTop_toTopOf="@+id/tv_themeL_active" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
