@@ -2,7 +2,7 @@ package com.ssafy.moabang.data.model.dto
 
 data class Theme(
     val themeId: Int,
-    val cafeId: Int,
+    val cafeName: String,
     val name: String,
     val img: String,
     val description: String,
@@ -10,6 +10,8 @@ data class Theme(
     val difficulty: Int,
     val player: String,
     val time: Int,
-    var genre: String,
+    val genre: String,
+    val rating: Double,
+    var like: Boolean,
     val type: String
 )
