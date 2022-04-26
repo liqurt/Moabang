@@ -38,7 +38,7 @@ public class KakaoAPI {
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
             StringBuilder sb = new StringBuilder();
             sb.append("grant_type=authorization_code");
-            sb.append("&client_id="+kakaoApiKey);
+            sb.append("&client_id=" + kakaoApiKey);
             sb.append("&redirect_uri=http://114.129.238.28/user/login");
             sb.append("&code=" + authorize_code);
             bw.write(sb.toString());
@@ -118,10 +118,10 @@ public class KakaoAPI {
             userInfo.put("birthday", birthday);
             userInfo.put("gender", gender);
             userInfo.put("profile_img", profile_img);
-            userInfo.put("resCode",true);
+            userInfo.put("resCode", true);
         } catch (IOException e) {
             e.printStackTrace();
-            userInfo.put("resCode",false);
+            userInfo.put("resCode", false);
             return userInfo;
         }
         return userInfo;
