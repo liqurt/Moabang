@@ -25,20 +25,23 @@ const loginWithKakao = () => {
       //   .then((response) => { console.log(response) })
       //   .catch((Error) => { console.log(Error) })
 
-      axios({
-        method: "post",
-        url: "http://114.129.238.28/user/klogin",
+      // axios({
+      //   method: "post",
+      //   url: "http://114.129.238.28/user/klogin",
+
+      // }, {
+      //   headers: {
+      //     token: ACCESS_TOKEN,
+      //   }
+      // })
+
+      axios.post('/user/klogin', {
 
       }, {
         headers: {
           token: ACCESS_TOKEN,
         }
       })
-        // axios.post('/user/login', {
-        //   data: {
-        //     "token": ACCESS_TOKEN,
-        //   }
-        // })
         // .then((Response)=>{console.log(Response.data)})
         // .catch((Error)=>{console.log(Error)})
         .then((res) => {
