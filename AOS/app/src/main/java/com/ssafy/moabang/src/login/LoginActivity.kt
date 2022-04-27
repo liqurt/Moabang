@@ -24,7 +24,6 @@ import retrofit2.Response
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
-    private val model: KakaoLoginViewModel by viewModels()
 
     private val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
         if (error != null) {
@@ -92,6 +91,7 @@ class LoginActivity : AppCompatActivity() {
      * 카카오톡 로그인 성공 후 토큰을 서버에 전송한다.
      */
     fun sendTokenToBackend(token: OAuthToken) {
+        Log.d("AAAAA","sendTokenToBackend")
         val loginService = GlobalApplication.retrofit.create(loginService::class.java)
         loginService.login(token.accessToken).enqueue(object : Callback<Boolean>{
             override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
