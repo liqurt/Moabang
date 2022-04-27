@@ -6,7 +6,7 @@ import retrofit2.http.POST
 
 interface loginService {
 
-    @POST("/user/login")
+    @POST("/user/klogin")
     fun login(
         @Header("token") token : String?,
     ) : Call<Boolean>
