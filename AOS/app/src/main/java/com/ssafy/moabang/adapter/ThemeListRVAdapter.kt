@@ -15,9 +15,16 @@ import com.ssafy.moabang.databinding.ListThemeItemBinding
 class ThemeListRVAdapter: RecyclerView.Adapter<ThemeListRVAdapter.ViewHolder>() {
     var data: List<Theme> = emptyList()
     lateinit var binding: ListThemeItemBinding
-    lateinit var itemClickListener: AdapterView.OnItemClickListener
+    lateinit var itemClickListener: ItemClickListener
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        init {
+            itemView.setOnClickListener {
+                if(this@ThemeListRVAdapter::itemClickListener.isInitialized){
+                    itemClickListener.onClick(data[adapterPosition])
+                }
+            }
+        }
         fun bind(item: Theme){
             val themeImg = itemView.findViewById<ImageView>(R.id.iv_themeL_img)
             val tvThemeName = itemView.findViewById<TextView>(R.id.tv_themeL_theme_name)
@@ -26,6 +33,8 @@ class ThemeListRVAdapter: RecyclerView.Adapter<ThemeListRVAdapter.ViewHolder>() 
             val tvTime = itemView.findViewById<TextView>(R.id.tv_themeL_time)
             val tvRating = itemView.findViewById<TextView>(R.id.tv_themeL_rating)
             val tvDiff = itemView.findViewById<TextView>(R.id.tv_themeL_diff)
+            val tvType = itemView.findViewById<TextView>(R.id.tv_themeL_type)
+            val tvActive = itemView.findViewById<TextView>(R.id.tv_themeL_active)
             val tvPlayer = itemView.findViewById<TextView>(R.id.tv_themeL_player)
             val like = itemView.findViewById<ImageView>(R.id.iv_themeL_like)
 
@@ -46,6 +55,8 @@ class ThemeListRVAdapter: RecyclerView.Adapter<ThemeListRVAdapter.ViewHolder>() 
             tvTime.text = item.time.toString() + "분"
             tvRating.text = item.rating.toString()
             tvDiff.text = item.difficulty.toString()
+            tvType.text = item.type
+            tvActive.text = item.active
             tvPlayer.text = item.player + "명"
         }
     }
@@ -62,6 +73,6 @@ class ThemeListRVAdapter: RecyclerView.Adapter<ThemeListRVAdapter.ViewHolder>() 
     override fun getItemCount(): Int = data.size
 
     interface ItemClickListener {
-        fun onClick(position: Int)
+        fun onClick(item: Theme)
     }
 }
