@@ -25,7 +25,7 @@
         android:layout_marginStart="16dp"
         android:text="테마 이름"
         android:textColor="@color/moabang_gray"
-        android:textSize="22dp"
+        android:textSize="20dp"
         app:layout_constraintStart_toEndOf="@+id/iv_themeL_img"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,7 +36,7 @@
         android:layout_marginTop="4dp"
         android:text="카페이름"
         android:textColor="@color/moabang_pink"
-        android:textSize="16dp"
+        android:textSize="14dp"
         app:layout_constraintStart_toStartOf="@+id/tv_themeL_theme_name"
         app:layout_constraintTop_toBottomOf="@+id/tv_themeL_theme_name" />
 
