@@ -1,4 +1,4 @@
-package test.test.entity;
+package com.self.roomescape.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -6,11 +6,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -22,20 +24,25 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="user")
+@Table(name = "user")
 public class User implements UserDetails {
     @Id
+    @Column(name = "uid")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userid;
-
+    private Long uid;
     @Column(nullable = false)
-    private String name;
-
+    private String nickname;
     @Column(nullable = false)
     private String email;
+    @Column(name = "p_img")
+    private String pimg;
+    private String birthday;
+    private String gender;
 
-    @Column
-    private String picture;
+    @CreationTimestamp
+    @Column(name = "date")
+    private Timestamp createDate;
+
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
@@ -73,7 +80,7 @@ public class User implements UserDetails {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Override
     public String getUsername() {
-        return String.valueOf(this.userid);
+        return String.valueOf(this.uid);
     }
 
     @Override

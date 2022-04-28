@@ -1,4 +1,4 @@
-package test.test.config.auth;
+package com.self.roomescape.config;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
-import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
@@ -53,7 +52,7 @@ public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
 
     // Jwt 토큰으로 인증 정보를 조회
     public Authentication getAuthentication(String token) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPk(token));
+        UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPk(token)); // 여기서 문제 발생
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
@@ -62,9 +61,11 @@ public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
 
-    // Request의 Header에서 token 파싱 : "X-AUTH-TOKEN: jwt토큰"
+    // Request의 Header에서 token 파싱 : "Authorization : bearer"
     public String resolveToken(HttpServletRequest req) {
-        return req.getHeader("jwt");
+        if (req.getHeader("Authorization") != null)
+            return req.getHeader("Authorization").substring(7);
+        return null;
     }
 
     // Jwt 토큰의 유효성 + 만료일자 확인
@@ -78,10 +79,8 @@ public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
     }
 
     public List<String> getUserRoles(String token) {
-        return (List<String>)Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("roles");
+        return (List<String>) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("roles");
     }
-
-
 
 
 }

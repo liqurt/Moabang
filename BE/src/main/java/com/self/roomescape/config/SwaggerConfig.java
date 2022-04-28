@@ -1,4 +1,4 @@
-package test.test.config.auth;
+package com.self.roomescape.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

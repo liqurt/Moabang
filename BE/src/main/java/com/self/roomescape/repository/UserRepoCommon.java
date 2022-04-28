@@ -1,7 +1,7 @@
-package test.test.repository;
+package com.self.roomescape.repository;
 
 import org.springframework.stereotype.Repository;
-import test.test.entity.User;
+import com.self.roomescape.entity.User;
 
 @Repository
 public interface UserRepoCommon {

@@ -1,4 +1,4 @@
-package test.test.config.auth;
+package com.self.roomescape.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -7,23 +7,24 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.context.SecurityContextPersistenceFilter;
 import org.springframework.web.filter.CharacterEncodingFilter;
-import test.test.entity.Role;
+import org.springframework.web.filter.CorsFilter;
 
 
 @RequiredArgsConstructor
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtTokenProvider jwtTokenProvider;
+    private final CorsFilter corsFilter;
 
     @Override
-    public void configure(WebSecurity web) throws Exception    {
+    public void configure(WebSecurity web) throws Exception {
         // static 디렉터리의 하위 파일 목록은 인증 무시 ( = 항상통과 )
         web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/lib/**");
         web.ignoring().antMatchers("/v2/api-docs", "/swagger-resources/**",
-                "/swagger-ui.html", "/webjars/**", "/swagger/**", "/test/**");
+                "/swagger-ui.html", "/webjars/**", "/swagger/**");
     }
-
 
 
     @Override
@@ -41,13 +42,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests()
                 // permitAll() 처리한 경로의 API는 JWT 값이 없어도 실행 가능
-                .antMatchers("/sociallogin/**").permitAll()
-                .antMatchers("/bb").permitAll()
+                .antMatchers("/cafe/**").permitAll()
+                .antMatchers("/user/**").permitAll()
                 .anyRequest().hasRole("USER")
                 .and()
                 // 403 예외처리 핸들링
-                .exceptionHandling().accessDeniedPage("/user/denied")
-                .and()
+//                .exceptionHandling().accessDeniedPage("/user/denied")
+//                .and()
+                .addFilterBefore(corsFilter, SecurityContextPersistenceFilter.class)
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
     }
 }

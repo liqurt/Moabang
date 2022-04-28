@@ -1,4 +1,4 @@
-package test.test.entity;
+package com.self.roomescape.entity;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
