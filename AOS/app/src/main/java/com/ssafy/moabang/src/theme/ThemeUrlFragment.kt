@@ -53,6 +53,7 @@ class ThemeUrlFragment: Fragment() {
                                 .commit()
                             fragmentManager.popBackStack()
                         }
+                        themeDetailActivity.finish()
                     }
                 }
             }

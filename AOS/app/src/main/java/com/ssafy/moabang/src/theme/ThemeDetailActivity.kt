@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import android.view.View
-import android.webkit.WebViewClient
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
@@ -44,7 +43,7 @@ class ThemeDetailActivity : AppCompatActivity() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {}
         })
 
-
+        setFragment(ThemeReviewFragment())
         setThemeInfo()
         setClickListener()
     }
@@ -98,7 +97,9 @@ class ThemeDetailActivity : AppCompatActivity() {
             frag.arguments = bundle
             setFragment(frag)
         }
-        binding.tvThemeDAReview.setOnClickListener {  }
+        binding.tvThemeDAReview.setOnClickListener {
+            setFragment(ThemeReviewFragment())
+        }
         binding.tvThemeDACompare.setOnClickListener {  }
         binding.tvThemeDAReserve.setOnClickListener {  }
     }
@@ -124,4 +125,5 @@ class ThemeDetailActivity : AppCompatActivity() {
             }
         }
     }
+
 }
