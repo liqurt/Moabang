@@ -10,7 +10,6 @@ data class Theme(
     val name: String,
     val img: String,
     val description: String,
-    val price: Int,
     val difficulty: Int,
     val player: String,
     val time: Int,
@@ -18,5 +17,6 @@ data class Theme(
     val rating: Double,
     var like: Boolean,
     val active: String,
-    val type: String
+    val type: String,
+    val url: String
 ): Parcelable

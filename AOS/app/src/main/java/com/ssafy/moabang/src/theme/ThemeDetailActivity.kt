@@ -3,7 +3,12 @@ package com.ssafy.moabang.src.theme
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
+import android.view.View
+import android.webkit.WebViewClient
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.ssafy.moabang.R
 import com.ssafy.moabang.data.model.dto.Theme
 import com.ssafy.moabang.databinding.ActivityThemeDetailBinding
@@ -11,6 +16,7 @@ import com.ssafy.moabang.databinding.ActivityThemeDetailBinding
 class ThemeDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityThemeDetailBinding
     private lateinit var theme: Theme
+    lateinit var behavior: BottomSheetBehavior<ConstraintLayout>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +32,7 @@ class ThemeDetailActivity : AppCompatActivity() {
     }
 
     private fun init(){
+        behavior = BottomSheetBehavior.from(binding.themeDABottomSheet)
         setThemeInfo()
         setClickListener()
     }
@@ -57,10 +64,36 @@ class ThemeDetailActivity : AppCompatActivity() {
             finish()
         }
 
-        binding.tvThemeDAHomepage.setOnClickListener {  }
+
+        binding.bsThemeDA.setOnClickListener {
+            behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        }
+
+        binding.tvThemeDAHomepage.setOnClickListener {
+            behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+                override fun onStateChanged(bottomSheet: View, newState: Int) {
+                    if (newState == BottomSheetBehavior.STATE_DRAGGING) {
+                        behavior.state = BottomSheetBehavior.STATE_EXPANDED
+                    }
+                }
+
+                override fun onSlide(bottomSheet: View, slideOffset: Float) {}
+
+            })
+            val frag = ThemeUrlFragment()
+            var bundle = Bundle(1)
+            bundle.putString("url", theme.url)
+            frag.arguments = bundle
+            setFragment(frag)
+        }
         binding.tvThemeDAReview.setOnClickListener {  }
         binding.tvThemeDACompare.setOnClickListener {  }
         binding.tvThemeDAReserve.setOnClickListener {  }
+    }
+
+    private fun setFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.frameLayout_themeDetail, fragment).commit()
     }
 
     private fun setLike(){
