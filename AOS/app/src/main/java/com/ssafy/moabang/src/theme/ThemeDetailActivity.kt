@@ -56,6 +56,11 @@ class ThemeDetailActivity : AppCompatActivity() {
         binding.ivToolbarLeadingIcon.setOnClickListener {
             finish()
         }
+
+        binding.tvThemeDAHomepage.setOnClickListener {  }
+        binding.tvThemeDAReview.setOnClickListener {  }
+        binding.tvThemeDACompare.setOnClickListener {  }
+        binding.tvThemeDAReserve.setOnClickListener {  }
     }
 
     private fun setLike(){
