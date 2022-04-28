@@ -33,6 +33,18 @@ class ThemeDetailActivity : AppCompatActivity() {
 
     private fun init(){
         behavior = BottomSheetBehavior.from(binding.themeDABottomSheet)
+        behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+                    binding.bsThemeDA.setImageResource(R.drawable.icon_down)
+                } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                    binding.bsThemeDA.setImageResource(R.drawable.icon_up)
+                }
+            }
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {}
+        })
+
+
         setThemeInfo()
         setClickListener()
     }
@@ -78,8 +90,8 @@ class ThemeDetailActivity : AppCompatActivity() {
                 }
 
                 override fun onSlide(bottomSheet: View, slideOffset: Float) {}
-
             })
+
             val frag = ThemeUrlFragment()
             var bundle = Bundle(1)
             bundle.putString("url", theme.url)
