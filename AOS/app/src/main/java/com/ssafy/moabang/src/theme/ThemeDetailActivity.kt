@@ -18,10 +18,44 @@ class ThemeDetailActivity : AppCompatActivity() {
         intent.getParcelableExtra<Theme>("theme")?.let {
             theme = it
         } ?: finish()
+
+        init()
+
+    }
+
+    private fun init(){
         setThemeInfo()
+        setClickListener()
     }
 
     private fun setThemeInfo() {
-        binding.textView.text = theme.name
+        binding.tvToolbarTheme.text = theme.name
+        binding.tvToolbarCafe.text = theme.cafeName
+
+        setLike()
+
+    }
+
+    private fun setClickListener(){
+        binding.ivToolbarLeadingIcon.setOnClickListener {
+            finish()
+        }
+    }
+
+    private fun setLike(){
+        if(theme.like) {
+            binding.ivToolbarTrailingIcon.setImageResource(R.drawable.icon_like_after)
+        } else {
+            binding.ivToolbarTrailingIcon.setImageResource(R.drawable.icon_like_before)
+        }
+
+        binding.ivToolbarTrailingIcon.setOnClickListener {
+            theme.like = !theme.like
+            if(theme.like) {
+                binding.ivToolbarTrailingIcon.setImageResource(R.drawable.icon_like_after)
+            } else {
+                binding.ivToolbarTrailingIcon.setImageResource(R.drawable.icon_like_before)
+            }
+        }
     }
 }
