@@ -15,8 +15,10 @@
         <entry key="..\:/Users/liqur/Desktop/SSAFY2/pjt3/cafeList/S06P31D205/AOS/app/src/main/res/drawable/icon_sort_mini.xml" value="0.3165" />
         <entry key="..\:/Users/liqur/Desktop/SSAFY2/pjt3/cafeList/S06P31D205/AOS/app/src/main/res/drawable/little_box.xml" value="0.3215" />
         <entry key="..\:/Users/liqur/Desktop/SSAFY2/pjt3/cafeList/S06P31D205/AOS/app/src/main/res/drawable/search_box.xml" value="0.136" />
-        <entry key="..\:/Users/liqur/Desktop/SSAFY2/pjt3/cafeList/S06P31D205/AOS/app/src/main/res/layout/fragment_cafe_list.xml" value="0.3221884498480243" />
-        <entry key="..\:/Users/liqur/Desktop/SSAFY2/pjt3/cafeList/S06P31D205/AOS/app/src/main/res/layout/fragment_theme.xml" value="0.5541666666666667" />
+        <entry key="..\:/Users/liqur/Desktop/SSAFY2/pjt3/cafeList/S06P31D205/AOS/app/src/main/res/layout/fragment_cafe.xml" value="0.25885416666666666" />
+        <entry key="..\:/Users/liqur/Desktop/SSAFY2/pjt3/cafeList/S06P31D205/AOS/app/src/main/res/layout/fragment_cafe_list.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/liqur/Desktop/SSAFY2/pjt3/cafeList/S06P31D205/AOS/app/src/main/res/layout/fragment_cafe_map.xml" value="0.25885416666666666" />
+        <entry key="..\:/Users/liqur/Desktop/SSAFY2/pjt3/cafeList/S06P31D205/AOS/app/src/main/res/layout/fragment_theme.xml" value="0.49354518371400197" />
         <entry key="..\:/Users/liqur/Desktop/SSAFY2/pjt3/kakaologin/S06P31D205/AOS/app/src/main/res/layout/activity_login.xml" value="0.31354166666666666" />
         <entry key="..\:/Users/liqur/Desktop/SSAFY2/pjt3/kakaologin/S06P31D205/AOS/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/liqur/Desktop/SSAFY2/pjt3/kakaologin/S06P31D205/AOS/app/src/main/res/layout/fragment_my_page.xml" value="0.31354166666666666" />

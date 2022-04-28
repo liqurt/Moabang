@@ -1,10 +1,13 @@
 package com.ssafy.moabang.config
 
 import android.app.Application
+import androidx.room.Room
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.kakao.sdk.common.KakaoSdk
 import com.ssafy.moabang.BuildConfig
+import com.ssafy.moabang.data.model.database.AppDatabase
+import com.ssafy.moabang.data.model.repository.Repository
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -26,6 +29,8 @@ class GlobalApplication : Application() {
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
 
+        Repository.initialize(this)
+
     }
 
     companion object {
@@ -37,5 +42,10 @@ class GlobalApplication : Application() {
 
         lateinit var gson: Gson
             private set
+
+        lateinit var db: AppDatabase
+            private set
+
+
     }
 }
