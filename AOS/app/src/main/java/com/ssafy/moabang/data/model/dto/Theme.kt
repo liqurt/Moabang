@@ -1,5 +1,9 @@
 package com.ssafy.moabang.data.model.dto
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Theme(
     val themeId: Int,
     val cafeName: String,
@@ -13,5 +17,6 @@ data class Theme(
     val genre: String,
     val rating: Double,
     var like: Boolean,
+    val active: String,
     val type: String
-)
+): Parcelable
