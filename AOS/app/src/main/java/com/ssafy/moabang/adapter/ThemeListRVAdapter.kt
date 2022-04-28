@@ -38,6 +38,12 @@ class ThemeListRVAdapter: RecyclerView.Adapter<ThemeListRVAdapter.ViewHolder>() 
             val tvPlayer = itemView.findViewById<TextView>(R.id.tv_themeL_player)
             val like = itemView.findViewById<ImageView>(R.id.iv_themeL_like)
 
+            if(item.like){
+                like.setImageResource(R.drawable.icon_like_after)
+            } else {
+                like.setImageResource(R.drawable.icon_like_before)
+            }
+
             like.setOnClickListener {
                 if(item.like){
                     item.like = false
