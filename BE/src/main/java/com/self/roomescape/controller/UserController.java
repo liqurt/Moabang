@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.self.roomescape.config.JwtTokenProvider;
 import com.self.roomescape.entity.User;
+import response.UserInfoResponse;
 //import com.self.roomescape.service.UserService;
 //import com.self.roomescape.auth.dto.SessionUser;
 
@@ -114,7 +115,6 @@ public class UserController {
         }
 
         Optional<User> isUser = userRepository.findByEmail((String) userInfo.get("email"));
-        User temp = new User();
         if (!isUser.isPresent()) { // 이메일 중복 확인.
 
 
@@ -127,7 +127,6 @@ public class UserController {
                     .email((String) userInfo.get("email"))
                     .build();
             userRepository.save(user);
-            temp = user;
         }
 
         // 로그인 처리(토큰 발급)
@@ -135,12 +134,14 @@ public class UserController {
         String jwtToken = jwtTokenProvider.createToken(String.valueOf((String) userInfo.get("email")), list);
         response.addHeader("Authorization", "Bearer " + jwtToken);
 
-//        String jwtToken = JWT.create()
-//                .withSubject("JwtToken")
-//                .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 10 * 6 * 10))
-//                .withClaim("email", (String) userInfo.get("email"))
-//                .sign(Algorithm.HMAC512(key));
-        return new ResponseEntity<>(temp, HttpStatus.OK);
+        User user = userRepository.findByEmail((String) userInfo.get("email")).get();
+
+        UserInfoResponse userInfoResponse = new UserInfoResponse();
+        userInfoResponse.setEmail(user.getEmail());
+        userInfoResponse.setUid(user.getUid());
+        userInfoResponse.setNickname(user.getNickname());
+        userInfoResponse.setP_img(user.getPimg());
+        return new ResponseEntity<>(userInfoResponse, HttpStatus.OK);
     }
 
 
