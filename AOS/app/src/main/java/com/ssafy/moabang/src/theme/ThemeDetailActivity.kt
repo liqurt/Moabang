@@ -77,7 +77,11 @@ class ThemeDetailActivity : AppCompatActivity() {
 
 
         binding.bsThemeDA.setOnClickListener {
-            behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            if(behavior.state == BottomSheetBehavior.STATE_COLLAPSED){
+                behavior.state = BottomSheetBehavior.STATE_EXPANDED
+            } else if(behavior.state == BottomSheetBehavior.STATE_EXPANDED) {
+                behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            }
         }
 
         binding.tvThemeDAHomepage.setOnClickListener {
@@ -98,7 +102,11 @@ class ThemeDetailActivity : AppCompatActivity() {
             setFragment(frag)
         }
         binding.tvThemeDAReview.setOnClickListener {
-            setFragment(ThemeReviewFragment())
+            val frag = ThemeReviewFragment()
+            var bundle = Bundle(1)
+            bundle.putDouble("rating", theme.rating)
+            frag.arguments = bundle
+            setFragment(frag)
         }
         binding.tvThemeDACompare.setOnClickListener {  }
         binding.tvThemeDAReserve.setOnClickListener {  }

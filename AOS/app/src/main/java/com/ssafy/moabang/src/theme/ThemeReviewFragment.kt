@@ -11,17 +11,20 @@ import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.ssafy.moabang.R
+import com.ssafy.moabang.data.model.dto.Theme
 import com.ssafy.moabang.databinding.FragmentThemeReviewBinding
 
 class ThemeReviewFragment : Fragment() {
     private lateinit var binding: FragmentThemeReviewBinding
     private lateinit var callback: OnBackPressedCallback
     private lateinit var themeDetailActivity: ThemeDetailActivity
+    private var rate: Double = 0.0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+//        rate = arguments?.getDouble("rating")
         binding = FragmentThemeReviewBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
@@ -54,6 +57,7 @@ class ThemeReviewFragment : Fragment() {
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
+        binding.ratingBarThemeRVF.rating = 3.8.toFloat()
     }
 
 }

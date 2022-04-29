@@ -41,20 +41,20 @@ class ThemeUrlFragment: Fragment() {
     private fun init() {
         callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (binding.themeUrlFWebview.canGoBack()) {
-                    binding.themeUrlFWebview.goBack()
-                } else {
-                    if (themeDetailActivity.behavior.state == BottomSheetBehavior.STATE_EXPANDED) {
+                if (themeDetailActivity.behavior.state == BottomSheetBehavior.STATE_EXPANDED) {
+                    if (binding.themeUrlFWebview.canGoBack()) {
+                        binding.themeUrlFWebview.goBack()
+                    } else {
                         themeDetailActivity.behavior.state = BottomSheetBehavior.STATE_COLLAPSED
-                    } else if (themeDetailActivity.behavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
-                        val fragmentManager = activity?.supportFragmentManager
-                        if (fragmentManager != null) {
-                            fragmentManager.beginTransaction().remove(this@ThemeUrlFragment)
-                                .commit()
-                            fragmentManager.popBackStack()
-                        }
-                        themeDetailActivity.finish()
                     }
+                } else if (themeDetailActivity.behavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
+                    val fragmentManager = activity?.supportFragmentManager
+                    if (fragmentManager != null) {
+                        fragmentManager.beginTransaction().remove(this@ThemeUrlFragment)
+                            .commit()
+                        fragmentManager.popBackStack()
+                    }
+                    themeDetailActivity.finish()
                 }
             }
         }
