@@ -22,7 +22,7 @@
 
     <RatingBar
         android:id="@+id/ratingBar_themeRVF"
-        style="?android:attr/ratingBarStyleIndicator"
+        style="@android:style/Widget.DeviceDefault.RatingBar.Indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -30,10 +30,10 @@
         android:max="5"
         android:numStars="5"
         android:progressTint="@color/moabang_pink"
-        android:rating="4.2"
-        android:stepSize="0.1"
-        app:layout_constraintStart_toEndOf="@+id/tv_themeRVF_title"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_themeRVF_title" />
+        android:rating="4.0"
+        android:stepSize="0.5"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_themeRVF_title"
+        app:layout_constraintStart_toEndOf="@+id/tv_themeRVF_title" />
 
     <TextView
         android:id="@+id/tv_themeRVF_rating"
