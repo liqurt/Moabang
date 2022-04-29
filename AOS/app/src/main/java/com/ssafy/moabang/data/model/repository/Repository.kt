@@ -4,8 +4,10 @@ import android.content.Context
 import android.util.Log
 import androidx.room.Room
 import androidx.room.withTransaction
+import com.ssafy.moabang.config.GlobalApplication
 import com.ssafy.moabang.data.model.database.AppDatabase
 import com.ssafy.moabang.data.model.dto.Cafe
+import com.ssafy.moabang.src.retrofitInterface.cafeService
 import java.lang.IllegalStateException
 
 const val DB_NAME = "moabang.db"
@@ -25,9 +27,9 @@ class Repository private constructor(context: Context) {
             cafeDao.getAllCafe()
         }
 
-    suspend fun getCafeBySidoGungu(sido: String, gungu: String): List<Cafe> =
+    suspend fun getCafeBySidoGungu(island: String, si: String): List<Cafe> =
         database.withTransaction {
-            cafeDao.getCafeBySidoGungu(sido, gungu)
+            cafeDao.getCafeByIslandSi(island, si)
         }
 
     suspend fun getCafeByName(name: String): List<Cafe> =
@@ -38,6 +40,11 @@ class Repository private constructor(context: Context) {
     suspend fun insertCafe(cafe: Cafe) =
         database.withTransaction {
             cafeDao.insertCafe(cafe)
+        }
+
+    suspend fun insertCafes(cafeList: List<Cafe>) =
+        database.withTransaction {
+            cafeDao.insertCafes(cafeList)
         }
 
     suspend fun clearAll() =

@@ -6,15 +6,14 @@ import androidx.room.PrimaryKey
 @Entity
 data class Cafe(
     @PrimaryKey var cid : Int,
-    var oid : Int,
-    var sido : String,
-    var gungu : String,
-    var name : String,
-    var url : String,
-    var time : String,
-    var img : String,
-    var latitude : Double,
-    var longitude : Double,
-    var location : String, // 도로명주소
-    var tel : String
+    var cname : String?,
+    var cphone : String?,
+    var url : String?,
+    var time : String?,
+    var img : String?,
+    var location : String?,
+    var lat : String?,
+    var lon : String?,
+    var island : String?, // 도(섬 도 島)
+    var si : String?, // 시
 )

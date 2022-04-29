@@ -18,19 +18,25 @@ class GlobalApplication : Application() {
 
         KakaoSdk.init(this, BuildConfig.native_app_key) // 카카오 세팅
 
-        val serverURL="http://114.129.238.28" // 승관의 집
-
         gson = GsonBuilder()
             .setLenient()
             .create()
+
+        retrofitInit()
+
+        Repository.initialize(this)
+
+    }
+
+    fun retrofitInit(){
+        // 승관홈 : http://114.129.238.28/
+        // 서-버 : http://k6d205.p.ssafy.io:8080/
+        val serverURL="http://k6d205.p.ssafy.io:8080/"
 
         retrofit = Retrofit.Builder()
             .baseUrl(serverURL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
-
-        Repository.initialize(this)
-
     }
 
     companion object {
@@ -42,10 +48,5 @@ class GlobalApplication : Application() {
 
         lateinit var gson: Gson
             private set
-
-        lateinit var db: AppDatabase
-            private set
-
-
     }
 }
