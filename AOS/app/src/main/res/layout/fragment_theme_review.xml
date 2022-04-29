@@ -20,26 +20,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <RatingBar
+    <com.iarcuschin.simpleratingbar.SimpleRatingBar
         android:id="@+id/ratingBar_themeRVF"
-        style="@android:style/Widget.DeviceDefault.RatingBar.Indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginBottom="4dp"
         android:isIndicator="true"
         android:max="5"
         android:numStars="5"
-        android:progressTint="@color/moabang_pink"
-        android:rating="4.0"
-        android:stepSize="0.5"
         app:layout_constraintBottom_toBottomOf="@+id/tv_themeRVF_title"
-        app:layout_constraintStart_toEndOf="@+id/tv_themeRVF_title" />
+        app:layout_constraintStart_toEndOf="@+id/tv_themeRVF_title"
+        app:srb_borderColor="@color/moabang_pink"
+        app:srb_fillColor="@color/moabang_pink"
+        app:srb_numberOfStars="5"
+        app:srb_rating="3"
+        app:srb_starSize="25dp"
+        app:srb_stepSize="0.5" />
 
     <TextView
         android:id="@+id/tv_themeRVF_rating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
+        android:layout_marginStart="10dp"
         android:text="4.1"
         android:textColor="@color/moabang_gray"
         android:textSize="18dp"
