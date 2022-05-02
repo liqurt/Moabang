@@ -108,7 +108,7 @@ class ThemeReserveFragment : Fragment() {
                     isEnabled = false
                     setChipBackgroundColorResource(R.color.moabang_gray)
                 } else {
-                    setChipBackgroundColorResource(R.color.moabang_lightPink)
+                    setChipBackgroundColorResource(R.color.moabang_pink)
                     cnt++
                 }
                 setTextAppearanceResource(R.style.ChipTextStyle)
