@@ -113,8 +113,12 @@ class ThemeDetailActivity : AppCompatActivity() {
             frag.arguments = bundle
             setFragment(frag)
         }
-        binding.tvThemeDACompare.setOnClickListener {  }
-        binding.tvThemeDAReserve.setOnClickListener {  }
+        binding.tvThemeDACompare.setOnClickListener {
+
+        }
+        binding.tvThemeDAReserve.setOnClickListener {
+            setFragment(ThemeReserveFragment())
+        }
     }
 
     private fun setFragment(fragment: Fragment) {
