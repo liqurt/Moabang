@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_rectangle_search"
         android:drawableEnd="@drawable/icon_search_mini"
+        android:imeOptions="actionSearch"
         android:ems="10"
         android:hint="카페 검색"
         android:inputType="textPersonName"
@@ -27,6 +28,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 
     <LinearLayout
         android:id="@+id/ll_cafeF"

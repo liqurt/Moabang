@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.ssafy.moabang.R
 import com.ssafy.moabang.data.model.dto.Cafe
 import com.ssafy.moabang.databinding.ListCafeItemBinding
 
@@ -32,7 +33,11 @@ class CafeListRVAdapter(private val cafeList: List<Cafe>) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bindInfo(cafe : Cafe) {
-            Glide.with(binding.root.context).load(cafe.img).centerCrop().into(binding.iv1)
+            Glide.with(binding.root.context)
+                .load(cafe.img)
+                .placeholder(R.drawable.door)
+                .centerCrop()
+                .into(binding.iv1)
             binding.tv1.text = cafe.cname
             binding.tv2.text = cafe.location
             binding.tv3.text = cafe.cphone
