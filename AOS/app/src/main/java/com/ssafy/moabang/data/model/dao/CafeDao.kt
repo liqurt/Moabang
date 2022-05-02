@@ -12,6 +12,9 @@ interface CafeDao {
     @Query("SELECT * FROM Cafe")
     fun getAllCafe() : List<Cafe>
 
+    @Query("SELECT * FROM Cafe WHERE island LIKE :island")
+    fun getCafeByIsland(island : String) : List<Cafe>
+
     @Query("SELECT * FROM Cafe WHERE island LIKE :island AND si LIKE :si")
     fun getCafeByIslandSi(island : String, si : String) : List<Cafe>
 

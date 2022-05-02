@@ -27,7 +27,12 @@ class Repository private constructor(context: Context) {
             cafeDao.getAllCafe()
         }
 
-    suspend fun getCafeBySidoGungu(island: String, si: String): List<Cafe> =
+    suspend fun getCafeByIsland(island: String): List<Cafe> =
+        database.withTransaction {
+            cafeDao.getCafeByIsland(island)
+        }
+
+    suspend fun getCafeByIslandSi(island: String, si: String): List<Cafe> =
         database.withTransaction {
             cafeDao.getCafeByIslandSi(island, si)
         }
