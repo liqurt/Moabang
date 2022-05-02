@@ -35,4 +35,21 @@ class CafeListFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        init()
+    }
+
+    /**
+     * moabang.db 에서 cafe table을 전부 cafeList에 담는다.
+     */
+    private fun init(){
+        CoroutineScope(Dispatchers.IO).launch {
+            cafeList = repository.getAllCafe()
+            cafeListAdapter = CafeListRVAdapter(cafeList)
+            binding.rvCafeF.adapter = cafeListAdapter
+            binding.rvCafeF.layoutManager = GridLayoutManager(context, 2)
+        }
+    }
+
 }

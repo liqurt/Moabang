@@ -35,7 +35,7 @@ class CafeListRVAdapter(private val cafeList: List<Cafe>) :
             Glide.with(binding.root.context).load(cafe.img).centerCrop().into(binding.iv1)
             binding.tv1.text = cafe.cname
             binding.tv2.text = cafe.location
-            binding.tv3.text = cafe.cid.toString()
+            binding.tv3.text = cafe.cphone
         }
     }
 
