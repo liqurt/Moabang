@@ -28,6 +28,8 @@ public class Theme {
     private String time;
     private String genre;
     private String type;
+    private String activity;
+    private String grade;
 
 
 }
