@@ -9,8 +9,11 @@ import android.view.ViewGroup
 import android.webkit.WebSettings
 import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.ssafy.moabang.R
+import com.ssafy.moabang.adapter.ReviewListRVAdapter
+import com.ssafy.moabang.data.model.dto.Review
 import com.ssafy.moabang.data.model.dto.Theme
 import com.ssafy.moabang.databinding.FragmentThemeReviewBinding
 
@@ -18,6 +21,7 @@ class ThemeReviewFragment : Fragment() {
     private lateinit var binding: FragmentThemeReviewBinding
     private lateinit var callback: OnBackPressedCallback
     private lateinit var themeDetailActivity: ThemeDetailActivity
+    private lateinit var reviewListRVAdapter: ReviewListRVAdapter
     private var rate: Double = 0.0
 
     override fun onCreateView(
@@ -40,6 +44,8 @@ class ThemeReviewFragment : Fragment() {
     }
 
     private fun init() {
+        initRVA()
+
         callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (themeDetailActivity.behavior.state == BottomSheetBehavior.STATE_EXPANDED) {
@@ -58,6 +64,23 @@ class ThemeReviewFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
         binding.ratingBarThemeRVF.rating = 3.8.toFloat()
+    }
+
+    private fun initRVA() {
+        reviewListRVAdapter = ReviewListRVAdapter()
+        binding.rvThemeRVF.apply {
+            layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+            adapter = reviewListRVAdapter
+        }
+
+        reviewListRVAdapter.data = listOf(
+            Review(1, 1, 1, "방탈굿", 4.3, 1, "63분", 2, 3, 1, 3, 3, "2022.05.01", "2022.05.02", "완전 재밌어요 다들 하세요~"),
+            Review(2, 2, 2, "뭐야이게", 1.3, 2, "75분", 1, 5, 2, 5, 5, "2022.05.01", "2022.05.01", "핵노잼임 절대 하지 마셈"),
+            Review(1, 1, 1, "방탈굿", 4.3, 1, "63분", 2, 3, 1, 3, 3, "2022.05.01", "2022.05.02", "완전 재밌어요 다들 하세요~"),
+            Review(2, 2, 2, "뭐야이게", 1.3, 2, "75분", 1, 5, 2, 5, 5, "2022.05.01", "2022.05.01", "핵노잼임 절대 하지 마셈"),
+            Review(1, 1, 1, "방탈굿", 4.3, 1, "63분", 2, 3, 1, 3, 3, "2022.05.01", "2022.05.02", "완전 재밌어요 다들 하세요~"),
+            Review(2, 2, 2, "뭐야이게", 1.3, 2, "75분", 1, 5, 2, 5, 5, "2022.05.01", "2022.05.01", "핵노잼임 절대 하지 마셈")
+        )
     }
 
 }

@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.iarcuschin.simpleratingbar.SimpleRatingBar
 import com.ssafy.moabang.R
 import com.ssafy.moabang.data.model.dto.Review
 import com.ssafy.moabang.databinding.ListReviewItemBinding
@@ -19,8 +20,8 @@ class ReviewListRVAdapter: RecyclerView.Adapter<ReviewListRVAdapter.ViewHolder>(
 
             val userInfo = itemView.findViewById<TextView>(R.id.tv_reviewL_info)
             var txt = item.player.toString() + "인, "
-            if(item.isSuccess == 1) txt.plus("탈출 성공")
-            else txt.plus("탈출 실패")
+            if(item.isSuccess == 1) txt += "탈출 성공"
+            else txt += "탈출 실패"
             userInfo.text = txt
 
             val active = itemView.findViewById<TextView>(R.id.tv_reviewL_active)
@@ -31,7 +32,7 @@ class ReviewListRVAdapter: RecyclerView.Adapter<ReviewListRVAdapter.ViewHolder>(
 
             itemView.findViewById<TextView>(R.id.tv_reviewL_name).text = item.userName
             itemView.findViewById<TextView>(R.id.tv_reviewL_date).text = item.regDate
-            itemView.findViewById<RatingBar>(R.id.ratingBar_reviewL).rating = item.rating.toFloat()
+            itemView.findViewById<SimpleRatingBar>(R.id.ratingBar_reviewL).rating = item.rating.toFloat()
             itemView.findViewById<TextView>(R.id.tv_reviewL_rating).text = item.rating.toString()
             itemView.findViewById<TextView>(R.id.tv_reviewL_diff).text = item.diff.toString()
             itemView.findViewById<TextView>(R.id.tv_reviewL_time).text = item.timeLeft
