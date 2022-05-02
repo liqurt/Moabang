@@ -28,7 +28,7 @@ class ThemeReviewFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-//        rate = arguments?.getDouble("rating")
+        rate = arguments?.getDouble("rating")!!
         binding = FragmentThemeReviewBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
@@ -44,6 +44,7 @@ class ThemeReviewFragment : Fragment() {
     }
 
     private fun init() {
+        initInfo()
         initRVA()
 
         callback = object : OnBackPressedCallback(true) {
@@ -62,11 +63,16 @@ class ThemeReviewFragment : Fragment() {
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
-
-        binding.ratingBarThemeRVF.rating = 3.8.toFloat()
     }
 
-    private fun initRVA() {
+    private fun initInfo() {
+        binding.ratingBarThemeRVF.rating = rate.toFloat()
+        binding.tvThemeRVFRating.text = rate.toString()
+
+        // TODO: 통계 정보로 세팅팅
+    }
+
+   private fun initRVA() {
         reviewListRVAdapter = ReviewListRVAdapter()
         binding.rvThemeRVF.apply {
             layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)

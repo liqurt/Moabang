@@ -43,7 +43,12 @@ class ThemeDetailActivity : AppCompatActivity() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {}
         })
 
-        setFragment(ThemeReviewFragment())
+        val frag = ThemeReviewFragment()
+        var bundle = Bundle(1)
+        bundle.putDouble("rating", theme.rating)
+        frag.arguments = bundle
+        setFragment(frag)
+
         setThemeInfo()
         setClickListener()
     }

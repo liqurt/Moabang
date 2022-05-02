@@ -18,6 +18,17 @@ class ReviewListRVAdapter: RecyclerView.Adapter<ReviewListRVAdapter.ViewHolder>(
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         fun bind(item: Review){
 
+            val revise = itemView.findViewById<TextView>(R.id.tv_reviewL_revise)
+            val delete = itemView.findViewById<TextView>(R.id.tv_reviewL_delete)
+
+            // TODO: 리뷰 작성자가 본인일때만 수정 삭제 버튼 보이게 함
+            revise.setOnClickListener {
+                // TODO
+            }
+            delete.setOnClickListener {
+                // TODO
+            }
+
             val userInfo = itemView.findViewById<TextView>(R.id.tv_reviewL_info)
             var txt = item.player.toString() + "인, "
             if(item.isSuccess == 1) txt += "탈출 성공"
@@ -49,16 +60,7 @@ class ReviewListRVAdapter: RecyclerView.Adapter<ReviewListRVAdapter.ViewHolder>(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int){
         holder.bind(data[position])
-        val revise = holder.itemView.findViewById<TextView>(R.id.tv_reviewL_revise)
-        val delete = holder.itemView.findViewById<TextView>(R.id.tv_reviewL_delete)
-
-        revise.setOnClickListener {
-            // TODO
-        }
-        delete.setOnClickListener {
-            // TODO
-        }
-    }
+            }
 
     override fun getItemCount(): Int {
         return data.size
