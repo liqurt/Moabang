@@ -22,13 +22,13 @@ class ThemeReviewFragment : Fragment() {
     private lateinit var callback: OnBackPressedCallback
     private lateinit var themeDetailActivity: ThemeDetailActivity
     private lateinit var reviewListRVAdapter: ReviewListRVAdapter
-    private var rate: Double = 0.0
+    private lateinit var theme: Theme
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        rate = arguments?.getDouble("rating")!!
+        theme = arguments?.getParcelable<Theme>("theme")!!
         binding = FragmentThemeReviewBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
@@ -66,8 +66,8 @@ class ThemeReviewFragment : Fragment() {
     }
 
     private fun initInfo() {
-        binding.ratingBarThemeRVF.rating = rate.toFloat()
-        binding.tvThemeRVFRating.text = rate.toString()
+        binding.ratingBarThemeRVF.rating = theme.rating.toFloat()
+        binding.tvThemeRVFRating.text = theme.rating.toString()
 
         // TODO: 통계 정보로 세팅팅
     }

@@ -109,7 +109,7 @@ class ThemeDetailActivity : AppCompatActivity() {
         binding.tvThemeDAReview.setOnClickListener {
             val frag = ThemeReviewFragment()
             var bundle = Bundle(1)
-            bundle.putDouble("rating", theme.rating)
+            bundle.putParcelable("theme", theme)
             frag.arguments = bundle
             setFragment(frag)
         }
