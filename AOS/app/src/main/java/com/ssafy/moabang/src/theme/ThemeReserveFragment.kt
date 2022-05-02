@@ -1,5 +1,6 @@
 package com.ssafy.moabang.src.theme
 
+import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,11 +13,14 @@ import com.google.android.material.chip.Chip
 import com.ssafy.moabang.R
 import com.ssafy.moabang.data.model.dto.ReservationTime
 import com.ssafy.moabang.databinding.FragmentThemeReserveBinding
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ThemeReserveFragment : Fragment() {
     private lateinit var binding: FragmentThemeReserveBinding
     private lateinit var callback: OnBackPressedCallback
     private lateinit var themeDetailActivity: ThemeDetailActivity
+    private lateinit var date: List<String>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +42,7 @@ class ThemeReserveFragment : Fragment() {
 
     private fun init() {
         initChip()
+        initDate()
 
         callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -55,6 +60,28 @@ class ThemeReserveFragment : Fragment() {
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+    }
+
+    private fun initDate(){
+        date = getToday("yyyy-MM-dd").split("-")
+        binding.tvThemeRSFDateSelected.text = getToday("yyyy-MM-dd")
+
+        binding.llThemeRSF.setOnClickListener {
+            val dialog = DatePickerDialog(requireContext(), R.style.MySpinnerDatePickerStyle, datePickerListener, date[0].toInt(), date[1].toInt()-1, date[2].toInt())
+            dialog.show()
+        }
+    }
+
+    private val datePickerListener =
+        DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+            val newDate = "$year-${monthOfYear + 1}-$dayOfMonth"
+            binding.tvThemeRSFDateSelected.text = newDate
+        }
+
+    private fun getToday(pattern: String): String {
+        val dt = Date(System.currentTimeMillis());
+        val sdf = SimpleDateFormat(pattern);
+        return sdf.format(dt);
     }
 
     private fun initChip(){
