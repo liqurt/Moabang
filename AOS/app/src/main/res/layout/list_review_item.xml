@@ -153,7 +153,7 @@
                     android:textColor="@color/moabang_gray" />
 
                 <TextView
-                    android:id="@+id/reviewL_success"
+                    android:id="@+id/reviewL_time"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -162,7 +162,7 @@
                     android:textColor="@color/moabang_pink" />
 
                 <TextView
-                    android:id="@+id/tv_reviewL_success"
+                    android:id="@+id/tv_reviewL_time"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -195,7 +195,7 @@
                     android:textColor="@color/moabang_gray" />
 
                 <TextView
-                    android:id="@+id/reviewL_time"
+                    android:id="@+id/reviewL_hint"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -204,7 +204,7 @@
                     android:textColor="@color/moabang_pink" />
 
                 <TextView
-                    android:id="@+id/tv_reviewL_time"
+                    android:id="@+id/tv_reviewL_hint"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
