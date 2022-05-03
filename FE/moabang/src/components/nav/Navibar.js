@@ -32,12 +32,12 @@ const Navibar = () => {
                     <Nav.Link href="#features">테마</Nav.Link>
                     <Nav.Link href="#pricing">카페</Nav.Link>
                     <Nav.Link href="#pricing">커뮤니티</Nav.Link>
+                    {getCookie('myToken') ?
+                        <Button variant="secondary" onClick={handleLogoutClick}>Logout</Button>
+                        :
+                        <Button hidden='true'></Button>
+                    }
                 </Nav>
-                {getCookie('myToken') ?
-                    <Button variant="secondary" onClick={handleLogoutClick}>Logout</Button>
-                    :
-                    <div></div>
-                }
             </Container>
         </Navbar>
     );
