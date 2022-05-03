@@ -1,6 +1,5 @@
 import React from 'react';
 import Slider from "react-slick";
-import logo from '../login/모아방 로고.png';
 import './Carousels.css'
 
 const Carousels = () => {
@@ -22,41 +21,41 @@ const Carousels = () => {
             </div>
             <Slider {...settings}>
                 <div className='picture'>
-                    <img src="https://lh5.googleusercontent.com/p/AF1QipMO2kd5--SwDQJETAo-wC9HV_gmeqcUIp-DC5mQ=w408-h271-k-no" />
+                    <img src="https://lh5.googleusercontent.com/p/AF1QipMO2kd5--SwDQJETAo-wC9HV_gmeqcUIp-DC5mQ=w408-h271-k-no" alt="img" />
 
                     <div>
                         <p>넥스트에디션 강남1호점</p>
                     </div>
                 </div>
                 <div className='picture'>
-                    <img src="https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=A5sHAKOEZMAeVtVEcHBRog&cb_client=search.gws-prod.gps&w=408&h=240&yaw=302.96442&pitch=0&thumbfov=100" />
+                    <img src="https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=A5sHAKOEZMAeVtVEcHBRog&cb_client=search.gws-prod.gps&w=408&h=240&yaw=302.96442&pitch=0&thumbfov=100" alt="img" />
                     <div>
                         <p>넥스트에디션 강남2호점</p>
                     </div>
                 </div>
                 <div className='picture'>
-                    <img src="https://lh5.googleusercontent.com/p/AF1QipNFWXk2oMevBu1ASRNaiWbK6q9xuGA4dLk3TVnY=w408-h306-k-no" />
+                    <img src="https://lh5.googleusercontent.com/p/AF1QipNFWXk2oMevBu1ASRNaiWbK6q9xuGA4dLk3TVnY=w408-h306-k-no" alt="img" />
 
                     <div>
                         <p>넥스트에디션 강남3호점</p>
                     </div>
                 </div>
                 <div className='picture'>
-                    <img src="https://lh5.googleusercontent.com/p/AF1QipO8YT-qovSJQ3lwus7_-8ErSao1Q3VR9L-3FirY=w408-h544-k-no" />
+                    <img src="https://lh5.googleusercontent.com/p/AF1QipO8YT-qovSJQ3lwus7_-8ErSao1Q3VR9L-3FirY=w408-h544-k-no" alt="img" />
 
                     <div>
                         <p>넥스트에디션 강남5호점</p>
                     </div>
                 </div>
                 <div className='picture'>
-                    <img src="https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=a5yegYj6L_kxDkvnSwE57A&cb_client=search.gws-prod.gps&w=408&h=240&yaw=31.844925&pitch=0&thumbfov=100" />
+                    <img src="https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=a5yegYj6L_kxDkvnSwE57A&cb_client=search.gws-prod.gps&w=408&h=240&yaw=31.844925&pitch=0&thumbfov=100" alt="img" />
 
                     <div>
                         <p>도어이스케이프 레드 신논현점</p>
                     </div>
                 </div>
                 <div className='picture'>
-                    <img src="https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=MS903sdl_s-CS8yvfptOMg&cb_client=search.gws-prod.gps&w=408&h=240&yaw=128.22763&pitch=0&thumbfov=100" />
+                    <img src="https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=MS903sdl_s-CS8yvfptOMg&cb_client=search.gws-prod.gps&w=408&h=240&yaw=128.22763&pitch=0&thumbfov=100" alt="img" />
 
                     <div>
                         <p>도어이스케이프 블루 신논현점</p>

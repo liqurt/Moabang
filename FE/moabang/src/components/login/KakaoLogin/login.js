@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { getCookie, setCookie } from '../../utils/Cookie';
 
 const { Kakao } = window;
 /* https://developers.kakao.com/docs/latest/ko/kakaologin/js*/
@@ -30,15 +29,15 @@ const LoginWithKakao = () => {
         }
       })
         .then((res) => {
-          console.log(res.headers.authorization);
-          setCookie('myToken', res.headers.authorization, {
-            path: "/",
-            secure: true,
-            sameSite: "none",
-            // httpOnly: true,        //httpOnly 옵션은 ie 브라우져를 쓰거나 .com 등으로 끝나는 일반적인 도메인에만 적용가능하다.
-          })
+          console.log(res);
+          console.log(res.data.nickname);
+          console.log(res.data.email);
+          console.log(res.data.p_img);
+          localStorage.setItem('myToken', res.headers.authorization)
+          localStorage.setItem('username', res.data.nickname)
+          localStorage.setItem('email', res.data.email)
+          localStorage.setItem('p_img', res.data.p_img)
           console.log("로그인 성공");
-          console.log("myToken : ", getCookie('myToken'));
           document.location.href = '/'
         })
         .catch((error) => {
