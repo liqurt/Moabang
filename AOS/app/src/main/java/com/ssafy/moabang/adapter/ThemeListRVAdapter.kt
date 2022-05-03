@@ -3,7 +3,6 @@ package com.ssafy.moabang.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -38,32 +37,32 @@ class ThemeListRVAdapter: RecyclerView.Adapter<ThemeListRVAdapter.ViewHolder>() 
             val tvPlayer = itemView.findViewById<TextView>(R.id.tv_themeL_player)
             val like = itemView.findViewById<ImageView>(R.id.iv_themeL_like)
 
-            if(item.like){
-                like.setImageResource(R.drawable.icon_like_after)
-            } else {
-                like.setImageResource(R.drawable.icon_like_before)
-            }
-
-            like.setOnClickListener {
-                if(item.like){
-                    item.like = false
-                    like.setImageResource(R.drawable.icon_like_before)
-                } else {
-                    item.like = true
-                    like.setImageResource(R.drawable.icon_like_after)
-                }
-            }
+//            if(item.like){
+//                like.setImageResource(R.drawable.icon_like_after)
+//            } else {
+//                like.setImageResource(R.drawable.icon_like_before)
+//            }
+//
+//            like.setOnClickListener {
+//                if(item.like){
+//                    item.like = false
+//                    like.setImageResource(R.drawable.icon_like_before)
+//                } else {
+//                    item.like = true
+//                    like.setImageResource(R.drawable.icon_like_after)
+//                }
+//            }
 
             Glide.with(themeImg).load(item.img).into(themeImg)
-            tvThemeName.text = item.name
-            tvCafeName.text = item.cafeName
+            tvThemeName.text = item.tname
+            tvCafeName.text = item.cname
             tvGenre.text = item.genre
             tvTime.text = item.time.toString() + "분"
-            tvRating.text = item.rating.toString()
+            tvRating.text = item.grade.toString()
             tvDiff.text = item.difficulty.toString()
             tvType.text = item.type
-            tvActive.text = item.active
-            tvPlayer.text = item.player + "명"
+            tvActive.text = item.activity
+            tvPlayer.text = item.rplayer + "명"
         }
     }
 
