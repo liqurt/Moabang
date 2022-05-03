@@ -1,6 +1,6 @@
 package com.ssafy.moabang.src.main.cafe
 
-import com.ssafy.moabang.R
+import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
@@ -8,9 +8,12 @@ import android.view.*
 import android.view.inputmethod.EditorInfo
 import android.widget.PopupMenu
 import android.widget.TextView
+import androidx.appcompat.view.menu.MenuBuilder
+import androidx.appcompat.view.menu.MenuPopupHelper
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import com.ssafy.moabang.R
 import com.ssafy.moabang.adapter.CafeListRVAdapter
 import com.ssafy.moabang.data.model.dto.Cafe
 import com.ssafy.moabang.data.model.repository.Repository
@@ -75,7 +78,7 @@ class CafeListFragment : Fragment(), DialogInterface.OnDismissListener,
 
     private fun search() {
         val queryString = binding.etCafeF.text.toString()
-        val job = CoroutineScope(Dispatchers.Main).launch {
+        CoroutineScope(Dispatchers.Main).launch {
             cafeList = repository.getCafeByName(queryString)
             binding.rvCafeF.adapter = CafeListRVAdapter(cafeList)
         }
@@ -93,6 +96,7 @@ class CafeListFragment : Fragment(), DialogInterface.OnDismissListener,
         inflater.inflate(R.menu.cafe_sort_menu, popup.menu)
         popup.setOnMenuItemClickListener(this)
         popup.show()
+
     }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
