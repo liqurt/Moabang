@@ -67,11 +67,11 @@ class ThemeFragment : Fragment() {
                     "내일 나는 목걸이를 전해줘야 한다!\n" +
                     "\n" +
                     "*편한 복장을 권장합니다.(치마 비추천)\n" +
-                    "-추천 인원은 3인 이상입니다.", 28000, 4, "2~4", 75, "판타지", 4.6, false, "보통", "복합"),
-            Theme(2, "솔버 2호점", "디어 마르시", imgUrl2, "밤하늘, 나를 향해 가장 푸르게 빛나는 저 별, 나는 그에게 \"에덴\" 이라는 이름을 붙여주었다.", 24000, 4, "2~4", 75, "감성", 4.1, true, "적음","자물쇠"),
-            Theme(1, "코드케이 홍대점", "꼬레아 우라", imgUrl, "설명설명", 28000, 4, "2~4", 75, "판타지", 4.6, false, "보통","복합"),
-            Theme(1, "코드케이 홍대점", "꼬레아 우라", imgUrl, "설명설명", 28000, 4, "2~4", 75, "판타지", 4.6, false, "보통","복합"),
-            Theme(1, "코드케이 홍대점", "꼬레아 우라", imgUrl, "설명설명", 28000, 4, "2~4", 75, "판타지", 4.6, false, "보통","복합"),
+                    "-추천 인원은 3인 이상입니다.", 4, "2~4", 75, "판타지", 4.6, false, "보통", "복합", "http://www.code-k.co.kr/sub/code_sub03.html?R_JIJEM=S3#"),
+            Theme(2, "솔버 2호점", "디어 마르시", imgUrl2, "밤하늘, 나를 향해 가장 푸르게 빛나는 저 별, 나는 그에게 \"에덴\" 이라는 이름을 붙여주었다.",  4, "2~4", 75, "감성", 4.1, true, "적음","자물쇠", "http://solver-gd.com/m/02.html#"),
+            Theme(1, "코드케이 홍대점", "꼬레아 우라", imgUrl, "설명설명",  4, "2~4", 75, "판타지", 4.6, false, "보통","복합", "http://www.code-k.co.kr/sub/code_sub03.html?R_JIJEM=S3#"),
+            Theme(1, "코드케이 홍대점", "꼬레아 우라", imgUrl, "설명설명",  4, "2~4", 75, "판타지", 4.6, false, "보통","복합", "http://www.code-k.co.kr/sub/code_sub03.html?R_JIJEM=S3#"),
+            Theme(1, "코드케이 홍대점", "꼬레아 우라", imgUrl, "설명설명",  4, "2~4", 75, "판타지", 4.6, false, "보통","복합", "http://www.code-k.co.kr/sub/code_sub03.html?R_JIJEM=S3#"),
         )
 
         themeListRVAdapter.itemClickListener = object : ThemeListRVAdapter.ItemClickListener {
