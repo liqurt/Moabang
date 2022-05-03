@@ -1,12 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Carousels from '../main/Carousels';
+import Popular_theme from '../main/Popular_theme';
+import { getCookie } from '../utils/Cookie';
+
 
 const mainpage = () => {
 
     return (
         <div>
-            LandingPage
-            <Link to="/login">로그인</Link>
+            <Carousels />
+            <Popular_theme />
         </div>
     );
 };

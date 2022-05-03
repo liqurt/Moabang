@@ -2,11 +2,6 @@ div {
     text-align: center;
 }
 
-/* .App-logo {
-    height: 40vmin;
-    pointer-events: none;
-  } */
-
 .login {
     background-color: #FFE2E2;
     min-height: 100vh;
@@ -17,6 +12,18 @@ div {
     font-size: calc(10px + 2vmin);
     color: #8785A2;
 }
+.logo{
+    margin-bottom: 5vh;
+}
   
+h2{
+    margin-top: 5vh;
+    margin-bottom: 10vh;
+}
+
+p{
+    margin-top: 1vh;
+    font-size: 2vh;
+}
   
   

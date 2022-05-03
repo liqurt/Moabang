@@ -4,18 +4,13 @@ import React from 'react';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import axios from "axios";
-import ReactDOM, { createRoot } from 'react-dom/client';
-import "@babel/polyfill";
+import { createRoot } from 'react-dom/client';
 
 
-axios.defaults.baseURL = "http://localhost:3000/";
-axios.defaults.withCredentials = true;
+axios.defaults.baseURL = "http://모아방.kr:8080";
+// axios.defaults.withCredentials = true;
+// axios.defaults.headers['Access-Control-Allow-Origin'] = '*';
 const root = createRoot(document.getElementById('root'));
-
-
-if (!window._babelPolyfill) {
-  require("@babel/polyfill");
-}
 
 root.render(
   <BrowserRouter>
