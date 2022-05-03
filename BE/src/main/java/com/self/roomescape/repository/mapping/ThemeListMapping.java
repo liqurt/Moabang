@@ -25,4 +25,10 @@ public interface ThemeListMapping {
     String getCname();
 
     String getCurl();
+
+    String getDifficulty();
+
+    String getGrade();
+
+    String getActivity();
 }

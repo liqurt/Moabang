@@ -11,6 +11,6 @@ public interface ThemeRepository extends JpaRepository<Theme, Long> { // ,c.url 
     List<Theme> findByCid(int cid);
 //    List<Theme> findAllBy();
 
-    @Query(value = "select t.tid as tid,t.cid as cid, t.tname as tname , t.img as img ,t.description as description,t.difficulty as difficulty,t.rplayer as rplayer, t.time as time, t.genre as genre, t.type as type,c.cname as cname,c.url as curl from  Theme t left join Cafe c on c.cid=t.cid")
+    @Query(value = "select t.tid as tid,t.cid as cid, t.tname as tname , t.img as img ,t.description as description,t.difficulty as difficulty,t.rplayer as rplayer, t.time as time, t.genre as genre, t.type as type,t.grade as grade,t.activity as activity,c.cname as cname,c.url as curl from  Theme t left join Cafe c on c.cid=t.cid")
     List<ThemeListMapping> findThemeAndCafe();
 }
