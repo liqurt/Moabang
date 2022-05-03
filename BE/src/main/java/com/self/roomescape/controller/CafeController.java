@@ -41,4 +41,11 @@ public class CafeController {
 
         return new ResponseEntity<>(themeAllList, HttpStatus.OK);
     }
+
+    @GetMapping("/theme/listtest")
+    public ResponseEntity<?> find2AllTheme() {
+        List<ThemeListMapping> themeAllList = themeRepository.findThemeAndCafe();
+
+        return new ResponseEntity<>(themeAllList, HttpStatus.OK);
+    }
 }
