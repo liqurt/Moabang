@@ -26,7 +26,7 @@ public interface ThemeListMapping {
 
     String getCurl();
 
-    String getDifficulty();
+    float getDifficulty();
 
     String getGrade();
 
