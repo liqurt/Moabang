@@ -14,6 +14,5 @@
         <!-- 선택한 날짜를 표시할 색상 -->
         <item name="colorControlActivated">@color/moabang_pink</item>
         <item name="colorControlHighlight">@color/moabang_pink</item>
-
     </style>
 </resources>
