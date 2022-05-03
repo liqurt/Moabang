@@ -7,3 +7,4 @@ else
 echo "> sudo kill -9 $CURRENT_PID"
 sudo kill -9 $CURRENT_PID
 sleep 10
+fi
