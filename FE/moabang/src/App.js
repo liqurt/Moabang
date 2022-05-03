@@ -1,28 +1,28 @@
-
 import {
   Routes,
-  Navigate,
-  Route,
+  Route
 } from 'react-router-dom';
 // import './App.css';
 import Login from './components/login/loginpage';
 import Home from './components/main/mainpage';
-import Navbar from './components/navbar';
+import Navbar from './components/nav/Navibar';
+import { getCookie } from './components/utils/Cookie';
 // import Error from './components/error/error';
 
 function App() {
-
   return (
     <div className="App">
-
       <Navbar />
       <Routes>
-        <Route path="/home" element={<Home />} />
-        <Route path="/" element={<Login />} />
+        {/* {getCookie('myToken') ?
+          <Route path="/home" element={<Home />} />
+          : 
+          <Route path="/" element={<Login />} />
+        } */}
+        {/* <Route path="/home" element={<Home />} /> */}
+        <Route path="/" element={getCookie('myToken') ? <Home /> : <Login />} />
         {/* <Route path="/*" element={<Error />} /> */}
       </Routes>
-
-
     </div>
   );
 }

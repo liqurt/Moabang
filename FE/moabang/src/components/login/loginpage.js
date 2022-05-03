@@ -9,7 +9,7 @@
 import React from 'react';
 import './loginpage.css'
 // import { GoogleLogin } from 'react-google-login';
-import KakaoLogin from "../KakaoLogin/KakaoLogin"
+import KakaoLogin from "./KakaoLogin/KakaoLogin"
 import axios from "axios";
 import logo from '../login/모아방 로고.png';
 import { Link } from 'react-router-dom';
@@ -68,7 +68,7 @@ const loginpage = () => {
 
     return (
         <div className='login'>
-            <img src={logo}></img>
+            <img className='logo' src={logo}></img>
             <h2>모아방</h2>
             <KakaoLogin />
             {/* <NaverLogin />
