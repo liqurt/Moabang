@@ -1,4 +1,4 @@
-package com.ssafy.moabang.data.model
+package com.ssafy.moabang.data.model.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -7,21 +7,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.moabang.data.model.dto.Theme
 import com.ssafy.moabang.data.model.repository.ThemeRepository
-import com.ssafy.moabang.data.model.response.ThemeListResponse
-import com.ssafy.moabang.util.Resource
-import com.ssafy.moabang.util.Status
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import retrofit2.Response
 
 class ThemeViewModel: ViewModel() {
-    val themeRepository = ThemeRepository()
-    private val ioScope = CoroutineScope(Dispatchers.IO)
-
-    private val _themeResponseStatus = MutableLiveData<Resource<*>>()
-    val themeResponseStatus: LiveData<Resource<*>>
-        get() = _themeResponseStatus
+    private val themeRepository = ThemeRepository()
 
     private val _themeListLiveData = MutableLiveData<List<Theme>>()
     val themeListLiveData : LiveData<List<Theme>>
@@ -34,16 +27,20 @@ class ThemeViewModel: ViewModel() {
         Log.d("VIEWMODEL TEST", "getAllTheme: $totalThemeList")
     }
 
-    suspend fun getTheme(jwtToken: String) = withContext(Dispatchers.IO) {
-        val result: Resource<ThemeListResponse> = themeRepository.getAllTheme(jwtToken)
-        _themeResponseStatus.postValue(result)
-        if(result.status == Status.SUCCESS){
-            result.data!!.dataSet!!.forEach {
-                if(!totalThemeList.contains(it)) {
-                    totalThemeList.add(it)
+    private suspend fun getTheme(jwtToken: String) = withContext(Dispatchers.IO) {
+        val result: Response<List<Theme>>? = themeRepository.getAllTheme(jwtToken)
+
+        if(result != null) {
+            if (result.isSuccessful) {
+                result.body()!!.forEach {
+                    if (!totalThemeList.contains(it)) {
+                        totalThemeList.add(it)
+                    }
                 }
             }
+            _themeListLiveData.postValue(totalThemeList)
+        } else {
+            Log.d("THEME VIEWMODEL TEST", "getTheme: response is null")
         }
-        _themeListLiveData.postValue(totalThemeList)
     }
 }
