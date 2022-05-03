@@ -13,10 +13,15 @@ import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
 import com.ssafy.moabang.databinding.ActivityLoginBinding
 import com.ssafy.moabang.src.main.MainActivity
-import androidx.activity.viewModels
 import com.ssafy.moabang.config.GlobalApplication
+import com.ssafy.moabang.data.model.dto.Cafe
+import com.ssafy.moabang.data.model.dto.User
+import com.ssafy.moabang.data.model.repository.Repository
+import com.ssafy.moabang.src.retrofitInterface.cafeService
 import com.ssafy.moabang.src.retrofitInterface.loginService
-import okhttp3.Headers
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -47,16 +52,13 @@ class LoginActivity : AppCompatActivity() {
         doIhaveKakaoToken()
     }
 
-    fun doIhaveKakaoToken(){
+    private fun doIhaveKakaoToken(){
         UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
             if (error != null) {
-                Log.e("AAAAA", "토큰 정보 보기 실패", error)
+                Log.e("AAAAA", "로그아웃 했음", error)
             }
             else if (tokenInfo != null) {
-                Log.i("AAAAA", "토큰 정보 보기 성공" +
-                        "\n회원번호: ${tokenInfo.id}" +
-                        "\n만료시간: ${tokenInfo.expiresIn} 초")
-                Log.i("AAAAA", "알잘딱 로그인")
+                Log.i("AAAAA", "자동 로그인")
                 kakaoLogin(null)
             }
         }
@@ -64,19 +66,13 @@ class LoginActivity : AppCompatActivity() {
 
     fun kakaoLogin(view : View?) {
         val context = this
-        // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
         if (UserApiClient.instance.isKakaoTalkLoginAvailable(context)) {
             UserApiClient.instance.loginWithKakaoTalk(context) { token, error ->
                 if (error != null) {
                     Log.e("AAAAA", "카카오톡으로 로그인 실패", error)
-
-                    // 사용자가 카카오톡 설치 후 디바이스 권한 요청 화면에서 로그인을 취소한 경우,
-                    // 의도적인 로그인 취소로 보고 카카오계정으로 로그인 시도 없이 로그인 취소로 처리 (예: 뒤로 가기)
                     if (error is ClientError && error.reason == ClientErrorCause.Cancelled) {
                         return@loginWithKakaoTalk
                     }
-
-                    // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인 시도
                     UserApiClient.instance.loginWithKakaoAccount(context, callback = callback)
                 } else if (token != null) {
                     sendTokenToBackend(token)
@@ -90,33 +86,57 @@ class LoginActivity : AppCompatActivity() {
     /**
      * 카카오톡 로그인 성공 후 토큰을 서버에 전송한다.
      */
-    fun sendTokenToBackend(token: OAuthToken) {
-        Log.d("AAAAA","sendTokenToBackend")
+    private fun sendTokenToBackend(token: OAuthToken) {
         val loginService = GlobalApplication.retrofit.create(loginService::class.java)
-        loginService.login(token.accessToken).enqueue(object : Callback<Boolean>{
-            override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
-                if(response.isSuccessful){
-                    val moabangToken = response.headers()
-                    saveOurTokenToSharedPrefs(moabangToken)
-                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+        loginService.login(token.accessToken).enqueue(object : Callback<User>{
+            override fun onResponse(call: Call<User>, response: Response<User>) {
+                if(response.isSuccessful){ // 로그인에 성공했다면
+                    val jwtToken = response.headers()["Authorization"]
+                    if (jwtToken != null) {
+                        saveOurTokenToSharedPrefs(jwtToken)
+                    }
+                    getCafesFromServer(jwtToken.toString())// 2. 서버에서 전체 카페 데이터를 가져오고, 이를 로컬 DB에 저장한다.
+                    val intent = Intent(this@LoginActivity, MainActivity::class.java) // 3. MainActivity로 전환한다.
                     startActivity(intent)
                 }else{
-                    Log.e("AAAAA","네트워킹 성공, 하지만 원하는 결과가 아님. ${response.errorBody()}")
+                    Log.e("AAAAA","네트워킹 성공1, 하지만 원하는 결과가 아님. ${response.errorBody()}")
                     Toast.makeText(this@LoginActivity, "네트워크 성공했지만 에러발생 : ${response.errorBody()}", Toast.LENGTH_SHORT).show()
                 }
             }
-
-            override fun onFailure(call: Call<Boolean>, t: Throwable) {
-                Toast.makeText(this@LoginActivity, "네트워크 오류 : ${t.message}", Toast.LENGTH_SHORT).show()
+            override fun onFailure(call: Call<User>, t: Throwable) {
+                Log.d("AAAAA","네트워크 오류1 : ${t.message}")
+                Toast.makeText(this@LoginActivity, "네트워크 오류1 : ${t.message}", Toast.LENGTH_SHORT).show()
             }
-
         })
     }
 
-    fun saveOurTokenToSharedPrefs(moabangToken: Headers) {
+    fun saveOurTokenToSharedPrefs(jwtToken: String) {
         val sp = getSharedPreferences("moabang", MODE_PRIVATE)
         val editor  : SharedPreferences.Editor = sp.edit()
-        editor.putString("moabangToken",moabangToken["Authorization"])
+        editor.putString("moabangToken",jwtToken)
         editor.apply()
     }
+
+    fun getCafesFromServer(jwtToken: String) {
+        Log.d("AAAAA","getCafesAndMoveIntoLocalDB param : $jwtToken")
+        val cafeService = GlobalApplication.retrofit.create(cafeService::class.java)
+        cafeService.getAllCafe(jwtToken).enqueue(object : Callback<List<Cafe>>{
+            override fun onResponse(call: Call<List<Cafe>>, response: Response<List<Cafe>>) {
+                if(response.isSuccessful){
+                    val data : List<Cafe> = response.body()!!
+                    CoroutineScope(Dispatchers.IO).launch {
+                        Repository.get().insertCafes(data)
+                    }
+                }else{
+                    Log.e("AAAAA","실패!")
+                }
+            }
+
+            override fun onFailure(call: Call<List<Cafe>>, t: Throwable) {
+                Log.d("AAAAA","네트워크 오류2 : ${t.message}")
+                Toast.makeText(this@LoginActivity, "네트워크 오류2 : ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
 }
