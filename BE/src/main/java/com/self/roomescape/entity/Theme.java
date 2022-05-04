@@ -14,6 +14,7 @@ import javax.persistence.*;
 public class Theme {
 
     @Id
+    @Column(name = "tid")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int tid;
 

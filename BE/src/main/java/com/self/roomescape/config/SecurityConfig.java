@@ -43,6 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 // permitAll() 처리한 경로의 API는 JWT 값이 없어도 실행 가능
                 .antMatchers("/cafe/**").permitAll()
+                .antMatchers("/theme/**").permitAll()
                 .antMatchers("/user/**").permitAll()
                 .anyRequest().hasRole("USER")
                 .and()
