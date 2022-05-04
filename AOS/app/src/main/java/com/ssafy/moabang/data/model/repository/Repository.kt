@@ -7,6 +7,7 @@ import androidx.room.withTransaction
 import com.ssafy.moabang.config.GlobalApplication
 import com.ssafy.moabang.data.model.database.AppDatabase
 import com.ssafy.moabang.data.model.dto.Cafe
+import com.ssafy.moabang.data.model.dto.Theme
 import com.ssafy.moabang.src.retrofitInterface.cafeService
 import java.lang.IllegalStateException
 
@@ -21,6 +22,7 @@ class Repository private constructor(context: Context) {
     ).build()
 
     private val cafeDao = database.cafeDao()
+    private val themeDao = database.themeDao()
 
     suspend fun getAllCafe(): List<Cafe> =
         database.withTransaction {
@@ -55,6 +57,16 @@ class Repository private constructor(context: Context) {
     suspend fun clearAll() =
         database.withTransaction {
             cafeDao.clearAll()
+        }
+
+    suspend fun getAllTheme(): List<Theme> =
+        database.withTransaction {
+            themeDao.getAllTheme()
+        }
+
+    suspend fun insertThemes(themeList: List<Theme>) =
+        database.withTransaction {
+            themeDao.insertThemes(themeList)
         }
 
     companion object {
