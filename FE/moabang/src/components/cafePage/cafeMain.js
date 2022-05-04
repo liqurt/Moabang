@@ -9,12 +9,12 @@ import "./CafeCSS/Cafe.css"
 const CafeMain = () => {
     //카페 리스트를 url로 가져옴
     const [cafeData, setCafeData] = useState([]); //DB에서 받아온 데이터 저장
-    const [cafeCount, setCageCount] = useState(45); //cafe 총 개수
+    const [cafeCount, setCafeCount] = useState(45); //cafe 총 개수
     async function getCafeData() {
-        axios.get('http://114.129.238.28/cafe/list')
+        axios.get('http://k6d205.p.ssafy.io:8080/cafe/list')
             .then(response => {
                 setCafeData(response.data);
-                setCageCount(response.data.length);
+                setCafeCount(response.data.length);
                 console.log(response);
                 
 

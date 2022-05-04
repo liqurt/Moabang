@@ -1,9 +1,8 @@
+
 .modal {
     display: none;
-    position: fixed;/*모달창 고정*/
     width: 100%;
     height: 100%;
-    overflow: auto; /*자동 스크롤*/
     top: 0;
     right: 0;
     bottom: 0;
@@ -26,8 +25,24 @@
     background-color: #faecec;
     /* 팝업이 열릴때 스르륵 열리는 효과 */
     animation: modal-show 0.3s;
-    overflow: hidden;
+    
+    overflow-y:  auto; /*자동 스크롤*/
 }
+.modal > section::-webkit-scrollbar {
+    width: 8px;  /* 스크롤바의 너비 */
+}
+
+.modal > section::-webkit-scrollbar-thumb {
+    height: 30%; /* 스크롤바의 길이 */
+    background: #fda8e8; /* 스크롤바의 색상 */
+    
+    border-radius: 10px;
+}
+
+.modal > section::-webkit-scrollbar-track {
+    background: #faecec;  /*스크롤바 뒷 배경 색상*/
+}
+
 .modal > section > header {
     width: 100%;
     float: left;
@@ -55,6 +70,7 @@
     align-items: center;
     width: 100%;
     height: 100%;
+    
     /* 팝업이 열릴때 스르륵 열리는 효과 */
     animation: modal-bg-show 0.3s;
 }

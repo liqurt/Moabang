@@ -1,0 +1,55 @@
+.toggle-container{
+    width: 800px;
+    height: auto;
+    background-color: aqua;
+}
+#ReviewWriteTitle{
+}
+
+#ReviewJoinNum{
+    
+}
+#ReviewIsCleared{
+    
+}
+#ReviewStar{
+    
+}
+#ReviewClearTime{
+    
+}
+#ReviewActive{
+    
+}
+#ReviewHint{
+    
+}
+#ReviewRecommendNum{
+    
+}
+
+
+
+#input1 {
+    width: 300px;
+    background-color: aqua;
+    outline: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+#input2 {
+    width: 25px;
+    background-color: aqua;
+    outline: none;
+    text-align: center;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+
+#reviewImg{
+    height: 60px;
+    width: 60px;
+}

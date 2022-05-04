@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import Modal from './Modal';
+import ModalMain from './Modal/ModalMain';
 import CafeDetail from './CafeDatail';
 
 import "./CafeCSS/Cafe.css"
@@ -12,9 +12,11 @@ const CafeList = (props) => {
     const [modalData, setModalData] = useState(null);
 
     const openModal = () => {
+        document.body.style.overflow = "hidden";
         setModalOpen(true);
     };
     const closeModal = () => {
+        document.body.style.overflow = "unset";
         setModalOpen(false);
     };
 
@@ -31,15 +33,15 @@ const CafeList = (props) => {
                     <div className='cafeInfo'>
                         <div id='cafeName' >{item.cname}</div>
                         <div id='cafeAdd'>{item.location}</div>
-                        <div id='cafeNumber'>{item.cphone}</div><br></br>
+                        <div id='cafeNumber'>{item.cphone}</div>
                     </div>
                     
                 </div>
             ))}
 
-            <Modal open={modalOpen} close={closeModal} header="Modal heading">
+            <ModalMain open={modalOpen} close={closeModal} header="Modal heading">
                 <CafeDetail cafe={modalData} />
-            </Modal>
+            </ModalMain>
             
             
             

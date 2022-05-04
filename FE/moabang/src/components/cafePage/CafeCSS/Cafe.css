@@ -33,24 +33,31 @@
 
 .cafeImg{
     border-radius: 15px;
-    margin-top: 5px;
+    margin-top: 15px;
     width: 90%;
     height: 70%;
 }
 .cafeInfo{
+    position: relative;
     height: 25%;
 }
 #cafeName{
     font-size: 25px;
     font-family:'Lucida Grande';
-    float: none;
     margin-left: 20px;
+    position: relative;
+    left: 0;
 }
 #cafeAdd{
-    
+    position: absolute;
+    left: 10px;
+    bottom: 0px;
+    width: 50%;
 }
 #cafeNumber{
-
+    position: absolute;
+    right: 10px;
+    bottom: 0px;
 }
 .button4 {
     background-color: white;
