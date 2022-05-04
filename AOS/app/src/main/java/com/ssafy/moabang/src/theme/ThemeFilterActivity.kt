@@ -50,11 +50,7 @@ class ThemeFilterActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
                 isCheckedIconVisible = true
                 setCheckedIconTintResource(R.color.moabang_pink)
                 setChipBackgroundColorResource(R.color.white)
-                setChipStrokeColorResource(R.color.moabang_pink)
-                setChipStrokeWidthResource(R.dimen.chipStrokeSize)
                 setTextAppearanceResource(R.style.ChipTextStyle2)
-                chipCornerRadius = 1F
-                chipMinHeight = 100F
             })
         }
     }
