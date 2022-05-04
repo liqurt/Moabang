@@ -41,14 +41,18 @@ public class ThemeController {
     public ResponseEntity<?> findList(@PathVariable int themeid, HttpServletRequest request) {
         String token = jwtTokenProvider.resolveToken(request);
         String useremail = jwtTokenProvider.getUserPk(token);
-
-
-        UserLike userLike = UserLike.builder()
-                .theme(themeRepository.findThemesByTid(themeid))
-                .user(userRepository.findUserByEmail(useremail))
-                .build();
-        userLikeRepository.save(userLike);
-        return new ResponseEntity<>("success", HttpStatus.OK);
+        User user = userRepository.findUserByEmail(useremail);
+        Theme theme = themeRepository.findThemesByTid(themeid);
+        if(user!=null && theme!=null) {
+            UserLike userLike = UserLike.builder()
+                    .theme(theme)
+                    .user(user)
+                    .build();
+            userLikeRepository.save(userLike);
+            return new ResponseEntity<>("success", HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>("fail", HttpStatus.OK);
+        }
     }
 
 
