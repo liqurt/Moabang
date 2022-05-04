@@ -74,10 +74,10 @@ class CafeDetailFragment(var cafe: Cafe) : Fragment() {
                         layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
                         themeListRVAdapter.itemClickListener = object : ThemeListRVAdapter.ItemClickListener {
                             override fun onClick(item: Theme) {
-//                                  GET:/cafe/theme/{cid} 에서 받아오는 테마와 (cname있음!)
-//                                  GET:/cafe/theme/list 에서 받아오는 테마가 다르다!(cname없음!)
-//                                  해결법 1 : 백엔드에 문의 해서 받아오는 테마 양식을 통일 (요청했고, 대기증)
-//                                  해결법 2 : 안드로이드에서 필요한 데이터는 cafe.blahblahblah로 갖고오기(테마쪽 코드랑 충돌 가능성 있음) -> 지금 하고있어요!
+                                item.apply {
+                                    cname = cafe.cname.toString()
+                                    curl = cafe.url.toString()
+                                }
                                 val intent = Intent(
                                     requireActivity(),
                                     ThemeDetailActivity::class.java
