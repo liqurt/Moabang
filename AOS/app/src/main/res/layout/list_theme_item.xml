@@ -20,12 +20,14 @@
 
     <TextView
         android:id="@+id/tv_themeL_theme_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="4dp"
         android:text="테마 이름"
         android:textColor="@color/moabang_gray"
         android:textSize="20dp"
+        app:layout_constraintEnd_toStartOf="@+id/iv_themeL_like"
         app:layout_constraintStart_toEndOf="@+id/iv_themeL_img"
         app:layout_constraintTop_toTopOf="parent" />
 
