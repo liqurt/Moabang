@@ -12,6 +12,7 @@ import com.self.roomescape.repository.UserRepository;
 import com.self.roomescape.repository.mapping.ThemeListMapping;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,21 +38,28 @@ public class ThemeController {
     private UserLikeRepository userLikeRepository;
 
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "JWT Token", required = true, dataType = "string", paramType = "header")})
+    @ApiOperation(value = "테마 좋아요", notes = "좋아요 , 좋아요 취소 둘다 가능~")
     @GetMapping("/{themeid}/like")
     public ResponseEntity<?> findList(@PathVariable int themeid, HttpServletRequest request) {
         String token = jwtTokenProvider.resolveToken(request);
         String useremail = jwtTokenProvider.getUserPk(token);
         User user = userRepository.findUserByEmail(useremail);
         Theme theme = themeRepository.findThemesByTid(themeid);
-        if(user!=null && theme!=null) {
-            UserLike userLike = UserLike.builder()
-                    .theme(theme)
-                    .user(user)
-                    .build();
-            userLikeRepository.save(userLike);
-            return new ResponseEntity<>("success", HttpStatus.OK);
-        }else{
-            return new ResponseEntity<>("fail", HttpStatus.OK);
+        Optional<UserLike> userLike = userLikeRepository.findUserLikeByUserAndTheme(user,theme);
+        if(userLike.isPresent()){
+            userLikeRepository.delete(userLike.get());
+            return new ResponseEntity<>("좋아요 취소 success", HttpStatus.OK);
+        }else {
+            if (user != null && theme != null) {
+                UserLike addUserLike = UserLike.builder()
+                        .theme(theme)
+                        .user(user)
+                        .build();
+                userLikeRepository.save(addUserLike);
+                return new ResponseEntity<>("좋아요 success", HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("fail", HttpStatus.OK);
+            }
         }
     }
 

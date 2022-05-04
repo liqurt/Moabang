@@ -3,6 +3,7 @@ package com.self.roomescape.controller;
 import com.self.roomescape.entity.*;
 import com.self.roomescape.repository.*;
 import com.self.roomescape.repository.mapping.ThemeListMapping;
+
 import io.jsonwebtoken.Jwts;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import response.ThemeDetailResDTO;
 import response.ThemeDetailResponse;
+
 import response.ThemeListResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,8 +35,10 @@ public class CafeController {
     private UserRepository userRepository;
     @Autowired
     private UserLikeRepository userLikeRepository;
+
     @Value("${spring.jwt.secret}")
     private String secretKey;
+
 
 
     @ApiOperation(value = "카페 전체 목록", notes = "카페 전체 목록을 반환.")
@@ -72,7 +77,7 @@ public class CafeController {
 
             // logic 1. 얻은 uid를 통해서 like 테이블에 좋아요한 tid가 있는지 확인.
             Optional<List<UserLike>> likeList = userLikeRepository.findUserLikeByUser(user.get());
-
+//            System.out.println(likeList);
             if (likeList.isPresent()) {
                 // 2. tid가 있다면 받아온 themeInfo에 isLike에 배열로 비교하면서 같다면 true 아니면 false를 집어넣는다..
                 for (int i = 0; i < themeAllList.size(); i++) {
@@ -95,16 +100,17 @@ public class CafeController {
                     temp.setTname(themeAllList.get(i).getTname());
 
                     for (int j = 0; j < likeList.get().size(); j++) {
-                        System.out.println("test : "+likeList.get().get(j).getTheme());
                         if (themeAllList.get(i).getTid() == likeList.get().get(j).getTheme().getTid()){
                             temp.setIslike(true);
+                            themeListResponses.add(temp);
                             ;// true 정보 넣기
                         } else {
                             temp.setIslike(false);
+                            themeListResponses.add(temp);
                             ;// false 정보 넣기
                         }
                     }
-                    themeListResponses.add(temp);
+
                 }
             }
             return new ResponseEntity<>(themeListResponses, HttpStatus.OK);
@@ -126,8 +132,29 @@ public class CafeController {
         if (!themeInfo.isPresent()) {
             return new ResponseEntity<>("tid : " + tid + "에 해당되는 정보가 없음", HttpStatus.OK);
         }
+        ThemeDetailResDTO themeDetailResDTO = ThemeDetailResDTO.builder()
+                        .Tid(themeInfo.get().getTid())
+                        .Cid(themeInfo.get().getCid())
+                        .Tname(themeInfo.get().getTname())
+                        .Img(themeInfo.get().getImg())
+                        .Description(themeInfo.get().getDescription())
+                        .Rplayer(themeInfo.get().getRplayer())
+                        .Time(themeInfo.get().getTime())
+                        .Genre(themeInfo.get().getGenre())
+                        .Type(themeInfo.get().getType())
+                        .Difficulty(themeInfo.get().getDifficulty())
+                        .Grade(themeInfo.get().getGrade())
+                        .Activity(themeInfo.get().getActivity())
+                        .Difficulty(themeInfo.get().getDifficulty())
+                        .Difficulty(themeInfo.get().getDifficulty())
+                        .Difficulty(themeInfo.get().getDifficulty())
+                        .Cname(cafeRepository.findCafeByCid(themeInfo.get().getCid()).getCname())
+                        .Curl(cafeRepository.findCafeByCid(themeInfo.get().getCid()).getUrl())
+                        .Island(cafeRepository.findCafeByCid(themeInfo.get().getCid()).getIsland())
+                        .Si(cafeRepository.findCafeByCid(themeInfo.get().getCid()).getSi())
+                        .build();
 
-        themeDetailResponse.setTheme(themeInfo.get());
+        themeDetailResponse.setThemeDetailResDTO(themeDetailResDTO);
 
         Optional<List<Review>> rlist = reviewRepository.findByTid(tid);
 
@@ -144,4 +171,6 @@ public class CafeController {
     public String getUserPk(String token) {
         return Jwts.parser().setSigningKey(secretKey.getBytes()).parseClaimsJws(token).getBody().getSubject();
     }
+
+
 }

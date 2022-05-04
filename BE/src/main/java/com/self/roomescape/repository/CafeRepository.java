@@ -12,6 +12,7 @@ import java.util.Optional;
 @Repository
 public interface CafeRepository extends JpaRepository<Cafe, Long> {
     List<Cafe> findAll();
+    Cafe findCafeByCid(int cid);
 
 
 }
