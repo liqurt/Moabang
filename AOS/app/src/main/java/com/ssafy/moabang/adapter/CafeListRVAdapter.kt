@@ -8,7 +8,7 @@ import com.ssafy.moabang.R
 import com.ssafy.moabang.data.model.dto.Cafe
 import com.ssafy.moabang.databinding.ListCafeItemBinding
 
-class CafeListRVAdapter(private val cafeList: List<Cafe>) :
+class CafeListRVAdapter(var cafeList: List<Cafe>) :
     RecyclerView.Adapter<CafeListRVAdapter.CafeViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -41,11 +41,15 @@ class CafeListRVAdapter(private val cafeList: List<Cafe>) :
             binding.tv1.text = cafe.cname
             binding.tv2.text = cafe.location
             binding.tv3.text = cafe.cphone
+
+            itemView.setOnClickListener {
+                listener.onClick(cafe)
+            }
         }
     }
 
     interface CafeItemClickListener {
-        fun onClick(cafe: Cafe, position: Int)
+        fun onClick(cafe: Cafe)
     }
 
     lateinit var listener: CafeItemClickListener
