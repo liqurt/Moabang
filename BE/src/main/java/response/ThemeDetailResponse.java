@@ -12,6 +12,6 @@ import java.util.List;
 @Setter
 @ToString
 public class ThemeDetailResponse {
-    private Theme theme;
+    private ThemeDetailResDTO themeDetailResDTO;
     private List<Review> reviewList;
 }
