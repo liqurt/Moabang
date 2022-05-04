@@ -14,12 +14,8 @@ function App() {
     <div className="App">
       <Navbar />
       <Routes>
-        {/* {getCookie('myToken') ?
-          <Route path="/home" element={<Home />} />
-          : 
-          <Route path="/" element={<Login />} />
-        } */}
-        {/* <Route path="/home" element={<Home />} /> */}
+
+        <Route path="/home" element={<Home />} />
         <Route path="/" element={getCookie('myToken') ? <Home /> : <Login />} />
         {/* <Route path="/*" element={<Error />} /> */}
       </Routes>

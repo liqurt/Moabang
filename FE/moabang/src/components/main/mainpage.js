@@ -1,7 +1,6 @@
 import React from 'react';
-import Carousels from '../main/Carousels';
-import Popular_theme from '../main/Popular_theme';
-import { getCookie } from '../utils/Cookie';
+import Carousels from '../main/Contents/Carousels';
+import PopularTheme from '../main/Contents/Popular_theme';
 
 
 const mainpage = () => {
@@ -9,7 +8,7 @@ const mainpage = () => {
     return (
         <div>
             <Carousels />
-            <Popular_theme />
+            <PopularTheme />
         </div>
     );
 };

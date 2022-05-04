@@ -5,18 +5,18 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Theme(
-    val themeId: Int,
-    val cafeName: String,
-    val name: String,
-    val img: String,
-    val description: String,
-    val difficulty: Int,
-    val player: String,
-    val time: Int,
-    val genre: String,
-    val rating: Double,
-    var like: Boolean,
-    val active: String,
+    val time: String,
     val type: String,
-    val url: String
+    val description: String?,
+    val tid: Int,
+    val difficulty: Int,
+    val tname: String,
+    val rplayer: String,
+    val genre: String,
+    val grade: Double,
+    val activity: String,
+    val cid: Int,
+    val cname: String,
+    val img: String,
+    val curl: String
 ): Parcelable

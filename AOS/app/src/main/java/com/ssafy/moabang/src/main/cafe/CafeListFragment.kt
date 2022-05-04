@@ -1,6 +1,5 @@
 package com.ssafy.moabang.src.main.cafe
 
-import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
@@ -8,8 +7,6 @@ import android.view.*
 import android.view.inputmethod.EditorInfo
 import android.widget.PopupMenu
 import android.widget.TextView
-import androidx.appcompat.view.menu.MenuBuilder
-import androidx.appcompat.view.menu.MenuPopupHelper
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -30,6 +27,7 @@ class CafeListFragment : Fragment(), DialogInterface.OnDismissListener,
     private lateinit var binding: FragmentCafeListBinding
     private val vm: CafeListViewModel by viewModels()
     private lateinit var cafeList: List<Cafe>
+    private var cafeListRVAdapter : CafeListRVAdapter = CafeListRVAdapter(listOf())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +48,7 @@ class CafeListFragment : Fragment(), DialogInterface.OnDismissListener,
     }
 
     private fun init() {
+
         // 핸드폰 키보드의 Search 버튼을 누르거나, 그냥 컴퓨터로 엔터쳤을때
         binding.etCafeF.setOnEditorActionListener(object : TextView.OnEditorActionListener {
             override fun onEditorAction(p0: TextView?, p1: Int, p2: KeyEvent?): Boolean {
@@ -69,10 +68,14 @@ class CafeListFragment : Fragment(), DialogInterface.OnDismissListener,
 
         // moabang.db 에서 cafe table을 전부 cafeList에 담는다.
         CoroutineScope(Dispatchers.Main).launch {
-            cafeList = repository.getAllCafe()
-            binding.rvCafeF.adapter = CafeListRVAdapter(cafeList)
-            binding.rvCafeF.layoutManager = GridLayoutManager(context, 2)
+            val job = CoroutineScope(Dispatchers.Main).async {
+                cafeList = repository.getAllCafe()
+                updateCafeList(cafeList)
+                binding.rvCafeF.layoutManager = GridLayoutManager(context, 2)
+            }
+            job.await()
         }
+
     }
 
 
@@ -80,7 +83,7 @@ class CafeListFragment : Fragment(), DialogInterface.OnDismissListener,
         val queryString = binding.etCafeF.text.toString()
         CoroutineScope(Dispatchers.Main).launch {
             cafeList = repository.getCafeByName(queryString)
-            binding.rvCafeF.adapter = CafeListRVAdapter(cafeList)
+            updateCafeList(cafeList)
         }
     }
 
@@ -103,12 +106,12 @@ class CafeListFragment : Fragment(), DialogInterface.OnDismissListener,
         return when (item.itemId) {
             R.id.sort_by_name_ascending -> {
                 cafeList = cafeList.sortedBy { it.cname }
-                binding.rvCafeF.adapter = CafeListRVAdapter(cafeList)
+                updateCafeList(cafeList)
                 true
             }
             R.id.sort_by_name_descending -> {
                 cafeList = cafeList.sortedByDescending { it.cname }
-                binding.rvCafeF.adapter = CafeListRVAdapter(cafeList)
+                updateCafeList(cafeList)
                 true
             }
             else -> false
@@ -122,7 +125,7 @@ class CafeListFragment : Fragment(), DialogInterface.OnDismissListener,
                     cafeList = repository.getCafeByIsland(vm.island)
                 }
                 job.await()
-                binding.rvCafeF.adapter = CafeListRVAdapter(cafeList)
+                updateCafeList(cafeList)
             }
         } else if (vm.island.isNotEmpty() && vm.si.isNotEmpty()) {
             CoroutineScope(Dispatchers.Main).launch {
@@ -130,11 +133,24 @@ class CafeListFragment : Fragment(), DialogInterface.OnDismissListener,
                     cafeList = repository.getCafeByIslandSi(vm.island, vm.si)
                 }
                 job.await()
-                binding.rvCafeF.adapter = CafeListRVAdapter(cafeList)
+                updateCafeList(cafeList)
             }
         } else {
             Log.d("AAAAA", "User가 dialog에서 취소버튼을 눌렀음.")
         }
+    }
+
+    private fun updateCafeList(cafelist : List<Cafe>){
+        cafeListRVAdapter.cafeList = cafelist
+        binding.rvCafeF.adapter = cafeListRVAdapter
+        cafeListRVAdapter.setItemClickListener(object : CafeListRVAdapter.CafeItemClickListener{
+            override fun onClick(cafe: Cafe) {
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.container, CafeDetailFragment(cafe))
+                    .addToBackStack(null)
+                    .commit()
+            }
+        })
     }
 
 
