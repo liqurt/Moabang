@@ -18,11 +18,16 @@ import com.ssafy.moabang.databinding.FragmentThemeBinding
 import com.ssafy.moabang.src.theme.ThemeDetailActivity
 import com.ssafy.moabang.src.theme.ThemeFilterActivity
 import android.text.Editable
+import com.ssafy.moabang.data.model.repository.Repository
 import com.ssafy.moabang.src.theme.ThemeFilter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class ThemeFragment : Fragment() {
     private lateinit var binding: FragmentThemeBinding
+    private lateinit var repository: Repository
     private lateinit var themeListRVAdapter: ThemeListRVAdapter
     private var tf = ThemeFilter()
 
@@ -31,6 +36,11 @@ class ThemeFragment : Fragment() {
     private var searchList = ArrayList<Theme>()
 
     val themeViewModel: ThemeViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        repository = Repository.get()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,16 +56,11 @@ class ThemeFragment : Fragment() {
     }
 
     private fun init(){
-        val sp = requireActivity().getSharedPreferences("moabang", AppCompatActivity.MODE_PRIVATE)
-        val token = sp.getString("moabangToken", "")!!
-
-        themeViewModel.getAllTheme(token)
         themeListRVAdapter = ThemeListRVAdapter()
 
-        themeViewModel.themeListLiveData.observe(requireActivity()){
-            originalList = it
-            themeListRVAdapter.data = it
-            themeListRVAdapter.notifyDataSetChanged()
+        CoroutineScope(Dispatchers.Main).launch {
+            originalList = repository.getAllTheme()
+            themeListRVAdapter.filterList(originalList)
         }
 
         binding.rvThemeF.apply{
@@ -81,6 +86,7 @@ class ThemeFragment : Fragment() {
     }
 
     fun filter(){
+        filteredList = ArrayList<Theme>()
         if(!(tf.island == "" || tf.island == "전체")){
 
         }
@@ -106,8 +112,7 @@ class ThemeFragment : Fragment() {
                 searchList.add(item)
             }
         }
-        themeListRVAdapter.data = searchList
-        binding.rvThemeF.adapter = themeListRVAdapter
+        themeListRVAdapter.filterList(searchList)
     }
 
     inner class SwitchListener: CompoundButton.OnCheckedChangeListener{

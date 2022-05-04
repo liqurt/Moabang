@@ -75,7 +75,7 @@ class ThemeListRVAdapter: RecyclerView.Adapter<ThemeListRVAdapter.ViewHolder>() 
         holder.bind(data[position])
     }
 
-    private fun filterList(list: List<Theme>){
+    fun filterList(list: List<Theme>){
         data = list
         notifyDataSetChanged()
     }
