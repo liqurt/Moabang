@@ -1,39 +1,61 @@
 package com.ssafy.moabang.src.theme
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import androidx.fragment.app.DialogFragment
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.ssafy.moabang.R
 import com.ssafy.moabang.databinding.DialogThemeFilterBinding
 
 
 
 
-class ThemeFilterDialog : DialogFragment(), AdapterView.OnItemSelectedListener {
+class ThemeFilterActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private lateinit var binding: DialogThemeFilterBinding
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = DialogThemeFilterBinding.inflate(inflater, container, false)
-        return binding.root
+    override fun onCreate(savedInstanceState: Bundle?){
+        super.onCreate(savedInstanceState)
+        binding = DialogThemeFilterBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        init()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private fun init(){
+        binding.toolbarThemeFilter.ivToolbarIcon.setOnClickListener { this.onBackPressed() }
+        binding.toolbarThemeFilter.tvToolbarTitle.text = "테마 필터"
         val list = resources.getStringArray(R.array.cafe_list_island)
 
-
         binding.spThemeD.apply{
-            adapter = ArrayAdapter<String>(requireContext(), R.layout.spinner_text, list)
-            onItemSelectedListener = this@ThemeFilterDialog
+            adapter = ArrayAdapter<String>(this@ThemeFilterActivity, R.layout.spinner_text, list)
+            onItemSelectedListener = this@ThemeFilterActivity
+        }
+
+        setChipGroup(binding.cgThemeDGenre, resources.getStringArray(R.array.genre_list))
+        setChipGroup(binding.cgThemeDType, resources.getStringArray(R.array.type_list))
+        setChipGroup(binding.cgThemeDPlayer, resources.getStringArray(R.array.player_list))
+        setChipGroup(binding.cgThemeDDiff, resources.getStringArray(R.array.diff_list))
+        setChipGroup(binding.cgThemeDActive, resources.getStringArray(R.array.active_list))
+
+    }
+
+    private fun setChipGroup(res: ChipGroup, list: Array<String>){
+        for(item in list){
+            res.addView(Chip(this).apply {
+                text = item
+                isCheckable = true
+                isCheckedIconVisible = true
+                setCheckedIconTintResource(R.color.moabang_pink)
+                setChipBackgroundColorResource(R.color.white)
+                setChipStrokeColorResource(R.color.moabang_pink)
+                setChipStrokeWidthResource(R.dimen.chipStrokeSize)
+                setTextAppearanceResource(R.style.ChipTextStyle2)
+                chipCornerRadius = 1F
+                chipMinHeight = 100F
+            })
         }
     }
 
@@ -68,20 +90,8 @@ class ThemeFilterDialog : DialogFragment(), AdapterView.OnItemSelectedListener {
                 }
 //            vm.island = p0.getItemAtPosition(p2).toString()
             }
-            binding.cgThemeD.removeAllViews()
-            for (item in strings) {
-                binding.cgThemeD.addView(Chip(requireContext()).apply {
-                    text = item
-                    isCheckable = true
-                    isCheckedIconVisible = true
-                    setCheckedIconTintResource(R.color.moabang_pink)
-                    setChipBackgroundColorResource(R.color.white)
-                    setChipStrokeColorResource(R.color.moabang_pink)
-                    setChipStrokeWidthResource(R.dimen.chipStrokeSize)
-                    setTextAppearanceResource(R.style.ChipTextStyle2)
-                    chipMinHeight = 100F
-                })
-            }
+            binding.cgThemeDArea.removeAllViews()
+            setChipGroup(binding.cgThemeDArea, strings)
         }
 
     }

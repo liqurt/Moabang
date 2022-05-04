@@ -17,6 +17,9 @@
             android:name=".src.theme.ThemeDetailActivity"
             android:exported="true" />
         <activity
+            android:name=".src.theme.ThemeFilterActivity"
+            android:exported="true" />
+        <activity
             android:name=".src.login.LoginActivity"
             android:exported="true">
             <intent-filter>
