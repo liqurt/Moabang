@@ -1,6 +1,7 @@
 package com.self.roomescape.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,7 +37,9 @@ public class User implements UserDetails {
     private String email;
     @Column(name = "p_img")
     private String pimg;
+    @JsonIgnore
     private String birthday;
+    @JsonIgnore
     private String gender;
 
     @CreationTimestamp
@@ -45,6 +48,7 @@ public class User implements UserDetails {
 
 
     @ElementCollection(fetch = FetchType.EAGER)
+    @JsonIgnore
     @Builder.Default
     private List<String> roles = new ArrayList<>();
 
@@ -84,6 +88,7 @@ public class User implements UserDetails {
     }
 
     @Override
+    @JsonIgnore
     public String getPassword() {
         return null;
     }

@@ -1,12 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Carousels from '../main/Contents/Carousels';
+import PopularTheme from '../main/Contents/Popular_theme';
+
 
 const mainpage = () => {
 
     return (
         <div>
-            LandingPage
-            <Link to="/login">로그인</Link>
+            <Carousels />
+            <PopularTheme />
         </div>
     );
 };
