@@ -3,6 +3,7 @@ package com.ssafy.moabang.src.theme
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
+import android.util.Log
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
@@ -31,6 +32,7 @@ class ThemeDetailActivity : AppCompatActivity() {
     }
 
     private fun init(){
+        Log.d("ThemeDetailActivity", "init: $theme.tid")
         behavior = BottomSheetBehavior.from(binding.themeDABottomSheet)
         behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -54,18 +56,18 @@ class ThemeDetailActivity : AppCompatActivity() {
     }
 
     private fun setThemeInfo() {
-        binding.tvToolbarTheme.text = theme.name
-        binding.tvToolbarCafe.text = theme.cafeName
+        binding.tvToolbarTheme.text = theme.tname
+        binding.tvToolbarCafe.text = theme.cname
 
         Glide.with(binding.ivThemeDAImg).load(theme.img).centerCrop().into(binding.ivThemeDAImg)
 
         binding.tvThemeDAGenre.text = theme.genre
-        binding.tvThemeDATime.text = theme.time.toString() + "분"
-        binding.tvThemeDARating.text = theme.rating.toString()
+        binding.tvThemeDATime.text = theme.time
+        binding.tvThemeDARating.text = theme.grade.toString()
         binding.tvThemeDADiff.text = theme.difficulty.toString()
-        binding.tvThemeDAPlayer.text = theme.player + "명"
+        binding.tvThemeDAPlayer.text = theme.rplayer + "명"
         binding.tvThemeDAType.text = theme.type
-        binding.tvThemeDAActive.text = theme.active
+        binding.tvThemeDAActive.text = theme.activity
         binding.tvThemeDADesc.apply {
             text = theme.description
             movementMethod = ScrollingMovementMethod()
@@ -102,7 +104,7 @@ class ThemeDetailActivity : AppCompatActivity() {
 
             val frag = ThemeUrlFragment()
             var bundle = Bundle(1)
-            bundle.putString("url", theme.url)
+            bundle.putString("url", theme.curl)
             frag.arguments = bundle
             setFragment(frag)
         }
@@ -129,20 +131,20 @@ class ThemeDetailActivity : AppCompatActivity() {
     }
 
     private fun setLike(){
-        if(theme.like) {
-            binding.ivToolbarTrailingIcon.setImageResource(R.drawable.icon_like_after)
-        } else {
-            binding.ivToolbarTrailingIcon.setImageResource(R.drawable.icon_like_before)
-        }
-
-        binding.ivToolbarTrailingIcon.setOnClickListener {
-            theme.like = !theme.like
-            if(theme.like) {
-                binding.ivToolbarTrailingIcon.setImageResource(R.drawable.icon_like_after)
-            } else {
-                binding.ivToolbarTrailingIcon.setImageResource(R.drawable.icon_like_before)
-            }
-        }
+//        if(theme.like) {
+//            binding.ivToolbarTrailingIcon.setImageResource(R.drawable.icon_like_after)
+//        } else {
+//            binding.ivToolbarTrailingIcon.setImageResource(R.drawable.icon_like_before)
+//        }
+//
+//        binding.ivToolbarTrailingIcon.setOnClickListener {
+//            theme.like = !theme.like
+//            if(theme.like) {
+//                binding.ivToolbarTrailingIcon.setImageResource(R.drawable.icon_like_after)
+//            } else {
+//                binding.ivToolbarTrailingIcon.setImageResource(R.drawable.icon_like_before)
+//            }
+//        }
     }
 
 }

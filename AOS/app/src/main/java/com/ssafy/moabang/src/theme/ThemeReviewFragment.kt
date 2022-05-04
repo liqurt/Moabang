@@ -6,12 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebSettings
-import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.ssafy.moabang.R
 import com.ssafy.moabang.adapter.ReviewListRVAdapter
 import com.ssafy.moabang.data.model.dto.Review
 import com.ssafy.moabang.data.model.dto.Theme
@@ -66,8 +63,8 @@ class ThemeReviewFragment : Fragment() {
     }
 
     private fun initInfo() {
-        binding.ratingBarThemeRVF.rating = theme.rating.toFloat()
-        binding.tvThemeRVFRating.text = theme.rating.toString()
+        binding.ratingBarThemeRVF.rating = theme.grade.toFloat()/2
+        binding.tvThemeRVFRating.text = theme.grade.toString()
 
         // TODO: 통계 정보로 세팅팅
     }
