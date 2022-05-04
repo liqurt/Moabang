@@ -18,5 +18,7 @@ data class Theme(
     val cid: Int,
     val cname: String,
     val img: String,
+    val island: String,
+    val si: String,
     val curl: String
 ): Parcelable
