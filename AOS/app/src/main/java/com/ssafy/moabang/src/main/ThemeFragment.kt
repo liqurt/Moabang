@@ -18,16 +18,17 @@ import com.ssafy.moabang.databinding.FragmentThemeBinding
 import com.ssafy.moabang.src.theme.ThemeDetailActivity
 import com.ssafy.moabang.src.theme.ThemeFilterActivity
 import android.text.Editable
-
-
+import com.ssafy.moabang.src.theme.ThemeFilter
 
 
 class ThemeFragment : Fragment() {
     private lateinit var binding: FragmentThemeBinding
     private lateinit var themeListRVAdapter: ThemeListRVAdapter
+    private var tf = ThemeFilter()
 
     private lateinit var originalList: List<Theme>
     private var filteredList = ArrayList<Theme>()
+    private var searchList = ArrayList<Theme>()
 
     val themeViewModel: ThemeViewModel by viewModels()
 
@@ -75,29 +76,37 @@ class ThemeFragment : Fragment() {
             startActivity(Intent(requireActivity(), ThemeFilterActivity()::class.java))
         }
 
+        search()
         filter()
     }
 
-    private fun filter(){
+    fun filter(){
+        if(!(tf.island == "" || tf.island == "전체")){
+
+        }
+    }
+
+    private fun search(){
         // 검색
         binding.etThemeFSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
             override fun afterTextChanged(editable: Editable) {
-                val searchText: String = binding.etThemeFSearch.getText().toString()
+                val searchText: String = binding.etThemeFSearch.text.toString()
                 searchFilter(searchText)
             }
         })
     }
 
     fun searchFilter(searchText: String) {
-        filteredList = ArrayList<Theme>()
-        for (item in originalList) {
+        val list = if(filteredList.size == 0) originalList else  filteredList
+        searchList = ArrayList<Theme>()
+        for (item in list) {
             if (item.tname.contains(searchText)) {
-                filteredList.add(item)
+                searchList.add(item)
             }
         }
-        themeListRVAdapter.data = filteredList
+        themeListRVAdapter.data = searchList
         binding.rvThemeF.adapter = themeListRVAdapter
     }
 
