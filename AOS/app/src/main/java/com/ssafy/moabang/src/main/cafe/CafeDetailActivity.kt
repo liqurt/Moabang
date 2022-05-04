@@ -1,14 +1,10 @@
 package com.ssafy.moabang.src.main.cafe
 
 import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.ssafy.moabang.adapter.ThemeListRVAdapter
@@ -16,35 +12,36 @@ import com.ssafy.moabang.config.GlobalApplication
 import com.ssafy.moabang.data.api.CafeApi
 import com.ssafy.moabang.data.model.dto.Cafe
 import com.ssafy.moabang.data.model.dto.Theme
-import com.ssafy.moabang.databinding.FragmentCafeDetailBinding
+import com.ssafy.moabang.databinding.ActivityCafeDetailBinding
 import com.ssafy.moabang.src.theme.ThemeDetailActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class CafeDetailFragment(var cafe: Cafe) : Fragment() {
-
-    private lateinit var binding: FragmentCafeDetailBinding
+class CafeDetailActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityCafeDetailBinding
     private lateinit var themeList: List<Theme>
     private var themeListRVAdapter : ThemeListRVAdapter = ThemeListRVAdapter()
+    private lateinit var cafe: Cafe
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentCafeDetailBinding.inflate(LayoutInflater.from(context))
-        return binding.root
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityCafeDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        intent.getParcelableExtra<Cafe>("cafe")?.let {
+            cafe = it
+        } ?: finish()
+
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        Log.d("AAAAA", "cafe from cafeListFragment : $cafe")
+    override fun onStart() {
+        super.onStart()
         initView()
     }
 
-
     private fun getJWTtoken(): String {
-        val sp = requireActivity().getSharedPreferences("moabang", AppCompatActivity.MODE_PRIVATE)
+        val sp = getSharedPreferences("moabang", MODE_PRIVATE)
         return sp.getString("moabangToken", "NO_JWT_TOKEN")!!
     }
 
@@ -71,7 +68,7 @@ class CafeDetailFragment(var cafe: Cafe) : Fragment() {
                     themeListRVAdapter.data = themeList
                     binding.rvCafeDetailFThemeByCafe.apply {
                         adapter = themeListRVAdapter
-                        layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+                        layoutManager = LinearLayoutManager(this@CafeDetailActivity, LinearLayoutManager.VERTICAL, false)
                         themeListRVAdapter.itemClickListener = object : ThemeListRVAdapter.ItemClickListener {
                             override fun onClick(item: Theme) {
                                 item.apply {
@@ -79,7 +76,7 @@ class CafeDetailFragment(var cafe: Cafe) : Fragment() {
                                     curl = cafe.url.toString()
                                 }
                                 val intent = Intent(
-                                    requireActivity(),
+                                    this@CafeDetailActivity,
                                     ThemeDetailActivity::class.java
                                 ).putExtra("theme", item)
                                 startActivity(intent)
@@ -94,7 +91,7 @@ class CafeDetailFragment(var cafe: Cafe) : Fragment() {
 
             override fun onFailure(call: Call<List<Theme>>, t: Throwable) {
                 Log.d("AAAAA", "네트워크 오류2 : ${t.message}")
-                Toast.makeText(requireContext(), "네트워크 오류2 : ${t.message}", Toast.LENGTH_SHORT)
+                Toast.makeText(this@CafeDetailActivity, "네트워크 오류2 : ${t.message}", Toast.LENGTH_SHORT)
                     .show()
             }
         })

@@ -14,6 +14,9 @@
         android:theme="@style/Theme.Moabang"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".src.main.cafe.CafeDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".src.theme.ThemeDetailActivity"
             android:exported="true" />
         <activity

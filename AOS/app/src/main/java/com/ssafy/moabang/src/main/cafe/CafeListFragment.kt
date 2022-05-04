@@ -1,6 +1,7 @@
 package com.ssafy.moabang.src.main.cafe
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -15,6 +16,7 @@ import com.ssafy.moabang.adapter.CafeListRVAdapter
 import com.ssafy.moabang.data.model.dto.Cafe
 import com.ssafy.moabang.data.model.repository.Repository
 import com.ssafy.moabang.databinding.FragmentCafeListBinding
+import com.ssafy.moabang.src.theme.ThemeDetailActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -145,10 +147,8 @@ class CafeListFragment : Fragment(), DialogInterface.OnDismissListener,
         binding.rvCafeF.adapter = cafeListRVAdapter
         cafeListRVAdapter.setItemClickListener(object : CafeListRVAdapter.CafeItemClickListener{
             override fun onClick(cafe: Cafe) {
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.container, CafeDetailFragment(cafe))
-                    .addToBackStack(null)
-                    .commit()
+                val intent = Intent(requireActivity(), CafeDetailActivity::class.java).putExtra("cafe", cafe)
+                startActivity(intent)
             }
         })
     }
