@@ -31,9 +31,10 @@ public class CafeController {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private LikeRepository likeRepository;
+    private UserLikeRepository userLikeRepository;
     @Value("${spring.jwt.secret}")
     private String secretKey;
+
 
     @ApiOperation(value = "카페 전체 목록", notes = "카페 전체 목록을 반환.")
     @GetMapping("/list")
@@ -70,7 +71,8 @@ public class CafeController {
             // user 좋아요 정보 불러오는 부분
 
             // logic 1. 얻은 uid를 통해서 like 테이블에 좋아요한 tid가 있는지 확인.
-            Optional<List<Like>> likeList = likeRepository.findByUserUid(user.get().getUid());
+            Optional<List<UserLike>> likeList = userLikeRepository.findUserLikeByUser(user.get());
+
             if (likeList.isPresent()) {
                 // 2. tid가 있다면 받아온 themeInfo에 isLike에 배열로 비교하면서 같다면 true 아니면 false를 집어넣는다..
                 for (int i = 0; i < themeAllList.size(); i++) {
@@ -93,7 +95,8 @@ public class CafeController {
                     temp.setTname(themeAllList.get(i).getTname());
 
                     for (int j = 0; j < likeList.get().size(); j++) {
-                        if (themeAllList.get(i).getTid() == likeList.get().get(j).getThemeTid()) {
+                        System.out.println("test : "+likeList.get().get(j).getTheme());
+                        if (themeAllList.get(i).getTid() == likeList.get().get(j).getTheme().getTid()){
                             temp.setIslike(true);
                             ;// true 정보 넣기
                         } else {
