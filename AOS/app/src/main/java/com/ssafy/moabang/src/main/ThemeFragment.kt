@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.CompoundButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
@@ -15,6 +16,7 @@ import com.ssafy.moabang.data.model.viewmodel.ThemeViewModel
 import com.ssafy.moabang.data.model.dto.Theme
 import com.ssafy.moabang.databinding.FragmentThemeBinding
 import com.ssafy.moabang.src.theme.ThemeDetailActivity
+import com.ssafy.moabang.src.theme.ThemeFilterDialog
 
 class ThemeFragment : Fragment() {
     private lateinit var binding: FragmentThemeBinding
@@ -47,7 +49,6 @@ class ThemeFragment : Fragment() {
             themeListRVAdapter.notifyDataSetChanged()
         }
 
-
         binding.rvThemeF.apply{
             layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
             adapter = themeListRVAdapter
@@ -60,6 +61,13 @@ class ThemeFragment : Fragment() {
                     startActivity(intent)
                 }
             }
+        }
+
+        binding.btnThemeFFilter.setOnClickListener{
+            val fd = ThemeFilterDialog()
+
+            WindowManager.LayoutParams.MATCH_PARENT
+            ThemeFilterDialog().show(childFragmentManager, "")
         }
     }
 

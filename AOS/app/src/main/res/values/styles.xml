@@ -6,6 +6,12 @@
         <item name="android:textAlignment">center</item>
     </style>
 
+    <style name="ChipTextStyle2">
+        <item name="android:textSize">14dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/moabang_pink</item>
+    </style>
+
     <style name="MySpinnerDatePickerStyle" parent="Theme.AppCompat.Light.Dialog">
         <!-- 상단 색 변경 -->
         <item name="colorAccent">@color/moabang_pink</item>
