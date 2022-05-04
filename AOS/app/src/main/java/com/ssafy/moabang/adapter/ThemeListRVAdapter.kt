@@ -61,7 +61,7 @@ class ThemeListRVAdapter: RecyclerView.Adapter<ThemeListRVAdapter.ViewHolder>() 
             tvRating.text = item.grade.toString()
             tvDiff.text = item.difficulty.toString()
             tvType.text = item.type
-            tvActive.text = item.activity
+            tvActive.text = if(item.activity == "") "-" else item.activity
             tvPlayer.text = item.rplayer + "명"
         }
     }

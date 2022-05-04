@@ -67,7 +67,7 @@ class ThemeDetailActivity : AppCompatActivity() {
         binding.tvThemeDADiff.text = theme.difficulty.toString()
         binding.tvThemeDAPlayer.text = theme.rplayer + "명"
         binding.tvThemeDAType.text = theme.type
-        binding.tvThemeDAActive.text = theme.activity
+        binding.tvThemeDAActive.text = if(theme.activity == "") "정보없음" else theme.activity
         binding.tvThemeDADesc.apply {
             text = theme.description
             movementMethod = ScrollingMovementMethod()
