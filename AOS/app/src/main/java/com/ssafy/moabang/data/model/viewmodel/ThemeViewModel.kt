@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.moabang.data.model.dto.Theme
 import com.ssafy.moabang.data.model.repository.ThemeRepository
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -24,7 +23,7 @@ class ThemeViewModel: ViewModel() {
 
     fun getAllTheme(jwtToken: String) = viewModelScope.launch {
         getTheme(jwtToken)
-        Log.d("VIEWMODEL TEST", "getAllTheme: $totalThemeList")
+//        Log.d("VIEWMODEL TEST", "getAllTheme: $totalThemeList")
     }
 
     private suspend fun getTheme(jwtToken: String) = withContext(Dispatchers.IO) {

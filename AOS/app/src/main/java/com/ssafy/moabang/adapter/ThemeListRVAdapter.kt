@@ -57,7 +57,7 @@ class ThemeListRVAdapter: RecyclerView.Adapter<ThemeListRVAdapter.ViewHolder>() 
             tvThemeName.text = item.tname
             tvCafeName.text = item.cname
             tvGenre.text = item.genre
-            tvTime.text = item.time.toString() + "분"
+            tvTime.text = item.time
             tvRating.text = item.grade.toString()
             tvDiff.text = item.difficulty.toString()
             tvType.text = item.type

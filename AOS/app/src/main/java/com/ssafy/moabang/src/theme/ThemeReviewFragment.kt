@@ -63,7 +63,7 @@ class ThemeReviewFragment : Fragment() {
     }
 
     private fun initInfo() {
-        binding.ratingBarThemeRVF.rating = theme.grade.toFloat()
+        binding.ratingBarThemeRVF.rating = theme.grade.toFloat()/2
         binding.tvThemeRVFRating.text = theme.grade.toString()
 
         // TODO: 통계 정보로 세팅팅

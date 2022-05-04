@@ -3,6 +3,7 @@ package com.ssafy.moabang.src.theme
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
+import android.util.Log
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
@@ -31,6 +32,7 @@ class ThemeDetailActivity : AppCompatActivity() {
     }
 
     private fun init(){
+        Log.d("ThemeDetailActivity", "init: $theme.tid")
         behavior = BottomSheetBehavior.from(binding.themeDABottomSheet)
         behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
