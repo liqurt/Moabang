@@ -1,8 +1,11 @@
 package com.ssafy.moabang.data.model.dto
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Entity
 data class Cafe(
     @PrimaryKey var cid : Int,
@@ -16,4 +19,4 @@ data class Cafe(
     var lon : String?,
     var island : String?, // 도(섬 도 島)
     var si : String?, // 시
-)
+): Parcelable

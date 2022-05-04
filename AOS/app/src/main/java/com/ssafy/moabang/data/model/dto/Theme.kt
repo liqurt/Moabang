@@ -16,7 +16,7 @@ data class Theme(
     val grade: Double,
     val activity: String,
     val cid: Int,
-    val cname: String,
+    var cname: String,
     val img: String,
-    val curl: String
+    var curl: String
 ): Parcelable
