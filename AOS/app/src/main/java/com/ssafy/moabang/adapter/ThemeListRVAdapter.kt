@@ -75,6 +75,11 @@ class ThemeListRVAdapter: RecyclerView.Adapter<ThemeListRVAdapter.ViewHolder>() 
         holder.bind(data[position])
     }
 
+    private fun filterList(list: List<Theme>){
+        data = list
+        notifyDataSetChanged()
+    }
+
     override fun getItemCount(): Int = data.size
 
     interface ItemClickListener {

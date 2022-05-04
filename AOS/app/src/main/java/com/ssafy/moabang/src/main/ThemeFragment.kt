@@ -2,6 +2,7 @@ package com.ssafy.moabang.src.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,10 +17,17 @@ import com.ssafy.moabang.data.model.dto.Theme
 import com.ssafy.moabang.databinding.FragmentThemeBinding
 import com.ssafy.moabang.src.theme.ThemeDetailActivity
 import com.ssafy.moabang.src.theme.ThemeFilterActivity
+import android.text.Editable
+
+
+
 
 class ThemeFragment : Fragment() {
     private lateinit var binding: FragmentThemeBinding
     private lateinit var themeListRVAdapter: ThemeListRVAdapter
+
+    private lateinit var originalList: List<Theme>
+    private var filteredList = ArrayList<Theme>()
 
     val themeViewModel: ThemeViewModel by viewModels()
 
@@ -44,6 +52,7 @@ class ThemeFragment : Fragment() {
         themeListRVAdapter = ThemeListRVAdapter()
 
         themeViewModel.themeListLiveData.observe(requireActivity()){
+            originalList = it
             themeListRVAdapter.data = it
             themeListRVAdapter.notifyDataSetChanged()
         }
@@ -65,6 +74,30 @@ class ThemeFragment : Fragment() {
         binding.btnThemeFFilter.setOnClickListener{
             startActivity(Intent(requireActivity(), ThemeFilterActivity()::class.java))
         }
+
+        filter()
+    }
+
+    private fun filter(){
+        binding.etThemeFSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+            override fun afterTextChanged(editable: Editable) {
+                val searchText: String = binding.etThemeFSearch.getText().toString()
+                searchFilter(searchText)
+            }
+        })
+    }
+
+    fun searchFilter(searchText: String) {
+        filteredList = ArrayList<Theme>()
+        for (item in originalList) {
+            if (item.tname.contains(searchText)) {
+                filteredList.add(item)
+            }
+        }
+        themeListRVAdapter.data = filteredList
+        binding.rvThemeF.adapter = themeListRVAdapter
     }
 
     inner class SwitchListener: CompoundButton.OnCheckedChangeListener{
