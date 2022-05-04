@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.fragment.app.viewModels
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
@@ -17,6 +19,7 @@ import com.ssafy.moabang.config.GlobalApplication
 import com.ssafy.moabang.data.model.dto.Cafe
 import com.ssafy.moabang.data.model.dto.User
 import com.ssafy.moabang.data.model.repository.Repository
+import com.ssafy.moabang.data.model.viewmodel.ThemeViewModel
 import com.ssafy.moabang.src.retrofitInterface.cafeService
 import com.ssafy.moabang.src.retrofitInterface.loginService
 import kotlinx.coroutines.CoroutineScope
@@ -29,6 +32,7 @@ import retrofit2.Response
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
+    val themeViewModel: ThemeViewModel by viewModels()
 
     private val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
         if (error != null) {
@@ -96,6 +100,7 @@ class LoginActivity : AppCompatActivity() {
                         saveOurTokenToSharedPrefs(jwtToken)
                     }
                     getCafesFromServer(jwtToken.toString())// 2. 서버에서 전체 카페 데이터를 가져오고, 이를 로컬 DB에 저장한다.
+                    themeViewModel.getAllTheme(jwtToken.toString())
                     val intent = Intent(this@LoginActivity, MainActivity::class.java) // 3. MainActivity로 전환한다.
                     startActivity(intent)
                 }else{
