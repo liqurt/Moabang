@@ -88,4 +88,6 @@ dependencies {
     // ViewModel
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0'
 
+    // CoordinatorLayout
+    implementation "androidx.coordinatorlayout:coordinatorlayout:1.2.0"
 }
