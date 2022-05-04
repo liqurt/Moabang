@@ -1,0 +1,13 @@
+.pop-theme p{
+    text-align: left;
+      margin: 7vh 0 3vh 10px;
+      font-size: 20px;
+      font-family: 'BMJUA';
+}
+
+@font-face {
+    font-family: 'BMJUA';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
