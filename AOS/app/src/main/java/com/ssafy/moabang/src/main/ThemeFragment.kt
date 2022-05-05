@@ -8,16 +8,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.moabang.adapter.ThemeListRVAdapter
-import com.ssafy.moabang.data.model.viewmodel.ThemeViewModel
 import com.ssafy.moabang.data.model.dto.Theme
 import com.ssafy.moabang.databinding.FragmentThemeBinding
 import com.ssafy.moabang.src.theme.ThemeDetailActivity
 import com.ssafy.moabang.src.theme.ThemeFilterActivity
 import android.text.Editable
+import android.util.Log
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import com.ssafy.moabang.data.model.repository.Repository
 import com.ssafy.moabang.src.theme.ThemeFilter
 import kotlinx.coroutines.CoroutineScope
@@ -28,14 +28,21 @@ import kotlinx.coroutines.launch
 class ThemeFragment : Fragment() {
     private lateinit var binding: FragmentThemeBinding
     private lateinit var repository: Repository
-    private lateinit var themeListRVAdapter: ThemeListRVAdapter
-    private var tf = ThemeFilter()
+    lateinit var themeListRVAdapter: ThemeListRVAdapter
 
     private lateinit var originalList: List<Theme>
-    private var filteredList = ArrayList<Theme>()
+    private lateinit var filteredList: List<Theme>
     private var searchList = ArrayList<Theme>()
 
-    val themeViewModel: ThemeViewModel by viewModels()
+    private val activityResultLauncher : ActivityResultLauncher<Intent> = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ){
+        if(it.resultCode == 1){
+            val intent = it.data
+            val returnValue = intent!!.getParcelableExtra<ThemeFilter>("tf")
+            filter(returnValue!!)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +62,7 @@ class ThemeFragment : Fragment() {
         init()
     }
 
-    private fun init(){
+    fun init(){
         themeListRVAdapter = ThemeListRVAdapter()
 
         CoroutineScope(Dispatchers.Main).launch {
@@ -78,17 +85,19 @@ class ThemeFragment : Fragment() {
         }
 
         binding.btnThemeFFilter.setOnClickListener{
-            startActivity(Intent(requireActivity(), ThemeFilterActivity()::class.java))
+            val intent = Intent(requireActivity(), ThemeFilterActivity()::class.java)
+            activityResultLauncher.launch(intent)
         }
 
         search()
-        filter()
     }
 
-    fun filter(){
-        filteredList = ArrayList<Theme>()
-        if(!(tf.island == "" || tf.island == "전체")){
-
+    private fun filter(tf: ThemeFilter){
+        Log.d("FILTER TEST", "filter: island = ${tf.island}, si = ${tf.si}")
+        CoroutineScope(Dispatchers.Main).launch {
+//            filteredList = repository.filterThemes(tf.island, tf.si, tf.genre, tf.type, tf.diff, tf.active)
+            filteredList = repository.filterThemesArea(tf.island, tf.si)
+            themeListRVAdapter.filterList(filteredList)
         }
     }
 
@@ -105,7 +114,7 @@ class ThemeFragment : Fragment() {
     }
 
     fun searchFilter(searchText: String) {
-        val list = if(filteredList.size == 0) originalList else  filteredList
+        val list = if(!::filteredList.isInitialized || filteredList.isEmpty()) originalList else  filteredList
         searchList = ArrayList<Theme>()
         for (item in list) {
             if (item.tname.contains(searchText)) {

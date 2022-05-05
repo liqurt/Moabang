@@ -69,6 +69,16 @@ class Repository private constructor(context: Context) {
             themeDao.insertThemes(themeList)
         }
 
+    suspend fun filterThemes(island: String, si: ArrayList<String>, genre: ArrayList<String>, type: ArrayList<String>, diff : ArrayList<Int>, active : ArrayList<String>) : List<Theme> =
+        database.withTransaction {
+            themeDao.filterThemesTemp(island, si, genre, type, diff, active)
+        }
+
+    suspend fun filterThemesArea(island: String, si: ArrayList<String>) : List<Theme> =
+        database.withTransaction {
+            themeDao.filterThemesArera(island, si)
+        }
+
     companion object {
         private var instance: Repository? = null
         fun initialize(context: Context) {

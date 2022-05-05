@@ -1,11 +1,15 @@
 package com.ssafy.moabang.src.theme
 
-class ThemeFilter {
-    var island = ""
-    var si = ArrayList<String>()
-    var genre = ArrayList<String>()
-    var type = ArrayList<String>()
-    var player = ArrayList<String>()
-    var diff = ArrayList<String>()
-    var active = ArrayList<String>()
-}
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class ThemeFilter (
+    var island: String,
+    var si: ArrayList<String>,
+    var genre: ArrayList<String>,
+    var type: ArrayList<String>,
+    var player: ArrayList<String>,
+    var diff: ArrayList<Int>,
+    var active: ArrayList<String>
+): Parcelable

@@ -1,5 +1,6 @@
 package com.ssafy.moabang.src.theme
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -11,15 +12,17 @@ import com.ssafy.moabang.R
 import com.ssafy.moabang.databinding.DialogThemeFilterBinding
 import com.ssafy.moabang.src.main.ThemeFragment
 
-
 class ThemeFilterActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private lateinit var binding: DialogThemeFilterBinding
-    private lateinit var genreList : Array<String>
-    private lateinit var typeList : Array<String>
-    private lateinit var playerList : Array<String>
-    private lateinit var diffList : Array<String>
-    private lateinit var activeList : Array<String>
-    private val tf = ThemeFilter()
+
+    private var island = ""
+    private lateinit var siList : ArrayList<String>
+    private lateinit var genreList : ArrayList<String>
+    private lateinit var typeList : ArrayList<String>
+    private lateinit var playerList : ArrayList<String>
+    private lateinit var diffList : ArrayList<Int>
+    private lateinit var activeList : ArrayList<String>
+    private lateinit var tf : ThemeFilter
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
@@ -30,12 +33,6 @@ class ThemeFilterActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
     }
 
     private fun init(){
-        genreList = resources.getStringArray(R.array.genre_list)
-        typeList = resources.getStringArray(R.array.type_list)
-        playerList = resources.getStringArray(R.array.player_list)
-        diffList = resources.getStringArray(R.array.diff_list)
-        activeList = resources.getStringArray(R.array.active_list)
-
         binding.toolbarThemeFilter.ivToolbarIcon.setOnClickListener { this.onBackPressed() }
         binding.toolbarThemeFilter.tvToolbarTitle.text = "테마 필터"
         val list = resources.getStringArray(R.array.cafe_list_island)
@@ -45,87 +42,64 @@ class ThemeFilterActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
             onItemSelectedListener = this@ThemeFilterActivity
         }
 
-        setChipGroup(binding.cgThemeDGenre, genreList)
-        setChipGroup(binding.cgThemeDType, typeList)
-        setChipGroup(binding.cgThemeDPlayer, playerList)
-        setChipGroup(binding.cgThemeDDiff, diffList)
-        setChipGroup(binding.cgThemeDActive, activeList)
+        setChipGroup(binding.cgThemeDGenre, resources.getStringArray(R.array.genre_list))
+        setChipGroup(binding.cgThemeDType, resources.getStringArray(R.array.type_list))
+        setChipGroup(binding.cgThemeDPlayer, resources.getStringArray(R.array.player_list))
+        setChipGroup(binding.cgThemeDDiff, resources.getStringArray(R.array.diff_list))
+        setChipGroup(binding.cgThemeDActive, resources.getStringArray(R.array.active_list))
 
         initOnClickListener()
-
     }
 
     private fun initOnClickListener(){
         binding.tvThemeDOk.setOnClickListener {
             // 초기화
-            tf.si.clear()
-            tf.genre.clear()
-            tf.type.clear()
-            tf.player.clear()
-            tf.diff.clear()
-            tf.active.clear()
+            siList = ArrayList<String>()
+            genreList = ArrayList<String>()
+            typeList = ArrayList<String>()
+            playerList = ArrayList<String>()
+            diffList = ArrayList<Int>()
+            activeList = ArrayList<String>()
             /////////
 
-
-            var siList = emptyArray<String>()
-            when (tf.island) {
-                "서울" -> {
-                    siList = resources.getStringArray(R.array.cafe_list_si_seoul)
-                }
-                "경기/인천" -> {
-                    siList = resources.getStringArray(R.array.cafe_list_si_gyeonggi_incheon)
-                }
-                "충청" -> {
-                    siList = resources.getStringArray(R.array.cafe_list_si_chungcheong)
-                }
-                "강원" -> {
-                    siList = resources.getStringArray(R.array.cafe_list_si_gangwon)
-                }
-                "경상" -> {
-                    siList = resources.getStringArray(R.array.cafe_list_si_gyeongsang)
-                }
-                "전라" -> {
-                    siList = resources.getStringArray(R.array.cafe_list_si_jeolla)
-                }
-                "제주" -> {
-                    siList = resources.getStringArray(R.array.cafe_list_si_jeju)
-                }
-                else -> {
-                    siList = emptyArray<String>()
-                }
-            }
             for(idx in binding.cgThemeDArea.checkedChipIds){
-                tf.si.add(siList[idx-1])
+                siList.add(binding.cgThemeDArea.findViewById<Chip>(idx).text.toString())
             }
 
             for(idx in binding.cgThemeDGenre.checkedChipIds){
-                tf.genre.add(genreList[idx-1])
+                genreList.add(binding.cgThemeDGenre.findViewById<Chip>(idx).text.toString())
             }
 
             for(idx in binding.cgThemeDType.checkedChipIds){
-                tf.type.add(typeList[idx-1])
+                typeList.add(binding.cgThemeDType.findViewById<Chip>(idx).text.toString())
             }
 
             for(idx in binding.cgThemeDPlayer.checkedChipIds){
-                tf.player.add(playerList[idx-1])
+                playerList.add(binding.cgThemeDPlayer.findViewById<Chip>(idx).text.toString())
             }
 
             for(idx in binding.cgThemeDDiff.checkedChipIds){
-                tf.diff.add(diffList[idx-1])
+                diffList.add(binding.cgThemeDDiff.findViewById<Chip>(idx).text.toString().toInt())
             }
 
             for(idx in binding.cgThemeDActive.checkedChipIds){
-                tf.active.add(activeList[idx-1])
+                activeList.add(binding.cgThemeDActive.findViewById<Chip>(idx).text.toString())
             }
 
-            ThemeFragment().filter()
+            tf = ThemeFilter(island, siList, genreList, typeList, playerList, diffList, activeList)
+            val intent = Intent(this@ThemeFilterActivity, ThemeFragment::class.java)
+                .putExtra("tf", tf)
+            setResult(1, intent)
             finish()
         }
 
         binding.tvThemeDCancel.setOnClickListener {
+            val intent = Intent(this@ThemeFilterActivity, ThemeFragment::class.java)
+            setResult(0, intent)
             finish()
         }
     }
+
 
     private fun setChipGroup(res: ChipGroup, list: Array<String>){
         for(item in list){
@@ -170,7 +144,7 @@ class ThemeFilterActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
                     strings = resources.getStringArray(R.array.cafe_list_si_jeju)
                 }
             }
-            tf.island = p0.getItemAtPosition(p2).toString()
+            island = p0.getItemAtPosition(p2).toString()
             binding.cgThemeDArea.removeAllViews()
             setChipGroup(binding.cgThemeDArea, strings)
         }
