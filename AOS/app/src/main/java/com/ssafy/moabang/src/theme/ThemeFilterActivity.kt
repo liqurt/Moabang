@@ -102,9 +102,10 @@ class ThemeFilterActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
 
 
     private fun setChipGroup(res: ChipGroup, list: Array<String>){
-        for(item in list){
+        for(i in list.indices){
+            if(res == binding.cgThemeDArea && i == 0) continue
             res.addView(Chip(this).apply {
-                text = item
+                text = list[i]
                 isCheckable = true
                 isCheckedIconVisible = true
                 setCheckedIconTintResource(R.color.moabang_pink)

@@ -76,7 +76,9 @@
                     android:layout_marginTop="8dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_themeD_area"></com.google.android.material.chip.ChipGroup>
+                    app:layout_constraintTop_toBottomOf="@+id/tv_themeD_area"
+                    app:singleSelection="false">
+                </com.google.android.material.chip.ChipGroup>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout

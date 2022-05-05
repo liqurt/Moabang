@@ -18,6 +18,7 @@ import android.text.Editable
 import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import com.ssafy.moabang.R
 import com.ssafy.moabang.data.model.repository.Repository
 import com.ssafy.moabang.src.theme.ThemeFilter
 import kotlinx.coroutines.CoroutineScope
@@ -94,9 +95,54 @@ class ThemeFragment : Fragment() {
 
     private fun filter(tf: ThemeFilter){
         Log.d("FILTER TEST", "filter: island = ${tf.island}, si = ${tf.si}")
+
+        if(tf.island != "전체" && tf.si.size == 0){
+            when (tf.island) {
+                "서울" -> {
+                    resources.getStringArray(R.array.cafe_list_si_seoul).toCollection(tf.si)
+                }
+                "경기/인천" -> {
+                    resources.getStringArray(R.array.cafe_list_si_gyeonggi_incheon).toCollection(tf.si)
+                }
+                "충청" -> {
+                    resources.getStringArray(R.array.cafe_list_si_chungcheong).toCollection(tf.si)
+                }
+                "강원" -> {
+                    resources.getStringArray(R.array.cafe_list_si_gangwon).toCollection(tf.si)
+                }
+                "경상" -> {
+                    resources.getStringArray(R.array.cafe_list_si_gyeongsang).toCollection(tf.si)
+                }
+                "전라" -> {
+                    resources.getStringArray(R.array.cafe_list_si_jeolla).toCollection(tf.si)
+                }
+                "제주" -> {
+                    resources.getStringArray(R.array.cafe_list_si_jeju).toCollection(tf.si)
+                }
+            }
+            Log.d("TOCOLLECTION TEST", "tf.si : ${tf.si}")
+        }
+        if(tf.genre.size == 0) resources.getStringArray(R.array.genre_list).toCollection(tf.genre)
+        if(tf.type.size == 0) resources.getStringArray(R.array.type_list).toCollection(tf.type)
+        if(tf.player.size == 0) resources.getStringArray(R.array.player_list).toCollection(tf.player)
+        if(tf.diff.size == 0){
+            tf.diff.add(1)
+            tf.diff.add(2)
+            tf.diff.add(3)
+            tf.diff.add(4)
+            tf.diff.add(5)
+        }
+        if(tf.active.size == 0) {
+            resources.getStringArray(R.array.active_list).toCollection(tf.active)
+            tf.active.add("")
+        }
+
         CoroutineScope(Dispatchers.Main).launch {
-//            filteredList = repository.filterThemes(tf.island, tf.si, tf.genre, tf.type, tf.diff, tf.active)
-            filteredList = repository.filterThemesArea(tf.island, tf.si)
+            filteredList = if(tf.island == "전체"){
+                repository.filterThemesNoArea(tf.genre, tf.type, tf.diff, tf.active)
+            } else {
+                repository.filterThemes(tf.island, tf.si, tf.genre, tf.type, tf.diff, tf.active)
+            }
             themeListRVAdapter.filterList(filteredList)
         }
     }
@@ -114,7 +160,8 @@ class ThemeFragment : Fragment() {
     }
 
     fun searchFilter(searchText: String) {
-        val list = if(!::filteredList.isInitialized || filteredList.isEmpty()) originalList else  filteredList
+//        val list = if(!::filteredList.isInitialized || filteredList.isEmpty()) originalList else  filteredList
+        val list = themeListRVAdapter.data
         searchList = ArrayList<Theme>()
         for (item in list) {
             if (item.tname.contains(searchText)) {
