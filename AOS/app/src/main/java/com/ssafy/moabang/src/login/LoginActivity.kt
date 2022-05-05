@@ -103,6 +103,7 @@ class LoginActivity : AppCompatActivity() {
                     themeViewModel.getAllTheme(jwtToken.toString())
                     val intent = Intent(this@LoginActivity, MainActivity::class.java) // 3. MainActivity로 전환한다.
                     startActivity(intent)
+                    finish()
                 }else{
                     Log.e("AAAAA","네트워킹 성공1, 하지만 원하는 결과가 아님. ${response.errorBody()}")
                     Toast.makeText(this@LoginActivity, "네트워크 성공했지만 에러발생 : ${response.errorBody()}", Toast.LENGTH_SHORT).show()
