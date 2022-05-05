@@ -73,11 +73,19 @@
     font-size: 20px;
 }
 
-#ThemeListDiff{
+#ThemeDiff{
     position: absolute;
-    bottom: 60px;
+    bottom: 40px;
     right: 3px;
 }
+#ThemeGrade{
+    font-size: 20px;
+    position: absolute;
+    bottom: 80px;
+    right: 3px;
+}
+
+
 
 .button4 {
     background-color: white;

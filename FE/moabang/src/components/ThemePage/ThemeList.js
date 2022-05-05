@@ -71,8 +71,9 @@ const ThemeList = (props) => {
                         <div id='ThemeGenre' >{item.genre}</div>
                         <div id='ThemeRplayer' >{ConanMin(item.rplayer)}
                             {Water()}{ConanMax(item.rplayer)}</div>
-                        <div id='ThemeListDiff'>{DifficultyKeyImg(item.difficulty)}</div>
+                        <div id='ThemeDiff'>{DifficultyKeyImg(item.difficulty)}</div>
                         <div id='ThemeTime' >{item.time}</div>
+                        <div id='ThemeGrade' >평점: {item.grade}</div>
                     </div>
                     
                 </div>

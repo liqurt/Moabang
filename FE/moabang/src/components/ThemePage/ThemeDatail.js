@@ -85,6 +85,7 @@ const ThemeDetail = (props) => {
                             {Water()}{ConanMax(Theme.rplayer)}</div>
                     <div id='ThemeDetailTime'>{Theme.time}</div>
                     <div id='ThemeDetailListDiff'>{DifficultyKeyImg(Theme.difficulty)}</div>
+                    <div id='ThemeDetailListGrade'>{Theme.grade}</div>
                 </div>
                 <div className='ThemeTotalReview'>
                     리뷰통계 - 리뷰 기능 만들면 연결할 예정

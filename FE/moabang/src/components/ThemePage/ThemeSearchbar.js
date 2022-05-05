@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import ThemeList from './ThemeList';
 import Paging from './Paging';
+import { gerneBtn ,memberCntBtn,sortBtn ,typeBtn, diffBtn } from './FilterData';
 
 import "./ThemeCSS/Theme.css"
 import "./ThemeCSS/Paging.css"
@@ -9,9 +10,11 @@ import "./ThemeCSS/SearchBar.css";
 const ThemeSearchbar = (props) => {
     const products = props.searchItems;
     const [searchValue, setSearchValue] = useState("");
-    const [joinNum, setJoinNum] = useState(0); //참가 인원
-    const [star, setStar] = useState(0); //평점
-    const [active, setActive] = useState(0); //활동성
+    const [gerne, setGerne] = useState("");
+    const [memberCnt, setMemberCnt] = useState(0);
+    const [sortList, setSortList] = useState("이름순");
+    const [themetype, setThemetype] = useState("");
+    const [diff, setDiff] = useState(0);
 
     const handleInputChange = (event) => {      
         setSearchValue(event.target.value)//입력된 텍스트 답아옴
@@ -22,36 +25,156 @@ const ThemeSearchbar = (props) => {
     const handleInputClear = () => {//텍스트 초기화
         setSearchValue("")
     }
-    
 
-    const filteredProducts = products.filter((product) => { 
-        return product.tname.includes(searchValue);//검색창에 입력된 내용과 비교하여 출력
+    
+    
+    //검색창 필터
+    const filteredProducts = products.filter((res) => { 
+        return res.tname.includes(searchValue);//검색창에 입력된 내용과 비교하여 출력
+    })
+    //장르별 필터
+    const resFilter = filteredProducts.filter((res) => {
+        
+        return res.genre.includes(gerne);
+    });
+    //인원별 필터
+    const memberCntFilter = resFilter.filter((res) => {
+        const min = parseInt(res.rplayer.substr(-3,1));
+        const max = parseInt(res.rplayer.substr(-1));
+        if (memberCnt == 0) {
+            return memberCnt >=0;
+        } else {
+            const resTF = (min <= memberCnt) && (memberCnt <= max);
+            return resTF
+        }
+        
+    });
+    //타입
+    const typeFilter=memberCntFilter.filter((res) => {
+        
+        return res.type.includes(themetype);
+    });
+
+    const diffFilter = typeFilter.filter((res) => {
+        if (diff == 0) {
+            return true;
+        } else {
+            return res.difficulty==diff;
+        }
+        
+        
+    });
+    //정렬
+    const sortFilter = diffFilter.sort((a, b) =>{
+        if (sortList === "이름순") {
+            let x = a.tname.toLowerCase();
+            let y = b.tname.toLowerCase();
+            if (x < y) {
+                return -1;
+            }
+            if (x > y) {
+                return 1;
+            }
+            return 0;
+        } else if (sortList === "평점순") {
+            
+            return b.grade-a.grade;
+        }
+        
+
+
     })
 
+
     //필터 체크 박스 영역 ---------------------------------
-    const handleSetJoinNum = (event) => {      
-        setJoinNum(event.target.value)//입력된 텍스트 답아옴
-
-        const checkboxes = document.getElementsByName("joinNum");
-        checkboxes.forEach((cb) => {
-            cb.checked = false;
-        })
+    //장르
+    const handleGerne = (event) => {
+        if (event.target.value === "전체")
+            setGerne("");
+        else
+            setGerne(event.target.value);
         
-        event.target.checked = true;
-    }
-    const handleSetStar = (event) => {      
-        setStar(event.target.value)//입력된 텍스트 답아옴
-        const checkboxes = document.getElementsByName("star");
-        checkboxes.forEach((cb) => {
-            cb.checked = false;
-        })
+        //클릭 시 색 변하게 하기 위한 코드
+        const nameId = document.getElementsByClassName('filterBtn1');
+        if (event.target.classList[1] === "clicked") {
+            event.target.classList.remove("clicked");
+        } else {
+            for (var i = 0; i < nameId.length; i++) {
+                nameId[i].classList.remove("clicked");
+            }
+
+            event.target.classList.add("clicked");
+        }
+    }   
+    
+    //타입
+    const handleType = (event) => {
+        if (event.target.value === "전체")
+            setThemetype("");
+        else
+            setThemetype(event.target.value);
         
-        event.target.checked = true;
+        //클릭 시 색 변하게 하기 위한 코드
+        const nameId = document.getElementsByClassName('filterBtn2');
+        if (event.target.classList[1] === "clicked") {
+            event.target.classList.remove("clicked");
+        } else {
+            for (var i = 0; i < nameId.length; i++) {
+                nameId[i].classList.remove("clicked");
+            }
+
+            event.target.classList.add("clicked");
+        }
     }
-    const handleSetActive= (event) => {      
-        setActive(event.target.value)//입력된 텍스트 답아옴
+    //난이도
+    const handleDiff = (event) => {
+        setDiff(event.target.value);
+        //클릭 시 색 변하게 하기 위한 코드
+        const nameId = document.getElementsByClassName('filterBtn3');
+        if (event.target.classList[1] === "clicked") {
+            event.target.classList.remove("clicked");
+        } else {
+            for (var i = 0; i < nameId.length; i++) {
+                nameId[i].classList.remove("clicked");
+            }
+
+            event.target.classList.add("clicked");
+        }
+    }
+    //인원
+    const handleMemberCnt = (event) => {
+        setMemberCnt(event.target.value);
+        //클릭 시 색 변하게 하기 위한 코드
+        const nameId = document.getElementsByClassName('filterBtn4');
+        if (event.target.classList[1] === "clicked") {
+            event.target.classList.remove("clicked");
+        } else {
+            for (var i = 0; i < nameId.length; i++) {
+                nameId[i].classList.remove("clicked");
+            }
+
+            event.target.classList.add("clicked");
+        }
     }
 
+    
+    //정렬
+    const handleSort = (event) => {
+        setSortList(event.target.value);
+
+        //클릭 시 색 변하게 하기 위한 코드
+        const nameId = document.getElementsByClassName('filterBtn5');
+        if (event.target.classList[1] === "clicked") {
+            event.target.classList.remove("clicked");
+        } else {
+            for (var i = 0; i < nameId.length; i++) {
+                nameId[i].classList.remove("clicked");
+            }
+
+            event.target.classList.add("clicked");
+        }
+    }
+    
 
     //위로 체크 박스 영역-----------------------------
     //페이징 처리
@@ -63,6 +186,8 @@ const ThemeSearchbar = (props) => {
         
     };
 
+
+
     const indexOfLast = page * 9;
     const indexOfFirst = indexOfLast - 9;
     function currentPosts(tmp) {
@@ -72,7 +197,7 @@ const ThemeSearchbar = (props) => {
     }
 
     useEffect(() => {
-        setPageCnt((cnt) => cnt = filteredProducts.length);
+        setPageCnt((cnt) => cnt = sortFilter.length);
         
     }, [searchValue]);
 
@@ -85,39 +210,54 @@ const ThemeSearchbar = (props) => {
                     {shouldDisplayButton && <button className='button4' onClick={handleInputClear}>검색 초기화</button>}
                     <input type="text" className="search__input" value={searchValue} placeholder='검색어 입력'  onChange={handleInputChange}/>
                 </div>
-                <div id='ReviewJoinNum'>
-                    참가 인원:
-                    <input type={"checkbox"} name='joinNum' value={1} onClick={handleSetJoinNum}/>1명
-                    <input type={"checkbox"} name='joinNum' value={2} onClick={handleSetJoinNum}/>2명
-                    <input type={"checkbox"} name='joinNum' value={3} onClick={handleSetJoinNum}/>3명
-                    <input type={"checkbox"} name='joinNum' value={4} onClick={handleSetJoinNum}/>4명
-                    <input type={"checkbox"} name='joinNum' value={5} onClick={handleSetJoinNum}/>5명
-                    <input type={"checkbox"} name='joinNum' value={6} onClick={handleSetJoinNum}/>6명
+                <div><span>장르</span>
+                {gerneBtn &&
+                    gerneBtn.map((type, index) => (
+                        <button className='filterBtn1' key={index} value={type.value} onClick={handleGerne}>
+                            {type.name}
+                        </button>
+                    ))
+                }
                 </div>
-                    
-                <div id='ReviewStar'>
-                    평점
-                    <input type={"checkbox"} name='star' value={0} onClick={handleSetStar}/>1이하
-                    <input type={"checkbox"} name='star' value={1} onClick={handleSetStar}/>1이상
-                    <input type={"checkbox"} name='star' value={2} onClick={handleSetStar}/>2이상
-                    <input type={"checkbox"} name='star' value={3} onClick={handleSetStar}/>3이상
-                    <input type={"checkbox"} name='star' value={4} onClick={handleSetStar}/>4이상
-                    <input type={"checkbox"} name='star' value={5} onClick={handleSetStar}/>5이상
-                    
+                <div>
+                    <span>타입</span>
+                    {typeBtn &&
+                        typeBtn.map((type, index) => (
+                            <button className='filterBtn2' key={index} value={type.value} onClick={handleType}>
+                                {type.name}
+                            </button>
+                        ))
+                    }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span>난이도</span>
+                    {diffBtn &&
+                        diffBtn.map((type, index) => (
+                            <button className='filterBtn3' key={index} value={type.value} onClick={handleDiff}>
+                                {type.name}
+                            </button>
+                        ))
+                    }
                 </div>
-                <div id='ReviewActive'>
-                    활동성
-                    <select onChange={handleSetActive} value={active}>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                    </select>
-
+                <div><span>참여인원</span>
+                {memberCntBtn &&
+                    memberCntBtn.map((type, index) => (
+                        <button className='filterBtn4' key={index} value={type.value} onClick={handleMemberCnt}>
+                            {type.name}
+                        </button>
+                    ))
+                }
                 </div>
-
-
+                
+                
+                <div><span>정렬</span>
+                {sortBtn &&
+                    sortBtn.map((type, index) => (
+                        <button className='filterBtn5' key={index} value={type.value} onClick={handleSort}>
+                            {type.name}
+                        </button>
+                    ))
+                }
+                </div>
+                
             </div>
             <br></br>
             <div>
@@ -128,7 +268,7 @@ const ThemeSearchbar = (props) => {
             </div>
 
             <div >
-                <ThemeList Theme={currentPosts(filteredProducts)} />
+                <ThemeList Theme={currentPosts(sortFilter)} />
                 
             </div>
 

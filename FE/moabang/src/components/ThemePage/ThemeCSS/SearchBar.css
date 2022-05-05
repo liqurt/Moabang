@@ -28,6 +28,39 @@
 
 }
 
+.filterBtn1{
+  margin: 5px;
+  background-color: rgb(238, 226, 226);
+  border-radius: 5px;
+}
+.filterBtn2{
+  margin: 5px;
+  
+  background-color: rgb(238, 226, 226);
+  border-radius: 5px;
+}
+.filterBtn3{
+  margin: 5px;
+  
+  background-color: rgb(238, 226, 226);
+  border-radius: 5px;
+}
+.filterBtn4{
+  margin: 5px;
+  
+  background-color: rgb(238, 226, 226);
+  border-radius: 5px;
+}
+.filterBtn5{
+  margin: 5px;
+  
+  background-color: rgb(238, 226, 226);
+  border-radius: 5px;
+}
+.clicked{
+  background-color: rgb(252, 0, 55);
+}
+
 
 
 
