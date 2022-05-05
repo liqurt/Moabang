@@ -160,8 +160,7 @@ class ThemeFragment : Fragment() {
     }
 
     fun searchFilter(searchText: String) {
-//        val list = if(!::filteredList.isInitialized || filteredList.isEmpty()) originalList else  filteredList
-        val list = themeListRVAdapter.data
+        val list = if(!::filteredList.isInitialized || filteredList.isEmpty()) originalList else filteredList
         searchList = ArrayList<Theme>()
         for (item in list) {
             if (item.tname.contains(searchText)) {
