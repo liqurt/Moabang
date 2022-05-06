@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -20,7 +22,7 @@ public class Review {
     @Column(name = "reviewId")
     private Long rid;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "uid")
     private UserInfo userInfo;
     private int tid;
@@ -35,11 +37,12 @@ public class Review {
     private int difficulty;
 
     @JsonFormat(pattern = "yyyy.MM.dd")
-    private Timestamp playDate;
+    @Temporal(TemporalType.DATE)
+    private Date playDate;
 
     @JsonFormat(pattern = "yyyy.MM.dd")
+    @CreationTimestamp
     private Timestamp regDate;
     private String content;
-
 
 }

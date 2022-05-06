@@ -30,6 +30,7 @@ public class Theme {
     private String genre;
     private String type;
     private float grade;
+    private int reviewCnt;
     private String activity;
 
 }

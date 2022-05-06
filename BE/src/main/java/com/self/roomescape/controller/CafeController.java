@@ -5,6 +5,7 @@ import com.self.roomescape.repository.*;
 import com.self.roomescape.repository.mapping.ThemeListMapping;
 
 import io.jsonwebtoken.Jwts;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,6 +25,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/cafe")
+@Api(tags = {"카페 Api"})
 public class CafeController {
     @Autowired
     private CafeRepository cafeRepository;
@@ -38,7 +40,6 @@ public class CafeController {
 
     @Value("${spring.jwt.secret}")
     private String secretKey;
-
 
 
     @ApiOperation(value = "카페 전체 목록", notes = "카페 전체 목록을 반환.")
@@ -100,7 +101,7 @@ public class CafeController {
                     temp.setTname(themeAllList.get(i).getTname());
 
                     for (int j = 0; j < likeList.get().size(); j++) {
-                        if (themeAllList.get(i).getTid() == likeList.get().get(j).getTheme().getTid()){
+                        if (themeAllList.get(i).getTid() == likeList.get().get(j).getTheme().getTid()) {
                             temp.setIslike(true);
                             themeListResponses.add(temp);
                             ;// true 정보 넣기
@@ -133,26 +134,24 @@ public class CafeController {
             return new ResponseEntity<>("tid : " + tid + "에 해당되는 정보가 없음", HttpStatus.OK);
         }
         ThemeDetailResDTO themeDetailResDTO = ThemeDetailResDTO.builder()
-                        .Tid(themeInfo.get().getTid())
-                        .Cid(themeInfo.get().getCid())
-                        .Tname(themeInfo.get().getTname())
-                        .Img(themeInfo.get().getImg())
-                        .Description(themeInfo.get().getDescription())
-                        .Rplayer(themeInfo.get().getRplayer())
-                        .Time(themeInfo.get().getTime())
-                        .Genre(themeInfo.get().getGenre())
-                        .Type(themeInfo.get().getType())
-                        .Difficulty(themeInfo.get().getDifficulty())
-                        .Grade(themeInfo.get().getGrade())
-                        .Activity(themeInfo.get().getActivity())
-                        .Difficulty(themeInfo.get().getDifficulty())
-                        .Difficulty(themeInfo.get().getDifficulty())
-                        .Difficulty(themeInfo.get().getDifficulty())
-                        .Cname(cafeRepository.findCafeByCid(themeInfo.get().getCid()).getCname())
-                        .Curl(cafeRepository.findCafeByCid(themeInfo.get().getCid()).getUrl())
-                        .Island(cafeRepository.findCafeByCid(themeInfo.get().getCid()).getIsland())
-                        .Si(cafeRepository.findCafeByCid(themeInfo.get().getCid()).getSi())
-                        .build();
+                .Tid(themeInfo.get().getTid())
+                .Cid(themeInfo.get().getCid())
+                .Tname(themeInfo.get().getTname())
+                .Img(themeInfo.get().getImg())
+                .Description(themeInfo.get().getDescription())
+                .Rplayer(themeInfo.get().getRplayer())
+                .Time(themeInfo.get().getTime())
+                .Genre(themeInfo.get().getGenre())
+                .Type(themeInfo.get().getType())
+                .Difficulty(themeInfo.get().getDifficulty())
+                .Grade(themeInfo.get().getGrade())
+                .Activity(themeInfo.get().getActivity())
+                .Difficulty(themeInfo.get().getDifficulty())
+                .Cname(cafeRepository.findCafeByCid(themeInfo.get().getCid()).getCname())
+                .Curl(cafeRepository.findCafeByCid(themeInfo.get().getCid()).getUrl())
+                .Island(cafeRepository.findCafeByCid(themeInfo.get().getCid()).getIsland())
+                .Si(cafeRepository.findCafeByCid(themeInfo.get().getCid()).getSi())
+                .build();
 
         themeDetailResponse.setThemeDetailResDTO(themeDetailResDTO);
 

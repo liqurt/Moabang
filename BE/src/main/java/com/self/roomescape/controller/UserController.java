@@ -38,7 +38,7 @@ import java.util.*;
 @RequiredArgsConstructor
 @Controller
 @RequestMapping(value = "/user")
-@Api(tags = {"snsLogin"})
+@Api(tags = {"snsLogin Api"})
 public class UserController {
     //    private final UserService userService;
     private final HttpSession httpSession;
