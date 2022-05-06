@@ -192,7 +192,6 @@ class ThemeFragment : Fragment() {
         }
         if(tf.genre.size == 0) resources.getStringArray(R.array.genre_list).toCollection(tf.genre)
         if(tf.type.size == 0) resources.getStringArray(R.array.type_list).toCollection(tf.type)
-        if(tf.player.size == 0) resources.getStringArray(R.array.player_list).toCollection(tf.player)
         if(tf.diff.size == 0){
             tf.diff.add(1)
             tf.diff.add(2)
@@ -205,11 +204,26 @@ class ThemeFragment : Fragment() {
             tf.active.add("")
         }
 
+        var minp = 0
+        var maxp = 0
+        if(tf.player.size > 0){
+            minp = tf.player[0]
+            if(tf.player.size == 1){
+                maxp = tf.player[0]
+            } else {
+                maxp = tf.player[tf.player.size - 1]
+            }
+            if(maxp == 5) maxp = 10
+        } else {
+            minp = 0
+            maxp = 10
+        }
+
         CoroutineScope(Dispatchers.Main).launch {
             filteredList = if(tf.island == "전체"){
-                repository.filterThemesNoArea(tf.genre, tf.type, tf.diff, tf.active)
+                repository.filterThemesNoArea(tf.genre, tf.type, minp, maxp, tf.diff, tf.active)
             } else {
-                repository.filterThemes(tf.island, tf.si, tf.genre, tf.type, tf.diff, tf.active)
+                repository.filterThemes(tf.island, tf.si, tf.genre, tf.type, minp, maxp, tf.diff, tf.active)
             }
             themeListRVAdapter.filterList(filteredList)
         }

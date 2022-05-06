@@ -74,14 +74,14 @@ class Repository private constructor(context: Context) {
             themeDao.insertThemes(themeList)
         }
 
-    suspend fun filterThemes(island: String, si: ArrayList<String>, genre: ArrayList<String>, type: ArrayList<String>, diff : ArrayList<Int>, active : ArrayList<String>) : List<Theme> =
+    suspend fun filterThemes(island: String, si: ArrayList<String>, genre: ArrayList<String>, type: ArrayList<String>, minp: Int, maxp: Int, diff : ArrayList<Int>, active : ArrayList<String>) : List<Theme> =
         database.withTransaction {
-            themeDao.filterThemesTemp(island, si, genre, type, diff, active)
+            themeDao.filterThemesTemp(island, si, genre, type, minp, maxp, diff, active)
         }
 
-    suspend fun filterThemesNoArea(genre: ArrayList<String>, type: ArrayList<String>, diff : ArrayList<Int>, active : ArrayList<String>) : List<Theme> =
+    suspend fun filterThemesNoArea(genre: ArrayList<String>, type: ArrayList<String>, minp: Int, maxp: Int, diff : ArrayList<Int>, active : ArrayList<String>) : List<Theme> =
         database.withTransaction {
-            themeDao.filterThemesNoAreaTemp(genre, type, diff, active)
+            themeDao.filterThemesNoAreaTemp(genre, type, minp, maxp, diff, active)
         }
 
     suspend fun filterThemesArea(island: String, si: ArrayList<String>) : List<Theme> =

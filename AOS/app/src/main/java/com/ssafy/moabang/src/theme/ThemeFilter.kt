@@ -9,7 +9,7 @@ data class ThemeFilter (
     var si: ArrayList<String>,
     var genre: ArrayList<String>,
     var type: ArrayList<String>,
-    var player: ArrayList<String>,
+    var player: ArrayList<Int>,
     var diff: ArrayList<Int>,
     var active: ArrayList<String>
 ): Parcelable

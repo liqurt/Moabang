@@ -19,7 +19,7 @@ class ThemeFilterActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
     private lateinit var siList : ArrayList<String>
     private lateinit var genreList : ArrayList<String>
     private lateinit var typeList : ArrayList<String>
-    private lateinit var playerList : ArrayList<String>
+    private lateinit var playerList : ArrayList<Int>
     private lateinit var diffList : ArrayList<Int>
     private lateinit var activeList : ArrayList<String>
     private lateinit var tf : ThemeFilter
@@ -57,7 +57,7 @@ class ThemeFilterActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
             siList = ArrayList<String>()
             genreList = ArrayList<String>()
             typeList = ArrayList<String>()
-            playerList = ArrayList<String>()
+            playerList = ArrayList<Int>()
             diffList = ArrayList<Int>()
             activeList = ArrayList<String>()
             /////////
@@ -75,7 +75,15 @@ class ThemeFilterActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
             }
 
             for(idx in binding.cgThemeDPlayer.checkedChipIds){
-                playerList.add(binding.cgThemeDPlayer.findViewById<Chip>(idx).text.toString())
+                when(binding.cgThemeDPlayer.findViewById<Chip>(idx).text.toString()) {
+                    "1인" -> {playerList.add(1)}
+                    "2인" -> {playerList.add(2)}
+                    "3인" -> {playerList.add(3)}
+                    "4인" -> {playerList.add(4)}
+                    "5인 이상" -> {playerList.add(5)}
+
+                }
+
             }
 
             for(idx in binding.cgThemeDDiff.checkedChipIds){

@@ -24,5 +24,7 @@ data class Theme(
     val island: String,
     val si: String,
     val url: String,
-    var islike: Boolean
+    var islike: Boolean,
+    val min_player: Int,
+    val max_player: Int
 ): Parcelable
