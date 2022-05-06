@@ -193,11 +193,7 @@ class ThemeFragment : Fragment() {
         if(tf.genre.size == 0) resources.getStringArray(R.array.genre_list).toCollection(tf.genre)
         if(tf.type.size == 0) resources.getStringArray(R.array.type_list).toCollection(tf.type)
         if(tf.diff.size == 0){
-            tf.diff.add(1)
-            tf.diff.add(2)
-            tf.diff.add(3)
-            tf.diff.add(4)
-            tf.diff.add(5)
+            for(i in 1..5) tf.diff.add(i)
         }
         if(tf.active.size == 0) {
             resources.getStringArray(R.array.active_list).toCollection(tf.active)
