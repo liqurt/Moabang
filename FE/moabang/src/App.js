@@ -8,7 +8,10 @@ import Home from './components/main/mainpage';
 import Mypage from './components/mypage/Mypage';
 import Navbar from './components/nav/Navibar';
 // import Error from './components/error/error';
+import CafeMain from './components/cafePage/cafeMain';
+import ThemeMain from './components/ThemePage/ThemeMain';
 
+import "./App.css";
 function App() {
   return (
     <div className="App">
@@ -18,6 +21,9 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/" element={localStorage.getItem('myToken') ? <Home /> : <Login />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/cafe" element={<CafeMain />} />
+        <Route path="/theme" element={<ThemeMain />} />
         {/* <Route path="/*" element={<Error />} /> */}
       </Routes>
     </div>

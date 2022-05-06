@@ -36,8 +36,8 @@ const Navibar = () => {
                     }
                     <Nav.Link href="/home">홈</Nav.Link>
 
-                    <Nav.Link href="#features">테마</Nav.Link>
-                    <Nav.Link href="#pricing">카페</Nav.Link>
+                    <Nav.Link href="/theme">테마</Nav.Link>
+                    <Nav.Link href="/cafe">카페</Nav.Link>
                     <Nav.Link href="#pricing">커뮤니티</Nav.Link>
                     <Nav.Link href="https://drive.google.com/uc?export=download&id=1zRrn_S_lFrYk0uU3AEl5zr5LJYAdoAFM&confirm=t">앱 다운로드</Nav.Link>
                 </Nav>

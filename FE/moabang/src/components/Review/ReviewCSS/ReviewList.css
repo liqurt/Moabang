@@ -1,0 +1,44 @@
+.review-container{
+    margin-top: 30px;
+}
+.ReviewHead{
+    margin-left: 80px;
+    text-align: left;
+    height: 30px;
+}
+
+.ReviewWriteBtn{
+    width: 100%;
+    height: 50px;
+
+}
+
+#circle{
+    float: left;
+}
+#ReviewTitle{
+    font-size: 20px;
+    float: left;
+
+}
+#ReviewNemNum{
+    margin-left: 20px;
+    float: left;
+}
+#ReviewSuccAndFail{
+    margin-left: 10px;
+    float: left;
+}
+
+.ReviewDetail{
+    border-radius: 15px;
+    margin-top: 8px;
+    margin-left: 4%;
+    margin-right: 4%;
+    width: 80%;
+    height: 150px;
+    background-color: #FFFFFF;
+}
+
+
+

@@ -1,0 +1,85 @@
+.ThemeDetailImgAndInfo{
+    width: 100%;
+    height: 600px;
+}
+
+
+.TDetailImg{
+    margin-top: 20px;
+    margin-left: 30px;
+    height: 500px;
+    width: 400px;
+    float: left;
+    border-radius: 15px;
+}
+.ThemeDetailInfo{
+    margin-top: 20px;
+    height: 200px;
+    width: 50%;
+    
+    background-color: #FFFFFF;
+    position: relative;
+    margin-left: 30px;
+    float: right;
+    border-radius: 15px;
+}
+.ThemeTotalReview{
+    margin-top: 50px;
+    height: 250px;
+    width: 50%;
+    float: right;
+    border-radius: 15px;
+    background-color: #FFFFFF;
+}
+
+.ThemeNav{
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    margin: 10px;
+    height: 50px;
+    width: 80%;
+
+}
+
+#ThemeDetailName{
+    font-family: "Son";
+    font-size: 35px;
+}
+#ThemeDetailType{
+    font-family: "Oeisi";
+    font-size: 30px;
+    text-align: left;
+    margin-left: 20px;
+}
+#ThemeDetailGenre{
+    font-family: "Oeisi";
+    font-size: 30px;
+    text-align: left;
+    margin-left: 20px;
+}
+
+#ThemeDetailRplayer{
+    position: absolute;
+    bottom: 0px;
+    right: 3px;
+    font-size: 20px;
+}
+#ThemeDetailTime{
+    font-family: "Oeisi";
+    font-size: 30px;
+    text-align: left;
+    margin-left: 20px;
+}
+#ThemeDetailListDiff{
+    position: absolute;
+    bottom: 60px;
+    right: 3px;
+}
+#ThemeDetailListGrade{
+    font-family: "Oeisi";
+    font-size: 30px;
+    text-align: left;
+    margin-left: 20px;
+
+}
+

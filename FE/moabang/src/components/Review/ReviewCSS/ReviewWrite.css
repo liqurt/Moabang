@@ -1,0 +1,93 @@
+.toggle-container{
+    width: 100%;
+    height: auto;
+    background-color: aqua;
+    border-radius: 10px;
+}
+#ReviewWriteTitle{
+}
+
+#ReviewJoinNum{
+    
+}
+#ReviewIsCleared{
+    
+}
+#ReviewStar{
+    
+}
+#ReviewClearTime{
+    
+}
+#ReviewActive{
+    
+}
+#ReviewHint{
+    
+}
+#ReviewRecommendNum{
+    
+}
+#ReviewCotent{
+    margin-top: 15px;
+}
+
+
+.writeSumitBtn{
+    margin: 10px;
+    width: 100px;
+    height: 28px;
+    border-radius: 10px;
+}
+#inputTitle{
+    width: 40%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 1px solid #555;
+    outline: none;
+    
+}:focus {
+    background-color: lightblue;
+}
+
+#inputContent{
+    width: 60%;
+    height: 70px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    font-size: 16px;
+    resize: none;
+    
+}:focus {
+    background-color: lightblue;
+}
+
+
+
+#input1 {
+    width: 400px;
+    outline: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+#input2 {
+    width: 50px;
+    background-color: aqua;
+    outline: none;
+    text-align: center;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+
+#reviewImg{
+    height: 60px;
+    width: 60px;
+}
+
