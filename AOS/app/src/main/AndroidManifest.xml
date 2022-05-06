@@ -3,6 +3,8 @@
     package="com.ssafy.moabang">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
     <application
         android:name=".config.GlobalApplication"
@@ -13,6 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Moabang"
         android:usesCleartextTraffic="true">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}" />
+        <activity
+            android:name=".src.main.cafe.CafeDetailActivity"
+            android:exported="false" />
         <activity
             android:name=".src.theme.ThemeDetailActivity"
             android:exported="true" />

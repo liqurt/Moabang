@@ -4,11 +4,10 @@ import android.content.Context
 import android.util.Log
 import androidx.room.Room
 import androidx.room.withTransaction
-import com.ssafy.moabang.config.GlobalApplication
 import com.ssafy.moabang.data.model.database.AppDatabase
 import com.ssafy.moabang.data.model.dto.Cafe
 import com.ssafy.moabang.data.model.dto.Theme
-import com.ssafy.moabang.src.retrofitInterface.cafeService
+
 import java.lang.IllegalStateException
 
 const val DB_NAME = "moabang.db"

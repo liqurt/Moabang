@@ -11,6 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "user_like")
+@ToString
 public class UserLike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,10 +19,8 @@ public class UserLike {
     private int ulid;
 
     @ManyToOne(targetEntity = User.class)
-
     private User user;
 
     @ManyToOne(targetEntity = Theme.class)
-
     private Theme theme;
 }

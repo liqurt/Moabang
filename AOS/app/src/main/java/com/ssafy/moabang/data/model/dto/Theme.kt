@@ -19,7 +19,7 @@ data class Theme(
     val grade: Double,
     val activity: String,
     val cid: Int,
-    val cname: String,
+    var cname: String,
     val img: String,
     val island: String,
     val si: String,

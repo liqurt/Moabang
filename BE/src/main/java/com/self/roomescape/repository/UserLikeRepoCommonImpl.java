@@ -16,6 +16,19 @@ public class UserLikeRepoCommonImpl implements UserLikeRepoCommon{
         this.queryFactory= new JPAQueryFactory(em);        this.em=em;
     }
 
+    @Override
+    @Transactional
+    public Boolean check(User user, Theme theme){
+        UserLike result = queryFactory
+                .selectFrom(QUserLike.userLike)
+                .where(QUserLike.userLike.user.eq(user))
+                .fetchFirst();
+        if(result!=null){
+            return true;
+        }else{
+            return false;
+        }
+    }
 //    @Override
 //    @Transactional
 //    public User findUserByEmail(User user) {

@@ -5,10 +5,13 @@ import {
 // import './App.css';
 import Login from './components/login/loginpage';
 import Home from './components/main/mainpage';
+import Mypage from './components/mypage/Mypage';
 import Navbar from './components/nav/Navibar';
-import { getCookie } from './components/utils/Cookie';
 // import Error from './components/error/error';
+import CafeMain from './components/cafePage/cafeMain';
+import ThemeMain from './components/ThemePage/ThemeMain';
 
+import "./App.css";
 function App() {
   return (
     <div className="App">
@@ -16,7 +19,11 @@ function App() {
       <Routes>
 
         <Route path="/home" element={<Home />} />
-        <Route path="/" element={getCookie('myToken') ? <Home /> : <Login />} />
+        <Route path="/mypage" element={<Mypage />} />
+        <Route path="/" element={localStorage.getItem('myToken') ? <Home /> : <Login />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/cafe" element={<CafeMain />} />
+        <Route path="/theme" element={<ThemeMain />} />
         {/* <Route path="/*" element={<Error />} /> */}
       </Routes>
     </div>

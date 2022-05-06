@@ -26,6 +26,10 @@ public interface ThemeListMapping {
 
     String getCurl();
 
+    String getIsland();
+
+    String getSi();
+
     float getDifficulty();
 
     String getGrade();

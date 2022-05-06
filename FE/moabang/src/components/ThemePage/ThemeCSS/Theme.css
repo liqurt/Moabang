@@ -1,0 +1,104 @@
+.total{
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+
+
+.filter{ 
+    width: 100%;
+    height: 250px;
+    background-color: #FFC7C7;
+    border-radius: 15px;
+}
+
+.ThemeList{
+    width: 100%;
+}
+
+.detailList{
+    display: flex;
+    flex-wrap:wrap;
+}
+
+.detail-container{
+    border-radius: 15px;
+    margin-top: 2%;
+    margin-left: 4%;
+    margin-right: 4%;
+    width: 25%;
+    height: 600px;
+    background-color: #FFFFFF;
+}
+
+.ThemeImg{
+    border-radius: 15px;
+    margin-top: 10px;
+    width: 85%;
+    height: 70%;
+}
+.ThemeInfo{
+    width: 100%;
+    height: 25%;
+    position: relative;
+}
+#ThemeName{
+    font-family: "Son";
+    font-size: 35px;
+}
+#ThemeType{
+    font-family: "Oeisi";
+    font-size: 30px;
+    text-align: left;
+    margin-left: 20px;
+
+}
+#ThemeGenre{
+    font-family: "Oeisi";
+    font-size: 30px;
+    text-align: left;
+    margin-left: 20px;
+}
+#ThemeTime{
+    font-family: "Oeisi";
+    font-size: 30px;
+    text-align: left;
+    margin-left: 20px;
+    
+}
+#ThemeRplayer{
+    position: absolute;
+    bottom: 0px;
+    right: 3px;
+    font-size: 20px;
+}
+
+#ThemeDiff{
+    position: absolute;
+    bottom: 40px;
+    right: 3px;
+}
+#ThemeGrade{
+    font-size: 20px;
+    position: absolute;
+    bottom: 80px;
+    right: 3px;
+}
+
+
+
+.button4 {
+    background-color: white;
+    color: black;
+    border: 2px solid #e7e7e7;
+    border-radius: 15px;
+    margin-right: 10px;
+  }
+  
+  .button4:hover {background-color: #e7e7e7;}
+
+
+
+
+
+

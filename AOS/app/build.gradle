@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 Properties properties = new Properties()
@@ -89,4 +90,13 @@ dependencies {
     // ViewModel
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0'
 
+    // CoordinatorLayout
+    implementation "androidx.coordinatorlayout:coordinatorlayout:1.2.0"
+
+    // GoogleMap
+    implementation 'com.google.android.gms:play-services-maps:18.0.2'
+    implementation 'com.google.android.gms:play-services-location:19.0.1'
+
+    // tedPermission
+    implementation 'io.github.ParkSangGwon:tedpermission-normal:3.3.0'
 }

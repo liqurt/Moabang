@@ -12,6 +12,7 @@ import java.util.List;
 @Setter
 @ToString
 public class ThemeDetailResponse {
-    private Theme theme;
+    private ThemeDetailDTO themeDetailDTO;
     private List<Review> reviewList;
+    private boolean islike;
 }
