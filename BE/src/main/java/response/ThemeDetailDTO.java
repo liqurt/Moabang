@@ -1,11 +1,12 @@
 package response;
 
-import lombok.Data;
+import lombok.*;
 
-import javax.persistence.*;
 
 @Data
-public class ThemeListResponse {
+@NoArgsConstructor
+@AllArgsConstructor
+public class ThemeDetailDTO {
     private int tid;
     private int cid;
     private String tname;
@@ -15,14 +16,13 @@ public class ThemeListResponse {
     private String time;
     private String genre;
     private String type;
+    private int difficulty;
+    private float grade;
+    private String activity;
     private String cname;
-    private String curl;
+    private String url;
     private String island;
     private String si;
-    private float difficulty;
-    private String grade;
-    private String activity;
-    private boolean islike;
+    private long count;
 
-    private int TotalLike;
 }

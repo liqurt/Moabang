@@ -10,7 +10,7 @@ import java.util.Optional;
 
 
 @Repository
-public interface CafeRepository extends JpaRepository<Cafe, Long> {
+public interface CafeRepository extends JpaRepository<Cafe, Long>, CafeRepoCommon {
     List<Cafe> findAll();
     Cafe findCafeByCid(int cid);
 
