@@ -1,0 +1,27 @@
+.profile-card{
+    border-radius: 2vh;
+    margin: 3vh 0 3vh 5vh;
+}
+.profile-card-img
+{
+    width: 30vh;
+    height: 30vh;
+    border: 5px white solid;
+    border-radius: 30vh ;
+    text-align: left;
+}
+.flex-column{
+    background-color: white;
+    border-radius: 2vh;
+    margin: 3vh 0 3vh 5vh;
+}
+.profile-tab-item-1-text,
+.profile-tab-item-2-text,
+.profile-tab-item-3-text,
+.profile-tab-item-4-text
+{
+    color: #8785A2;
+}
+.profile-tab-item-1{
+    background-color: white;
+}

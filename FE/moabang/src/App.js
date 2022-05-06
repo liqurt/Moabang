@@ -5,8 +5,8 @@ import {
 // import './App.css';
 import Login from './components/login/loginpage';
 import Home from './components/main/mainpage';
+import Mypage from './components/mypage/Mypage';
 import Navbar from './components/nav/Navibar';
-import { getCookie } from './components/utils/Cookie';
 // import Error from './components/error/error';
 
 function App() {
@@ -16,7 +16,8 @@ function App() {
       <Routes>
 
         <Route path="/home" element={<Home />} />
-        <Route path="/" element={getCookie('myToken') ? <Home /> : <Login />} />
+        <Route path="/mypage" element={<Mypage />} />
+        <Route path="/" element={localStorage.getItem('myToken') ? <Home /> : <Login />} />
         {/* <Route path="/*" element={<Error />} /> */}
       </Routes>
     </div>
