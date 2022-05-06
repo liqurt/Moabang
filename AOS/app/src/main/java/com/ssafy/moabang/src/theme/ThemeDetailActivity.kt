@@ -131,20 +131,20 @@ class ThemeDetailActivity : AppCompatActivity() {
     }
 
     private fun setLike(){
-//        if(theme.like) {
-//            binding.ivToolbarTrailingIcon.setImageResource(R.drawable.icon_like_after)
-//        } else {
-//            binding.ivToolbarTrailingIcon.setImageResource(R.drawable.icon_like_before)
-//        }
-//
-//        binding.ivToolbarTrailingIcon.setOnClickListener {
-//            theme.like = !theme.like
-//            if(theme.like) {
-//                binding.ivToolbarTrailingIcon.setImageResource(R.drawable.icon_like_after)
-//            } else {
-//                binding.ivToolbarTrailingIcon.setImageResource(R.drawable.icon_like_before)
-//            }
-//        }
+        if(theme.isLike) {
+            binding.ivToolbarTrailingIcon.setImageResource(R.drawable.icon_like_after)
+        } else {
+            binding.ivToolbarTrailingIcon.setImageResource(R.drawable.icon_like_before)
+        }
+
+        binding.ivToolbarTrailingIcon.setOnClickListener {
+            theme.isLike = !theme.isLike
+            if(theme.isLike) {
+                binding.ivToolbarTrailingIcon.setImageResource(R.drawable.icon_like_after)
+            } else {
+                binding.ivToolbarTrailingIcon.setImageResource(R.drawable.icon_like_before)
+            }
+        }
     }
 
 }

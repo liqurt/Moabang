@@ -37,21 +37,21 @@ class ThemeListRVAdapter: RecyclerView.Adapter<ThemeListRVAdapter.ViewHolder>() 
             val tvPlayer = itemView.findViewById<TextView>(R.id.tv_themeL_player)
             val like = itemView.findViewById<ImageView>(R.id.iv_themeL_like)
 
-//            if(item.like){
-//                like.setImageResource(R.drawable.icon_like_after)
-//            } else {
-//                like.setImageResource(R.drawable.icon_like_before)
-//            }
-//
-//            like.setOnClickListener {
-//                if(item.like){
-//                    item.like = false
-//                    like.setImageResource(R.drawable.icon_like_before)
-//                } else {
-//                    item.like = true
-//                    like.setImageResource(R.drawable.icon_like_after)
-//                }
-//            }
+            if(item.isLike){
+                like.setImageResource(R.drawable.icon_like_after)
+            } else {
+                like.setImageResource(R.drawable.icon_like_before)
+            }
+
+            like.setOnClickListener {
+                if(item.isLike){
+                    item.isLike = false
+                    like.setImageResource(R.drawable.icon_like_before)
+                } else {
+                    item.isLike = true
+                    like.setImageResource(R.drawable.icon_like_after)
+                }
+            }
 
             Glide.with(themeImg).load(item.img).into(themeImg)
             tvThemeName.text = item.tname
