@@ -84,6 +84,11 @@ class Repository private constructor(context: Context) {
             themeDao.filterThemesArea(island, si)
         }
 
+    suspend fun setThemeLike(tid: Int, isLike: Boolean) =
+        database.withTransaction {
+            themeDao.setThemeLike(tid, isLike)
+        }
+
     companion object {
         private var instance: Repository? = null
         fun initialize(context: Context) {

@@ -5,18 +5,22 @@ import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.View
+import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.ssafy.moabang.R
 import com.ssafy.moabang.data.model.dto.Theme
+import com.ssafy.moabang.data.model.viewmodel.ThemeViewModel
 import com.ssafy.moabang.databinding.ActivityThemeDetailBinding
 
 class ThemeDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityThemeDetailBinding
     private lateinit var theme: Theme
     lateinit var behavior: BottomSheetBehavior<ConstraintLayout>
+    private val themeViewModel: ThemeViewModel by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,6 +86,13 @@ class ThemeDetailActivity : AppCompatActivity() {
             finish()
         }
 
+//        binding.ivToolbarTrailingIcon.setOnClickListener {
+//            val sp = this.getSharedPreferences("moabang", AppCompatActivity.MODE_PRIVATE)
+//            val token = sp.getString("moabangToken", "")!!
+//
+//            themeViewModel.themeLike(token, theme.tid)
+//
+//        }
 
         binding.bsThemeDA.setOnClickListener {
             if(behavior.state == BottomSheetBehavior.STATE_COLLAPSED){
@@ -104,10 +115,11 @@ class ThemeDetailActivity : AppCompatActivity() {
 
             val frag = ThemeUrlFragment()
             var bundle = Bundle(1)
-            bundle.putString("url", theme.curl)
+            bundle.putString("url", theme.url)
             frag.arguments = bundle
             setFragment(frag)
         }
+
         binding.tvThemeDAReview.setOnClickListener {
             val frag = ThemeReviewFragment()
             var bundle = Bundle(1)
@@ -115,9 +127,11 @@ class ThemeDetailActivity : AppCompatActivity() {
             frag.arguments = bundle
             setFragment(frag)
         }
+
         binding.tvThemeDACompare.setOnClickListener {
             // TODO: 테마 비교 Activity로 이동
         }
+
         binding.tvThemeDAReserve.setOnClickListener {
             // TODO: 제휴한 카페만 해당 프래그먼트 보이도록 해야 함
             // TODO: 제휴된 카페가 아닐경우 해당 버튼 안보이게 하거나 버튼 클릭 시 토스트로 처리
@@ -131,15 +145,16 @@ class ThemeDetailActivity : AppCompatActivity() {
     }
 
     private fun setLike(){
-        if(theme.isLike) {
+        if(theme.islike) {
             binding.ivToolbarTrailingIcon.setImageResource(R.drawable.icon_like_after)
         } else {
             binding.ivToolbarTrailingIcon.setImageResource(R.drawable.icon_like_before)
         }
 
         binding.ivToolbarTrailingIcon.setOnClickListener {
-            theme.isLike = !theme.isLike
-            if(theme.isLike) {
+            themeViewModel.themeLike(theme.tid)
+            theme.islike = !theme.islike
+            if(theme.islike) {
                 binding.ivToolbarTrailingIcon.setImageResource(R.drawable.icon_like_after)
             } else {
                 binding.ivToolbarTrailingIcon.setImageResource(R.drawable.icon_like_before)

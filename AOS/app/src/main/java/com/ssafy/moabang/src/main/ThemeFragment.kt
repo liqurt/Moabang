@@ -20,8 +20,12 @@ import android.view.MenuInflater
 import android.widget.PopupMenu
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.viewModels
 import com.ssafy.moabang.R
 import com.ssafy.moabang.data.model.repository.Repository
+import com.ssafy.moabang.data.model.viewmodel.ThemeViewModel
 import com.ssafy.moabang.src.theme.ThemeFilter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -36,6 +40,8 @@ class ThemeFragment : Fragment() {
     private lateinit var originalList: List<Theme>
     private lateinit var filteredList: List<Theme>
     private var searchList = ArrayList<Theme>()
+
+    private val themeViewModel: ThemeViewModel by viewModels()
 
     private val activityResultLauncher : ActivityResultLauncher<Intent> = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -67,6 +73,7 @@ class ThemeFragment : Fragment() {
 
     fun init(){
         themeListRVAdapter = ThemeListRVAdapter()
+        themeListRVAdapter.notifyDataSetChanged()
 
         CoroutineScope(Dispatchers.Main).launch {
             originalList = repository.getAllTheme()

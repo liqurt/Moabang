@@ -31,6 +31,8 @@ interface ThemeDao {
     @Query("SELECT * FROM Theme WHERE island = :island AND si IN (:si)")
     fun filterThemesArea(island: String, si: ArrayList<String>) : List<Theme>
 
+    @Query("UPDATE Theme SET isLike = :isLike WHERE tid = :tid")
+    fun setThemeLike(tid: Int, isLike: Boolean)
 
     @Query("DELETE FROM Theme")
     fun clearAll()
