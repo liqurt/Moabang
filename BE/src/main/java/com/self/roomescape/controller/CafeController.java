@@ -23,6 +23,7 @@ import response.ThemeListResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -106,6 +107,18 @@ public class CafeController {
                     tmp.setType(themeDetailDTOList.get(i).getType());
                     tmp.setTname(themeDetailDTOList.get(i).getTname());
                     tmp.setCount(themeDetailDTOList.get(i).getCount());
+
+                    String data = themeDetailDTOList.get(i).getRplayer();
+                    String[] srr = data.split("~");
+                    if (srr.length != 1) {
+                        tmp.setMin_player(Integer.parseInt(srr[0]));
+                        tmp.setMax_player(Integer.parseInt(srr[1]));
+                    } else {
+                        tmp.setMin_player(Integer.parseInt(srr[0]));
+                        tmp.setMax_player(Integer.parseInt(srr[0]));
+                    }
+
+
                     for (int j = 0; j < likeList.get().size(); j++) {
                         if (themeDetailDTOList.get(i).getTid() == likeList.get().get(j).getTheme().getTid()) {
                             tmp.setIslike(true);
@@ -139,6 +152,17 @@ public class CafeController {
                     tmp.setTname(themeDetailDTOList.get(i).getTname());
                     tmp.setCount(themeDetailDTOList.get(i).getCount());
                     tmp.setIslike(false);
+
+                    String data = themeDetailDTOList.get(i).getRplayer();
+                    String[] srr = data.split("~");
+                    if (srr.length != 1) {
+                        tmp.setMin_player(Integer.parseInt(srr[0]));
+                        tmp.setMax_player(Integer.parseInt(srr[1]));
+                    } else {
+                        tmp.setMin_player(Integer.parseInt(srr[0]));
+                        tmp.setMax_player(Integer.parseInt(srr[0]));
+                    }
+
                     themeDetailResDTOList.add(tmp);
                 }
 

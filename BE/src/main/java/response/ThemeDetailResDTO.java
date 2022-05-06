@@ -26,5 +26,7 @@ public class ThemeDetailResDTO {
     private String si;
     private long count;
     private boolean islike;
+    private int min_player;
+    private int max_player;
 
 }
