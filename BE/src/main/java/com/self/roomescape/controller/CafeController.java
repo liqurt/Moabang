@@ -5,6 +5,8 @@ import com.self.roomescape.repository.*;
 import com.self.roomescape.repository.mapping.ThemeListMapping;
 
 import io.jsonwebtoken.Jwts;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -202,7 +204,7 @@ public class CafeController {
         return Jwts.parser().setSigningKey(secretKey.getBytes()).parseClaimsJws(token).getBody().getSubject();
     }
 
-
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "Authorization", required = false, dataType = "string", paramType = "header")})
     @ApiOperation(value = "테마 전체 목록", notes = "테마 전체 목록을 카페 이름 및 URL과 같이 반환")
     @GetMapping("/theme/list")
     public ResponseEntity<?> findAllTheme(HttpServletRequest request) {
@@ -283,7 +285,7 @@ public class CafeController {
         }
         return new ResponseEntity<>(themeDetailDTOList, HttpStatus.OK);
     }
-
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "Authorization", required = false, dataType = "string", paramType = "header")})
     @ApiOperation(value = "테마 상세 정보", notes = "해당 Tid를 통해서 테마 상세 정보 및 댓글 목록을 반환한다.")
     @GetMapping("/theme/detail/{tid}")
     public ResponseEntity<?> findThemeDetail(@PathVariable int tid,HttpServletRequest request) throws Exception {
