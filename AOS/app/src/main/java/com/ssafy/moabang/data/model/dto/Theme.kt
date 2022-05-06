@@ -23,7 +23,7 @@ data class Theme(
     val img: String,
     val island: String,
     val si: String,
-    val url: String,
+    var url: String,
     var islike: Boolean,
     val min_player: Int,
     val max_player: Int
