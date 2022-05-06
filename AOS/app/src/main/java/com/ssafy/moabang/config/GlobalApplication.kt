@@ -1,12 +1,10 @@
 package com.ssafy.moabang.config
 
 import android.app.Application
-import androidx.room.Room
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.kakao.sdk.common.KakaoSdk
 import com.ssafy.moabang.BuildConfig
-import com.ssafy.moabang.data.model.database.AppDatabase
 import com.ssafy.moabang.data.model.repository.Repository
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -32,7 +30,7 @@ class GlobalApplication : Application() {
         // 승관홈 : http://114.129.238.28/
         // 서-버 : http://k6d205.p.ssafy.io:8080/
         // 모아방 : http://모아방.kr:8080/
-        val serverURL="http://114.129.238.28/"
+        val serverURL="http://모아방.kr:8080/"
 
         retrofit = Retrofit.Builder()
             .baseUrl(serverURL)
