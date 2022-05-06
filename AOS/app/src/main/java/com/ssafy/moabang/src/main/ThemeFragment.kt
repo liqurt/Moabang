@@ -40,6 +40,7 @@ class ThemeFragment : Fragment() {
     private lateinit var originalList: List<Theme>
     private lateinit var filteredList: List<Theme>
     private var searchList = ArrayList<Theme>()
+    private lateinit var tf: ThemeFilter
 
     private val themeViewModel: ThemeViewModel by viewModels()
 
@@ -49,7 +50,14 @@ class ThemeFragment : Fragment() {
         if(it.resultCode == 1){
             val intent = it.data
             val returnValue = intent!!.getParcelableExtra<ThemeFilter>("tf")
+            if (returnValue != null) {
+                tf = returnValue
+            }
             filter(returnValue!!)
+        }
+        if(it.resultCode == 2){
+            init()
+            if(::tf.isInitialized) filter(tf)
         }
     }
 
@@ -89,7 +97,7 @@ class ThemeFragment : Fragment() {
             override fun onClick(item: Theme) {
                 if(item != null){
                     val intent = Intent(requireActivity(), ThemeDetailActivity::class.java).putExtra("theme", item)
-                    startActivity(intent)
+                    activityResultLauncher.launch(intent)
                 }
             }
         }

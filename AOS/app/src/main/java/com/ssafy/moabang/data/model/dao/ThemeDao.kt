@@ -13,6 +13,9 @@ interface ThemeDao {
     @Query("SELECT * FROM Theme")
     fun getAllTheme() : List<Theme>
 
+    @Query("SELECT * FROM Theme WHERE tid = :tid")
+    fun getTheme(tid : Int) : Theme
+
     @Insert
     fun insertTheme(theme : Theme)
 

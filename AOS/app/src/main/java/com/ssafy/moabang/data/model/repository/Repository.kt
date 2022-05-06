@@ -64,6 +64,11 @@ class Repository private constructor(context: Context) {
             themeDao.getAllTheme()
         }
 
+    suspend fun getTheme(tid: Int): Theme =
+        database.withTransaction {
+            themeDao.getTheme(tid)
+        }
+
     suspend fun insertThemes(themeList: List<Theme>) =
         database.withTransaction {
             themeDao.insertThemes(themeList)

@@ -1,5 +1,6 @@
 package com.ssafy.moabang.src.theme
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
@@ -12,8 +13,13 @@ import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.ssafy.moabang.R
 import com.ssafy.moabang.data.model.dto.Theme
+import com.ssafy.moabang.data.model.repository.Repository
 import com.ssafy.moabang.data.model.viewmodel.ThemeViewModel
 import com.ssafy.moabang.databinding.ActivityThemeDetailBinding
+import com.ssafy.moabang.src.main.ThemeFragment
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ThemeDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityThemeDetailBinding
@@ -28,11 +34,11 @@ class ThemeDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         intent.getParcelableExtra<Theme>("theme")?.let {
-            theme = it
+            CoroutineScope(Dispatchers.Main).launch {
+                theme = Repository.get().getTheme(it.tid)
+                init()
+            }
         } ?: finish()
-
-        init()
-
     }
 
     private fun init(){
@@ -83,16 +89,8 @@ class ThemeDetailActivity : AppCompatActivity() {
 
     private fun setClickListener(){
         binding.ivToolbarLeadingIcon.setOnClickListener {
-            finish()
+            onBackPressed()
         }
-
-//        binding.ivToolbarTrailingIcon.setOnClickListener {
-//            val sp = this.getSharedPreferences("moabang", AppCompatActivity.MODE_PRIVATE)
-//            val token = sp.getString("moabangToken", "")!!
-//
-//            themeViewModel.themeLike(token, theme.tid)
-//
-//        }
 
         binding.bsThemeDA.setOnClickListener {
             if(behavior.state == BottomSheetBehavior.STATE_COLLAPSED){
@@ -161,5 +159,13 @@ class ThemeDetailActivity : AppCompatActivity() {
             }
         }
     }
+
+    override fun onBackPressed() {
+        val intent = Intent(this, ThemeFragment::class.java)
+        setResult(2, intent)
+        finish()
+        super.onBackPressed()
+    }
+
 
 }
