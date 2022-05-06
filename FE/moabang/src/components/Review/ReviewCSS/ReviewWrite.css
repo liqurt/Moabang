@@ -47,8 +47,6 @@
     border: 1px solid #555;
     outline: none;
     
-}:focus {
-    background-color: lightblue;
 }
 
 #inputContent{
@@ -62,8 +60,6 @@
     font-size: 16px;
     resize: none;
     
-}:focus {
-    background-color: lightblue;
 }
 
 
