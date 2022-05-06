@@ -298,8 +298,8 @@ public class CafeController {
             String token = request.getHeader("Authorization").substring(7);
             Optional<User> user = userRepository.findByEmail(this.getUserPk(token));
             if (user.isPresent()) {
-                Optional<List<UserLike>> likeList = userLikeRepository.findUserLikeByUser(user.get());
-                if (likeList.get().size() != 0) {
+                Optional<UserLike> userLike = userLikeRepository.findUserLikeByUserAndTheme(user.get(), themeRepository.findThemesByTid(tid));
+                if (userLike.isPresent()) {
                     themeDetailResponse.setIslike(true);
                 } else {
                     themeDetailResponse.setIslike(false);
