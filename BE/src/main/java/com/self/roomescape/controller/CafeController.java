@@ -112,6 +112,30 @@ public class CafeController {
                     }
 
                 }
+            }else{
+                for (int i = 0; i < themeAllList.size(); i++) {
+                    ThemeListResponse temp = new ThemeListResponse();
+                    temp.setActivity(themeAllList.get(i).getActivity());
+                    temp.setCid(themeAllList.get(i).getCid());
+                    temp.setCname(themeAllList.get(i).getCname());
+                    temp.setCurl(themeAllList.get(i).getCurl());
+                    temp.setDifficulty(themeAllList.get(i).getDifficulty());
+                    temp.setDescription(themeAllList.get(i).getDescription());
+                    temp.setGenre(themeAllList.get(i).getGenre());
+                    temp.setImg(themeAllList.get(i).getImg());
+                    temp.setIsland(themeAllList.get(i).getIsland());
+                    temp.setSi(themeAllList.get(i).getSi());
+                    temp.setGrade(themeAllList.get(i).getGrade());
+                    temp.setRplayer(themeAllList.get(i).getRplayer());
+                    temp.setTid(themeAllList.get(i).getTid());
+                    temp.setTime(themeAllList.get(i).getTime());
+                    temp.setType(themeAllList.get(i).getType());
+                    temp.setTname(themeAllList.get(i).getTname());
+                    temp.setIslike(false);
+                    themeListResponses.add(temp);
+
+
+                }
             }
             return new ResponseEntity<>(themeListResponses, HttpStatus.OK);
         }
