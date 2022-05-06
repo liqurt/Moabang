@@ -8,4 +8,8 @@ import java.util.Optional;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
     Optional<List<Review>> findByTid(int tid);
+
+    Optional<Review> findByRid(long rid);
+
+    void deleteByRid(long rid);
 }
