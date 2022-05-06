@@ -10,14 +10,24 @@ import retrofit2.Response
 
 class ThemeRepository {
     val themeApi = GlobalApplication.retrofit.create(ThemeApi::class.java)
-    var res: Response<List<Theme>>? = null
 
-    suspend fun getAllTheme(jwtToken: String): Response<List<Theme>>? {
+    suspend fun getAllTheme(): Response<List<Theme>>? {
         try{
-            res = themeApi.getAllTheme(jwtToken).execute()
+            var res = themeApi.getAllTheme().execute()
             Log.d("Theme Repository Test","성공")
             return res
         } catch (e: Exception){
+            e.printStackTrace()
+        }
+        return null
+    }
+
+    suspend fun themeLike(tid: Int) : Response<String>? {
+        try{
+           var res = themeApi.themeLike(tid).execute()
+            Log.d("Theme LIKE Test","성공 $res")
+            return res
+        } catch(e: Exception) {
             e.printStackTrace()
         }
         return null
