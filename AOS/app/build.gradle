@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 Properties properties = new Properties()
@@ -90,4 +91,8 @@ dependencies {
 
     // CoordinatorLayout
     implementation "androidx.coordinatorlayout:coordinatorlayout:1.2.0"
+
+    // GoogleMap
+    implementation 'com.google.android.gms:play-services-maps:18.0.2'
+    implementation 'com.google.android.gms:play-services-location:19.0.1'
 }
