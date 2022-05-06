@@ -76,17 +76,12 @@ class Repository private constructor(context: Context) {
 
     suspend fun filterThemes(island: String, si: ArrayList<String>, genre: ArrayList<String>, type: ArrayList<String>, minp: Int, maxp: Int, diff : ArrayList<Int>, active : ArrayList<String>) : List<Theme> =
         database.withTransaction {
-            themeDao.filterThemesTemp(island, si, genre, type, minp, maxp, diff, active)
+            themeDao.filterThemes(island, si, genre, type, minp, maxp, diff, active)
         }
 
     suspend fun filterThemesNoArea(genre: ArrayList<String>, type: ArrayList<String>, minp: Int, maxp: Int, diff : ArrayList<Int>, active : ArrayList<String>) : List<Theme> =
         database.withTransaction {
-            themeDao.filterThemesNoAreaTemp(genre, type, minp, maxp, diff, active)
-        }
-
-    suspend fun filterThemesArea(island: String, si: ArrayList<String>) : List<Theme> =
-        database.withTransaction {
-            themeDao.filterThemesArea(island, si)
+            themeDao.filterThemesNoArea(genre, type, minp, maxp, diff, active)
         }
 
     suspend fun setThemeLike(tid: Int, isLike: Boolean) =
