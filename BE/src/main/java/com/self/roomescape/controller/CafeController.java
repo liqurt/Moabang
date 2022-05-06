@@ -294,14 +294,16 @@ public class CafeController {
         ThemeDetailDTO themeDetailDTO = cafeRepository.gettheme(tid);
         themeDetailResponse.setThemeDetailDTO(themeDetailDTO);
         Optional<List<Review>> rlist = reviewRepository.findByTid(tid);
-        String token = request.getHeader("Authorization").substring(7);
-        Optional<User> user = userRepository.findByEmail(this.getUserPk(token));
-        if(user.isPresent()){
-            Optional<List<UserLike>> likeList = userLikeRepository.findUserLikeByUser(user.get());
-            if(likeList.get().size()!=0){
-                themeDetailResponse.setIslike(true);
-            }else{
-                themeDetailResponse.setIslike(false);
+        if (request.getHeader("Authorization") != null) {
+            String token = request.getHeader("Authorization").substring(7);
+            Optional<User> user = userRepository.findByEmail(this.getUserPk(token));
+            if (user.isPresent()) {
+                Optional<List<UserLike>> likeList = userLikeRepository.findUserLikeByUser(user.get());
+                if (likeList.get().size() != 0) {
+                    themeDetailResponse.setIslike(true);
+                } else {
+                    themeDetailResponse.setIslike(false);
+                }
             }
         }
 
