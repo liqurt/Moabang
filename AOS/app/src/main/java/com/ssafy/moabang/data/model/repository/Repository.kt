@@ -6,6 +6,8 @@ import androidx.room.Room
 import androidx.room.withTransaction
 import com.ssafy.moabang.data.model.database.AppDatabase
 import com.ssafy.moabang.data.model.dto.Cafe
+import com.ssafy.moabang.data.model.dto.Theme
+
 import java.lang.IllegalStateException
 
 const val DB_NAME = "moabang.db"
@@ -19,6 +21,7 @@ class Repository private constructor(context: Context) {
     ).build()
 
     private val cafeDao = database.cafeDao()
+    private val themeDao = database.themeDao()
 
     suspend fun getAllCafe(): List<Cafe> =
         database.withTransaction {
@@ -53,6 +56,36 @@ class Repository private constructor(context: Context) {
     suspend fun clearAll() =
         database.withTransaction {
             cafeDao.clearAll()
+        }
+
+    suspend fun getAllTheme(): List<Theme> =
+        database.withTransaction {
+            themeDao.getAllTheme()
+        }
+
+    suspend fun getTheme(tid: Int): Theme =
+        database.withTransaction {
+            themeDao.getTheme(tid)
+        }
+
+    suspend fun insertThemes(themeList: List<Theme>) =
+        database.withTransaction {
+            themeDao.insertThemes(themeList)
+        }
+
+    suspend fun filterThemes(island: String, si: ArrayList<String>, genre: ArrayList<String>, type: ArrayList<String>, minp: Int, maxp: Int, diff : ArrayList<Int>, active : ArrayList<String>) : List<Theme> =
+        database.withTransaction {
+            themeDao.filterThemes(island, si, genre, type, minp, maxp, diff, active)
+        }
+
+    suspend fun filterThemesNoArea(genre: ArrayList<String>, type: ArrayList<String>, minp: Int, maxp: Int, diff : ArrayList<Int>, active : ArrayList<String>) : List<Theme> =
+        database.withTransaction {
+            themeDao.filterThemesNoArea(genre, type, minp, maxp, diff, active)
+        }
+
+    suspend fun setThemeLike(tid: Int, isLike: Boolean) =
+        database.withTransaction {
+            themeDao.setThemeLike(tid, isLike)
         }
 
     companion object {

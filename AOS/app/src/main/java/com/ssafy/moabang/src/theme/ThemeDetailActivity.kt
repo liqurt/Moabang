@@ -1,22 +1,32 @@
 package com.ssafy.moabang.src.theme
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.View
+import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.ssafy.moabang.R
 import com.ssafy.moabang.data.model.dto.Theme
+import com.ssafy.moabang.data.model.repository.Repository
+import com.ssafy.moabang.data.model.viewmodel.ThemeViewModel
 import com.ssafy.moabang.databinding.ActivityThemeDetailBinding
+import com.ssafy.moabang.src.main.ThemeFragment
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ThemeDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityThemeDetailBinding
     private lateinit var theme: Theme
     lateinit var behavior: BottomSheetBehavior<ConstraintLayout>
+    private val themeViewModel: ThemeViewModel by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,11 +34,11 @@ class ThemeDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         intent.getParcelableExtra<Theme>("theme")?.let {
-            theme = it
+            CoroutineScope(Dispatchers.Main).launch {
+                theme = Repository.get().getTheme(it.tid)
+                init()
+            }
         } ?: finish()
-
-        init()
-
     }
 
     private fun init(){
@@ -67,7 +77,7 @@ class ThemeDetailActivity : AppCompatActivity() {
         binding.tvThemeDADiff.text = theme.difficulty.toString()
         binding.tvThemeDAPlayer.text = theme.rplayer + "명"
         binding.tvThemeDAType.text = theme.type
-        binding.tvThemeDAActive.text = theme.activity
+        binding.tvThemeDAActive.text = if(theme.activity == "") "정보없음" else theme.activity
         binding.tvThemeDADesc.apply {
             text = theme.description
             movementMethod = ScrollingMovementMethod()
@@ -79,9 +89,8 @@ class ThemeDetailActivity : AppCompatActivity() {
 
     private fun setClickListener(){
         binding.ivToolbarLeadingIcon.setOnClickListener {
-            finish()
+            onBackPressed()
         }
-
 
         binding.bsThemeDA.setOnClickListener {
             if(behavior.state == BottomSheetBehavior.STATE_COLLAPSED){
@@ -104,10 +113,11 @@ class ThemeDetailActivity : AppCompatActivity() {
 
             val frag = ThemeUrlFragment()
             var bundle = Bundle(1)
-            bundle.putString("url", theme.curl)
+            bundle.putString("url", theme.url)
             frag.arguments = bundle
             setFragment(frag)
         }
+
         binding.tvThemeDAReview.setOnClickListener {
             val frag = ThemeReviewFragment()
             var bundle = Bundle(1)
@@ -115,9 +125,11 @@ class ThemeDetailActivity : AppCompatActivity() {
             frag.arguments = bundle
             setFragment(frag)
         }
+
         binding.tvThemeDACompare.setOnClickListener {
             // TODO: 테마 비교 Activity로 이동
         }
+
         binding.tvThemeDAReserve.setOnClickListener {
             // TODO: 제휴한 카페만 해당 프래그먼트 보이도록 해야 함
             // TODO: 제휴된 카페가 아닐경우 해당 버튼 안보이게 하거나 버튼 클릭 시 토스트로 처리
@@ -131,20 +143,29 @@ class ThemeDetailActivity : AppCompatActivity() {
     }
 
     private fun setLike(){
-//        if(theme.like) {
-//            binding.ivToolbarTrailingIcon.setImageResource(R.drawable.icon_like_after)
-//        } else {
-//            binding.ivToolbarTrailingIcon.setImageResource(R.drawable.icon_like_before)
-//        }
-//
-//        binding.ivToolbarTrailingIcon.setOnClickListener {
-//            theme.like = !theme.like
-//            if(theme.like) {
-//                binding.ivToolbarTrailingIcon.setImageResource(R.drawable.icon_like_after)
-//            } else {
-//                binding.ivToolbarTrailingIcon.setImageResource(R.drawable.icon_like_before)
-//            }
-//        }
+        if(theme.islike) {
+            binding.ivToolbarTrailingIcon.setImageResource(R.drawable.icon_like_after)
+        } else {
+            binding.ivToolbarTrailingIcon.setImageResource(R.drawable.icon_like_before)
+        }
+
+        binding.ivToolbarTrailingIcon.setOnClickListener {
+            themeViewModel.themeLike(theme.tid)
+            theme.islike = !theme.islike
+            if(theme.islike) {
+                binding.ivToolbarTrailingIcon.setImageResource(R.drawable.icon_like_after)
+            } else {
+                binding.ivToolbarTrailingIcon.setImageResource(R.drawable.icon_like_before)
+            }
+        }
     }
+
+    override fun onBackPressed() {
+        val intent = Intent(this, ThemeFragment::class.java)
+        setResult(2, intent)
+        finish()
+        super.onBackPressed()
+    }
+
 
 }

@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
@@ -17,6 +18,7 @@ import com.ssafy.moabang.config.GlobalApplication
 import com.ssafy.moabang.data.model.dto.Cafe
 import com.ssafy.moabang.data.model.dto.User
 import com.ssafy.moabang.data.model.repository.Repository
+import com.ssafy.moabang.data.model.viewmodel.ThemeViewModel
 import com.ssafy.moabang.data.api.CafeApi
 import com.ssafy.moabang.data.api.LoginApi
 import kotlinx.coroutines.CoroutineScope
@@ -29,6 +31,7 @@ import retrofit2.Response
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
+    val themeViewModel: ThemeViewModel by viewModels()
 
     private val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
         if (error != null) {
@@ -96,8 +99,10 @@ class LoginActivity : AppCompatActivity() {
                         saveOurTokenToSharedPrefs(jwtToken)
                     }
                     getCafesFromServer(jwtToken.toString())// 2. 서버에서 전체 카페 데이터를 가져오고, 이를 로컬 DB에 저장한다.
+                    themeViewModel.getAllTheme(jwtToken.toString())
                     val intent = Intent(this@LoginActivity, MainActivity::class.java) // 3. MainActivity로 전환한다.
                     startActivity(intent)
+                    finish()
                 }else{
                     Log.e("AAAAA","네트워킹 성공1, 하지만 원하는 결과가 아님. ${response.errorBody()}")
                     Toast.makeText(this@LoginActivity, "네트워크 성공했지만 에러발생 : ${response.errorBody()}", Toast.LENGTH_SHORT).show()

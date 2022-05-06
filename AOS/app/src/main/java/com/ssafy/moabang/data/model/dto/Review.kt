@@ -19,5 +19,5 @@ data class Review(
     val hint: Int,
     val playDate: String,
     var regDate: String,
-    val desc: String
+    val desc: String,
 ): Parcelable

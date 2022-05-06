@@ -73,7 +73,7 @@ class CafeDetailActivity : AppCompatActivity() {
                             override fun onClick(item: Theme) {
                                 item.apply {
                                     cname = cafe.cname.toString()
-                                    curl = cafe.url.toString()
+                                    url = cafe.url.toString()
                                 }
                                 val intent = Intent(
                                     this@CafeDetailActivity,

@@ -5,11 +5,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ssafy.moabang.R
+import com.ssafy.moabang.config.GlobalApplication
 import com.ssafy.moabang.data.model.dto.Theme
+import com.ssafy.moabang.data.model.repository.Repository
+import com.ssafy.moabang.data.model.viewmodel.ThemeViewModel
 import com.ssafy.moabang.databinding.ListThemeItemBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ThemeListRVAdapter: RecyclerView.Adapter<ThemeListRVAdapter.ViewHolder>() {
     var data: List<Theme> = emptyList()
@@ -37,21 +44,11 @@ class ThemeListRVAdapter: RecyclerView.Adapter<ThemeListRVAdapter.ViewHolder>() 
             val tvPlayer = itemView.findViewById<TextView>(R.id.tv_themeL_player)
             val like = itemView.findViewById<ImageView>(R.id.iv_themeL_like)
 
-//            if(item.like){
-//                like.setImageResource(R.drawable.icon_like_after)
-//            } else {
-//                like.setImageResource(R.drawable.icon_like_before)
-//            }
-//
-//            like.setOnClickListener {
-//                if(item.like){
-//                    item.like = false
-//                    like.setImageResource(R.drawable.icon_like_before)
-//                } else {
-//                    item.like = true
-//                    like.setImageResource(R.drawable.icon_like_after)
-//                }
-//            }
+            if(item.islike){
+                like.setImageResource(R.drawable.icon_like_after)
+            } else {
+                like.setImageResource(R.drawable.icon_like_before)
+            }
 
             Glide.with(themeImg).load(item.img).into(themeImg)
             tvThemeName.text = item.tname
@@ -61,7 +58,7 @@ class ThemeListRVAdapter: RecyclerView.Adapter<ThemeListRVAdapter.ViewHolder>() 
             tvRating.text = item.grade.toString()
             tvDiff.text = item.difficulty.toString()
             tvType.text = item.type
-            tvActive.text = item.activity
+            tvActive.text = if(item.activity == "") "-" else item.activity
             tvPlayer.text = item.rplayer + "명"
         }
     }
@@ -73,6 +70,24 @@ class ThemeListRVAdapter: RecyclerView.Adapter<ThemeListRVAdapter.ViewHolder>() 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(data[position])
+
+        holder.itemView.findViewById<ImageView>(R.id.iv_themeL_like).setOnClickListener {
+            data[position].islike = !data[position].islike
+            if(data[position].islike){
+                holder.itemView.findViewById<ImageView>(R.id.iv_themeL_like).setImageResource(R.drawable.icon_like_after)
+            } else {
+                holder.itemView.findViewById<ImageView>(R.id.iv_themeL_like).setImageResource(R.drawable.icon_like_before)
+            }
+            CoroutineScope(Dispatchers.Main).launch{
+                Repository.get().setThemeLike(data[position].tid, data[position].islike)
+                ThemeViewModel().themeLike(data[position].tid)
+            }
+        }
+    }
+
+    fun filterList(list: List<Theme>){
+        data = list
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int = data.size
