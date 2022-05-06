@@ -13,5 +13,6 @@ import java.util.Optional;
 public interface UserLikeRepository extends JpaRepository<UserLike, Long>, UserLikeRepoCommon{
     Optional<List<UserLike>> findUserLikeByUser(User user);
     Optional<UserLike> findUserLikeByUserAndTheme(User user, Theme theme);
+    Optional<List<UserLike>> findUserLikeByTheme_Tid(int tid);
 
 }

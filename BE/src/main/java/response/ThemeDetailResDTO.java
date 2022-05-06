@@ -4,39 +4,27 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-@Builder
+
 @Getter
 @Setter
 public class ThemeDetailResDTO {
-    private int Tid;
+    private int tid;
+    private int cid;
+    private String tname;
+    private String img;
+    private String description;
+    private String rplayer;
+    private String time;
+    private String genre;
+    private String type;
+    private int difficulty;
+    private float grade;
+    private String activity;
+    private String cname;
+    private String url;
+    private String island;
+    private String si;
+    private long count;
+    private boolean islike;
 
-    private int Cid;
-
-    private String Tname;
-
-    private String Img;
-
-    private String Description;
-
-    private String Rplayer;
-
-    private String Time;
-
-    private String Genre;
-
-    private String Type;
-
-    private String Cname;
-
-    private String Curl;
-
-    private String Island;
-
-    private String Si;
-
-    private float Difficulty;
-
-    private float Grade;
-
-    private String Activity;
 }
