@@ -17,8 +17,8 @@ import com.ssafy.moabang.config.GlobalApplication
 import com.ssafy.moabang.data.model.dto.Cafe
 import com.ssafy.moabang.data.model.dto.User
 import com.ssafy.moabang.data.model.repository.Repository
-import com.ssafy.moabang.src.retrofitInterface.cafeService
-import com.ssafy.moabang.src.retrofitInterface.loginService
+import com.ssafy.moabang.data.api.CafeApi
+import com.ssafy.moabang.data.api.LoginApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -87,7 +87,7 @@ class LoginActivity : AppCompatActivity() {
      * 카카오톡 로그인 성공 후 토큰을 서버에 전송한다.
      */
     private fun sendTokenToBackend(token: OAuthToken) {
-        val loginService = GlobalApplication.retrofit.create(loginService::class.java)
+        val loginService = GlobalApplication.retrofit.create(LoginApi::class.java)
         loginService.login(token.accessToken).enqueue(object : Callback<User>{
             override fun onResponse(call: Call<User>, response: Response<User>) {
                 if(response.isSuccessful){ // 로그인에 성공했다면
@@ -119,7 +119,7 @@ class LoginActivity : AppCompatActivity() {
 
     fun getCafesFromServer(jwtToken: String) {
         Log.d("AAAAA","getCafesAndMoveIntoLocalDB param : $jwtToken")
-        val cafeService = GlobalApplication.retrofit.create(cafeService::class.java)
+        val cafeService = GlobalApplication.retrofit.create(CafeApi::class.java)
         cafeService.getAllCafe(jwtToken).enqueue(object : Callback<List<Cafe>>{
             override fun onResponse(call: Call<List<Cafe>>, response: Response<List<Cafe>>) {
                 if(response.isSuccessful){

@@ -1,27 +1,15 @@
-package com.self.roomescape.entity;
+package response;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
-import javax.persistence.*;
 
-@Entity
 @Getter
 @Setter
-@ToString
-@Table(name = "theme")
-public class Theme {
-
-    @Id
-    @Column(name = "tid")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ThemeDetailResDTO {
     private int tid;
-
     private int cid;
-
-    private int difficulty;
-
     private String tname;
     private String img;
     private String description;
@@ -29,8 +17,14 @@ public class Theme {
     private String time;
     private String genre;
     private String type;
+    private int difficulty;
     private float grade;
-    private int reviewCnt;
     private String activity;
+    private String cname;
+    private String url;
+    private String island;
+    private String si;
+    private long count;
+    private boolean islike;
 
 }
