@@ -23,6 +23,6 @@ data class Theme(
     val img: String,
     val island: String,
     val si: String,
-    val curl: String,
-    var isLike: Boolean
+    val url: String,
+    var islike: Boolean
 ): Parcelable
