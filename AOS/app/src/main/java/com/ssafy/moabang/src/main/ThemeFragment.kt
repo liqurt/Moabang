@@ -16,6 +16,8 @@ import com.ssafy.moabang.src.theme.ThemeDetailActivity
 import com.ssafy.moabang.src.theme.ThemeFilterActivity
 import android.text.Editable
 import android.util.Log
+import android.view.MenuInflater
+import android.widget.PopupMenu
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.ssafy.moabang.R
@@ -85,13 +87,64 @@ class ThemeFragment : Fragment() {
             }
         }
 
+        // 필터
         binding.btnThemeFFilter.setOnClickListener{
             val intent = Intent(requireActivity(), ThemeFilterActivity()::class.java)
             activityResultLauncher.launch(intent)
         }
 
+        // 정렬
+        binding.btnThemeFSort.setOnClickListener {
+            showPopup(binding.btnThemeFSort)
+        }
+
         search()
     }
+
+    private fun showPopup(v: View) {
+        val popup = PopupMenu(requireContext(), v)
+        val inflater: MenuInflater = popup.menuInflater
+        var list = if(!::filteredList.isInitialized || filteredList.isEmpty()) originalList else filteredList
+        inflater.inflate(R.menu.theme_sort_menu, popup.menu)
+        popup.setOnMenuItemClickListener { it ->
+            when(it.itemId){
+                R.id.sort_by_rate_descending -> {
+                    list = list.sortedByDescending { it.grade }
+                    themeListRVAdapter.filterList((list))
+                    true
+                }
+                R.id.sort_by_rate_ascending -> {
+                    list = list.sortedBy { it.grade }
+                    themeListRVAdapter.filterList((list))
+                    true
+                }
+                R.id.sort_by_tname_descending -> {
+                    list = list.sortedByDescending { it.tname }
+                    themeListRVAdapter.filterList((list))
+                    true
+                }
+                R.id.sort_by_tname_ascending -> {
+                    list = list.sortedBy { it.tname }
+                    themeListRVAdapter.filterList((list))
+                    true
+                }
+                R.id.sort_by_cname_descending -> {
+                    list = list.sortedByDescending { it.cname }
+                    themeListRVAdapter.filterList((list))
+                    true
+                }
+                R.id.sort_by_cname_ascending -> {
+                    list = list.sortedBy { it.cname }
+                    themeListRVAdapter.filterList((list))
+                    true
+                }
+            else -> false
+            }
+        }
+        popup.show()
+    }
+
+
 
     private fun filter(tf: ThemeFilter){
         Log.d("FILTER TEST", "filter: island = ${tf.island}, si = ${tf.si}")
