@@ -78,7 +78,9 @@ public class CafeController {
             // logic 1. 얻은 uid를 통해서 like 테이블에 좋아요한 tid가 있는지 확인.
             Optional<List<UserLike>> likeList = userLikeRepository.findUserLikeByUser(user.get());
 //            System.out.println(likeList);
-            if (likeList.isPresent()) {
+
+            if (likeList.get().size()!=0) {
+
                 // 2. tid가 있다면 받아온 themeInfo에 isLike에 배열로 비교하면서 같다면 true 아니면 false를 집어넣는다..
                 for (int i = 0; i < themeAllList.size(); i++) {
                     ThemeListResponse temp = new ThemeListResponse();
@@ -113,6 +115,7 @@ public class CafeController {
 
                 }
             }else{
+
                 for (int i = 0; i < themeAllList.size(); i++) {
                     ThemeListResponse temp = new ThemeListResponse();
                     temp.setActivity(themeAllList.get(i).getActivity());
