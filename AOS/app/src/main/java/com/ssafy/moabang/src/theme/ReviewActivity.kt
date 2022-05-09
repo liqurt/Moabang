@@ -3,26 +3,32 @@ package com.ssafy.moabang.src.theme
 import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.ssafy.moabang.R
-import com.ssafy.moabang.data.model.dto.Theme
 import com.ssafy.moabang.databinding.ActivityReviewBinding
-import android.widget.RatingBar
+import android.widget.Toast
+import com.ssafy.moabang.data.model.dto.ReviewForCreate
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.Calendar.DATE
 
 
 class ReviewActivity : AppCompatActivity() {
     private lateinit var binding: ActivityReviewBinding
     private var tid:Int = 0
+    private var type = ""
     private lateinit var date: List<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityReviewBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        tid = intent.getIntExtra("tid", 0)
+        type = intent.getStringExtra("type").toString()
+        if(type == "등록") {
+            tid = intent.getIntExtra("tid", 0)
+        }
         init()
     }
 
@@ -42,6 +48,95 @@ class ReviewActivity : AppCompatActivity() {
 
         binding.ratingBarReview.setOnRatingBarChangeListener{_, rating, _ ->
             binding.tvReviewRating.text = (rating*2).toString() + "/10"
+        }
+
+        binding.tvReviewCancel.setOnClickListener { this.onBackPressed() }
+        binding.tvReviewOk.setOnClickListener {
+            registerReview()
+        }
+
+    }
+
+    private fun registerReview(){
+        var cnt = 0 // 8이 되어야 함
+        var txt = ""
+
+        var active: String = ""
+        var clearTime: Int = 0
+        var chaegamDif: Int = 0
+        var hint: Int = 0
+        var isSuccess: Int = 0
+        var player: Int = 0
+        var rating: Float = 0.0F
+        var recPlayer: Int = 0
+
+        var playDate = binding.tvReviewDateSelected.text.toString()
+
+        if(binding.etReviewPlayer.text.toString() != ""){
+            player = binding.etReviewPlayer.text.toString().toInt()
+            cnt++
+        } else {
+            Toast.makeText(this, "플레이 인원을 입력해주세요", Toast.LENGTH_SHORT).show()
+        }
+
+        if(binding.cgReviewSuccess.checkedChipIds.size >= 1){
+            txt = binding.cgReviewSuccess.findViewById<Chip>(binding.cgReviewSuccess.checkedChipId).text.toString()
+            isSuccess = if(txt == "네") 1 else 0
+            cnt++
+        } else {
+            if(cnt == 1) Toast.makeText(this, "탈출 성공여부를 선택해주세요", Toast.LENGTH_SHORT).show()
+        }
+
+        if(binding.etReviewTimeLeft.text.toString() != ""){
+            clearTime = binding.etReviewTimeLeft.text.toString().toInt()
+            cnt++
+        } else {
+            if(cnt == 2) Toast.makeText(this, "탈출 소요시간을 입력해주세요", Toast.LENGTH_SHORT).show()
+        }
+
+        if(binding.etReviewHint.text.toString() != ""){
+            hint = binding.etReviewHint.text.toString().toInt()
+            cnt++
+        } else {
+            if(cnt == 3) Toast.makeText(this, "사용한 힌트 갯수를 입력해주세요", Toast.LENGTH_SHORT).show()
+        }
+
+        if(binding.cgReviewDiff.checkedChipIds.size >= 1){
+            txt = binding.cgReviewDiff.findViewById<Chip>(binding.cgReviewDiff.checkedChipId).text.toString()
+            chaegamDif = if(txt == "아주 쉬움") 1
+                            else if(txt == "쉬움") 2
+                            else if(txt == "보통") 3
+                            else if(txt == "어려움") 4
+                            else 5
+            cnt++
+        } else {
+            if(cnt == 4) Toast.makeText(this, "체감 난이도를 선택해주세요", Toast.LENGTH_SHORT).show()
+        }
+
+        if(binding.cgReviewActive.checkedChipIds.size >= 1){
+            active = binding.cgReviewActive.findViewById<Chip>(binding.cgReviewActive.checkedChipId).text.toString()
+            cnt++
+        } else {
+            if(cnt == 5) Toast.makeText(this, "체감 활동성을 선택해주세요", Toast.LENGTH_SHORT).show()
+        }
+
+        if(binding.etReviewRplayer.text.toString() != ""){
+            recPlayer = binding.etReviewRplayer.text.toString().toInt()
+            cnt++
+        } else {
+            if(cnt == 6) Toast.makeText(this, "추천 인원을 입력해주세요", Toast.LENGTH_SHORT).show()
+        }
+
+        if(binding.tvReviewRating.text.toString() != "별점을 입력해주세요"){
+            rating = binding.ratingBarReview.rating.toString().toFloat()*2
+            cnt++
+        } else {
+            if(cnt == 7) Toast.makeText(this, "별점을 입력해주세요", Toast.LENGTH_SHORT).show()
+        }
+
+        if(cnt == 8){
+            var review = ReviewForCreate(active, clearTime, binding.etReviewContent.text.toString(), chaegamDif, hint, isSuccess, playDate, player, rating, recPlayer, tid)
+            Log.d("REVIEW TEST", "registerReview: $review")
         }
 
     }
@@ -73,13 +168,18 @@ class ReviewActivity : AppCompatActivity() {
     private val datePickerListener =
         DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
             val newDate = "$year-${monthOfYear + 1}-$dayOfMonth"
-            binding.tvReviewDateSelected.text = newDate
+            binding.tvReviewDateSelected.text = reformDate(newDate)
         }
 
     private fun getToday(pattern: String): String {
-        val dt = Date(System.currentTimeMillis());
-        val sdf = SimpleDateFormat(pattern);
-        return sdf.format(dt);
+        val dt = Date(System.currentTimeMillis())
+        val sdf = SimpleDateFormat(pattern, Locale.KOREA)
+        return sdf.format(dt)
+    }
+
+    private fun reformDate(dt: String): String {
+        var sdf = SimpleDateFormat("yyyy-MM-dd")
+        return sdf.format(sdf.parse(dt)).toString()
     }
 
 

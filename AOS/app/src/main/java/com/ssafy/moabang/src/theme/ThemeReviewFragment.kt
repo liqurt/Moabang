@@ -46,7 +46,9 @@ class ThemeReviewFragment : Fragment() {
         initRVA()
 
         binding.btnThemeRVFReview.setOnClickListener {
-            startActivity(Intent(requireContext(), ReviewActivity::class.java).putExtra("tid", theme.tid))
+            startActivity(Intent(requireContext(), ReviewActivity::class.java)
+                .putExtra("type", "등록")
+                .putExtra("tid", theme.tid))
         }
 
         callback = object : OnBackPressedCallback(true) {

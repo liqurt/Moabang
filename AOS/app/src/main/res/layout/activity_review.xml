@@ -65,6 +65,48 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tv_review_player"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:text="플레이 인원을 입력해주세요"
+            android:textColor="@color/moabang_gray"
+            android:textSize="16dp"
+            android:textStyle="bold"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_review_date" />
+
+        <EditText
+            android:id="@+id/et_review_player"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="@color/moabang_pink"
+            android:ems="3"
+            android:inputType="numberDecimal"
+            android:maxLength="1"
+            android:singleLine="true"
+            android:textColor="@color/moabang_pink"
+            android:textSize="14dp"
+            app:layout_constraintEnd_toStartOf="@+id/tv_review_playerr"
+            app:layout_constraintTop_toTopOf="@+id/tv_review_player" />
+
+        <TextView
+            android:id="@+id/tv_review_playerr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:text="명"
+            android:textColor="@color/moabang_gray"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="@+id/et_review_player"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/et_review_player" />
+
+        <TextView
             android:id="@+id/tv_review_success"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -75,7 +117,7 @@
             android:textSize="16dp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ll_review" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_review_player" />
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/cg_review_success"
@@ -94,7 +136,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
-            android:text="몇 분을 남기고 탈출하셨나요?"
+            android:text="몇 분동안 플레이하셨나요?"
             android:textColor="@color/moabang_gray"
             android:textSize="16dp"
             android:textStyle="bold"
@@ -217,7 +259,7 @@
             tools:ignore="MissingConstraints"></com.google.android.material.chip.ChipGroup>
 
         <TextView
-            android:id="@+id/tv_review_player"
+            android:id="@+id/tv_review_rplayer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -232,7 +274,7 @@
             app:layout_constraintTop_toBottomOf="@+id/cg_review_active" />
 
         <EditText
-            android:id="@+id/et_review_player"
+            android:id="@+id/et_review_rplayer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -243,21 +285,21 @@
             android:singleLine="true"
             android:textColor="@color/moabang_pink"
             android:textSize="14dp"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_review_player"
-            app:layout_constraintEnd_toStartOf="@+id/tv_review_playerr"
-            app:layout_constraintTop_toTopOf="@+id/tv_review_player" />
+            app:layout_constraintBottom_toBottomOf="@+id/tv_review_rplayer"
+            app:layout_constraintEnd_toStartOf="@+id/tv_review_rplayerr"
+            app:layout_constraintTop_toTopOf="@+id/tv_review_rplayer" />
 
         <TextView
-            android:id="@+id/tv_review_playerr"
+            android:id="@+id/tv_review_rplayerr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="32dp"
             android:text="명"
             android:textColor="@color/moabang_gray"
             android:textSize="14dp"
-            app:layout_constraintBottom_toBottomOf="@+id/et_review_player"
+            app:layout_constraintBottom_toBottomOf="@+id/et_review_rplayer"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/et_review_player" />
+            app:layout_constraintTop_toTopOf="@+id/et_review_rplayer" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -300,7 +342,7 @@
             app:layout_constraintTop_toBottomOf="@+id/ratingBar_review" />
 
         <EditText
-            android:id="@+id/editText_historyEdit_text"
+            android:id="@+id/et_review_content"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="16dp"
