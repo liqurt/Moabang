@@ -44,23 +44,23 @@
             android:id="@+id/tv_loginA_tmp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="150dp"
+            android:layout_marginBottom="100dp"
             android:text="로그인 구현 전 >"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_loginA" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <ImageButton
             android:id="@+id/kakao_login_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
             android:backgroundTint="@color/moabang_lightPink"
             android:contentDescription="카카오 로그인 버튼"
             android:onClick="@{activity.kakaoLogin}"
+            app:layout_constraintBottom_toTopOf="@+id/tv_loginA_tmp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_loginA"
             app:srcCompat="@drawable/kakao_login_medium_narrow" />
 
 
