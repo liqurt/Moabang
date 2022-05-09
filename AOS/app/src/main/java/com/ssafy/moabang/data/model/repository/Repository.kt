@@ -100,7 +100,7 @@ class Repository private constructor(context: Context) {
             if(instance == null){
                 Log.d("AAAAA", "instance not init")
             }else{
-                Log.d("AAAAA", "instance init")
+                Log.d("AAAAA", "instance already init")
             }
             return instance ?: throw IllegalStateException("초기화 안 됨")
         }
