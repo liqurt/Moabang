@@ -12,17 +12,23 @@ import com.ssafy.moabang.config.GlobalApplication
 import com.ssafy.moabang.data.api.CafeApi
 import com.ssafy.moabang.data.model.dto.Cafe
 import com.ssafy.moabang.data.model.dto.Theme
+import com.ssafy.moabang.data.model.repository.Repository
 import com.ssafy.moabang.databinding.ActivityCafeDetailBinding
 import com.ssafy.moabang.src.theme.ThemeDetailActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.properties.Delegates
 
 class CafeDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCafeDetailBinding
     private lateinit var themeList: List<Theme>
     private var themeListRVAdapter : ThemeListRVAdapter = ThemeListRVAdapter()
     private lateinit var cafe: Cafe
+    private var repository = Repository.get()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,13 +37,17 @@ class CafeDetailActivity : AppCompatActivity() {
 
         intent.getParcelableExtra<Cafe>("cafe")?.let {
             cafe = it
-        } ?: finish()
+            initView()
+        } ?: findCafeWithTitle()
 
     }
 
-    override fun onStart() {
-        super.onStart()
-        initView()
+    private fun findCafeWithTitle() {
+        val cname = intent.getStringExtra("cname")
+        CoroutineScope(Dispatchers.Main).launch {
+            cafe = repository.getCafeByNameExactly(cname!!)
+            initView()
+        }
     }
 
     private fun getJWTtoken(): String {
@@ -46,7 +56,6 @@ class CafeDetailActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        Log.d("AAAAA","initView()")
         // cafe
         Glide.with(this)
             .load(cafe.img)
