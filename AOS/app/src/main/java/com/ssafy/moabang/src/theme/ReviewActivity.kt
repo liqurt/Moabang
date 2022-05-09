@@ -1,6 +1,7 @@
 package com.ssafy.moabang.src.theme
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -144,6 +145,9 @@ class ReviewActivity : AppCompatActivity() {
             try{
                 reviewViewModel.reviewAdd(review)
                 Toast.makeText(this, "리뷰가 등록되었습니다.", Toast.LENGTH_SHORT).show()
+
+                val intent = Intent(this, ThemeReviewFragment::class.java)
+                setResult(1, intent)
                 finish()
             } catch (e: Exception){
                 Toast.makeText(this, "리뷰 등록 실패 : ${e.printStackTrace()}", Toast.LENGTH_SHORT).show()

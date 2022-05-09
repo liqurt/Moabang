@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -27,6 +29,14 @@ class ThemeReviewFragment : Fragment() {
     private lateinit var theme: Theme
     private val reviewViewModel: ReviewViewModel by viewModels()
 
+    private val activityResultLauncher : ActivityResultLauncher<Intent> = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ){
+        if(it.resultCode == 1){
+            reviewViewModel.getReview(theme.tid)
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,11 +53,6 @@ class ThemeReviewFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        init()
-    }
-
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
         init()
     }
 
@@ -56,9 +61,11 @@ class ThemeReviewFragment : Fragment() {
         initRVA()
 
         binding.btnThemeRVFReview.setOnClickListener {
-            startActivity(Intent(requireContext(), ReviewActivity::class.java)
+            val intent = Intent(requireContext(), ReviewActivity::class.java)
                 .putExtra("type", "등록")
-                .putExtra("tid", theme.tid))
+                .putExtra("tid", theme.tid)
+            activityResultLauncher.launch(intent)
+
         }
 
         callback = object : OnBackPressedCallback(true) {
@@ -97,7 +104,6 @@ class ThemeReviewFragment : Fragment() {
         }
 
        reviewViewModel.reviewListLiveData.observe(requireActivity()){
-           Log.d("LIVEDATA TEST", "initRVA: reviewList observed")
            reviewListRVAdapter.data = it
            reviewListRVAdapter.notifyDataSetChanged()
        }
