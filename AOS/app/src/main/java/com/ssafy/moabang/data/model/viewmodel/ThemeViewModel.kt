@@ -24,7 +24,7 @@ class ThemeViewModel: ViewModel() {
 
     fun getAllTheme(jwtToken: String) = viewModelScope.launch {
         getTheme(jwtToken)
-//        Log.d("VIEWMODEL TEST", "getAllTheme: $totalThemeList")
+        Log.d("VIEWMODEL TEST", "getAllTheme: $totalThemeList")
     }
 
     fun themeLike(tid: Int) = viewModelScope.launch {
@@ -43,6 +43,8 @@ class ThemeViewModel: ViewModel() {
                         totalThemeList.add(it)
                     }
                 }
+            }else{
+                Log.d("THEME VIEWMODEL TEST", "SAD: ${result.message()}")
             }
             _themeListLiveData.postValue(totalThemeList)
         } else {

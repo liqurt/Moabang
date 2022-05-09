@@ -80,10 +80,14 @@ class CafeDetailActivity : AppCompatActivity() {
                         layoutManager = LinearLayoutManager(this@CafeDetailActivity, LinearLayoutManager.VERTICAL, false)
                         themeListRVAdapter.itemClickListener = object : ThemeListRVAdapter.ItemClickListener {
                             override fun onClick(item: Theme) {
+                                Log.d("AAAAA", "CAFE : $cafe")
                                 item.apply {
                                     cname = cafe.cname.toString()
                                     url = cafe.url.toString()
+//                                    island = cafe.island.toString() // 이게 null 이었어서 추가해줌
+//                                    si = cafe.location.toString() // 이게 null 이었어서 추가해줌
                                 }
+                                Log.d("AAAAA", "ITEM(THEME) : $item")
                                 val intent = Intent(
                                     this@CafeDetailActivity,
                                     ThemeDetailActivity::class.java
