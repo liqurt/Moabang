@@ -122,52 +122,14 @@ public class CafeController {
                     for (int j = 0; j < likeList.get().size(); j++) {
                         if (themeDetailDTOList.get(i).getTid() == likeList.get().get(j).getTheme().getTid()) {
                             tmp.setIslike(true);
-                            themeDetailResDTOList.add(tmp);
                         } else {
                             tmp.setIslike(false);
-                            themeDetailResDTOList.add(tmp);
                         }
                     }
-
-
-                }
-            } else {
-                for (int i = 0; i < themeDetailDTOList.size(); i++) {
-                    ThemeDetailResDTO tmp = new ThemeDetailResDTO();
-                    tmp.setActivity(themeDetailDTOList.get(i).getActivity());
-                    tmp.setCid(themeDetailDTOList.get(i).getCid());
-                    tmp.setCname(themeDetailDTOList.get(i).getCname());
-                    tmp.setUrl(themeDetailDTOList.get(i).getUrl());
-                    tmp.setDifficulty(themeDetailDTOList.get(i).getDifficulty());
-                    tmp.setDescription(themeDetailDTOList.get(i).getDescription());
-                    tmp.setGenre(themeDetailDTOList.get(i).getGenre());
-                    tmp.setImg(themeDetailDTOList.get(i).getImg());
-                    tmp.setIsland(themeDetailDTOList.get(i).getIsland());
-                    tmp.setSi(themeDetailDTOList.get(i).getSi());
-                    tmp.setGrade(themeDetailDTOList.get(i).getGrade());
-                    tmp.setRplayer(themeDetailDTOList.get(i).getRplayer());
-                    tmp.setTid(themeDetailDTOList.get(i).getTid());
-                    tmp.setTime(themeDetailDTOList.get(i).getTime());
-                    tmp.setType(themeDetailDTOList.get(i).getType());
-                    tmp.setTname(themeDetailDTOList.get(i).getTname());
-                    tmp.setCount(themeDetailDTOList.get(i).getCount());
-                    tmp.setIslike(false);
-
-                    String data = themeDetailDTOList.get(i).getRplayer();
-                    String[] srr = data.split("~");
-                    if (srr.length != 1) {
-                        tmp.setMin_player(Integer.parseInt(srr[0]));
-                        tmp.setMax_player(Integer.parseInt(srr[1]));
-                    } else {
-                        tmp.setMin_player(Integer.parseInt(srr[0]));
-                        tmp.setMax_player(Integer.parseInt(srr[0]));
-                    }
-
                     themeDetailResDTOList.add(tmp);
                 }
-
+                return new ResponseEntity<>(themeDetailResDTOList, HttpStatus.OK);
             }
-            return new ResponseEntity<>(themeDetailResDTOList, HttpStatus.OK);
         }
         for (int i = 0; i < themeDetailDTOList.size(); i++) {
             ThemeDetailResDTO tmp = new ThemeDetailResDTO();
@@ -199,7 +161,6 @@ public class CafeController {
                 tmp.setMin_player(Integer.parseInt(srr[0]));
                 tmp.setMax_player(Integer.parseInt(srr[0]));
             }
-
             themeDetailResDTOList.add(tmp);
         }
         return new ResponseEntity<>(themeDetailResDTOList, HttpStatus.OK);
