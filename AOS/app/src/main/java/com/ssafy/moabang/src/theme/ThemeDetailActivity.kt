@@ -89,7 +89,7 @@ class ThemeDetailActivity : AppCompatActivity() {
 
     private fun setClickListener(){
         binding.ivToolbarLeadingIcon.setOnClickListener {
-            onBackPressed()
+            finish()
         }
 
         binding.bsThemeDA.setOnClickListener {
@@ -159,13 +159,5 @@ class ThemeDetailActivity : AppCompatActivity() {
             }
         }
     }
-
-    override fun onBackPressed() {
-        val intent = Intent(this, ThemeFragment::class.java)
-        setResult(2, intent)
-        finish()
-        super.onBackPressed()
-    }
-
 
 }

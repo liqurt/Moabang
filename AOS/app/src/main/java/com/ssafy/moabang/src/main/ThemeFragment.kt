@@ -42,8 +42,6 @@ class ThemeFragment : Fragment() {
     private var searchList = ArrayList<Theme>()
     private lateinit var tf: ThemeFilter
 
-    private val themeViewModel: ThemeViewModel by viewModels()
-
     private val activityResultLauncher : ActivityResultLauncher<Intent> = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ){
@@ -54,10 +52,6 @@ class ThemeFragment : Fragment() {
                 tf = returnValue
             }
             filter(returnValue!!)
-        }
-        if(it.resultCode == 2){
-            init()
-            if(::tf.isInitialized) filter(tf)
         }
     }
 
@@ -72,6 +66,12 @@ class ThemeFragment : Fragment() {
     ): View? {
         binding = FragmentThemeBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        init()
+        if(::tf.isInitialized) filter(tf)
+        super.onViewStateRestored(savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
