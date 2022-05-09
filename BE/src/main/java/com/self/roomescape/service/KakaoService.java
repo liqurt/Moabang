@@ -109,7 +109,7 @@ public class KakaoService {
             String email = kakao_account.getAsJsonObject().get("email").getAsString();
 //            String birthday = kakao_account.getAsJsonObject().get("birthday").getAsString();
 //            String gender = kakao_account.getAsJsonObject().get("gender").getAsString();
-            if(properties.getAsJsonObject().get("profile_image").getAsString()!=null) {
+            if(properties.has("profile_image")) {
                 String profile_img = properties.getAsJsonObject().get("profile_image").getAsString();
                 userInfo.put("profile_img", profile_img);
             }
