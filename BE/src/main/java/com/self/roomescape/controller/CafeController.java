@@ -29,7 +29,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/cafe")
-@Api(tags = {"카페 Api"})
+@Api(tags = {"카페 및 테마 Api"})
 public class CafeController {
     @Autowired
     private CafeRepository cafeRepository;
