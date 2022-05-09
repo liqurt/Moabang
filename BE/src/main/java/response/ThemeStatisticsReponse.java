@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 public class ThemeStatisticsReponse {
     private float r_rating;
-    private int r_difficulty;
+    private int r_chaegamDif;
     private float r_isSuccess;
     private String r_activity;
     private float r_clearTime;

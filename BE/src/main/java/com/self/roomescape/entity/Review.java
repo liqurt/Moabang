@@ -34,7 +34,7 @@ public class Review {
     private int player;
     private int recPlayer;
     private String active;
-    private int difficulty;
+    private int chaegamDif;
 
     @JsonFormat(pattern = "yyyy.MM.dd")
     @Temporal(TemporalType.DATE)

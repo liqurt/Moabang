@@ -81,7 +81,7 @@ public class ThemeController {
             Review review = new Review();
             review.setContent(reviewCreateRequest.getContent());
             review.setActive(reviewCreateRequest.getActive());
-            review.setDifficulty(reviewCreateRequest.getDifficulty());
+            review.setChaegamDif(reviewCreateRequest.getChaegamDif());
             review.setHint(reviewCreateRequest.getHint());
             review.setIsSuccess(reviewCreateRequest.getIsSuccess());
             review.setPlayer(reviewCreateRequest.getPlayer());
@@ -186,7 +186,7 @@ public class ThemeController {
         temp.setPlayer(reviewUpdateRequest.getPlayer());
         temp.setRecPlayer(reviewUpdateRequest.getRecPlayer());
         temp.setActive(reviewUpdateRequest.getActive());
-        temp.setDifficulty(reviewUpdateRequest.getDifficulty());
+        temp.setChaegamDif(reviewUpdateRequest.getChaegamDif());
         temp.setPlayDate(reviewUpdateRequest.getPlayDate());
         temp.setContent(reviewUpdateRequest.getContent());
 
@@ -228,7 +228,7 @@ public class ThemeController {
         for (int i = 0; i < reviewList.size(); i++) {
 
             s_rating += reviewList.get(i).getRating();
-            s_difficulty += reviewList.get(i).getDifficulty();
+            s_difficulty += reviewList.get(i).getChaegamDif();
             s_isSuccess += reviewList.get(i).getIsSuccess();
             s_clearTime += reviewList.get(i).getClearTime();
             s_hint += reviewList.get(i).getHint();
@@ -248,7 +248,7 @@ public class ThemeController {
 
         ThemeStatisticsReponse themeStatisticsReponse = new ThemeStatisticsReponse();
         themeStatisticsReponse.setR_rating(s_rating / (float) reviewList.size());
-        themeStatisticsReponse.setR_difficulty(Math.round(s_difficulty / reviewList.size()));
+        themeStatisticsReponse.setR_chaegamDif(Math.round(s_difficulty / reviewList.size()));
         themeStatisticsReponse.setR_isSuccess(s_isSuccess / (float) reviewList.size());
         themeStatisticsReponse.setR_clearTime(Math.round(s_clearTime / reviewList.size()));
         themeStatisticsReponse.setR_hint(s_hint / (float) reviewList.size());
