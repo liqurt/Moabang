@@ -3,17 +3,21 @@ package com.ssafy.moabang.src.theme
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.ssafy.moabang.adapter.ReviewListRVAdapter
 import com.ssafy.moabang.data.model.dto.Review
 import com.ssafy.moabang.data.model.dto.Theme
+import com.ssafy.moabang.data.model.viewmodel.ReviewViewModel
 import com.ssafy.moabang.databinding.FragmentThemeReviewBinding
+import okhttp3.internal.notify
 
 class ThemeReviewFragment : Fragment() {
     private lateinit var binding: FragmentThemeReviewBinding
@@ -21,6 +25,7 @@ class ThemeReviewFragment : Fragment() {
     private lateinit var themeDetailActivity: ThemeDetailActivity
     private lateinit var reviewListRVAdapter: ReviewListRVAdapter
     private lateinit var theme: Theme
+    private val reviewViewModel: ReviewViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +43,11 @@ class ThemeReviewFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+//        init()
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
         init()
     }
 
@@ -77,20 +87,20 @@ class ThemeReviewFragment : Fragment() {
     }
 
    private fun initRVA() {
+
+       reviewViewModel.getReview(theme.tid)
+
         reviewListRVAdapter = ReviewListRVAdapter()
         binding.rvThemeRVF.apply {
             layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
             adapter = reviewListRVAdapter
         }
 
-        reviewListRVAdapter.data = listOf(
-            Review(1, 1, 1, "방탈굿", 4.3, 1, "63분", 2, 3, 1, 3, 3, "2022.05.01", "2022.05.02", "완전 재밌어요 다들 하세요~"),
-            Review(2, 2, 2, "뭐야이게", 1.3, 2, "75분", 1, 5, 2, 5, 5, "2022.05.01", "2022.05.01", "핵노잼임 절대 하지 마셈"),
-            Review(1, 1, 1, "방탈굿", 4.3, 1, "63분", 2, 3, 1, 3, 3, "2022.05.01", "2022.05.02", "완전 재밌어요 다들 하세요~"),
-            Review(2, 2, 2, "뭐야이게", 1.3, 2, "75분", 1, 5, 2, 5, 5, "2022.05.01", "2022.05.01", "핵노잼임 절대 하지 마셈"),
-            Review(1, 1, 1, "방탈굿", 4.3, 1, "63분", 2, 3, 1, 3, 3, "2022.05.01", "2022.05.02", "완전 재밌어요 다들 하세요~"),
-            Review(2, 2, 2, "뭐야이게", 1.3, 2, "75분", 1, 5, 2, 5, 5, "2022.05.01", "2022.05.01", "핵노잼임 절대 하지 마셈")
-        )
+       reviewViewModel.reviewListLiveData.observe(requireActivity()){
+           Log.d("LIVEDATA TEST", "initRVA: reviewList observed")
+           reviewListRVAdapter.data = it
+           reviewListRVAdapter.notifyDataSetChanged()
+       }
     }
 
 }

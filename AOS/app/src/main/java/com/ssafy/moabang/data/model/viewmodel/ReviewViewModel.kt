@@ -11,6 +11,7 @@ import com.ssafy.moabang.data.model.dto.Theme
 import com.ssafy.moabang.data.model.repository.Repository
 import com.ssafy.moabang.data.model.repository.ReviewRepository
 import com.ssafy.moabang.data.model.repository.ThemeRepository
+import com.ssafy.moabang.data.model.response.ReviewResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -19,14 +20,18 @@ import retrofit2.Response
 class ReviewViewModel: ViewModel() {
     private val reviewRepository = ReviewRepository()
 
-    private val _reviewListLiveData = MutableLiveData<List<Review>>()
-    val reviewListLiveData : LiveData<List<Review>>
+    private val _reviewListLiveData = MutableLiveData<List<ReviewResponse>>()
+    val reviewListLiveData : LiveData<List<ReviewResponse>>
         get() = _reviewListLiveData
 
-    private val totalReviewList = mutableListOf<Review>()
+    private val totalReviewList = mutableListOf<ReviewResponse>()
 
     fun reviewAdd(review: ReviewForCreate) = viewModelScope.launch {
         addReview(review)
+    }
+
+    fun getReview(tid: Int) = viewModelScope.launch {
+        readReview(tid)
     }
 
     private suspend fun addReview(review: ReviewForCreate) = withContext(Dispatchers.IO) {
@@ -43,5 +48,21 @@ class ReviewViewModel: ViewModel() {
                 Log.d("THEME VIEWMODEL TEST", "changeLike FAILED: ${result.body()}")
             }
         }
+        _reviewListLiveData.postValue(totalReviewList)
+    }
+
+    private suspend fun readReview(tid: Int) = withContext(Dispatchers.IO) {
+        val result: Response<List<ReviewResponse>>? = reviewRepository.readReview(tid)
+
+        if(result != null){
+            if(result.isSuccessful){
+                result.body()!!.forEach {
+                    if(!totalReviewList.contains(it)){
+                        totalReviewList.add(it)
+                    }
+                }
+            }
+        }
+        _reviewListLiveData.postValue(totalReviewList)
     }
 }

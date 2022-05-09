@@ -7,6 +7,7 @@ import com.ssafy.moabang.data.api.ReviewApi
 import com.ssafy.moabang.data.api.ThemeApi
 import com.ssafy.moabang.data.model.dto.ReviewForCreate
 import com.ssafy.moabang.data.model.dto.Theme
+import com.ssafy.moabang.data.model.response.ReviewResponse
 import java.lang.Exception
 import retrofit2.Response
 
@@ -16,6 +17,17 @@ class ReviewRepository {
     suspend fun addReview(review: ReviewForCreate): Response<String>? {
         try{
             var res = reviewApi.addReview(review).execute()
+            Log.d("Review Repository Test","성공")
+            return res
+        } catch (e: Exception){
+            e.printStackTrace()
+        }
+        return null
+    }
+
+    suspend fun readReview(tid: Int): Response<List<ReviewResponse>>? {
+        try{
+            var res = reviewApi.readReview(tid).execute()
             Log.d("Review Repository Test","성공")
             return res
         } catch (e: Exception){
