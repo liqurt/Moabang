@@ -14,9 +14,9 @@ public class ReviewCreateRequest {
     private float rating;
     private int isSuccess;
     private int hint;
-    private String timeLeft;
+    private int clearTime;
     private int player;
-    private String recPlayer;
+    private int recPlayer;
     private String active;
     private int difficulty;
     private Date playDate;
