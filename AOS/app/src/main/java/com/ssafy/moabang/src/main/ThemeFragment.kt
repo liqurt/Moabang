@@ -74,7 +74,10 @@ class ThemeFragment : Fragment() {
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        init()
+        CoroutineScope(Dispatchers.Main).launch {
+            originalList = repository.getAllTheme()
+            themeListRVAdapter.filterList(originalList)
+        }
         if(::tf.isInitialized) filter(tf)
         super.onViewStateRestored(savedInstanceState)
     }
@@ -209,10 +212,9 @@ class ThemeFragment : Fragment() {
             } else {
                 maxp = tf.player[tf.player.size - 1]
             }
-            if(maxp == 5) maxp = 10
         } else {
             minp = 0
-            maxp = 10
+            maxp = 5
         }
 
         CoroutineScope(Dispatchers.Main).launch {
