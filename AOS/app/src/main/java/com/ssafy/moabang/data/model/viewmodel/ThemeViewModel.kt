@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.ssafy.moabang.data.model.dto.Theme
 import com.ssafy.moabang.data.model.repository.Repository
 import com.ssafy.moabang.data.model.repository.ThemeRepository
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -36,13 +37,17 @@ class ThemeViewModel: ViewModel() {
 
         if(result != null) {
             if (result.isSuccessful) {
-                Repository.get().insertThemes(result.body()!!)
-                Log.d("THEME VIEWMODEL TEST", "getTheme: ${result.body()}")
+                CoroutineScope(Dispatchers.IO).launch {
+                    Repository.get().insertThemes(result.body()!!)
+                }
+                Log.d("THEME VIEWMODEL TEST", "success: ${result.body()}")
                 result.body()!!.forEach {
                     if (!totalThemeList.contains(it)) {
                         totalThemeList.add(it)
                     }
                 }
+            }else{
+                Log.d("THEME VIEWMODEL TEST", "fail: ${result.body()}")
             }
             _themeListLiveData.postValue(totalThemeList)
         } else {
