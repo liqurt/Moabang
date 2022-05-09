@@ -30,7 +30,7 @@ class ReviewViewModel: ViewModel() {
     }
 
     private suspend fun addReview(review: ReviewForCreate) = withContext(Dispatchers.IO) {
-        val result: Response<String>? = reviewRepository.addReview()
+        val result: Response<String>? = reviewRepository.addReview(review)
 
         if(result != null){
             if(result.isSuccessful){

@@ -9,7 +9,10 @@ import com.google.android.material.chip.ChipGroup
 import com.ssafy.moabang.R
 import com.ssafy.moabang.databinding.ActivityReviewBinding
 import android.widget.Toast
+import androidx.activity.viewModels
 import com.ssafy.moabang.data.model.dto.ReviewForCreate
+import com.ssafy.moabang.data.model.viewmodel.ReviewViewModel
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.Calendar.DATE
@@ -17,6 +20,7 @@ import java.util.Calendar.DATE
 
 class ReviewActivity : AppCompatActivity() {
     private lateinit var binding: ActivityReviewBinding
+    val reviewViewModel: ReviewViewModel by viewModels()
     private var tid:Int = 0
     private var type = ""
     private lateinit var date: List<String>
@@ -137,6 +141,15 @@ class ReviewActivity : AppCompatActivity() {
         if(cnt == 8){
             var review = ReviewForCreate(active, clearTime, binding.etReviewContent.text.toString(), chaegamDif, hint, isSuccess, playDate, player, rating, recPlayer, tid)
             Log.d("REVIEW TEST", "registerReview: $review")
+            try{
+                reviewViewModel.reviewAdd(review)
+                Toast.makeText(this, "리뷰가 등록되었습니다.", Toast.LENGTH_SHORT).show()
+                finish()
+            } catch (e: Exception){
+                Toast.makeText(this, "리뷰 등록 실패 : ${e.printStackTrace()}", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+
         }
 
     }

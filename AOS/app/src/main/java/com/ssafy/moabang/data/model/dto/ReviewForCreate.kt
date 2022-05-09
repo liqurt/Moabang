@@ -1,7 +1,5 @@
 package com.ssafy.moabang.data.model.dto
 
-import android.os.Parcelable
-
 data class ReviewForCreate(
 var active: String,
 var clearTime: Int,
