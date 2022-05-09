@@ -18,7 +18,7 @@ public class ReviewUpdateRequest {
     private int player;
     private int recPlayer;
     private String active;
-    private int difficulty;
+    private int chaegamDif;
     private Date playDate;
     private String content;
 }

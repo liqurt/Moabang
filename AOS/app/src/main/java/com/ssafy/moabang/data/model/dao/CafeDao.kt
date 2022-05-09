@@ -21,6 +21,12 @@ interface CafeDao {
     @Query("SELECT * FROM Cafe WHERE cname LIKE '%'||:cname||'%'")
     fun getCafeByName(cname : String) : List<Cafe>
 
+    @Query("SELECT * FROM Cafe WHERE cname LIKE :cname")
+    fun getCafeByNameExactly(cname : String) : Cafe
+
+    @Query("SELECT * FROM Cafe WHERE cid LIKE :cid")
+    fun getCafeByCid(cid : Int) : Cafe
+
     @Insert
     fun insertCafe(cafe : Cafe)
 

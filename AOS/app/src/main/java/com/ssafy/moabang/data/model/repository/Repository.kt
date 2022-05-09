@@ -43,6 +43,16 @@ class Repository private constructor(context: Context) {
             cafeDao.getCafeByName(name)
         }
 
+    suspend fun getCafeByNameExactly(cname: String): Cafe =
+        database.withTransaction {
+            cafeDao.getCafeByNameExactly(cname)
+        }
+
+    suspend fun getCafeByCid(cid : Int) : Cafe =
+        database.withTransaction {
+            cafeDao.getCafeByCid(cid)
+        }
+
     suspend fun insertCafe(cafe: Cafe) =
         database.withTransaction {
             cafeDao.insertCafe(cafe)
@@ -100,7 +110,7 @@ class Repository private constructor(context: Context) {
             if(instance == null){
                 Log.d("AAAAA", "instance not init")
             }else{
-                Log.d("AAAAA", "instance init")
+                Log.d("AAAAA", "instance already init")
             }
             return instance ?: throw IllegalStateException("초기화 안 됨")
         }
