@@ -1,6 +1,7 @@
 package com.ssafy.moabang.src.theme
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -44,6 +45,10 @@ class ThemeReviewFragment : Fragment() {
         initInfo()
         initRVA()
 
+        binding.btnThemeRVFReview.setOnClickListener {
+            startActivity(Intent(requireContext(), ReviewActivity::class.java).putExtra("tid", theme.tid))
+        }
+
         callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (themeDetailActivity.behavior.state == BottomSheetBehavior.STATE_EXPANDED) {
@@ -66,7 +71,7 @@ class ThemeReviewFragment : Fragment() {
         binding.ratingBarThemeRVF.rating = theme.grade.toFloat()/2
         binding.tvThemeRVFRating.text = theme.grade.toString()
 
-        // TODO: 통계 정보로 세팅팅
+        // TODO: 통계 정보로 세팅
     }
 
    private fun initRVA() {

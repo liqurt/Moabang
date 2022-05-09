@@ -68,15 +68,15 @@ class ThemeFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        init()
+    }
+
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         init()
         if(::tf.isInitialized) filter(tf)
         super.onViewStateRestored(savedInstanceState)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        init()
     }
 
     fun init(){
