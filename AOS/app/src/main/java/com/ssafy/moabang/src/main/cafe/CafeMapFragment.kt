@@ -20,11 +20,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.gms.location.*
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
@@ -37,11 +35,12 @@ import kotlinx.coroutines.launch
 import java.util.*
 
 
-class CafeMapFragment : Fragment(), OnMapReadyCallback {
+class CafeMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener{
     private lateinit var binding: FragmentCafeMapBinding
     private var mMap: GoogleMap? = null
     private var currentLocation: LatLng? = null
     private lateinit var repository: Repository
+    private lateinit var infoWindow: View
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,6 +55,7 @@ class CafeMapFragment : Fragment(), OnMapReadyCallback {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment
         mapFragment?.getMapAsync(this)
+        infoWindow = requireActivity().layoutInflater.inflate(R.layout.info_window_custom, null)
     }
 
 
@@ -65,6 +65,7 @@ class CafeMapFragment : Fragment(), OnMapReadyCallback {
         mMap = googleMap
         mMap?.apply {
             isMyLocationEnabled = true
+            setInfoWindowAdapter(CafeMapInfoWindow(requireContext()))
         }
         addCafeMarker()
     }
@@ -114,15 +115,19 @@ class CafeMapFragment : Fragment(), OnMapReadyCallback {
                     Log.d("AAAAA", "정보가 부족한 카페 : ${it.cname}")
                 } else {
                     mMap?.addMarker(
-                        MarkerOptions().position(
-                            LatLng(it.lat!!.toDouble(), it.lon!!.toDouble())
-                        ).title(it.cname)
+                        MarkerOptions().apply {
+                            position(LatLng(it.lat!!.toDouble(), it.lon!!.toDouble()))
+                            title(it.cname)
+                            snippet(it.img) // 꼼수
+                        }
                     )
                 }
             }
         }
     }
-}
 
-// 비밀의 화원 혜화점 37.5828365, 127.0021265
-// 비트포비아 미션브레이크
+    override fun onInfoWindowClick(p0: Marker) {
+        Toast.makeText(requireContext(), p0.title, Toast.LENGTH_SHORT).show()
+        Log.d("AAAAA","${p0.title}")
+    }
+}
