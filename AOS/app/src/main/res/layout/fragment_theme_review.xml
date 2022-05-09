@@ -26,7 +26,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="4dp"
-        android:isIndicator="true"
         android:max="5"
         android:numStars="5"
         app:layout_constraintBottom_toBottomOf="@+id/tv_themeRVF_title"
@@ -35,6 +34,7 @@
         app:srb_fillColor="@color/moabang_pink"
         app:srb_numberOfStars="5"
         app:srb_rating="3"
+        app:srb_isIndicator="true"
         app:srb_starSize="25dp"
         app:srb_stepSize="0.5" />
 
