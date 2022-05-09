@@ -2,8 +2,8 @@
  * 1. 지도 띄우기[DONE]
  * 2. 위치 관련 퍼미션[DONE]
  * 3. 내 위치로 카메라 이동[DONE] - [NEED_REFACTORING] 카메라 이동을 해야함.
- * 4. 카페들의 위도 및 경도로 마커 추가[IN_PROGRESS]
- * 5. 마커 클릭시, 카페 상세로 이동
+ * 4. 카페들의 위도 및 경도로 마커 추가[DONE]
+ * 5. 마커 클릭시, 카페 상세로 이동[DONE]
  * 6. 줌 아웃시, 마커 간소화
  */
 package com.ssafy.moabang.src.main.cafe
@@ -35,7 +35,7 @@ import kotlinx.coroutines.launch
 import java.util.*
 
 
-class CafeMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener{
+class CafeMapFragment : Fragment(), OnMapReadyCallback{
     private lateinit var binding: FragmentCafeMapBinding
     private var mMap: GoogleMap? = null
     private var currentLocation: LatLng? = null
@@ -61,11 +61,14 @@ class CafeMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCl
 
     @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {
+        val customInfoWindow = CafeMapInfoWindow(requireContext())
+
         checkPermission()
         mMap = googleMap
         mMap?.apply {
             isMyLocationEnabled = true
-            setInfoWindowAdapter(CafeMapInfoWindow(requireContext()))
+            setInfoWindowAdapter(customInfoWindow)
+            setOnInfoWindowClickListener(customInfoWindow)
         }
         addCafeMarker()
     }
@@ -114,20 +117,15 @@ class CafeMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCl
                 if (it.cname == "" || it.lat == "" || it.lon == "") {
                     Log.d("AAAAA", "정보가 부족한 카페 : ${it.cname}")
                 } else {
-                    mMap?.addMarker(
-                        MarkerOptions().apply {
-                            position(LatLng(it.lat!!.toDouble(), it.lon!!.toDouble()))
-                            title(it.cname)
-                            snippet(it.img) // 꼼수
-                        }
-                    )
+                    val marker = MarkerOptions().apply {
+                        position(LatLng(it.lat!!.toDouble(), it.lon!!.toDouble()))
+                        title(it.cname)
+                        snippet(it.img)
+                    }
+                    mMap?.addMarker(marker)
                 }
             }
         }
     }
 
-    override fun onInfoWindowClick(p0: Marker) {
-        Toast.makeText(requireContext(), p0.title, Toast.LENGTH_SHORT).show()
-        Log.d("AAAAA","${p0.title}")
-    }
 }

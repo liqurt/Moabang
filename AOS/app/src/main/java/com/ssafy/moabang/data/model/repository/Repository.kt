@@ -43,6 +43,16 @@ class Repository private constructor(context: Context) {
             cafeDao.getCafeByName(name)
         }
 
+    suspend fun getCafeByNameExactly(cname: String): Cafe =
+        database.withTransaction {
+            cafeDao.getCafeByNameExactly(cname)
+        }
+
+    suspend fun getCafeByCid(cid : Int) : Cafe =
+        database.withTransaction {
+            cafeDao.getCafeByCid(cid)
+        }
+
     suspend fun insertCafe(cafe: Cafe) =
         database.withTransaction {
             cafeDao.insertCafe(cafe)
