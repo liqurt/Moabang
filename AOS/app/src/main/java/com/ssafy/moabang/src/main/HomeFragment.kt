@@ -9,13 +9,14 @@
 - {threshold} 값 이하인 카페 추출[DONE]
 - UI 상세 1 - recyclerView
 - 추출한 카페를 recyclerView의 adapter에 달아 놓는다.
-- UI 상세 2 - auto carousel
+- UI 상세 2 - auto carousel -> 이거는 아래에 있는 인기 테마에다가 해야할듯
  */
 package com.ssafy.moabang.src.main
 
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
@@ -24,12 +25,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.maps.model.LatLng
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
+import com.ssafy.moabang.adapter.CafeListRVAdapter
+import com.ssafy.moabang.adapter.NearCafeListRVAdapter
 import com.ssafy.moabang.data.model.dto.Cafe
 import com.ssafy.moabang.data.model.repository.Repository
 import com.ssafy.moabang.databinding.FragmentHomeBinding
+import com.ssafy.moabang.src.main.cafe.CafeDetailActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -39,8 +44,11 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private var currentLocation: LatLng? = null
 
-    private var nearCafeList = mutableListOf<Cafe>()
     private var repository = Repository.get()
+
+    private var nearCafeListRVAdapter : NearCafeListRVAdapter = NearCafeListRVAdapter(listOf())
+    private lateinit var nearCafeList : List<Cafe>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,8 +104,9 @@ class HomeFragment : Fragment() {
     private fun setNearCafeList() {
         val threshold = 10.0 // 10km
         if (currentLocation != null) {
-            CoroutineScope(Dispatchers.IO).launch {
+            CoroutineScope(Dispatchers.Main).launch {
                 var allCafeList = listOf<Cafe>()
+                var tempNearCafeList = mutableListOf<Cafe>()
                 CoroutineScope(Dispatchers.IO).async {
                     allCafeList = repository.getAllCafe()
                 }.await()
@@ -109,16 +118,28 @@ class HomeFragment : Fragment() {
                         val cafeLng = cafe.lon!!.toDouble()
                         val distance = getDistanceLatLngInKm(currentLocation!!.latitude, currentLocation!!.longitude, cafeLat, cafeLng)
                         if(distance <= threshold) {
-                            nearCafeList.add(cafe)
-                            Log.d("AAAAA", "HOME FRAGMENT_nearCafeList : ${cafe.cname}")
+                            tempNearCafeList.add(cafe)
                         }
                     }
                 }
-                Log.d("AAAAA", "HOME FRAGMENT_nearCafeList : ${nearCafeList.size}")
+                nearCafeList = tempNearCafeList
+                initRCV()
             }
         } else {
             Log.d("AAAAA", "HOME FRAGMENT : currentLocation is null")
         }
+    }
+
+    private fun initRCV(){
+        binding.rvHomeFNearCafe.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        nearCafeListRVAdapter = NearCafeListRVAdapter(nearCafeList)
+        nearCafeListRVAdapter.setItemClickListener(object : NearCafeListRVAdapter.CafeItemClickListener{
+            override fun onClick(cafe: Cafe) {
+                val intent = Intent(requireActivity(), CafeDetailActivity::class.java).putExtra("cafe", cafe)
+                startActivity(intent)
+            }
+        })
+        binding.rvHomeFNearCafe.adapter = nearCafeListRVAdapter
     }
 
     private fun getDistanceLatLngInKm(
