@@ -28,7 +28,6 @@ class ReviewActivity : AppCompatActivity() {
     private var tid:Int = 0
     private var review:ReviewResponse? = null
     private var type = ""
-    private lateinit var date: List<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,14 +69,15 @@ class ReviewActivity : AppCompatActivity() {
 
     private fun initAdd() {
         binding.toolbarReview.tvToolbarTitle.text = "리뷰 작성"
-        initDate()
+        initDate(getToday("yyyy.MM.dd"))
 
 
     }
 
     private fun initRevise(){
+        binding.tvReviewOk.text = "수정"
         binding.toolbarReview.tvToolbarTitle.text = "리뷰 수정"
-        binding.tvReviewDateSelected.text = review!!.playDate
+        initDate(review!!.playDate)
         binding.etReviewPlayer.setText(review!!.player.toString())
 
         if(review!!.isSuccess == 1){
@@ -251,9 +251,9 @@ class ReviewActivity : AppCompatActivity() {
         }
     }
 
-    private fun initDate(){
-        date = getToday("yyyy-MM-dd").split("-")
-        binding.tvReviewDateSelected.text = getToday("yyyy-MM-dd")
+    private fun initDate(dt: String){
+        var date = dt.split(".")
+        binding.tvReviewDateSelected.text = dt
 
         binding.llReview.setOnClickListener {
             val dialog = DatePickerDialog(this, R.style.MySpinnerDatePickerStyle, datePickerListener, date[0].toInt(), date[1].toInt()-1, date[2].toInt())
@@ -263,7 +263,7 @@ class ReviewActivity : AppCompatActivity() {
 
     private val datePickerListener =
         DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-            val newDate = "$year-${monthOfYear + 1}-$dayOfMonth"
+            val newDate = "$year.${monthOfYear + 1}.$dayOfMonth"
             binding.tvReviewDateSelected.text = reformDate(newDate)
         }
 
@@ -274,7 +274,7 @@ class ReviewActivity : AppCompatActivity() {
     }
 
     private fun reformDate(dt: String): String {
-        var sdf = SimpleDateFormat("yyyy-MM-dd")
+        var sdf = SimpleDateFormat("yyyy.MM.dd")
         return sdf.format(sdf.parse(dt)).toString()
     }
 
