@@ -87,6 +87,7 @@ public class CafeController {
 
             // logic 1. 얻은 uid를 통해서 like 테이블에 좋아요한 tid가 있는지 확인.
             Optional<List<UserLike>> likeList = userLikeRepository.findUserLikeByUser(user.get());
+
             if (likeList.get().size() != 0) {
                 for (int i = 0; i < themeDetailDTOList.size(); i++) {
                     ThemeDetailResDTO tmp = new ThemeDetailResDTO();
@@ -107,7 +108,7 @@ public class CafeController {
                     tmp.setType(themeDetailDTOList.get(i).getType());
                     tmp.setTname(themeDetailDTOList.get(i).getTname());
                     tmp.setCount(themeDetailDTOList.get(i).getCount());
-
+                    tmp.setIslike(false);
                     String data = themeDetailDTOList.get(i).getRplayer();
                     String[] srr = data.split("~");
                     if (srr.length != 1) {
@@ -122,8 +123,6 @@ public class CafeController {
                     for (int j = 0; j < likeList.get().size(); j++) {
                         if (themeDetailDTOList.get(i).getTid() == likeList.get().get(j).getTheme().getTid()) {
                             tmp.setIslike(true);
-                        } else {
-                            tmp.setIslike(false);
                         }
                     }
                     themeDetailResDTOList.add(tmp);
