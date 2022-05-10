@@ -29,18 +29,8 @@ class ThemeReviewFragment : Fragment() {
     private lateinit var theme: Theme
     private val reviewViewModel: ReviewViewModel by viewModels()
 
-    private val activityResultLauncher : ActivityResultLauncher<Intent> = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ){
-        if(it.resultCode == 1){
-//            reviewViewModel.getReview(theme.tid)
-//            reviewListRVAdapter.notifyDataSetChanged()
-        }
-    }
-
     override fun onResume() {
         reviewViewModel.getReview(theme.tid)
-        Log.d("REVIEW FRAGMENT", "onResume: ")
         super.onResume()
     }
 
@@ -68,11 +58,9 @@ class ThemeReviewFragment : Fragment() {
         initRVA()
 
         binding.btnThemeRVFReview.setOnClickListener {
-            val intent = Intent(requireContext(), ReviewActivity::class.java)
+            startActivity(Intent(requireContext(), ReviewActivity::class.java)
                 .putExtra("type", "등록")
-                .putExtra("tid", theme.tid)
-            activityResultLauncher.launch(intent)
-
+                .putExtra("tid", theme.tid))
         }
 
         callback = object : OnBackPressedCallback(true) {
@@ -101,8 +89,6 @@ class ThemeReviewFragment : Fragment() {
     }
 
    private fun initRVA() {
-
-       reviewViewModel.getReview(theme.tid)
 
         reviewListRVAdapter = ReviewListRVAdapter()
         binding.rvThemeRVF.apply {

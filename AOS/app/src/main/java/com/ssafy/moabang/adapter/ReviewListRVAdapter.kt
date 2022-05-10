@@ -1,6 +1,7 @@
 package com.ssafy.moabang.adapter
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,14 +30,9 @@ class ReviewListRVAdapter: RecyclerView.Adapter<ReviewListRVAdapter.ViewHolder>(
             if(item.userInfo.uid != sp.getInt("uid")){
                 revise.visibility = View.GONE
                 delete.visibility = View.GONE
-            }
-
-            // TODO: 리뷰 작성자가 본인일때만 수정 삭제 버튼 보이게 함
-            revise.setOnClickListener {
-                // TODO
-            }
-            delete.setOnClickListener {
-                // TODO
+            }else{
+                revise.visibility = View.VISIBLE
+                delete.visibility = View.VISIBLE
             }
 
             val userInfo = itemView.findViewById<TextView>(R.id.tv_reviewL_info)

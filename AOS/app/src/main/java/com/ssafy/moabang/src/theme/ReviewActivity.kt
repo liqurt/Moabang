@@ -206,9 +206,6 @@ class ReviewActivity : AppCompatActivity() {
                 try {
                     reviewViewModel.reviewAdd(reviewv)
                     Toast.makeText(this, "리뷰가 등록되었습니다.", Toast.LENGTH_SHORT).show()
-
-                    val intent = Intent(this, ThemeReviewFragment::class.java)
-                    setResult(1, intent)
                     finish()
                 } catch (e: Exception) {
                     Toast.makeText(this, "리뷰 등록 실패 : ${e.printStackTrace()}", Toast.LENGTH_SHORT)
@@ -235,9 +232,6 @@ class ReviewActivity : AppCompatActivity() {
                 try {
                     reviewViewModel.reviewUpdate(review!!.rid, reviewv)
                     Toast.makeText(this, "리뷰가 수정되었습니다.", Toast.LENGTH_SHORT).show()
-
-                    val intent = Intent(this, ThemeReviewFragment::class.java)
-                    setResult(1, intent)
                     finish()
                 } catch (e: Exception) {
                     Toast.makeText(this, "리뷰 수정 실패 : ${e.printStackTrace()}", Toast.LENGTH_SHORT)

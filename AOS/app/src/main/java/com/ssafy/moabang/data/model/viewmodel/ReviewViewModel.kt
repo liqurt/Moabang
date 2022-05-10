@@ -61,6 +61,7 @@ class ReviewViewModel: ViewModel() {
 
         if(result != null){
             if(result.isSuccessful){
+                totalReviewList.clear()
                 result.body()!!.forEach {
                     if(!totalReviewList.contains(it)){
                         totalReviewList.add(it)
