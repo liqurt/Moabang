@@ -1,24 +1,23 @@
 package com.ssafy.moabang.adapter
 
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RatingBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.iarcuschin.simpleratingbar.SimpleRatingBar
 import com.ssafy.moabang.R
 import com.ssafy.moabang.config.GlobalApplication.Companion.sp
-import com.ssafy.moabang.data.model.dto.Review
 import com.ssafy.moabang.data.model.response.ReviewResponse
+import com.ssafy.moabang.data.model.viewmodel.ReviewViewModel
 import com.ssafy.moabang.databinding.ListReviewItemBinding
 import com.ssafy.moabang.src.theme.ReviewActivity
+import com.ssafy.moabang.src.util.CustomDialog
 
 class ReviewListRVAdapter: RecyclerView.Adapter<ReviewListRVAdapter.ViewHolder>() {
-    var data: List<ReviewResponse> = emptyList()
+    var data: MutableList<ReviewResponse> = mutableListOf()
     lateinit var binding: ListReviewItemBinding
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -68,6 +67,18 @@ class ReviewListRVAdapter: RecyclerView.Adapter<ReviewListRVAdapter.ViewHolder>(
                 .putExtra("type", "수정")
                 .putExtra("review", data[position])
             ContextCompat.startActivity(holder.itemView.context, intent, null)
+        }
+
+        holder.itemView.findViewById<TextView>(R.id.tv_reviewL_delete).setOnClickListener {
+            CustomDialog(holder.itemView.context)
+                .setContent("리뷰를 삭제하시겠습니까?")
+                .setPositiveButtonText("삭제")
+                .setOnPositiveClickListener{
+                    ReviewViewModel().reviewDelete(data[position].rid)
+                    data.removeAt(position)
+                    notifyItemRemoved(position)
+                    notifyItemRangeChanged(position, data.size)
+                }.build().show()
         }
     }
 
