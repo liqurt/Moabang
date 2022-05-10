@@ -15,12 +15,14 @@ import com.kakao.sdk.user.UserApiClient
 import com.ssafy.moabang.databinding.ActivityLoginBinding
 import com.ssafy.moabang.src.main.MainActivity
 import com.ssafy.moabang.config.GlobalApplication
+import com.ssafy.moabang.config.GlobalApplication.Companion.sp
 import com.ssafy.moabang.data.model.dto.Cafe
 import com.ssafy.moabang.data.model.dto.User
 import com.ssafy.moabang.data.model.repository.Repository
 import com.ssafy.moabang.data.model.viewmodel.ThemeViewModel
 import com.ssafy.moabang.data.api.CafeApi
 import com.ssafy.moabang.data.api.LoginApi
+import com.ssafy.moabang.src.util.SharedPreferencesUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -96,7 +98,8 @@ class LoginActivity : AppCompatActivity() {
                 if(response.isSuccessful){ // 로그인에 성공했다면
                     val jwtToken = response.headers()["Authorization"]
                     if (jwtToken != null) {
-                        saveOurTokenToSharedPrefs(jwtToken)
+                        sp.putString("moabangToken", jwtToken.toString())
+                        sp.putInt("uid", response.body()!!.uid!!)
                     }
                     getCafesFromServer(jwtToken.toString())// 2. 서버에서 전체 카페 데이터를 가져오고, 이를 로컬 DB에 저장한다.
                     themeViewModel.getAllTheme(jwtToken.toString())
@@ -113,13 +116,6 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this@LoginActivity, "네트워크 오류1 : ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
-    }
-
-    fun saveOurTokenToSharedPrefs(jwtToken: String) {
-        val sp = getSharedPreferences("moabang", MODE_PRIVATE)
-        val editor  : SharedPreferences.Editor = sp.edit()
-        editor.putString("moabangToken",jwtToken)
-        editor.apply()
     }
 
     fun getCafesFromServer(jwtToken: String) {
