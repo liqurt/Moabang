@@ -6,6 +6,7 @@ import com.ssafy.moabang.config.GlobalApplication
 import com.ssafy.moabang.data.api.ReviewApi
 import com.ssafy.moabang.data.api.ThemeApi
 import com.ssafy.moabang.data.model.dto.ReviewForCreate
+import com.ssafy.moabang.data.model.dto.ReviewForUpdate
 import com.ssafy.moabang.data.model.dto.Theme
 import com.ssafy.moabang.data.model.response.ReviewResponse
 import java.lang.Exception
@@ -14,10 +15,10 @@ import retrofit2.Response
 class ReviewRepository {
     val reviewApi = GlobalApplication.retrofit.create(ReviewApi::class.java)
 
-    suspend fun addReview(review: ReviewForCreate): Response<String>? {
+    fun addReview(review: ReviewForCreate): Response<String>? {
         try{
             var res = reviewApi.addReview(review).execute()
-            Log.d("Review Repository Test","성공")
+            Log.d("Review Repository Test","add 성공")
             return res
         } catch (e: Exception){
             e.printStackTrace()
@@ -25,12 +26,23 @@ class ReviewRepository {
         return null
     }
 
-    suspend fun readReview(tid: Int): Response<List<ReviewResponse>>? {
+    fun readReview(tid: Int): Response<List<ReviewResponse>>? {
         try{
             var res = reviewApi.readReview(tid).execute()
-            Log.d("Review Repository Test","성공")
+            Log.d("Review Repository Test","read 성공")
             return res
         } catch (e: Exception){
+            e.printStackTrace()
+        }
+        return null
+    }
+
+    fun updateReview(rid: Int, review: ReviewForUpdate): Response<String>? {
+        try {
+            var res = reviewApi.updateReview(rid, review).execute()
+            Log.d("Review Repository Test", "update 성공")
+            return res
+        } catch (e: Exception) {
             e.printStackTrace()
         }
         return null

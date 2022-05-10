@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.moabang.data.model.dto.Review
 import com.ssafy.moabang.data.model.dto.ReviewForCreate
+import com.ssafy.moabang.data.model.dto.ReviewForUpdate
 import com.ssafy.moabang.data.model.dto.Theme
 import com.ssafy.moabang.data.model.repository.Repository
 import com.ssafy.moabang.data.model.repository.ReviewRepository
@@ -34,6 +35,10 @@ class ReviewViewModel: ViewModel() {
         readReview(tid)
     }
 
+    fun reviewUpdate(rid: Int, review: ReviewForUpdate) = viewModelScope.launch {
+        updateReview(rid, review)
+    }
+
     private suspend fun addReview(review: ReviewForCreate) = withContext(Dispatchers.IO) {
         val result: Response<String>? = reviewRepository.addReview(review)
 
@@ -45,7 +50,7 @@ class ReviewViewModel: ViewModel() {
                     Log.d("REVIEW VIEWMODEL TEST", "addReview FAILED: ${result.body()}")
                 }
             } else {
-                Log.d("THEME VIEWMODEL TEST", "changeLike FAILED: ${result.body()}")
+                Log.d("THEME VIEWMODEL TEST", "addReview FAILED: ${result.body()}")
             }
         }
         _reviewListLiveData.postValue(totalReviewList)
@@ -61,6 +66,23 @@ class ReviewViewModel: ViewModel() {
                         totalReviewList.add(it)
                     }
                 }
+            }
+        }
+        _reviewListLiveData.postValue(totalReviewList)
+    }
+
+    private suspend fun updateReview(rid: Int, review: ReviewForUpdate) = withContext(Dispatchers.IO) {
+        val result: Response<String>? = reviewRepository.updateReview(rid, review)
+
+        if(result != null){
+            if(result.isSuccessful){
+                if(result.body()!! == "true"){
+                    Log.d("REVIEW VIEWMODEL TEST", "updateReview SUCCESS: ${result.body()}")
+                } else {
+                    Log.d("REVIEW VIEWMODEL TEST", "updateReview FAILED - result is false: ${result.body()}")
+                }
+            } else {
+                Log.d("THEME VIEWMODEL TEST", "updateReview FAILED - result is null: ${result.body()}")
             }
         }
         _reviewListLiveData.postValue(totalReviewList)

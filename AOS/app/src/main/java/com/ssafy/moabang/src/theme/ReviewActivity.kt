@@ -12,6 +12,7 @@ import com.ssafy.moabang.databinding.ActivityReviewBinding
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.get
+import com.ssafy.moabang.config.GlobalApplication.Companion.sp
 import com.ssafy.moabang.data.model.dto.ReviewForCreate
 import com.ssafy.moabang.data.model.dto.ReviewForUpdate
 import com.ssafy.moabang.data.model.response.ReviewResponse
@@ -70,8 +71,6 @@ class ReviewActivity : AppCompatActivity() {
     private fun initAdd() {
         binding.toolbarReview.tvToolbarTitle.text = "리뷰 작성"
         initDate(getToday("yyyy.MM.dd"))
-
-
     }
 
     private fun initRevise(){
@@ -197,13 +196,13 @@ class ReviewActivity : AppCompatActivity() {
                     chaegamDif,
                     hint,
                     isSuccess,
-                    playDate,
+                    reformDate2(playDate),
                     player,
                     rating,
                     recPlayer,
                     tid
                 )
-                Log.d("REVIEW TEST", "registerReview: $reviewv")
+                Log.d("REVIEW TEST", "registerReview - 등록: $reviewv")
                 try {
                     reviewViewModel.reviewAdd(reviewv)
                     Toast.makeText(this, "리뷰가 등록되었습니다.", Toast.LENGTH_SHORT).show()
@@ -225,12 +224,26 @@ class ReviewActivity : AppCompatActivity() {
                     chaegamDif,
                     hint,
                     isSuccess,
-                    playDate,
+                    reformDate2(playDate),
                     player,
                     rating,
                     recPlayer,
                     review!!.rid
                 )
+                Log.d("REVIEW TEST", "registerReview - 수정: $reviewv")
+                Log.d("REVIEW TEST", "token: ${sp.getString("moabangToken")}")
+                try {
+                    reviewViewModel.reviewUpdate(review!!.rid, reviewv)
+                    Toast.makeText(this, "리뷰가 수정되었습니다.", Toast.LENGTH_SHORT).show()
+
+                    val intent = Intent(this, ThemeReviewFragment::class.java)
+                    setResult(1, intent)
+                    finish()
+                } catch (e: Exception) {
+                    Toast.makeText(this, "리뷰 수정 실패 : ${e.printStackTrace()}", Toast.LENGTH_SHORT)
+                        .show()
+                    finish()
+                }
             }
 
         }
@@ -276,6 +289,12 @@ class ReviewActivity : AppCompatActivity() {
     private fun reformDate(dt: String): String {
         var sdf = SimpleDateFormat("yyyy.MM.dd")
         return sdf.format(sdf.parse(dt)).toString()
+    }
+
+    private fun reformDate2(dt: String): String {
+        var sdf = SimpleDateFormat("yyyy.MM.dd")
+        var sdf2 = SimpleDateFormat("yyyy-MM-dd")
+        return sdf2.format(sdf.parse(dt)).toString()
     }
 
 

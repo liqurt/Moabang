@@ -3,13 +3,11 @@ package com.ssafy.moabang.data.api
 import com.google.android.gms.common.internal.safeparcel.SafeParcelable
 import com.ssafy.moabang.data.model.dto.Review
 import com.ssafy.moabang.data.model.dto.ReviewForCreate
+import com.ssafy.moabang.data.model.dto.ReviewForUpdate
 import com.ssafy.moabang.data.model.dto.Theme
 import com.ssafy.moabang.data.model.response.ReviewResponse
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface ReviewApi {
     @POST("/theme/review/create")
@@ -21,4 +19,10 @@ interface ReviewApi {
     fun readReview(
         @Path("tid") tid: Int
     ) : Call<List<ReviewResponse>>
+
+    @PUT("theme/review/update/{rid}")
+    fun updateReview(
+        @Path("rid") rid: Int,
+        @Body review: ReviewForUpdate
+    ) : Call<String>
 }

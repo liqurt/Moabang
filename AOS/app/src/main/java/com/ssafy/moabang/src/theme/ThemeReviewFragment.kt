@@ -33,8 +33,15 @@ class ThemeReviewFragment : Fragment() {
         ActivityResultContracts.StartActivityForResult()
     ){
         if(it.resultCode == 1){
-            reviewViewModel.getReview(theme.tid)
+//            reviewViewModel.getReview(theme.tid)
+//            reviewListRVAdapter.notifyDataSetChanged()
         }
+    }
+
+    override fun onResume() {
+        reviewViewModel.getReview(theme.tid)
+        Log.d("REVIEW FRAGMENT", "onResume: ")
+        super.onResume()
     }
 
     override fun onCreateView(
