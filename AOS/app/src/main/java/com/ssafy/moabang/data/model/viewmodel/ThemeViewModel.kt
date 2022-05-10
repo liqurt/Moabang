@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.ssafy.moabang.data.model.dto.Theme
 import com.ssafy.moabang.data.model.repository.Repository
 import com.ssafy.moabang.data.model.repository.ThemeRepository
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -36,7 +37,9 @@ class ThemeViewModel: ViewModel() {
 
         if(result != null) {
             if (result.isSuccessful) {
-                Repository.get().insertThemes(result.body()!!)
+                CoroutineScope(Dispatchers.IO).launch { // 승일님 혹시 시간 되시면 ThemeViewModel 클래스 40번째 라인에 있는 Repository.get().insertThemes(result.body()!!)를 CoroutineScope(Dispatchers.IO).launch {}로 감싸고 테마 목록 잘 뜨는지 한번만 확인 부탁드려용
+                    Repository.get().insertThemes(result.body()!!)
+                }
                 Log.d("THEME VIEWMODEL TEST", "getTheme: ${result.body()}")
                 result.body()!!.forEach {
                     if (!totalThemeList.contains(it)) {

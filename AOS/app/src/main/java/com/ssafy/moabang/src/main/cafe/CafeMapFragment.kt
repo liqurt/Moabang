@@ -1,32 +1,32 @@
-/**
- * 1. 지도 띄우기[DONE]
- * 2. 위치 관련 퍼미션[DONE]
- * 3. 내 위치로 카메라 이동[DONE] - [NEED_REFACTORING] 카메라 이동을 해야함.
- * 4. 카페들의 위도 및 경도로 마커 추가[DONE]
- * 5. 마커 클릭시, 카페 상세로 이동[DONE]
- * 6. 줌 아웃시, 마커 간소화
- */
 package com.ssafy.moabang.src.main.cafe
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.maps.android.clustering.ClusterManager
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
 import com.ssafy.moabang.R
+import com.ssafy.moabang.data.model.dto.Cafe
 import com.ssafy.moabang.data.model.repository.Repository
 import com.ssafy.moabang.databinding.FragmentCafeMapBinding
 import kotlinx.coroutines.CoroutineScope
@@ -35,12 +35,77 @@ import kotlinx.coroutines.launch
 import java.util.*
 
 
-class CafeMapFragment : Fragment(), OnMapReadyCallback{
+class CafeMapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var binding: FragmentCafeMapBinding
     private var mMap: GoogleMap? = null
     private var currentLocation: LatLng? = null
     private lateinit var repository: Repository
     private lateinit var infoWindow: View
+
+    private lateinit var clusterManager: ClusterManager<CafeMapClusterItem>
+
+    @SuppressLint("MissingPermission")
+    private fun setUpClusterer() {
+        if (mMap != null) {
+            mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(37.566535, 126.9779692), 10f))
+            clusterManager = ClusterManager(context, mMap)
+            mMap?.apply {
+                setOnCameraIdleListener(clusterManager)
+                setOnMarkerClickListener(clusterManager)
+                isMyLocationEnabled = true
+            }
+            addItems()
+
+            clusterManager.markerCollection.setInfoWindowAdapter(object :
+                GoogleMap.InfoWindowAdapter {
+                override fun getInfoContents(p0: Marker): View? {
+                    return null
+                }
+
+                override fun getInfoWindow(marker: Marker): View? {
+                    val v = (context as Activity).layoutInflater.inflate(
+                        R.layout.info_window_custom,
+                        null
+                    )
+                    val tvTitle = v.findViewById<TextView>(R.id.info_window_cname)
+                    val ivImg = v.findViewById<ImageView>(R.id.info_window_img)
+
+                    tvTitle.text = marker.title
+                    Glide.with(requireContext())
+                        .load(marker.snippet)
+                        .placeholder(R.drawable.door)
+                        .centerCrop()
+                        .into(ivImg)
+                    return v
+                }
+            })
+
+            clusterManager.markerCollection.setOnInfoWindowClickListener { marker ->
+                val intent = Intent(requireContext(), CafeDetailActivity::class.java).putExtra("cname", marker.title)
+                ContextCompat.startActivity(requireContext(), intent, null)
+            }
+        }
+    }
+
+    private fun addItems() {
+        CoroutineScope(Dispatchers.Main).launch {
+            repository.getAllCafe().forEach {
+                if (it.cname == "" || it.lat == "" || it.lon == "" || it.img == "" || it.img == null) {
+                    Log.d("AAAAA", "정보가 부족한 카페 : ${it.cname}")
+                } else {
+                    Log.d("AAAAA", "카페 : ${it}")
+                    val marker = CafeMapClusterItem(
+                        it.lat!!.toDouble(),
+                        it.lon!!.toDouble(),
+                        it.cname!!,
+                        it.img!!,
+                        it.img!!
+                    )
+                    clusterManager.addItem(marker)
+                }
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,16 +126,9 @@ class CafeMapFragment : Fragment(), OnMapReadyCallback{
 
     @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {
-        val customInfoWindow = CafeMapInfoWindow(requireContext())
-
         checkPermission()
         mMap = googleMap
-        mMap?.apply {
-            isMyLocationEnabled = true
-            setInfoWindowAdapter(customInfoWindow)
-            setOnInfoWindowClickListener(customInfoWindow)
-        }
-        addCafeMarker()
+        setUpClusterer()
     }
 
     @SuppressLint("MissingPermission")
@@ -110,22 +168,6 @@ class CafeMapFragment : Fragment(), OnMapReadyCallback{
             .setGotoSettingButtonText("[설정] 에서 위치 접근 권한을 허용 할 수 있습니다.")
             .check()
     }
-
-    private fun addCafeMarker() {
-        CoroutineScope(Dispatchers.Main).launch {
-            repository.getAllCafe().forEach {
-                if (it.cname == "" || it.lat == "" || it.lon == "") {
-                    Log.d("AAAAA", "정보가 부족한 카페 : ${it.cname}")
-                } else {
-                    val marker = MarkerOptions().apply {
-                        position(LatLng(it.lat!!.toDouble(), it.lon!!.toDouble()))
-                        title(it.cname)
-                        snippet(it.img)
-                    }
-                    mMap?.addMarker(marker)
-                }
-            }
-        }
-    }
-
 }
+
+

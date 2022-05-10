@@ -84,8 +84,8 @@ class CafeDetailActivity : AppCompatActivity() {
                                 item.apply {
                                     cname = cafe.cname.toString()
                                     url = cafe.url.toString()
-//                                    island = cafe.island.toString() // 이게 null 이었어서 추가해줌
-//                                    si = cafe.location.toString() // 이게 null 이었어서 추가해줌
+                                    island = cafe.island.toString()
+                                    si = cafe.location.toString()
                                 }
                                 Log.d("AAAAA", "ITEM(THEME) : $item")
                                 val intent = Intent(
