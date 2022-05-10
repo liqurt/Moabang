@@ -3,6 +3,7 @@ package com.ssafy.moabang.src.theme
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuInflater
@@ -18,7 +19,9 @@ import com.ssafy.moabang.adapter.ReviewListRVAdapter
 import com.ssafy.moabang.data.model.dto.Review
 import com.ssafy.moabang.data.model.dto.Theme
 import com.ssafy.moabang.data.model.response.ReviewResponse
+import com.ssafy.moabang.data.model.response.ReviewStatResponse
 import com.ssafy.moabang.data.model.viewmodel.ReviewViewModel
+import com.ssafy.moabang.data.model.viewmodel.ThemeViewModel
 import com.ssafy.moabang.databinding.FragmentThemeReviewBinding
 
 class ThemeReviewFragment : Fragment() {
@@ -29,6 +32,7 @@ class ThemeReviewFragment : Fragment() {
     private lateinit var theme: Theme
     private lateinit var list: List<ReviewResponse>
     private val reviewViewModel: ReviewViewModel by viewModels()
+    private val themeViewModel: ThemeViewModel by viewModels()
 
     override fun onResume() {
         reviewViewModel.getReview(theme.tid)
@@ -87,10 +91,21 @@ class ThemeReviewFragment : Fragment() {
     }
 
     private fun initInfo() {
-        binding.ratingBarThemeRVF.rating = theme.grade.toFloat()/2
-        binding.tvThemeRVFRating.text = theme.grade.toString()
+        themeViewModel.themeStat(theme.tid)
+        themeViewModel.themeStatLiveDate.observe(requireActivity()){
+            Log.d("THEME STAT TEST", "theme stat initInfo: $it")
 
-        // TODO: 통계 정보로 세팅
+            binding.ratingBarThemeRVF.rating = it.r_rating / 2
+            binding.tvThemeRVFRating.text = String.format("%.1f", it.r_rating)
+            binding.tvThemeRVFDiff.text = it.r_chaegamDif.toString()
+            binding.tvThemeRVFActive.text = it.r_activity
+            binding.tvThemeRVFPlayer.text = it.r_recPlayer.toString() + "명"
+            binding.tvThemeRVFSuccess.text = (it.r_isSuccess * 100).toString() + "%"
+            binding.tvThemeRVFTime.text = it.r_clearTime.toString() + "분"
+            binding.tvThemeRVFHint.text = it.r_hint.toString() + "개"
+        }
+
+
     }
 
    private fun initRVA() {
