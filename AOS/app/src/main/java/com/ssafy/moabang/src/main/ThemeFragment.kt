@@ -212,16 +212,22 @@ class ThemeFragment : Fragment() {
             } else {
                 maxp = tf.player[tf.player.size - 1]
             }
+            if(maxp == 5) maxp = 10
         } else {
             minp = 0
-            maxp = 5
+            maxp = 10
+        }
+
+        var plist = ArrayList<Int>()
+        for(i in minp..maxp){
+            plist.add(i)
         }
 
         CoroutineScope(Dispatchers.Main).launch {
             filteredList = if(tf.island == "전체"){
-                repository.filterThemesNoArea(tf.genre, tf.type, minp, maxp, tf.diff, tf.active)
+                repository.filterThemesNoArea(tf.genre, tf.type, plist, tf.diff, tf.active)
             } else {
-                repository.filterThemes(tf.island, tf.si, tf.genre, tf.type, minp, maxp, tf.diff, tf.active)
+                repository.filterThemes(tf.island, tf.si, tf.genre, tf.type, plist, tf.diff, tf.active)
             }
             themeListRVAdapter.filterList(filteredList)
         }
