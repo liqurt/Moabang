@@ -254,7 +254,7 @@ const ThemeSearchbar = (props) => {
             </div>
 
             <div >
-                <ThemeList Theme={currentPosts(sortFilter)} />
+                <ThemeList Theme={currentPosts(sortFilter)} setTListRender={props.setTListRender} />
                 
             </div>
 

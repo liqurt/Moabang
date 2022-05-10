@@ -2,22 +2,22 @@ import "./ReviewCSS/ReviewList.css";
 
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
-const ReviewList = (props) => {
-    //리뷰 리스트를 가져온다.
+const ReviewList = ({tid, listRender, setListRender}) => {
     const [review, setReview] = useState([]);
     
-    async function getReviewData() {
-        axios.get(`/theme/review/list/${props.tid}`)
+     //리뷰 리스트를 가져온다.
+     function getReviewData() {
+         axios.get(`/theme/review/list/${tid}`)
             .then(res => {
-                console.log(res)
                 setReview(res.data);
             });
     }
-
+    
     useEffect(() => {
         getReviewData();
-    }, []);
+    }, [listRender]);
     
     const SuccAndFailToString = (e) => {
         if (e === 1) {
@@ -25,6 +25,41 @@ const ReviewList = (props) => {
         } else {
             return "실패"
         } 
+    }
+    const ReviewDeleteHandler = (event) => {
+        Swal.fire({
+            title: '글을 삭제하시겠습니까???',
+            text: "삭제하시면 다시 복구시킬 수 없습니다.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '삭제',
+            cancelButtonText: '취소'
+        }).then((result) => {
+            if (result.value) {
+                
+                axios.delete(`/theme/review/delete/${event.target.value}`,
+                    {
+                        headers: {
+                            'Authorization': localStorage.getItem("myToken")
+                        }
+                    }
+                ).then(response => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '삭제 성공'
+                      })
+                    setListRender(e => !e);
+                }).catch(error => {
+                    console.error(error);
+                });
+
+            }
+        })
+
+
+
     }
 
     return (
@@ -36,8 +71,8 @@ const ReviewList = (props) => {
                         <span id='playDate'>{review.playDate}</span>
                         <span id='ReviewNemNum'>{review.player}명</span>
                         <span id='ReviewSuccAndFail'>{SuccAndFailToString(review.isSuccess)}</span>
-                        <span>수정</span>
-                        <span>삭제</span>
+                        <button id='ReviewDelete' value={review.rid} onClick={ReviewDeleteHandler}>삭제</button>
+                        <button id='ReviewUpdate'>수정</button>
                     </div>
                     
                     <div className='ReviewDetail' >

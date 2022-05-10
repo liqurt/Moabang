@@ -16,19 +16,28 @@
 #reviewListImg{
     height: 50px;
     border-radius: 10px;
+    float: left;
 }
-
+#playDate{
+    
+    margin-left: 20px;
+}
 #ReviewNemNum{
     margin-left: 10px;
 }
 #ReviewSuccAndFail{
     margin-left: 10px;
 }
-#playDate{
-    margin-left: 20px;
+
+#ReviewUpdate{
+    margin-left: 10px;
+    float: right;
 }
-
-
+#ReviewDelete{
+    margin-left: 10px;
+    float: right;
+    margin-right: 160px;
+}
 
 
 .ReviewDetail{

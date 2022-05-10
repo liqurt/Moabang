@@ -2,10 +2,10 @@
 import axios from 'axios';
 import { useState } from 'react'
 import "./ReviewCSS/ReviewWrite.css"
-
+import Swal from 'sweetalert2';
 import { succAndfailBtn } from './ReviewData';
 
-const ReviewWrite = (props) => {
+const ReviewWrite = ({tid, setListRender}) => {
     const [active, setActive] = useState(""); //활동성
     const [diff, setDiff] = useState(-1); //체감 난이도
     const [clearTime, setClearTime] = useState(""); //클리어 시간
@@ -16,8 +16,6 @@ const ReviewWrite = (props) => {
     const [star, setStar] = useState(-1); //평점
     const [recommendNum, setRecommendNum] = useState(-1); //추천 인원
     
-    
-
 
     const handleSetJoinNum = (event) => {      
         setJoinNum(event.target.value)//입력된 텍스트 답아옴
@@ -83,34 +81,35 @@ const ReviewWrite = (props) => {
     }
 
     const handleSubmit = () => {
-
+        
         //빈칸 없는지 체크
         if (isCleared == "-1") {
-            alert("성공 여부를 클릭해 주세요");
-        }else if (clearTime == "") {
-            alert("소요시간");
+            Swal.fire('성공 여부를 클릭해 주세요');
+        } else if (clearTime == "") {
+            Swal.fire('소요시간을 작성해 주세요.');
         }
         else if (diff == "-1") {
-            alert("체감 난이도");
+            Swal.fire('체감 난이도를 작성해 주세요.');
         }   
-        else if (cotent == "") {
-            alert("내용");
-        }
         else if (hint == "") {
-            alert("힌트 수");
+            Swal.fire('힌트 수를 작성해 주세요.');
         }
         else if (joinNum == "-1") {
-            alert("참여 인원");
+            Swal.fire('참여 인원을 작성해 주세요.');
         }
         else if (star == "-1") {
-            alert("평점");
+            Swal.fire('평점을 작성해 주세요.');
         }
         else if (active == "-1") {
-            alert("활동성");
+            Swal.fire('활동성을  작성해 주세요.');
         }
         else if (recommendNum == "-1") {
-            alert("추천인원");
-        } else {
+            Swal.fire('추천인원을  작성해 주세요.');
+        }
+        else if (cotent == "") {
+            Swal.fire('내용을 작성해 주세요.');
+        }
+        else {
              //axios로 결과를 쏴주고
             let today = new Date();
             let year = today.getFullYear(); 
@@ -133,7 +132,6 @@ const ReviewWrite = (props) => {
             }
             const timeNow = year + '-' + resM + '-' + resD;
 
-            console.log(timeNow);
             axios.post("/theme/review/create", {
                 active: active,
                 chaegamDif:diff,
@@ -145,7 +143,7 @@ const ReviewWrite = (props) => {
                 player: joinNum,
                 rating:star,
                 recPlayer: recommendNum,
-                tid: props.tid
+                tid: tid
                     
             }, {
                 headers: {
@@ -153,6 +151,7 @@ const ReviewWrite = (props) => {
                 }
             }).then(response => {
                 console.log(response);
+                setListRender(e => !e);
             }).catch(error => {
                 console.error(error);
             });
@@ -178,12 +177,7 @@ const ReviewWrite = (props) => {
             }
 
         }
-
-        
     }
-    
-
-   
 
     return (
         <div >

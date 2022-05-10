@@ -1,18 +1,37 @@
 import React, { useState } from "react"
 import Modal from './Modal';
-import ThemeDetail from './ThemeDatail';
+import ThemeDetail from './ThemeDetail';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 import "./ThemeCSS/Theme.css"
 import "../cafePage/Modal/ModalList.css"//난이도와 인원제한 사진 CSS를 가져오기 위한 import
 
-import {HeartOutlined, HeartFilled} from '@ant-design/icons';
 
 
 const ThemeList = (props) => {
     const Theme = props.Theme;
 
-    const heartChange = () => {
-        
+    console.log(Theme);
+    const heartChange = (event) => {
+        //좋아요 버튼
+        console.log(event.target.alt)
+        axios.get(`/theme/${event.target.alt}/like/`,
+            {
+                headers: {
+                    'Authorization': localStorage.getItem("myToken")
+                }
+            }
+        ).then(response => {
+            console.log(response);
+            props.setTListRender(e => !e);
+            Swal.fire({
+                con: 'success',
+                title: response.data
+            })
+        }).catch(error => {
+            console.error(error);
+        });
         
     }
 
@@ -66,6 +85,7 @@ const ThemeList = (props) => {
     const starScore = () => {
         return <img id='starscore' src='https://emojigraph.org/media/facebook/star_2b50.png' alt='starscore'></img>
     }
+   
     
 
     return (
@@ -79,8 +99,10 @@ const ThemeList = (props) => {
                     }} />
                     <div className="heartImg">
                         {item.islike ?  
-                        <HeartFilled className="heart " onClick={heartChange}/> :
-                        <HeartOutlined className="heart " onClick={heartChange}/>}
+                            <img className="heart " onClick={heartChange} alt={item.tid} src='https://mblogthumb-phinf.pstatic.net/20140709_176/wsm0030_1404859139443xgQQv_PNG/PicsArt_1404831829726.png?type=w800' /> :
+                            <img className="heart " onClick={heartChange} alt={item.tid} src='https://mblogthumb-phinf.pstatic.net/20140709_15/wsm0030_1404859141585ixxmQ_PNG/1404859141390_PicsArt_1404833054881.png?type=w2' />
+
+                        }
                         
                     </div>
                     

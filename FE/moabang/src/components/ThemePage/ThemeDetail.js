@@ -3,11 +3,14 @@ import "./ThemeCSS/ThemeDetail.css";
 
 import ReviewList from '../Review/ReviewList';
 import ReviewWrite from '../Review/ReviewWrite';
-
+import { useState} from 'react';
 
 const ThemeDetail = (props) => {
     //리뷰 더미 데이터
     
+    const [listRender, setListRender] = useState(true);
+    console.log(listRender);
+
 
     const Theme = props.Theme
 
@@ -80,8 +83,8 @@ const ThemeDetail = (props) => {
                 홈페이지이동|리뷰|비교하기|예약하기
             </div>
 
-            <ReviewWrite tid={Theme.tid}/>
-            <div><ReviewList tid={Theme.tid} /></div>
+            <ReviewWrite tid={Theme.tid} setListRender={setListRender}/>
+            <div><ReviewList tid={Theme.tid} listRender={listRender} setListRender={setListRender}/></div>
 
                 
         </div>

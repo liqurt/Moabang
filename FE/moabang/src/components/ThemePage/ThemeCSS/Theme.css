@@ -41,11 +41,11 @@
 
 .heart{
     position: absolute;
+    width: 40px;
     top: 0;
     right: 0;
     cursor:pointer;
     transition: transform 300ms ease;
-    font-size: 30px;
     color:red;
 }
 
