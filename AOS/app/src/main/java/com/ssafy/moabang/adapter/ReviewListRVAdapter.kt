@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.iarcuschin.simpleratingbar.SimpleRatingBar
 import com.ssafy.moabang.R
+import com.ssafy.moabang.config.GlobalApplication.Companion.sp
 import com.ssafy.moabang.data.model.dto.Review
 import com.ssafy.moabang.data.model.response.ReviewResponse
 import com.ssafy.moabang.databinding.ListReviewItemBinding
@@ -21,6 +22,11 @@ class ReviewListRVAdapter: RecyclerView.Adapter<ReviewListRVAdapter.ViewHolder>(
 
             val revise = itemView.findViewById<TextView>(R.id.tv_reviewL_revise)
             val delete = itemView.findViewById<TextView>(R.id.tv_reviewL_delete)
+
+            if(item.userInfo.uid != sp.getInt("uid")){
+                revise.visibility = View.GONE
+                delete.visibility = View.GONE
+            }
 
             // TODO: 리뷰 작성자가 본인일때만 수정 삭제 버튼 보이게 함
             revise.setOnClickListener {
