@@ -28,11 +28,12 @@
             android:textSize="24dp"
             android:textStyle="bold" />
 
-        <View
-            android:id="@+id/view"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_homeF_near_cafe"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/teal_700" />
+            android:layout_height="match_parent"
+            android:paddingTop="5dp" />
+
     </LinearLayout>
 
     <LinearLayout
