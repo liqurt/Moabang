@@ -8,5 +8,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface RecruitRepository extends JpaRepository<Recruit, Long> {
-
+    public List<Recruit> findTop5ByOrderByCreateDateDesc();
 }

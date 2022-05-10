@@ -84,7 +84,7 @@ public class RecruitController {
     }
 
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "JWT Token", required = true, dataType = "string", paramType = "header")})
-    @ApiOperation(value = "모집 글 삭제", notes = "모집 글 수정")
+    @ApiOperation(value = "모집 글 삭제", notes = "모집 글 삭제")
     @DeleteMapping("/{rid}")
     public ResponseEntity<?> deleteRecruit(@PathVariable long rid ,HttpServletRequest request) {
         Optional<Recruit> recruit = recruitRepository.findById(rid);
@@ -104,7 +104,7 @@ public class RecruitController {
     }
 
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "JWT Token", required = true, dataType = "string", paramType = "header")})
-    @ApiOperation(value = "모집 글 읽기", notes = "모집 글 수정")
+    @ApiOperation(value = "모집 글 읽기", notes = "모집 글 읽기")
     @GetMapping("/{rid}")
     public ResponseEntity<?> getRecruit(@PathVariable long rid) {
         Optional<Recruit> recruit = recruitRepository.findById(rid);
@@ -116,10 +116,18 @@ public class RecruitController {
     }
 
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "JWT Token", required = true, dataType = "string", paramType = "header")})
-    @ApiOperation(value = "모집 글 리스트 읽기", notes = "모집 글 수정")
+    @ApiOperation(value = "모집 글 리스트 읽기", notes = "모집 글 리스트 읽기")
     @GetMapping("/")
     public ResponseEntity<?> getRecruitList() {
         List<Recruit> recruitList = recruitRepository.findAll();
+        return new ResponseEntity<>(recruitList, HttpStatus.OK);
+    }
+
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "JWT Token", required = true, dataType = "string", paramType = "header")})
+    @ApiOperation(value = "작성일 기준 5개", notes = "작성일 기준 5개")
+    @GetMapping("/new")
+    public ResponseEntity<?> getRecruit5() {
+        List<Recruit> recruitList = recruitRepository.findTop5ByOrderByCreateDateDesc();
         return new ResponseEntity<>(recruitList, HttpStatus.OK);
     }
 
