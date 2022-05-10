@@ -25,4 +25,9 @@ interface ReviewApi {
         @Path("rid") rid: Int,
         @Body review: ReviewForUpdate
     ) : Call<String>
+
+    @DELETE("theme/review/delete/{rid}")
+    fun deleteReview(
+        @Path("rid") rid: Int
+    ) : Call<String>
 }

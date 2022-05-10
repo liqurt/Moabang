@@ -48,4 +48,15 @@ class ReviewRepository {
         return null
     }
 
+    fun deleteReview(rid: Int): Response<String>? {
+        try {
+            var res = reviewApi.deleteReview(rid).execute()
+            Log.d("Review Repository Test", "delete 성공")
+            return res
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return null
+    }
+
 }

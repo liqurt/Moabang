@@ -39,6 +39,10 @@ class ReviewViewModel: ViewModel() {
         updateReview(rid, review)
     }
 
+    fun reviewDelete(rid: Int) = viewModelScope.launch {
+        deleteReview(rid)
+    }
+
     private suspend fun addReview(review: ReviewForCreate) = withContext(Dispatchers.IO) {
         val result: Response<String>? = reviewRepository.addReview(review)
 
@@ -84,6 +88,23 @@ class ReviewViewModel: ViewModel() {
                 }
             } else {
                 Log.d("THEME VIEWMODEL TEST", "updateReview FAILED - result is null: ${result.body()}")
+            }
+        }
+        _reviewListLiveData.postValue(totalReviewList)
+    }
+
+    private suspend fun deleteReview(rid: Int) = withContext(Dispatchers.IO) {
+        val result: Response<String>? = reviewRepository.deleteReview(rid)
+
+        if(result != null){
+            if(result.isSuccessful){
+                if(result.body()!! == "true"){
+                    Log.d("REVIEW VIEWMODEL TEST", "deleteReview SUCCESS: ${result.body()}")
+                } else {
+                    Log.d("REVIEW VIEWMODEL TEST", "deleteReview FAILED - result is false: ${result.body()}")
+                }
+            } else {
+                Log.d("THEME VIEWMODEL TEST", "deleteReview FAILED - result is null: ${result.body()}")
             }
         }
         _reviewListLiveData.postValue(totalReviewList)
