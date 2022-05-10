@@ -93,7 +93,6 @@ class CafeMapFragment : Fragment(), OnMapReadyCallback {
                 if (it.cname == "" || it.lat == "" || it.lon == "" || it.img == "" || it.img == null) {
                     Log.d("AAAAA", "정보가 부족한 카페 : ${it.cname}")
                 } else {
-                    Log.d("AAAAA", "카페 : ${it}")
                     val marker = CafeMapClusterItem(
                         it.lat!!.toDouble(),
                         it.lon!!.toDouble(),
