@@ -82,6 +82,11 @@ class ReviewListRVAdapter: RecyclerView.Adapter<ReviewListRVAdapter.ViewHolder>(
         }
     }
 
+    fun sortList(list: List<ReviewResponse>){
+        data = list as MutableList<ReviewResponse>
+        notifyDataSetChanged()
+    }
+
     override fun getItemCount(): Int {
         return data.size
     }

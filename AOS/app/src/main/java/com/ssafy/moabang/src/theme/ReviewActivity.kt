@@ -107,8 +107,6 @@ class ReviewActivity : AppCompatActivity() {
         binding.ratingBarReview.rating = review!!.rating/2
         binding.tvReviewRating.text = review!!.rating.toString() + "/10"
         binding.etReviewContent.setText(review!!.content)
-
-
     }
 
     private fun registerReview(){

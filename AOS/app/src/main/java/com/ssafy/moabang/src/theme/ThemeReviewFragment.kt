@@ -5,13 +5,17 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.ssafy.moabang.R
 import com.ssafy.moabang.adapter.ReviewListRVAdapter
+import com.ssafy.moabang.data.model.dto.Review
 import com.ssafy.moabang.data.model.dto.Theme
 import com.ssafy.moabang.data.model.response.ReviewResponse
 import com.ssafy.moabang.data.model.viewmodel.ReviewViewModel
@@ -23,6 +27,7 @@ class ThemeReviewFragment : Fragment() {
     private lateinit var themeDetailActivity: ThemeDetailActivity
     private lateinit var reviewListRVAdapter: ReviewListRVAdapter
     private lateinit var theme: Theme
+    private lateinit var list: List<ReviewResponse>
     private val reviewViewModel: ReviewViewModel by viewModels()
 
     override fun onResume() {
@@ -52,6 +57,10 @@ class ThemeReviewFragment : Fragment() {
     private fun init() {
         initInfo()
         initRVA()
+
+        binding.btnThemeRVFSort.setOnClickListener {
+            showPopup(binding.btnThemeRVFSort)
+        }
 
         binding.btnThemeRVFReview.setOnClickListener {
             startActivity(Intent(requireContext(), ReviewActivity::class.java)
@@ -94,8 +103,39 @@ class ThemeReviewFragment : Fragment() {
 
        reviewViewModel.reviewListLiveData.observe(requireActivity()){
            reviewListRVAdapter.data = it as MutableList<ReviewResponse>
+           list = it
            reviewListRVAdapter.notifyDataSetChanged()
        }
+    }
+
+    private fun showPopup(v: View){
+        val popup = PopupMenu(requireContext(), v)
+        val inflater: MenuInflater = popup.menuInflater
+        inflater.inflate(R.menu.review_sort_menu, popup.menu)
+        popup.setOnMenuItemClickListener { it ->
+            when(it.itemId){
+                R.id.sort_by_rate -> {
+                    list = if(list != list.sortedByDescending { it.rating }) list.sortedByDescending { it.rating }
+                    else list.sortedBy { it.rating }
+                    reviewListRVAdapter.sortList(list)
+                    true
+                }
+                R.id.sort_by_playDate -> {
+                    list = if(list != list.sortedBy { it.playDate }) list.sortedBy { it.playDate }
+                    else list.sortedByDescending { it.playDate }
+                    reviewListRVAdapter.sortList(list)
+                    true
+                }
+                R.id.sort_by_regDate -> {
+                    list = if(list != list.sortedBy { it.regDate }) list.sortedBy { it.regDate }
+                    else list.sortedByDescending { it.regDate }
+                    reviewListRVAdapter.sortList(list)
+                    true
+                }
+                else -> false
+            }
+        }
+        popup.show()
     }
 
 }
