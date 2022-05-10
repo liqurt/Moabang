@@ -17,6 +17,7 @@ import com.ssafy.moabang.data.model.dto.ReviewForCreate
 import com.ssafy.moabang.data.model.dto.ReviewForUpdate
 import com.ssafy.moabang.data.model.response.ReviewResponse
 import com.ssafy.moabang.data.model.viewmodel.ReviewViewModel
+import com.ssafy.moabang.src.util.CustomDialog
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
@@ -291,9 +292,12 @@ class ReviewActivity : AppCompatActivity() {
         return sdf2.format(sdf.parse(dt)).toString()
     }
 
-
     override fun onBackPressed() {
-        // TODO: 경고 한번 하고 종료
-        super.onBackPressed()
+        CustomDialog(this)
+            .setContent("작성중이던 내용이 삭제됩니다.\n돌아가시겠습니까?")
+            .setPositiveButtonText("돌아가기")
+            .setOnPositiveClickListener{
+                super.onBackPressed()
+            }.build().show()
     }
 }
