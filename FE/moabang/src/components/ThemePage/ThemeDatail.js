@@ -7,30 +7,7 @@ import ReviewWrite from '../Review/ReviewWrite';
 
 const ThemeDetail = (props) => {
     //리뷰 더미 데이터
-    const ReviewData = [
-        {
-            title:"다녀감",
-            memNum: 2,
-            succAndFail:"성공",
-            star: 4,
-            time: 70,
-            active: 5,
-            hint: 3,
-            recommendNum:3,
-            content:"할만하네요"
-        },
-        {
-            title:"뭐야이게",
-            memNum: 3,
-            succAndFail:"실패",
-            star: 1,
-            time: 30,
-            active: 1,
-            hint: 2,
-            recommendNum:3,
-            content:"핵노잼 시간낭비 돈낭비 우비 뚜비"
-        }
-    ];
+    
 
     const Theme = props.Theme
 
@@ -39,7 +16,6 @@ const ThemeDetail = (props) => {
     //난이도별 열쇠 이미지 개수 맞추기
     const DifficultyKeyImg = (diff) => {
         const result = [];
-        console.log(diff);
         for (let i = 0; i < diff; i++) {
             result.push(<img key={i}  id='DiffKey' src='https://www.emojiall.com/images/240/htc/1f511.png' alt='keyimg' />)
         }
@@ -69,6 +45,9 @@ const ThemeDetail = (props) => {
     const Water = () => {
         return <img id='water' src='https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Tilde.svg/1200px-Tilde.svg.png' alt="water" ></img>
     }
+    const starScore = () => {
+        return <img id='theme-detail-starscore' src='https://emojigraph.org/media/facebook/star_2b50.png' alt='starscore'></img>
+    }
 
     return (
         <div className='ThemeDetailTotal'>
@@ -85,7 +64,7 @@ const ThemeDetail = (props) => {
                             {Water()}{ConanMax(Theme.rplayer)}</div>
                     <div id='ThemeDetailTime'>{Theme.time}</div>
                     <div id='ThemeDetailListDiff'>{DifficultyKeyImg(Theme.difficulty)}</div>
-                    <div id='ThemeDetailListGrade'>{Theme.grade}</div>
+                    <div id='ThemeDetailListGrade'>{starScore()}&nbsp;{Theme.grade}</div>
                 </div>
                 <div className='ThemeTotalReview'>
                     리뷰통계 - 리뷰 기능 만들면 연결할 예정
@@ -101,8 +80,8 @@ const ThemeDetail = (props) => {
                 홈페이지이동|리뷰|비교하기|예약하기
             </div>
 
-            <ReviewWrite />
-            <div><ReviewList ReviewData={ReviewData}/></div>
+            <ReviewWrite tid={Theme.tid}/>
+            <div><ReviewList tid={Theme.tid} /></div>
 
                 
         </div>

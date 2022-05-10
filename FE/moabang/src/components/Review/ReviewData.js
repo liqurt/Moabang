@@ -2,11 +2,11 @@
 export const succAndfailBtn = [
     {
         name: "성공",
-        value:"성공",
+        value:"1",
     },
     {
         name: "실패",
-        value:"실패",
+        value:"0",
     },
 ]
 

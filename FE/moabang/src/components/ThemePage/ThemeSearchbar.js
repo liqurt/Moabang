@@ -65,7 +65,8 @@ const ThemeSearchbar = (props) => {
         
     });
     //정렬
-    const sortFilter = diffFilter.sort((a, b) =>{
+    const sortFilter = diffFilter.sort((a, b) => {
+        
         if (sortList === "이름순") {
             let x = a.tname.toLowerCase();
             let y = b.tname.toLowerCase();
@@ -81,14 +82,13 @@ const ThemeSearchbar = (props) => {
             return b.grade-a.grade;
         }
         
-
-
     })
 
 
     //필터 체크 박스 영역 ---------------------------------
     //장르
     const handleGerne = (event) => {
+        setPage(1);
         if (event.target.value === "전체")
             setGerne("");
         else
@@ -96,19 +96,18 @@ const ThemeSearchbar = (props) => {
         
         //클릭 시 색 변하게 하기 위한 코드
         const nameId = document.getElementsByClassName('filterBtn1');
-        if (event.target.classList[1] === "clicked") {
-            event.target.classList.remove("clicked");
-        } else {
-            for (var i = 0; i < nameId.length; i++) {
-                nameId[i].classList.remove("clicked");
-            }
-
-            event.target.classList.add("clicked");
+        
+        for (var i = 0; i < nameId.length; i++) {
+            nameId[i].classList.remove("clicked");
         }
+
+        event.target.classList.add("clicked");
+        
     }   
     
     //타입
     const handleType = (event) => {
+        setPage(1);
         if (event.target.value === "전체")
             setThemetype("");
         else
@@ -116,63 +115,50 @@ const ThemeSearchbar = (props) => {
         
         //클릭 시 색 변하게 하기 위한 코드
         const nameId = document.getElementsByClassName('filterBtn2');
-        if (event.target.classList[1] === "clicked") {
-            event.target.classList.remove("clicked");
-        } else {
-            for (var i = 0; i < nameId.length; i++) {
-                nameId[i].classList.remove("clicked");
-            }
-
-            event.target.classList.add("clicked");
+        for (var i = 0; i < nameId.length; i++) {
+            nameId[i].classList.remove("clicked");
         }
+
+        event.target.classList.add("clicked");
     }
     //난이도
     const handleDiff = (event) => {
+        setPage(1);
         setDiff(event.target.value);
         //클릭 시 색 변하게 하기 위한 코드
         const nameId = document.getElementsByClassName('filterBtn3');
-        if (event.target.classList[1] === "clicked") {
-            event.target.classList.remove("clicked");
-        } else {
-            for (var i = 0; i < nameId.length; i++) {
-                nameId[i].classList.remove("clicked");
-            }
-
-            event.target.classList.add("clicked");
+        for (var i = 0; i < nameId.length; i++) {
+            nameId[i].classList.remove("clicked");
         }
+
+        event.target.classList.add("clicked");
     }
     //인원
     const handleMemberCnt = (event) => {
+        setPage(1);
         setMemberCnt(event.target.value);
         //클릭 시 색 변하게 하기 위한 코드
         const nameId = document.getElementsByClassName('filterBtn4');
-        if (event.target.classList[1] === "clicked") {
-            event.target.classList.remove("clicked");
-        } else {
-            for (var i = 0; i < nameId.length; i++) {
-                nameId[i].classList.remove("clicked");
-            }
-
-            event.target.classList.add("clicked");
+        for (var i = 0; i < nameId.length; i++) {
+            nameId[i].classList.remove("clicked");
         }
+
+        event.target.classList.add("clicked");
     }
 
     
     //정렬
     const handleSort = (event) => {
+        setPage(1);
         setSortList(event.target.value);
 
         //클릭 시 색 변하게 하기 위한 코드
         const nameId = document.getElementsByClassName('filterBtn5');
-        if (event.target.classList[1] === "clicked") {
-            event.target.classList.remove("clicked");
-        } else {
-            for (var i = 0; i < nameId.length; i++) {
-                nameId[i].classList.remove("clicked");
-            }
-
-            event.target.classList.add("clicked");
+        for (var i = 0; i < nameId.length; i++) {
+            nameId[i].classList.remove("clicked");
         }
+
+        event.target.classList.add("clicked");
     }
     
 
@@ -197,9 +183,9 @@ const ThemeSearchbar = (props) => {
     }
 
     useEffect(() => {
-        setPageCnt((cnt) => cnt = sortFilter.length);
+        setPageCnt((cnt) =>cnt = sortFilter.length );
         
-    }, [searchValue]);
+    }, [sortFilter]);
 
     
 

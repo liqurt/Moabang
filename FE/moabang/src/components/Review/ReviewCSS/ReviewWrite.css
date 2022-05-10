@@ -1,8 +1,8 @@
 .toggle-container{
     width: 100%;
     height: auto;
-    background-color: aqua;
-    border-radius: 10px;
+    background-color: rgb(250, 139, 222);
+    border-radius: 18px;
 }
 #ReviewWriteTitle{
 }
@@ -47,7 +47,8 @@
     border: 1px solid #555;
     outline: none;
     
-}:focus {
+}
+#inputTitle:focus {
     background-color: lightblue;
 }
 
@@ -62,10 +63,11 @@
     font-size: 16px;
     resize: none;
     
-}:focus {
-    background-color: lightblue;
 }
 
+#inputContent:focus {
+    background-color: lightblue;
+}
 
 
 #input1 {
@@ -77,12 +79,13 @@
 }
 #input2 {
     width: 50px;
-    background-color: aqua;
+    background-color: #FFFFFF;
     outline: none;
     text-align: center;
     border-top: none;
     border-left: none;
     border-right: none;
+    border-radius: 5px;
 }
 
 

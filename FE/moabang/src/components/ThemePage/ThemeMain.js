@@ -10,10 +10,10 @@ import "./ThemeCSS/Theme.css"
 const ThemeMain = () => {
     //카페 리스트를 url로 가져옴
     const [themeData, setthemeData] = useState([]); //DB에서 받아온 데이터 저장
-    const [ThemeCount, setThemeCount] = useState(45); //Theme 총 개수
+    const [ThemeCount, setThemeCount] = useState(1682); //Theme 총 개수
     
     async function getThemeData() {
-        axios.get('http://k6d205.p.ssafy.io:8080/cafe/theme/list')
+        await axios.get('http://k6d205.p.ssafy.io:8080/cafe/theme/list')
             .then(response => {
                 setthemeData(response.data);
                 setThemeCount(response.data.length);
@@ -23,8 +23,7 @@ const ThemeMain = () => {
         });
     }
     
-
-    //페이지 네이션
+    console.log(themeData.length);
     useEffect(() => {
         getThemeData();
     }, []);

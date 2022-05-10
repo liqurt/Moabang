@@ -5,8 +5,17 @@ import ThemeDetail from './ThemeDatail';
 import "./ThemeCSS/Theme.css"
 import "../cafePage/Modal/ModalList.css"//난이도와 인원제한 사진 CSS를 가져오기 위한 import
 
+import {HeartOutlined, HeartFilled} from '@ant-design/icons';
+
+
 const ThemeList = (props) => {
     const Theme = props.Theme;
+
+    const heartChange = () => {
+        
+        
+    }
+
 
     //Modal창 띄우기
     const [modalOpen, setModalOpen] = useState(false);
@@ -54,16 +63,26 @@ const ThemeList = (props) => {
     const Water = () => {
         return <img id='water' src='https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Tilde.svg/1200px-Tilde.svg.png' alt="water" ></img>
     }
+    const starScore = () => {
+        return <img id='starscore' src='https://emojigraph.org/media/facebook/star_2b50.png' alt='starscore'></img>
+    }
+    
 
     return (
         <div className='detailList' >
             {Theme.map((item, index) => (
                 
-                <div className='detail-container' key={index} onClick={() => {
+                <div className='detail-container' key={index} >
+                    <img className='ThemeImg' alt='profile' src={item.img} onClick={() => {
                     openModal();
                     setModalData(item);
-                }}>
-                    <img className='ThemeImg' alt='profile' src={item.img}/>
+                    }} />
+                    <div className="heartImg">
+                        {item.islike ?  
+                        <HeartFilled className="heart " onClick={heartChange}/> :
+                        <HeartOutlined className="heart " onClick={heartChange}/>}
+                        
+                    </div>
                     
                     <div className='ThemeInfo'>
                         <div id='ThemeName' >{item.tname}</div>
@@ -73,7 +92,8 @@ const ThemeList = (props) => {
                             {Water()}{ConanMax(item.rplayer)}</div>
                         <div id='ThemeDiff'>{DifficultyKeyImg(item.difficulty)}</div>
                         <div id='ThemeTime' >{item.time}</div>
-                        <div id='ThemeGrade' >평점: {item.grade}</div>
+                        <div id='ThemeGrade' >{starScore()} {item.grade}</div>
+                        
                     </div>
                     
                 </div>

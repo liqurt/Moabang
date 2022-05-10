@@ -1,28 +1,26 @@
 
+import axios from 'axios';
 import { useState } from 'react'
 import "./ReviewCSS/ReviewWrite.css"
 
 import { succAndfailBtn } from './ReviewData';
 
-const ReviewWrite = () => {
-    const [title, setTitle] = useState(""); //제목
-    const [joinNum, setJoinNum] = useState(-1); //참가 인원
-    const [isCleared, setIsCleared] = useState(""); //성공 여부
-    const [star, setStar] = useState(-1); //평점
+const ReviewWrite = (props) => {
+    const [active, setActive] = useState(""); //활동성
+    const [diff, setDiff] = useState(-1); //체감 난이도
     const [clearTime, setClearTime] = useState(""); //클리어 시간
-    const [active, setActive] = useState(-1); //활동성
+    const [cotent, setCotent] = useState(""); // 내용
     const [hint, setHint] = useState(""); //사용 힌트 수
+    const [isCleared, setIsCleared] = useState(-1); //성공 여부
+    const [joinNum, setJoinNum] = useState(-1); //참가 인원
+    const [star, setStar] = useState(-1); //평점
     const [recommendNum, setRecommendNum] = useState(-1); //추천 인원
-    const [cotent, setCotent] = useState("");
+    
+    
 
-    const handleSetTitle = (event) => {      
-        setTitle(event.target.value)//입력된 텍스트 답아옴
-    }
+
     const handleSetJoinNum = (event) => {      
         setJoinNum(event.target.value)//입력된 텍스트 답아옴
-        console.log(event.target.value)
-
-
     }
     
     const handleCleared = (event) => {    
@@ -30,62 +28,71 @@ const ReviewWrite = () => {
 
         //클릭시 색 변경
         const nameId = document.getElementsByClassName('filterBtn5');
-        if (event.target.classList[1] === "clicked") {
-            event.target.classList.remove("clicked");
-        } else {
-            for (var i = 0; i < nameId.length; i++) {
-                nameId[i].classList.remove("clicked");
-            }
-
-            event.target.classList.add("clicked");
+        for (var i = 0; i < nameId.length; i++) {
+            nameId[i].classList.remove("clicked");
         }
+
+        event.target.classList.add("clicked");
         
 
     }
     
     const handleSetStar = (event) => {      
-      
+    
         setStar(event.target.value)//입력된 텍스트 답아옴
     }
     const handleSetClearTime = (event) => {
-        console.log(event);
         setClearTime(event.target.value)//입력된 텍스트 답아옴
     }
     const handleSetActive= (event) => {      
-        setActive(event.target.value)//입력된 텍스트 답아옴
+        setActive(event.target.value);//입력된 텍스트 답아옴
     }
     const handleSetHint = (event) => {      
-        setHint(event.target.value)//입력된 텍스트 답아옴
+        setHint(event.target.value);//입력된 텍스트 답아옴
     }
     const handleRecommendNum = (event) => {      
-        setRecommendNum(event.target.value)//입력된 텍스트 답아옴
+        setRecommendNum(event.target.value);//입력된 텍스트 답아옴
     }
     const handleSetCotent = (event) => {      
-        setCotent(event.target.value)//입력된 텍스트 답아옴
+        setCotent(event.target.value);//입력된 텍스트 답아옴
+    }
+    const handleDiff = (event)=>{
+        setDiff(event.target.value);
     }
 
+    const handleClearContent = () => {
+        //초기화
+        setIsCleared("");
+        setCotent("")
+        setActive("");
+
+        setClearTime("");
+        setHint("");
+
+        setJoinNum(-1);
+        setStar(-1);
+        setDiff(-1);
+        setRecommendNum(-1);
+
+        //제출시 버튼 초기화
+        const nameId = document.getElementsByClassName('filterBtn5');
+        for (var i = 0; i < nameId.length; i++) {
+            nameId[i].classList.remove("clicked");
+        }
+
+    }
 
     const handleSubmit = () => {
-        // console.log(
-        //     "제목: ", title,
-        //     " 성공여부: ", isCleared,
-        //     " 참여인원:  ", joinNum,
-        //     " 평점: ", star,
-        //     " 클리어 타임: ", clearTime,
-        //     " 활동성: ", active,
-        //     " 사용 힌트 수: ", hint,
-        //     " 추천 인원: ", recommendNum
-        // );
-        
+
         //빈칸 없는지 체크
-        if (title == "") {
-            alert("제목을 입력해 주세요");
-            return;
-        } else if (isCleared == "") {
+        if (isCleared == "-1") {
             alert("성공 여부를 클릭해 주세요");
         }else if (clearTime == "") {
             alert("소요시간");
         }
+        else if (diff == "-1") {
+            alert("체감 난이도");
+        }   
         else if (cotent == "") {
             alert("내용");
         }
@@ -105,34 +112,77 @@ const ReviewWrite = () => {
             alert("추천인원");
         } else {
              //axios로 결과를 쏴주고
+            let today = new Date();
+            let year = today.getFullYear(); 
+            let month = today.getMonth() + 1;
+            let date = today.getDate(); // 일
 
-            //초기화
-            setTitle("");
-            setIsCleared("");
+            //API 날짜 양식에 맞춰주는 코드 (YYYY-MM-DD)
+            let resM = "";
+            if (Math.floor(month / 10) === 0) {
+                resM = '0' + month;
+            } else {
+                resM = month;
+            }
+
+            let resD = "";
+            if (Math.floor(date / 10) === 0) {
+                resD = '0' + date;
+            } else {
+                resD = date;
+            }
+            const timeNow = year + '-' + resM + '-' + resD;
+
+            console.log(timeNow);
+            axios.post("/theme/review/create", {
+                active: active,
+                chaegamDif:diff,
+                clearTime: clearTime,
+                content: cotent,
+                hint:hint,
+                isSuccess: isCleared,
+                playDate: timeNow,
+                player: joinNum,
+                rating:star,
+                recPlayer: recommendNum,
+                tid: props.tid
+                    
+            }, {
+                headers: {
+                    'Authorization': localStorage.getItem("myToken")
+                }
+            }).then(response => {
+                console.log(response);
+            }).catch(error => {
+                console.error(error);
+            });
+            
+            
+            setIsCleared(-1);
             setCotent("")
+            setActive("");
+            setDiff(-1);
 
             setClearTime("");
             setHint("");
 
             setJoinNum(-1);
             setStar(-1);
-            setActive(-1);
+            
             setRecommendNum(-1);
+
+            //제출시 버튼 초기화
+            const nameId = document.getElementsByClassName('filterBtn5');
+            for (var i = 0; i < nameId.length; i++) {
+                nameId[i].classList.remove("clicked");
+            }
 
         }
 
         
     }
     
-    function checkNumber(event) {
-        if(event.key === '.' 
-           || event.key === '-'
-           || event.key >= 0 && event.key <= 9) {
-          return true;
-        }
-        
-        return false;
-      }
+
    
 
     return (
@@ -141,7 +191,6 @@ const ReviewWrite = () => {
             <summary >
                 <img id='reviewImg' src='https://cdn-icons-png.flaticon.com/512/651/651191.png' alt='reviewImg' />
             </summary>
-                <div id='ReviewWriteTitle'>제목:<input id='inputTitle' type="text" value={title} onChange={handleSetTitle} /></div>
                 
                 <div><span>성공 여부</span>
                 {succAndfailBtn &&
@@ -155,6 +204,19 @@ const ReviewWrite = () => {
                     <span id='ReviewClearTime'>소요시간<input id='input2' type={"number"} onChange={handleSetClearTime} value={clearTime}/>분</span>
                     &nbsp; &nbsp; &nbsp; &nbsp;
                     <span id='ReviewHint'>사용 힌트 수<input id='input2' type={"number"}  onChange={handleSetHint} value={hint }/>개</span>
+                    &nbsp; &nbsp;
+                    <span id='ReviewJoinNum'>
+                        체감 난이도:
+                        <select onChange={handleDiff} value={diff}>
+                            <option value="-1">선택</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>명
+                    </span> 
+                
                 </div>
                 <div>
                     <span id='ReviewJoinNum'>
@@ -195,11 +257,9 @@ const ReviewWrite = () => {
                         활동성
                         <select onChange={handleSetActive} value={active}>
                             <option value="-1">선택</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
+                            <option value="적음">적음</option>
+                            <option value="보통">보통</option>
+                            <option value="많음">많음</option>
                         </select>
 
                     </span>
@@ -228,6 +288,7 @@ const ReviewWrite = () => {
                     </textarea>
                 </div>
                 
+                <button className='writeSumitBtn' onClick={handleClearContent}>초기화</button>
                 <button className='writeSumitBtn' onClick={handleSubmit}>제출</button>
                 
             </details>
