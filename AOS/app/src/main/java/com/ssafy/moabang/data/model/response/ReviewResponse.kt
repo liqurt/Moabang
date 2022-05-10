@@ -1,7 +1,10 @@
 package com.ssafy.moabang.data.model.response
 
+import android.os.Parcelable
 import com.ssafy.moabang.data.model.dto.User
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class ReviewResponse(
     val rid: Int,
     var userInfo: User,
@@ -17,4 +20,4 @@ data class ReviewResponse(
     val playDate: String,
     val regDate: String,
     val content: String
-)
+): Parcelable

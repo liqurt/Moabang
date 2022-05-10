@@ -11,7 +11,10 @@ import com.ssafy.moabang.R
 import com.ssafy.moabang.databinding.ActivityReviewBinding
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.view.get
 import com.ssafy.moabang.data.model.dto.ReviewForCreate
+import com.ssafy.moabang.data.model.dto.ReviewForUpdate
+import com.ssafy.moabang.data.model.response.ReviewResponse
 import com.ssafy.moabang.data.model.viewmodel.ReviewViewModel
 import java.lang.Exception
 import java.text.SimpleDateFormat
@@ -21,8 +24,9 @@ import java.util.Calendar.DATE
 
 class ReviewActivity : AppCompatActivity() {
     private lateinit var binding: ActivityReviewBinding
-    val reviewViewModel: ReviewViewModel by viewModels()
+    private val reviewViewModel: ReviewViewModel by viewModels()
     private var tid:Int = 0
+    private var review:ReviewResponse? = null
     private var type = ""
     private lateinit var date: List<String>
 
@@ -33,14 +37,18 @@ class ReviewActivity : AppCompatActivity() {
         type = intent.getStringExtra("type").toString()
         if(type == "등록") {
             tid = intent.getIntExtra("tid", 0)
+        } else if(type == "수정"){
+            review = intent.getParcelableExtra("review")
         }
+
         init()
+        if(type == "등록") initAdd()
+        else if(type == "수정")initRevise()
     }
 
-    private fun init() {
+    private fun init(){
         binding.toolbarReview.ivToolbarIcon.setOnClickListener { this.onBackPressed() }
-        binding.toolbarReview.tvToolbarTitle.text = "리뷰 작성"
-        initDate()
+        binding.tvReviewCancel.setOnClickListener { this.onBackPressed() }
 
         var array: Array<String> = arrayOf("네", "아니오")
         setChipGroup(binding.cgReviewSuccess, array)
@@ -55,10 +63,51 @@ class ReviewActivity : AppCompatActivity() {
             binding.tvReviewRating.text = (rating*2).toString() + "/10"
         }
 
-        binding.tvReviewCancel.setOnClickListener { this.onBackPressed() }
         binding.tvReviewOk.setOnClickListener {
             registerReview()
         }
+    }
+
+    private fun initAdd() {
+        binding.toolbarReview.tvToolbarTitle.text = "리뷰 작성"
+        initDate()
+
+
+    }
+
+    private fun initRevise(){
+        binding.toolbarReview.tvToolbarTitle.text = "리뷰 수정"
+        binding.tvReviewDateSelected.text = review!!.playDate
+        binding.etReviewPlayer.setText(review!!.player.toString())
+
+        if(review!!.isSuccess == 1){
+            binding.cgReviewSuccess.findViewById<Chip>(binding.cgReviewSuccess[0].id).isChecked = true
+        } else if(review!!.isSuccess == 0){
+            binding.cgReviewSuccess.findViewById<Chip>(binding.cgReviewSuccess[1].id).isChecked = true
+        }
+
+        binding.etReviewTimeLeft.setText(review!!.clearTime.toString())
+        binding.etReviewHint.setText(review!!.hint.toString())
+
+        binding.cgReviewDiff.findViewById<Chip>(binding.cgReviewDiff[review!!.chaegamDif-1].id).isChecked = true
+
+        when(review!!.active){
+            "적음" -> {
+                binding.cgReviewActive.findViewById<Chip>(binding.cgReviewActive[0].id).isChecked = true
+            }
+            "보통" -> {
+                binding.cgReviewActive.findViewById<Chip>(binding.cgReviewActive[1].id).isChecked = true
+            }
+            "많음" -> {
+                binding.cgReviewActive.findViewById<Chip>(binding.cgReviewActive[2].id).isChecked = true
+            }
+        }
+
+        binding.etReviewRplayer.setText(review!!.recPlayer.toString())
+        binding.ratingBarReview.rating = review!!.rating/2
+        binding.tvReviewRating.text = review!!.rating.toString() + "/10"
+        binding.etReviewContent.setText(review!!.content)
+
 
     }
 
@@ -140,18 +189,48 @@ class ReviewActivity : AppCompatActivity() {
         }
 
         if(cnt == 8){
-            var review = ReviewForCreate(active, clearTime, binding.etReviewContent.text.toString(), chaegamDif, hint, isSuccess, playDate, player, rating, recPlayer, tid)
-            Log.d("REVIEW TEST", "registerReview: $review")
-            try{
-                reviewViewModel.reviewAdd(review)
-                Toast.makeText(this, "리뷰가 등록되었습니다.", Toast.LENGTH_SHORT).show()
+            if(type == "등록") {
+                var reviewv = ReviewForCreate(
+                    active,
+                    clearTime,
+                    binding.etReviewContent.text.toString(),
+                    chaegamDif,
+                    hint,
+                    isSuccess,
+                    playDate,
+                    player,
+                    rating,
+                    recPlayer,
+                    tid
+                )
+                Log.d("REVIEW TEST", "registerReview: $reviewv")
+                try {
+                    reviewViewModel.reviewAdd(reviewv)
+                    Toast.makeText(this, "리뷰가 등록되었습니다.", Toast.LENGTH_SHORT).show()
 
-                val intent = Intent(this, ThemeReviewFragment::class.java)
-                setResult(1, intent)
-                finish()
-            } catch (e: Exception){
-                Toast.makeText(this, "리뷰 등록 실패 : ${e.printStackTrace()}", Toast.LENGTH_SHORT).show()
-                finish()
+                    val intent = Intent(this, ThemeReviewFragment::class.java)
+                    setResult(1, intent)
+                    finish()
+                } catch (e: Exception) {
+                    Toast.makeText(this, "리뷰 등록 실패 : ${e.printStackTrace()}", Toast.LENGTH_SHORT)
+                        .show()
+                    finish()
+                }
+            }
+            if(type == "수정"){
+                var reviewv = ReviewForUpdate(
+                    active,
+                    clearTime,
+                    binding.etReviewContent.text.toString(),
+                    chaegamDif,
+                    hint,
+                    isSuccess,
+                    playDate,
+                    player,
+                    rating,
+                    recPlayer,
+                    review!!.rid
+                )
             }
 
         }

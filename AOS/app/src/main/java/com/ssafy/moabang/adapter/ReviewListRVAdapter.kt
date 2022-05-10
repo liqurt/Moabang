@@ -1,10 +1,12 @@
 package com.ssafy.moabang.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.iarcuschin.simpleratingbar.SimpleRatingBar
 import com.ssafy.moabang.R
@@ -12,6 +14,7 @@ import com.ssafy.moabang.config.GlobalApplication.Companion.sp
 import com.ssafy.moabang.data.model.dto.Review
 import com.ssafy.moabang.data.model.response.ReviewResponse
 import com.ssafy.moabang.databinding.ListReviewItemBinding
+import com.ssafy.moabang.src.theme.ReviewActivity
 
 class ReviewListRVAdapter: RecyclerView.Adapter<ReviewListRVAdapter.ViewHolder>() {
     var data: List<ReviewResponse> = emptyList()
@@ -63,7 +66,14 @@ class ReviewListRVAdapter: RecyclerView.Adapter<ReviewListRVAdapter.ViewHolder>(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int){
         holder.bind(data[position])
-            }
+
+        holder.itemView.findViewById<TextView>(R.id.tv_reviewL_revise).setOnClickListener {
+            val intent = Intent(holder.itemView.context, ReviewActivity::class.java)
+                .putExtra("type", "수정")
+                .putExtra("review", data[position])
+            ContextCompat.startActivity(holder.itemView.context, intent, null)
+        }
+    }
 
     override fun getItemCount(): Int {
         return data.size
