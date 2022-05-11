@@ -3,11 +3,13 @@ package com.ssafy.moabang.data.model.dto
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.maps.android.clustering.ClusterItem
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @Entity
-data class Cafe(
+data class Cafe (
     @PrimaryKey var cid : Int,
     var cname : String?,
     var cphone : String?,
@@ -19,4 +21,7 @@ data class Cafe(
     var lon : String?,
     var island : String?, // 도(섬 도 島)
     var si : String?, // 시
-): Parcelable
+): Parcelable{
+    @IgnoredOnParcel
+    var distance : Double = 0.0
+}

@@ -6,30 +6,31 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ssafy.moabang.R
 import com.ssafy.moabang.data.model.dto.Cafe
-import com.ssafy.moabang.databinding.ListCafeItemCafeFBinding
+import com.ssafy.moabang.databinding.ListCafeItemHomeBinding
+import kotlin.math.roundToInt
 
-class CafeListRVAdapter(var cafeList: List<Cafe>) :
-    RecyclerView.Adapter<CafeListRVAdapter.CafeViewHolder>() {
+class NearCafeListRVAdapter (var cafeList: List<Cafe>) :
+    RecyclerView.Adapter<NearCafeListRVAdapter.NearCafeViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): CafeViewHolder {
-        val binding = ListCafeItemCafeFBinding.inflate(
+    ): NearCafeViewHolder {
+        val binding = ListCafeItemHomeBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false)
-        return CafeViewHolder(binding)
+        return NearCafeViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: CafeViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: NearCafeViewHolder, position: Int) {
         holder.bindInfo(cafeList[position])
     }
 
     override fun getItemCount(): Int = cafeList.size
 
 
-    inner class CafeViewHolder(private val binding: ListCafeItemCafeFBinding) :
+    inner class NearCafeViewHolder(private val binding: ListCafeItemHomeBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bindInfo(cafe : Cafe) {
@@ -37,10 +38,10 @@ class CafeListRVAdapter(var cafeList: List<Cafe>) :
                 .load(cafe.img)
                 .placeholder(R.drawable.door)
                 .centerCrop()
-                .into(binding.iv1)
-            binding.tv1.text = cafe.cname
-            binding.tv2.text = cafe.location
-            binding.tv3.text = cafe.cphone
+                .into(binding.ivHomeFImg)
+            binding.tvHomeFCname.text = cafe.cname
+            binding.tvHomeFLocation.text = cafe.location
+            binding.tvHomeFDistance.text = cafe.distance.roundToInt().toString() + "km"
 
             itemView.setOnClickListener {
                 listener.onClick(cafe)

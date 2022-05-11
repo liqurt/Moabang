@@ -109,13 +109,17 @@ public class KakaoService {
             String email = kakao_account.getAsJsonObject().get("email").getAsString();
 //            String birthday = kakao_account.getAsJsonObject().get("birthday").getAsString();
 //            String gender = kakao_account.getAsJsonObject().get("gender").getAsString();
-            String profile_img = properties.getAsJsonObject().get("profile_image").getAsString();
+            if(properties.has("profile_image")) {
+                String profile_img = properties.getAsJsonObject().get("profile_image").getAsString();
+                userInfo.put("profile_img", profile_img);
+            }
+
 
             userInfo.put("nickname", nickname);
             userInfo.put("email", email);
 //            userInfo.put("birthday", birthday);
 //            userInfo.put("gender", gender);
-            userInfo.put("profile_img", profile_img);
+       
             userInfo.put("resCode", true);
         } catch (IOException e) {
             e.printStackTrace();

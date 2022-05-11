@@ -21,8 +21,8 @@ data class Theme(
     val cid: Int,
     var cname: String,
     val img: String,
-    val island: String,
-    val si: String,
+    var island: String, // var -> val
+    var si: String, // var -> val
     var url: String,
     var islike: Boolean,
     val min_player: Int,

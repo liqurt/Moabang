@@ -8,6 +8,7 @@ import javax.persistence.*;
 @Builder
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "user_like")
@@ -15,7 +16,7 @@ import javax.persistence.*;
 public class UserLike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="ulid")
+    @Column(name = "ulid")
     private int ulid;
 
     @ManyToOne(targetEntity = User.class)

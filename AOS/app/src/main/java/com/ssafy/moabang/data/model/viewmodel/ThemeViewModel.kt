@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ssafy.moabang.data.model.dto.Review
 import com.ssafy.moabang.data.model.dto.Theme
 import com.ssafy.moabang.data.model.repository.Repository
 import com.ssafy.moabang.data.model.repository.ThemeRepository
@@ -32,7 +31,7 @@ class ThemeViewModel: ViewModel() {
 
     fun getAllTheme(jwtToken: String) = viewModelScope.launch {
         getTheme(jwtToken)
-//        Log.d("VIEWMODEL TEST", "getAllTheme: $totalThemeList")
+        Log.d("VIEWMODEL TEST", "getAllTheme: $totalThemeList")
     }
 
     fun themeLike(tid: Int) = viewModelScope.launch {
@@ -58,7 +57,7 @@ class ThemeViewModel: ViewModel() {
                     }
                 }
             }else{
-                Log.d("THEME VIEWMODEL TEST", "fail: ${result.body()}")
+                Log.d("THEME VIEWMODEL TEST", "SAD: ${result.message()}")
             }
             _themeListLiveData.postValue(totalThemeList)
         } else {

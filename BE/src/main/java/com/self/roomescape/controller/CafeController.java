@@ -29,7 +29,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/cafe")
-@Api(tags = {"카페 Api"})
+@Api(tags = {"카페 및 테마 Api"})
 public class CafeController {
     @Autowired
     private CafeRepository cafeRepository;
@@ -58,7 +58,7 @@ public class CafeController {
     @ApiOperation(value = "해당 카페의 테마 검색", notes = "해당 tid에 해당하는 테마 정보를 반환")
     @GetMapping("/theme/{cid}")
     public ResponseEntity<?> findCafeTheme(@PathVariable("cid") int cid) {
-        List<Theme> themeList = themeRepository.findByCid(cid);
+        List<Theme> themeList = themeRepository.findByCafeCid(cid);
 
         return new ResponseEntity<>(themeList, HttpStatus.OK);
     }
@@ -87,6 +87,7 @@ public class CafeController {
 
             // logic 1. 얻은 uid를 통해서 like 테이블에 좋아요한 tid가 있는지 확인.
             Optional<List<UserLike>> likeList = userLikeRepository.findUserLikeByUser(user.get());
+
             if (likeList.get().size() != 0) {
                 for (int i = 0; i < themeDetailDTOList.size(); i++) {
                     ThemeDetailResDTO tmp = new ThemeDetailResDTO();
@@ -107,7 +108,7 @@ public class CafeController {
                     tmp.setType(themeDetailDTOList.get(i).getType());
                     tmp.setTname(themeDetailDTOList.get(i).getTname());
                     tmp.setCount(themeDetailDTOList.get(i).getCount());
-
+                    tmp.setIslike(false);
                     String data = themeDetailDTOList.get(i).getRplayer();
                     String[] srr = data.split("~");
                     if (srr.length != 1) {
@@ -122,55 +123,50 @@ public class CafeController {
                     for (int j = 0; j < likeList.get().size(); j++) {
                         if (themeDetailDTOList.get(i).getTid() == likeList.get().get(j).getTheme().getTid()) {
                             tmp.setIslike(true);
-                            themeDetailResDTOList.add(tmp);
                         } else {
                             tmp.setIslike(false);
-                            themeDetailResDTOList.add(tmp);
                         }
                     }
-
-
-                }
-            } else {
-                for (int i = 0; i < themeDetailDTOList.size(); i++) {
-                    ThemeDetailResDTO tmp = new ThemeDetailResDTO();
-                    tmp.setActivity(themeDetailDTOList.get(i).getActivity());
-                    tmp.setCid(themeDetailDTOList.get(i).getCid());
-                    tmp.setCname(themeDetailDTOList.get(i).getCname());
-                    tmp.setUrl(themeDetailDTOList.get(i).getUrl());
-                    tmp.setDifficulty(themeDetailDTOList.get(i).getDifficulty());
-                    tmp.setDescription(themeDetailDTOList.get(i).getDescription());
-                    tmp.setGenre(themeDetailDTOList.get(i).getGenre());
-                    tmp.setImg(themeDetailDTOList.get(i).getImg());
-                    tmp.setIsland(themeDetailDTOList.get(i).getIsland());
-                    tmp.setSi(themeDetailDTOList.get(i).getSi());
-                    tmp.setGrade(themeDetailDTOList.get(i).getGrade());
-                    tmp.setRplayer(themeDetailDTOList.get(i).getRplayer());
-                    tmp.setTid(themeDetailDTOList.get(i).getTid());
-                    tmp.setTime(themeDetailDTOList.get(i).getTime());
-                    tmp.setType(themeDetailDTOList.get(i).getType());
-                    tmp.setTname(themeDetailDTOList.get(i).getTname());
-                    tmp.setCount(themeDetailDTOList.get(i).getCount());
-                    tmp.setIslike(false);
-
-                    String data = themeDetailDTOList.get(i).getRplayer();
-                    String[] srr = data.split("~");
-                    if (srr.length != 1) {
-                        tmp.setMin_player(Integer.parseInt(srr[0]));
-                        tmp.setMax_player(Integer.parseInt(srr[1]));
-                    } else {
-                        tmp.setMin_player(Integer.parseInt(srr[0]));
-                        tmp.setMax_player(Integer.parseInt(srr[0]));
-                    }
-
                     themeDetailResDTOList.add(tmp);
                 }
-
+                return new ResponseEntity<>(themeDetailResDTOList, HttpStatus.OK);
             }
-            return new ResponseEntity<>(themeDetailResDTOList, HttpStatus.OK);
         }
-        return new ResponseEntity<>(themeDetailDTOList, HttpStatus.OK);
+        for (int i = 0; i < themeDetailDTOList.size(); i++) {
+            ThemeDetailResDTO tmp = new ThemeDetailResDTO();
+            tmp.setActivity(themeDetailDTOList.get(i).getActivity());
+            tmp.setCid(themeDetailDTOList.get(i).getCid());
+            tmp.setCname(themeDetailDTOList.get(i).getCname());
+            tmp.setUrl(themeDetailDTOList.get(i).getUrl());
+            tmp.setDifficulty(themeDetailDTOList.get(i).getDifficulty());
+            tmp.setDescription(themeDetailDTOList.get(i).getDescription());
+            tmp.setGenre(themeDetailDTOList.get(i).getGenre());
+            tmp.setImg(themeDetailDTOList.get(i).getImg());
+            tmp.setIsland(themeDetailDTOList.get(i).getIsland());
+            tmp.setSi(themeDetailDTOList.get(i).getSi());
+            tmp.setGrade(themeDetailDTOList.get(i).getGrade());
+            tmp.setRplayer(themeDetailDTOList.get(i).getRplayer());
+            tmp.setTid(themeDetailDTOList.get(i).getTid());
+            tmp.setTime(themeDetailDTOList.get(i).getTime());
+            tmp.setType(themeDetailDTOList.get(i).getType());
+            tmp.setTname(themeDetailDTOList.get(i).getTname());
+            tmp.setCount(themeDetailDTOList.get(i).getCount());
+            tmp.setIslike(false);
+
+            String data = themeDetailDTOList.get(i).getRplayer();
+            String[] srr = data.split("~");
+            if (srr.length != 1) {
+                tmp.setMin_player(Integer.parseInt(srr[0]));
+                tmp.setMax_player(Integer.parseInt(srr[1]));
+            } else {
+                tmp.setMin_player(Integer.parseInt(srr[0]));
+                tmp.setMax_player(Integer.parseInt(srr[0]));
+            }
+            themeDetailResDTOList.add(tmp);
+        }
+        return new ResponseEntity<>(themeDetailResDTOList, HttpStatus.OK);
     }
+
 
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "Authorization", required = false, dataType = "string", paramType = "header")})
     @ApiOperation(value = "테마 상세 정보", notes = "해당 Tid를 통해서 테마 상세 정보 및 댓글 목록을 반환한다.")

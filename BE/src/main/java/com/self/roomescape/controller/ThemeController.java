@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import response.ThemeStatisticsReponse;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
@@ -25,7 +26,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/theme")
-@Api(tags = {"테마 및 리뷰 Api"})
+@Api(tags = {"좋아요 및 리뷰 Api"})
 public class ThemeController {
     @Autowired
     private CafeRepository cafeRepository;
@@ -80,14 +81,14 @@ public class ThemeController {
             Review review = new Review();
             review.setContent(reviewCreateRequest.getContent());
             review.setActive(reviewCreateRequest.getActive());
-            review.setDifficulty(reviewCreateRequest.getDifficulty());
+            review.setChaegamDif(reviewCreateRequest.getChaegamDif());
             review.setHint(reviewCreateRequest.getHint());
             review.setIsSuccess(reviewCreateRequest.getIsSuccess());
             review.setPlayer(reviewCreateRequest.getPlayer());
             review.setContent(reviewCreateRequest.getContent());
             review.setRating(reviewCreateRequest.getRating());
             review.setTid(reviewCreateRequest.getTid());
-            review.setTimeLeft(reviewCreateRequest.getTimeLeft());
+            review.setClearTime(reviewCreateRequest.getClearTime());
             review.setRecPlayer(reviewCreateRequest.getRecPlayer());
             //uid 랑 playdate 필요
             review.setPlayDate(reviewCreateRequest.getPlayDate());
@@ -159,8 +160,7 @@ public class ThemeController {
     }
 
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "JWT Token", required = true, dataType = "string", paramType = "header")})
-    @ApiOperation(value = "해당 테마 리뷰 수정", notes = "JWT 토큰으로 온 유저의 Uid가 해당 게시물의 Uid와 같으면 수정 \n" +
-            "수정 시 못바꾸는 값은 현재 reviewid, uid, tid 3개 ,수정 시 HttpStatus 200 및 true 값 반환 실패 시 400 및 false 반환")
+    @ApiOperation(value = "해당 테마 리뷰 수정", notes = "JWT 토큰으로 온 유저의 Uid가 해당 게시물의 Uid와 같으면 수정 \n" + "수정 시 못바꾸는 값은 현재 reviewid, uid, tid 3개 ,수정 시 HttpStatus 200 및 true 값 반환 실패 시 400 및 false 반환")
     @PutMapping("/review/update/{rid}")
     public ResponseEntity<?> updateReview(@RequestBody ReviewUpdateRequest reviewUpdateRequest, HttpServletRequest request) {
         Optional<Review> review = reviewRepository.findByRid(reviewUpdateRequest.getReview_id());
@@ -182,11 +182,11 @@ public class ThemeController {
         temp.setRating(reviewUpdateRequest.getRating());
         temp.setIsSuccess(reviewUpdateRequest.getIsSuccess());
         temp.setHint(reviewUpdateRequest.getHint());
-        temp.setTimeLeft(reviewUpdateRequest.getTimeLeft());
+        temp.setClearTime(reviewUpdateRequest.getClearTime());
         temp.setPlayer(reviewUpdateRequest.getPlayer());
         temp.setRecPlayer(reviewUpdateRequest.getRecPlayer());
         temp.setActive(reviewUpdateRequest.getActive());
-        temp.setDifficulty(reviewUpdateRequest.getDifficulty());
+        temp.setChaegamDif(reviewUpdateRequest.getChaegamDif());
         temp.setPlayDate(reviewUpdateRequest.getPlayDate());
         temp.setContent(reviewUpdateRequest.getContent());
 
@@ -205,5 +205,84 @@ public class ThemeController {
 
 
         return new ResponseEntity<>(rlist.get(), HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "해당 테마 리뷰 통계 정보", notes = "리뷰 통계 읽기 성공 시 HttpStatus 200 및 리스트 목록 없을 시 200 및 false 반환")
+    @GetMapping("/review/rate/{tid}")
+    public ResponseEntity<?> rateReview(@PathVariable int tid) {
+        List<Review> reviewList = reviewRepository.findByTid(tid).get();
+        if (reviewList.size() == 0) {
+            ThemeStatisticsReponse themeStatisticsReponse = new ThemeStatisticsReponse();
+            themeStatisticsReponse.setR_chaegamDif(0);
+            themeStatisticsReponse.setR_activity(null);
+            themeStatisticsReponse.setR_hint(0);
+            themeStatisticsReponse.setR_clearTime(0);
+            themeStatisticsReponse.setR_recPlayer(0);
+            themeStatisticsReponse.setR_rating(0);
+            themeStatisticsReponse.setR_isSuccess(0);
+
+            return new ResponseEntity<>(themeStatisticsReponse, HttpStatus.OK);
+        }
+
+        float s_rating = 0;
+        int s_difficulty = 0;
+        float s_isSuccess = 0;
+        String s_activity;
+        float s_clearTime = 0;
+        String s_recPlayer;
+        float s_hint = 0;
+        int activity_type[] = new int[4];
+        int[] res_recPlayer = new int[21];
+
+        for (int i = 0; i < reviewList.size(); i++) {
+
+            s_rating += reviewList.get(i).getRating();
+            s_difficulty += reviewList.get(i).getChaegamDif();
+            s_isSuccess += reviewList.get(i).getIsSuccess();
+            s_clearTime += reviewList.get(i).getClearTime();
+            s_hint += reviewList.get(i).getHint();
+            //활동성 각각 cnt 매기기
+            if (reviewList.get(i).getActive().equals("많음")) {
+                activity_type[3] += 1;
+            } else if (reviewList.get(i).getActive().equals("보통")) {
+                activity_type[2] += 1;
+            } else {
+                activity_type[1] += 1;
+            }
+            //추천 인원수 ~ 쪼개서 최소인원 및 최대인원 많은 순서로 넣기.
+            int[] srr = new int[21];
+            int rec_player = reviewList.get(i).getRecPlayer();
+            res_recPlayer[rec_player] += 1;
+        }
+
+        ThemeStatisticsReponse themeStatisticsReponse = new ThemeStatisticsReponse();
+        themeStatisticsReponse.setR_rating(s_rating / (float) reviewList.size());
+        themeStatisticsReponse.setR_chaegamDif(Math.round(s_difficulty / reviewList.size()));
+        themeStatisticsReponse.setR_isSuccess(s_isSuccess / (float) reviewList.size());
+        themeStatisticsReponse.setR_clearTime(Math.round(s_clearTime / reviewList.size()));
+        themeStatisticsReponse.setR_hint(s_hint / (float) reviewList.size());
+        //활동성 -> 전체의 합 평균
+        int sum = 0;
+        for (int i = 1; i < activity_type.length; i++) {
+            sum += activity_type[i] * i;
+        }
+        int res = Math.round((float) sum / (float) reviewList.size()); // 전체 합의 평균(소수점 반올림).
+        if (res == 3) {
+            themeStatisticsReponse.setR_activity("많음");
+        } else if (res == 2) {
+            themeStatisticsReponse.setR_activity("보통");
+        } else {
+            themeStatisticsReponse.setR_activity("적음");
+        }
+        //추천 인원 -> 전체의 합 평균 // 소수점 반올림
+
+        int sum_recPlayer = 0;
+        for (int i = 0; i < 21; i++) {
+            sum_recPlayer += res_recPlayer[i] * i;
+        }
+
+        int res_Player = Math.round((float) sum_recPlayer / (float) reviewList.size());
+        themeStatisticsReponse.setR_recPlayer(res_Player);
+        return new ResponseEntity<>(themeStatisticsReponse, HttpStatus.OK);
     }
 }

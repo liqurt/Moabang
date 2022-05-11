@@ -18,10 +18,11 @@ public class Theme {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int tid;
 
-    private int cid;
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cid")
+    @ToString.Exclude
+    private Cafe cafe;
     private int difficulty;
-
     private String tname;
     private String img;
     private String description;
@@ -32,5 +33,8 @@ public class Theme {
     private float grade;
     private int reviewCnt;
     private String activity;
+
+    @Transient
+    private int count;
 
 }

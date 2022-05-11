@@ -36,15 +36,16 @@ class ThemeDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
         Log.d("token", "onCreate token : ${sp.getString("moabangToken")}")
         intent.getParcelableExtra<Theme>("theme")?.let {
-            CoroutineScope(Dispatchers.Main).launch {
-                theme = Repository.get().getTheme(it.tid)
-                init()
-            }
-        } ?: finish()
+            theme = it
+            init()
+        } ?: noTheme()
+    }
+
+    private fun noTheme(){
+        finish()
     }
 
     private fun init(){
-        Log.d("ThemeDetailActivity", "init: $theme.tid")
         behavior = BottomSheetBehavior.from(binding.themeDABottomSheet)
         behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
