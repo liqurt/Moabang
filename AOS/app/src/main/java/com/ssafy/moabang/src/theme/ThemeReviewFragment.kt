@@ -1,5 +1,6 @@
 package com.ssafy.moabang.src.theme
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -89,6 +90,7 @@ class ThemeReviewFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initInfo() {
         themeViewModel.themeStat(theme.tid)
         themeViewModel.themeStatLiveDate.observe(requireActivity()){
@@ -100,7 +102,7 @@ class ThemeReviewFragment : Fragment() {
                 binding.tvThemeRVFDiff.text = it.r_chaegamDif.toString()
                 binding.tvThemeRVFActive.text = it.r_activity
                 binding.tvThemeRVFPlayer.text = it.r_recPlayer.toString() + "명"
-                binding.tvThemeRVFSuccess.text = (it.r_isSuccess * 100).toString() + "%"
+                binding.tvThemeRVFSuccess.text = String.format("%.1f",(it.r_isSuccess * 100)) + "%"
                 binding.tvThemeRVFTime.text = it.r_clearTime.toString() + "분"
                 binding.tvThemeRVFHint.text = String.format("%.1f", it.r_hint) + "개"
             }
