@@ -46,8 +46,8 @@ class HomeFragment : Fragment() {
 
     private var repository = Repository.get()
 
-    private var nearCafeListRVAdapter : NearCafeListRVAdapter = NearCafeListRVAdapter(listOf())
-    private lateinit var nearCafeList : List<Cafe>
+    private var nearCafeListRVAdapter: NearCafeListRVAdapter = NearCafeListRVAdapter(listOf())
+    private lateinit var nearCafeList: List<Cafe>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -102,7 +102,12 @@ class HomeFragment : Fragment() {
     }
 
     private fun setNearCafeList() {
-        val threshold = 10.0 // 10km
+
+        //test
+        // 제주 동쪽 33.455988, 126.894981
+        currentLocation = LatLng(33.455988, 126.894981)
+
+
         if (currentLocation != null) {
             CoroutineScope(Dispatchers.Main).launch {
                 var allCafeList = listOf<Cafe>()
@@ -110,18 +115,25 @@ class HomeFragment : Fragment() {
                 CoroutineScope(Dispatchers.IO).async {
                     allCafeList = repository.getAllCafe()
                 }.await()
-                for(cafe in allCafeList) {
-                    if(cafe.lat == null || cafe.lat == "" || cafe.lon == null || cafe.lon == "") {
+                for (cafe in allCafeList) {
+                    if (cafe.lat == null || cafe.lat == "" || cafe.lon == null || cafe.lon == "") {
                         continue
-                    }else{
+                    } else {
                         val cafeLat = cafe.lat!!.toDouble()
                         val cafeLng = cafe.lon!!.toDouble()
-                        val distance = getDistanceLatLngInKm(currentLocation!!.latitude, currentLocation!!.longitude, cafeLat, cafeLng)
-                        if(distance <= threshold) {
-                            tempNearCafeList.add(cafe)
-                        }
+                        val distance = getDistanceLatLngInKm(
+                            currentLocation!!.latitude,
+                            currentLocation!!.longitude,
+                            cafeLat,
+                            cafeLng
+                        )
+
+                        cafe.distance = distance
+                        tempNearCafeList.add(cafe)
                     }
                 }
+                tempNearCafeList.sortBy { it.distance }
+                tempNearCafeList = tempNearCafeList.subList(0, 6)
                 nearCafeList = tempNearCafeList
                 initRCV()
             }
@@ -130,12 +142,15 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun initRCV(){
-        binding.rvHomeFNearCafe.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+    private fun initRCV() {
+        binding.rvHomeFNearCafe.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         nearCafeListRVAdapter = NearCafeListRVAdapter(nearCafeList)
-        nearCafeListRVAdapter.setItemClickListener(object : NearCafeListRVAdapter.CafeItemClickListener{
+        nearCafeListRVAdapter.setItemClickListener(object :
+            NearCafeListRVAdapter.CafeItemClickListener {
             override fun onClick(cafe: Cafe) {
-                val intent = Intent(requireActivity(), CafeDetailActivity::class.java).putExtra("cafe", cafe)
+                val intent =
+                    Intent(requireActivity(), CafeDetailActivity::class.java).putExtra("cafe", cafe)
                 startActivity(intent)
             }
         })
@@ -162,5 +177,6 @@ class HomeFragment : Fragment() {
     private fun deg2rad(deg: Double): Double {
         return deg * (Math.PI / 180)
     }
+
 
 }
