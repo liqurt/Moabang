@@ -13,12 +13,15 @@ import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.ssafy.moabang.R
 import com.ssafy.moabang.config.GlobalApplication.Companion.sp
+import com.ssafy.moabang.data.model.dto.Cafe
 import com.ssafy.moabang.data.model.dto.Theme
+import com.ssafy.moabang.data.model.dto.ThemeForCompare
 import com.ssafy.moabang.data.model.repository.Repository
 import com.ssafy.moabang.data.model.viewmodel.ThemeViewModel
 import com.ssafy.moabang.databinding.ActivityThemeDetailBinding
 import com.ssafy.moabang.src.main.ThemeFragment
 import com.ssafy.moabang.src.main.cafe.CafeDetailActivity
+import com.ssafy.moabang.src.util.CompareList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,6 +29,7 @@ import kotlinx.coroutines.launch
 class ThemeDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityThemeDetailBinding
     private lateinit var theme: Theme
+    private lateinit var cafe: Cafe
     lateinit var behavior: BottomSheetBehavior<ConstraintLayout>
     private val themeViewModel: ThemeViewModel by viewModels()
 
@@ -53,6 +57,10 @@ class ThemeDetailActivity : AppCompatActivity() {
             }
             override fun onSlide(bottomSheet: View, slideOffset: Float) {}
         })
+
+        CoroutineScope(Dispatchers.Main).launch {
+            cafe = Repository.get().getCafe(theme.cid)
+        }
 
         val frag = ThemeReviewFragment()
         var bundle = Bundle(1)
@@ -126,15 +134,15 @@ class ThemeDetailActivity : AppCompatActivity() {
         }
 
         binding.tvThemeDACompare.setOnClickListener {
+            var dto = ThemeForCompare(theme.tid, theme.tname, theme.cname, cafe.lat, cafe.lon, theme.img, theme.genre, theme.grade, theme.difficulty, theme.time, theme.type, theme.activity, theme.rplayer)
+            if(!CompareList.items.contains(dto)) CompareList.items.add(dto)
+            Log.d("COMPARE LIST TEST", "LIST ITEMS - ${CompareList.items.size} : ${CompareList.items}")
             startActivity(Intent(this, ThemeCompareActivity::class.java))
         }
 
         binding.tvThemeDACafe.setOnClickListener {
-            CoroutineScope(Dispatchers.Main).launch {
-                val cafe = Repository.get().getCafe(theme.cid)
-                startActivity(Intent(this@ThemeDetailActivity, CafeDetailActivity::class.java)
-                    .putExtra("cafe", cafe))
-            }
+            startActivity(Intent(this@ThemeDetailActivity, CafeDetailActivity::class.java)
+                .putExtra("cafe", cafe))
         }
     }
 
