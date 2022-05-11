@@ -15,6 +15,7 @@ import com.ssafy.moabang.data.model.dto.ThemeForCompare
 import com.ssafy.moabang.data.model.repository.Repository
 import com.ssafy.moabang.data.model.viewmodel.ThemeViewModel
 import com.ssafy.moabang.databinding.ListThemeItemBinding
+import com.ssafy.moabang.src.util.CompareList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -37,9 +38,13 @@ class CompareTitleListRVAdapter: RecyclerView.Adapter<CompareTitleListRVAdapter.
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(data[position])
+
+        holder.itemView.findViewById<TextView>(R.id.tv_ctItem_delete).setOnClickListener {
+            data.removeAt(position)
+            notifyItemRemoved(position)
+            notifyItemRangeChanged(position, data.size)
+        }
     }
-
-
 
     override fun getItemCount(): Int = data.size
 }
