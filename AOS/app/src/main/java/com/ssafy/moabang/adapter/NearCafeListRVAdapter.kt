@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.ssafy.moabang.R
 import com.ssafy.moabang.data.model.dto.Cafe
 import com.ssafy.moabang.databinding.ListCafeItemHomeBinding
+import kotlin.math.roundToInt
 
 class NearCafeListRVAdapter (var cafeList: List<Cafe>) :
     RecyclerView.Adapter<NearCafeListRVAdapter.NearCafeViewHolder>() {
@@ -40,6 +41,7 @@ class NearCafeListRVAdapter (var cafeList: List<Cafe>) :
                 .into(binding.ivHomeFImg)
             binding.tvHomeFCname.text = cafe.cname
             binding.tvHomeFLocation.text = cafe.location
+            binding.tvHomeFDistance.text = cafe.distance.roundToInt().toString() + "km"
 
             itemView.setOnClickListener {
                 listener.onClick(cafe)
