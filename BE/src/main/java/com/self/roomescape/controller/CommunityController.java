@@ -22,7 +22,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/community")
-@Api(tags = {"방탈출 인원 모집"})
+@Api(tags = {"커뮤니티"})
 public class CommunityController {
 
     private final CafeRepository cafeRepository;
