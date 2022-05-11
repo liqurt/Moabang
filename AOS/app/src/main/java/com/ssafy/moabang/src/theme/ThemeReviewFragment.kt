@@ -95,14 +95,16 @@ class ThemeReviewFragment : Fragment() {
         themeViewModel.themeStatLiveDate.observe(requireActivity()){
             Log.d("THEME STAT TEST", "theme stat initInfo: $it")
 
-            binding.ratingBarThemeRVF.rating = it.r_rating / 2
-            binding.tvThemeRVFRating.text = String.format("%.1f", it.r_rating)
-            binding.tvThemeRVFDiff.text = it.r_chaegamDif.toString()
-            binding.tvThemeRVFActive.text = it.r_activity
-            binding.tvThemeRVFPlayer.text = it.r_recPlayer.toString() + "명"
-            binding.tvThemeRVFSuccess.text = (it.r_isSuccess * 100).toString() + "%"
-            binding.tvThemeRVFTime.text = it.r_clearTime.toString() + "분"
-            binding.tvThemeRVFHint.text = it.r_hint.toString() + "개"
+            if(it.r_activity != null) {
+                binding.ratingBarThemeRVF.rating = it.r_rating / 2
+                binding.tvThemeRVFRating.text = String.format("%.1f", it.r_rating)
+                binding.tvThemeRVFDiff.text = it.r_chaegamDif.toString()
+                binding.tvThemeRVFActive.text = it.r_activity
+                binding.tvThemeRVFPlayer.text = it.r_recPlayer.toString() + "명"
+                binding.tvThemeRVFSuccess.text = (it.r_isSuccess * 100).toString() + "%"
+                binding.tvThemeRVFTime.text = it.r_clearTime.toString() + "분"
+                binding.tvThemeRVFHint.text = String.format("%.1f", it.r_hint) + "개"
+            }
         }
 
 

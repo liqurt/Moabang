@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.ssafy.moabang.R
+import com.ssafy.moabang.config.GlobalApplication.Companion.sp
 import com.ssafy.moabang.data.model.dto.Theme
 import com.ssafy.moabang.data.model.repository.Repository
 import com.ssafy.moabang.data.model.viewmodel.ThemeViewModel
@@ -33,7 +34,7 @@ class ThemeDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityThemeDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        Log.d("token", "onCreate token : ${sp.getString("moabangToken")}")
         intent.getParcelableExtra<Theme>("theme")?.let {
             CoroutineScope(Dispatchers.Main).launch {
                 theme = Repository.get().getTheme(it.tid)

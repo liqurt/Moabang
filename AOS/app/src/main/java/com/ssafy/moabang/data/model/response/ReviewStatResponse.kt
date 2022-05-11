@@ -12,5 +12,5 @@ data class ReviewStatResponse(
     val r_activity: String,
     val r_clearTime: Int,
     val r_recPlayer: Int,
-    val r_hint: Int,
+    val r_hint: Float,
 ): Parcelable
