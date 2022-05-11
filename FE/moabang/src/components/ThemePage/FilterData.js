@@ -114,23 +114,23 @@ export const diffBtn = [
         value:0
     },
     {
-        name: "1",
+        name: "1명",
         value:1
     },
     {
-        name: "2",
+        name: "2명",
         value:2
     },
     {
-        name: "3",
+        name: "3명",
         value:3
     },
     {
-        name: "4",
+        name: "4명",
         value:4
     },
     {
-        name: "5",
+        name: "5명",
         value:5
     },
 ]
@@ -143,6 +143,10 @@ export const sortBtn = [
     {
         name: "평점순",
         value:"평점순"
+    },
+    {
+        name: "인기순",
+        value:"인기순"
     }
 ]
 

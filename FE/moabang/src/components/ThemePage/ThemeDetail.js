@@ -3,18 +3,50 @@ import "./ThemeCSS/ThemeDetail.css";
 
 import ReviewList from '../Review/ReviewList';
 import ReviewWrite from '../Review/ReviewWrite';
-import { useState} from 'react';
-
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 const ThemeDetail = (props) => {
     //리뷰 더미 데이터
+    const [listRender, setListRender] = useState(true);//리뷰의 상태가 변하면 리랜더링을 하기 위한 state
+    const [Theme, setTheme] = useState(props.Theme);
+    const [likeCheck, setLikeCheck] = useState(false);//좋아요 true false 인지 저장하기 윈한 state
+    const [isLikes, setIsLike]= useState(false);//좋아요 변화를 감지해서 리랜더링을 하기 위한 state
+    const [reviewRating, setReviewRating] = useState([]);
     
-    const [listRender, setListRender] = useState(true);
-    console.log(listRender);
 
+    //테마 리스트를 가져온다.
+    const getThemeList = () => {
+        axios.get(`/cafe/theme/detail/${props.Theme.tid}`,
+            {
+                headers: {
+                    'Authorization': localStorage.getItem("myToken")
+                }
+            }
+        ).then(res => {
+            setTheme(res.data.themeDetailDTO);
+            setLikeCheck(res.data.islike);
+        }).catch(error => {
+            console.error(error);
+        });
+    }
 
-    const Theme = props.Theme
+    useEffect(() => {
+        getThemeList();
+    }, [isLikes]);
 
-    console.log(Theme);
+    //리뷰 평균을 가져온다.
+    const getThemeRating = () => {
+        axios.get(`/theme/review/rate/${props.Theme.tid}`
+        ).then(res => {
+            setReviewRating(res.data);
+        }).catch(error => {
+            console.error(error);
+        });
+    }
+    useEffect(() => {
+        getThemeRating();
+    }, []);
 
     //난이도별 열쇠 이미지 개수 맞추기
     const DifficultyKeyImg = (diff) => {
@@ -48,15 +80,61 @@ const ThemeDetail = (props) => {
     const Water = () => {
         return <img id='water' src='https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Tilde.svg/1200px-Tilde.svg.png' alt="water" ></img>
     }
+    //별점 이미지
     const starScore = () => {
         return <img id='theme-detail-starscore' src='https://emojigraph.org/media/facebook/star_2b50.png' alt='starscore'></img>
     }
+
+
+    const heartChange = (event) => {
+        //좋아요 버튼
+        
+        axios.get(`/theme/${event.target.alt}/like/`,
+            {
+                headers: {
+                    'Authorization': localStorage.getItem("myToken")
+                }
+            }
+        ).then(response => {
+            props.setTListRender(e => !e);
+            setIsLike(e => e = !e);
+            Swal.fire({
+                icon: 'success',
+                title: response.data
+            })
+            
+        }).catch(error => {
+            console.error(error);
+        });
+        
+
+        
+        
+    }
+    function roundToTwo(num) {    
+        return +(Math.round(num + "e+1")  + "e-1");
+    }
+
 
     return (
         <div className='ThemeDetailTotal'>
             
             <div className='ThemeDetailImgAndInfo'>
+                <div className="heartDetailImg">
+                    {likeCheck ?  
+                        <img className="Detailheart " onClick={heartChange} alt={Theme.tid} src='https://mblogthumb-phinf.pstatic.net/20140709_176/wsm0030_1404859139443xgQQv_PNG/PicsArt_1404831829726.png?type=w800' /> :
+                        <img className="Detailheart " onClick={heartChange} alt={Theme.tid} src='https://mblogthumb-phinf.pstatic.net/20140709_15/wsm0030_1404859141585ixxmQ_PNG/1404859141390_PicsArt_1404833054881.png?type=w2' />
+
+                    }
+                    {
+                        Theme.count < 100 ?
+                            <div id='likeCnt'>{Theme.count}</div>:
+                            <div id='likeCnt'>100+</div>
+                    }    
+                </div>
+
                 <img className='TDetailImg' alt='profile' src={Theme.img} />
+
                 
             
                 <div className='ThemeDetailInfo'>
@@ -70,23 +148,26 @@ const ThemeDetail = (props) => {
                     <div id='ThemeDetailListGrade'>{starScore()}&nbsp;{Theme.grade}</div>
                 </div>
                 <div className='ThemeTotalReview'>
-                    리뷰통계 - 리뷰 기능 만들면 연결할 예정
-                    <div>체감 난이도</div>
-                    <div>활동성</div>
-                    <div>추천 인원</div>
-                    <div>탈출 성공률</div>
-                    <div>평균 소요시간</div>
+                    <div id='ThemeRatingTitle'>리뷰 통계</div>
+                    <img id='ThemeRatingImg' src='https://emojigraph.org/media/facebook/star_2b50.png' alt='starscore'></img>
+                    <div id='ThemeRatingStar'>x {roundToTwo(reviewRating.r_rating)}</div>
+                    <div id='ThemeRatingDiff'>체감 난이도:&nbsp;{reviewRating.r_chaegamDif}</div>
+                    <div id='ThemeRatingActive'>체감 활동성:&nbsp;{reviewRating.r_activity}</div>
+                    <div id='ThemeRatingRecNum'>추천 인원:&nbsp;{reviewRating.r_recPlayer}명</div>
+                    <div id='ThemeRatingClear'>탈출 성공률: {roundToTwo((reviewRating.r_isSuccess*100))}%</div>
+                    <div id='ThemeRatingTime'>클리어 타임: {reviewRating.r_clearTime}분</div>
+                    <div id='ThemeRatingHint'>사용 힌트수: {roundToTwo(reviewRating.r_hint)}개</div>
                 </div>
 
             </div>
-            <div className='ThemeNav'>
-                홈페이지이동|리뷰|비교하기|예약하기
-            </div>
+            
 
             <ReviewWrite tid={Theme.tid} setListRender={setListRender}/>
-            <div><ReviewList tid={Theme.tid} listRender={listRender} setListRender={setListRender}/></div>
-
-                
+            <div>
+                <ReviewList tid={Theme.tid} listRender={listRender} setListRender={setListRender} />
+            </div>
+            
+            
         </div>
     )
 

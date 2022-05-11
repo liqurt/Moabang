@@ -5,6 +5,11 @@
     margin-left: 80px;
     text-align: left;
     height: auto;
+    position: relative;
+    z-index: 10;
+}
+#emptyReviewContent{
+    font-size: 100px;
 }
 
 .ReviewWriteBtn{
@@ -17,15 +22,24 @@
     height: 50px;
     border-radius: 10px;
     float: left;
+    position: relative;
 }
 #playDate{
-    
+    font-family: "Oeisi";
+    font-size: 25px;
+    font-weight: 600;
     margin-left: 20px;
 }
 #ReviewNemNum{
+    font-family: "Oeisi";
+    font-size: 25px;
+    font-weight: 600;
     margin-left: 10px;
 }
 #ReviewSuccAndFail{
+    font-family: "Oeisi";
+    font-weight: 600;
+    font-size: 25px;
     margin-left: 10px;
 }
 
@@ -38,8 +52,10 @@
     float: right;
     margin-right: 160px;
 }
-
-
+/*
+---------------------------------------
+리뷰 리스트 CSS
+*/
 .ReviewDetail{
     border-radius: 15px;
     margin-top: 8px;
@@ -48,7 +64,90 @@
     width: 80%;
     height: 150px;
     background-color: #FFFFFF;
+    position: relative;
+    z-index: 0;
 }
+
+#ReviewListStarImg{
+    width: 30px;
+    float: left;
+}
+
+#ReviewListStar{
+    font-family: "good";
+    position: absolute;
+    top: 30px;
+    left: 20px;
+    font-weight: 1000;
+    font-size: 20px;
+    margin-left: 20px;
+
+}
+
+#ReviewListDiff{
+    font-family: "Oeisi";
+    font-size: 30px;
+    position: absolute;
+    top: 85px;
+    left: 20px;
+    margin-left: 20px;
+
+}
+#ReviewListTime{
+    font-family: "Oeisi";
+    font-size: 30px;
+    position: absolute;
+    top: 55px;
+    left: 20px;
+    margin-left: 20px;
+    
+    
+}
+#ReviewListActive{
+    font-family: "Oeisi";
+    font-size: 30px;
+    position: absolute;
+    top: 25px;
+    left: 200px;
+    margin-left: 20px;
+    
+}
+#ReviewListHint{
+    font-family: "Oeisi";
+    font-size: 30px;
+    position: absolute;
+    top: 85px;
+    left: 200px;
+    margin-left: 20px;
+    
+}
+
+#ReviewListRecNum{
+    font-family: "Oeisi";
+    font-size: 30px;
+    position: absolute;
+    top: 55px;
+    left: 200px;
+    margin-left: 20px;
+    
+    
+    
+}
+#ReviewListContent{
+    width: 350px;
+    text-align: left;
+    height: auto;
+    font-family: "Oeisi";
+    font-size: 28px;
+    position: absolute;
+    top: 25px;
+    left: 400px;
+    margin-left: 20px;
+    
+}
+
+
+
 
 
 

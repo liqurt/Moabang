@@ -12,7 +12,6 @@ import "../cafePage/Modal/ModalList.css"//난이도와 인원제한 사진 CSS�
 const ThemeList = (props) => {
     const Theme = props.Theme;
 
-    console.log(Theme);
     const heartChange = (event) => {
         //좋아요 버튼
         console.log(event.target.alt)
@@ -23,10 +22,9 @@ const ThemeList = (props) => {
                 }
             }
         ).then(response => {
-            console.log(response);
             props.setTListRender(e => !e);
             Swal.fire({
-                con: 'success',
+                icon: 'success',
                 title: response.data
             })
         }).catch(error => {
@@ -82,11 +80,10 @@ const ThemeList = (props) => {
     const Water = () => {
         return <img id='water' src='https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Tilde.svg/1200px-Tilde.svg.png' alt="water" ></img>
     }
+    //별점
     const starScore = () => {
         return <img id='starscore' src='https://emojigraph.org/media/facebook/star_2b50.png' alt='starscore'></img>
     }
-   
-    
 
     return (
         <div className='detailList' >
@@ -94,16 +91,21 @@ const ThemeList = (props) => {
                 
                 <div className='detail-container' key={index} >
                     <img className='ThemeImg' alt='profile' src={item.img} onClick={() => {
-                    openModal();
-                    setModalData(item);
+                        openModal();
+                        setModalData(item);
                     }} />
                     <div className="heartImg">
                         {item.islike ?  
-                            <img className="heart " onClick={heartChange} alt={item.tid} src='https://mblogthumb-phinf.pstatic.net/20140709_176/wsm0030_1404859139443xgQQv_PNG/PicsArt_1404831829726.png?type=w800' /> :
-                            <img className="heart " onClick={heartChange} alt={item.tid} src='https://mblogthumb-phinf.pstatic.net/20140709_15/wsm0030_1404859141585ixxmQ_PNG/1404859141390_PicsArt_1404833054881.png?type=w2' />
-
+                            <img className="heart " onClick={heartChange} alt={item.tid}
+                                src='https://mblogthumb-phinf.pstatic.net/20140709_176/wsm0030_1404859139443xgQQv_PNG/PicsArt_1404831829726.png?type=w800' /> :
+                            <img className="heart " onClick={heartChange} alt={item.tid}
+                                src='https://mblogthumb-phinf.pstatic.net/20140709_15/wsm0030_1404859141585ixxmQ_PNG/1404859141390_PicsArt_1404833054881.png?type=w2' />
                         }
-                        
+                        {
+                            item.count < 100 ?
+                                <div id='likeCnt'>{item.count}</div>:
+                                <div id='likeCnt'>100+</div>
+                        }
                     </div>
                     
                     <div className='ThemeInfo'>
@@ -122,7 +124,7 @@ const ThemeList = (props) => {
             ))}
 
             <Modal open={modalOpen} close={closeModal} header="Modal heading">
-                <ThemeDetail Theme={modalData} />
+                <ThemeDetail Theme={modalData} setTListRender={props.setTListRender}/>
             </Modal>
             
             

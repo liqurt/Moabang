@@ -5,12 +5,7 @@
 
 
 
-.filter{ 
-    width: 100%;
-    height: 250px;
-    background-color: #FFC7C7;
-    border-radius: 15px;
-}
+
 
 .ThemeList{
     width: 100%;
@@ -39,14 +34,24 @@
     height: 70%;
 }
 
-.heart{
+.heartImg{
     position: absolute;
-    width: 40px;
+    width: 44px;
     top: 0;
     right: 0;
     cursor:pointer;
     transition: transform 300ms ease;
-    color:red;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    border: 1px solid red;
+
+}
+#likeCnt{
+    font-family: Arial Black;
+}
+.heart{
+    width: 35px;
+    border-radius: 10px;
 }
 
 

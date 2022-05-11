@@ -80,6 +80,8 @@ const ThemeSearchbar = (props) => {
         } else if (sortList === "평점순") {
             
             return b.grade-a.grade;
+        } else if(sortList === "인기순"){
+            return b.count - a.count;
         }
         
     })
@@ -196,7 +198,7 @@ const ThemeSearchbar = (props) => {
                     {shouldDisplayButton && <button className='button4' onClick={handleInputClear}>검색 초기화</button>}
                     <input type="text" className="search__input" value={searchValue} placeholder='검색어 입력'  onChange={handleInputChange}/>
                 </div>
-                <div><span>장르</span>
+                <div className='locationGerne'><span>장르</span>
                 {gerneBtn &&
                     gerneBtn.map((type, index) => (
                         <button className='filterBtn1' key={index} value={type.value} onClick={handleGerne}>
@@ -205,16 +207,18 @@ const ThemeSearchbar = (props) => {
                     ))
                 }
                 </div>
-                <div>
-                    <span>타입</span>
+                <div className='locationType'>
+                    <span >타입</span>
                     {typeBtn &&
                         typeBtn.map((type, index) => (
                             <button className='filterBtn2' key={index} value={type.value} onClick={handleType}>
                                 {type.name}
                             </button>
                         ))
-                    }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <span>난이도</span>
+                    }
+                </div>
+                <div className='locationDiff'>
+                    <span >난이도</span>
                     {diffBtn &&
                         diffBtn.map((type, index) => (
                             <button className='filterBtn3' key={index} value={type.value} onClick={handleDiff}>
@@ -223,7 +227,7 @@ const ThemeSearchbar = (props) => {
                         ))
                     }
                 </div>
-                <div><span>참여인원</span>
+                <div className='locationNum'><span>참여인원</span>
                 {memberCntBtn &&
                     memberCntBtn.map((type, index) => (
                         <button className='filterBtn4' key={index} value={type.value} onClick={handleMemberCnt}>
@@ -234,7 +238,7 @@ const ThemeSearchbar = (props) => {
                 </div>
                 
                 
-                <div><span>정렬</span>
+                <div className='locationSort'><span>정렬</span>
                 {sortBtn &&
                     sortBtn.map((type, index) => (
                         <button className='filterBtn5' key={index} value={type.value} onClick={handleSort}>
