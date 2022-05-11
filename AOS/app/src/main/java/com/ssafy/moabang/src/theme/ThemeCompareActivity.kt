@@ -1,5 +1,6 @@
 package com.ssafy.moabang.src.theme
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,8 +10,12 @@ import com.ssafy.moabang.R
 import com.ssafy.moabang.adapter.CompareThemeListRVAdapter
 import com.ssafy.moabang.adapter.CompareTitleListRVAdapter
 import com.ssafy.moabang.data.model.dto.ThemeForCompare
+import com.ssafy.moabang.data.model.repository.Repository
 import com.ssafy.moabang.databinding.ActivityThemeCompareBinding
 import com.ssafy.moabang.src.util.CompareList
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ThemeCompareActivity : AppCompatActivity() {
     private lateinit var binding: ActivityThemeCompareBinding
@@ -56,7 +61,12 @@ class ThemeCompareActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@ThemeCompareActivity, LinearLayoutManager.HORIZONTAL, false)
             adapter = compareThemeListRVAdapter
         }
-
+        
+        compareTitleListRVAdapter.itemClickListener = object : CompareTitleListRVAdapter.ItemClickListener {
+            override fun onClick(item: ThemeForCompare) {
+                CompareList.addTheme(item)
+            }
+        }
 
     }
 }

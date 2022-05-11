@@ -24,9 +24,16 @@ import kotlinx.coroutines.launch
 class CompareTitleListRVAdapter: RecyclerView.Adapter<CompareTitleListRVAdapter.ViewHolder>() {
     var data: MutableList<ThemeForCompare> = mutableListOf()
     lateinit var binding: ListThemeItemBinding
+    lateinit var itemClickListener: CompareTitleListRVAdapter.ItemClickListener
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-
+        init {
+            itemView.setOnClickListener {
+                if(this@CompareTitleListRVAdapter::itemClickListener.isInitialized){
+                    itemClickListener.onClick(data[adapterPosition])
+                }
+            }
+        }
         fun bind(item: ThemeForCompare){
             itemView.findViewById<TextView>(R.id.tv_ctItem_title).text = item.tname
         }
@@ -52,4 +59,8 @@ class CompareTitleListRVAdapter: RecyclerView.Adapter<CompareTitleListRVAdapter.
     }
 
     override fun getItemCount(): Int = data.size
+
+    interface ItemClickListener {
+        fun onClick(item: ThemeForCompare)
+    }
 }
