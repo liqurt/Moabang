@@ -24,9 +24,16 @@ import kotlinx.coroutines.launch
 class CompareThemeListRVAdapter: RecyclerView.Adapter<CompareThemeListRVAdapter.ViewHolder>() {
     var data: MutableList<ThemeForCompare> = mutableListOf()
     lateinit var binding: ListThemeItemBinding
+    lateinit var itemClickListener: CompareThemeListRVAdapter.ItemClickListener
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-
+        init {
+            itemView.setOnClickListener {
+                if(this@CompareThemeListRVAdapter::itemClickListener.isInitialized){
+                    itemClickListener.onClick(data[adapterPosition])
+                }
+            }
+        }
         fun bind(item: ThemeForCompare){
             val img = itemView.findViewById<ImageView>(R.id.iv_tCompare_img)
             Glide.with(img).load(item.img).centerCrop().into(img)
@@ -68,4 +75,8 @@ class CompareThemeListRVAdapter: RecyclerView.Adapter<CompareThemeListRVAdapter.
     }
 
     override fun getItemCount(): Int = data.size
+
+    interface ItemClickListener {
+        fun onClick(item: ThemeForCompare)
+    }
 }

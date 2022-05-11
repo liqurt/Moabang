@@ -61,10 +61,20 @@ class ThemeCompareActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@ThemeCompareActivity, LinearLayoutManager.HORIZONTAL, false)
             adapter = compareThemeListRVAdapter
         }
-        
+
         compareTitleListRVAdapter.itemClickListener = object : CompareTitleListRVAdapter.ItemClickListener {
             override fun onClick(item: ThemeForCompare) {
                 CompareList.addTheme(item)
+            }
+        }
+
+        compareThemeListRVAdapter.itemClickListener = object : CompareThemeListRVAdapter.ItemClickListener {
+            override fun onClick(item: ThemeForCompare) {
+                CoroutineScope(Dispatchers.Main).launch {
+                    val theme = Repository.get().getTheme(item.tid)
+                    startActivity(Intent(this@ThemeCompareActivity, ThemeDetailActivity::class.java)
+                        .putExtra("theme", theme))
+                }
             }
         }
 
