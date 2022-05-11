@@ -15,11 +15,11 @@ import java.time.LocalDateTime;
 @Getter
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "recruit")
-public class Recruit {
+@Table(name = "community")
+public class Community {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "recruitId")
+    @Column(name = "communityId")
     private Long rid;
 
     @ManyToOne
@@ -30,6 +30,7 @@ public class Recruit {
 
     private String content;
 
+    private String header;
 
     @CreatedDate
     @Column(nullable = false)

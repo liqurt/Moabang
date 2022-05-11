@@ -14,4 +14,7 @@ public class RecruitCreateRequest {
 
     @ApiModelProperty(value = "글 내용", required = true, example = "카톡 주소 : @@")
     private String content;
+
+    @ApiModelProperty(value = "말머리", required = true, example = "구인")
+    private String header;
 }
