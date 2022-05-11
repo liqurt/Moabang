@@ -367,11 +367,11 @@
                 android:background="@color/moabang_pink"/>
 
             <TextView
-                android:id="@+id/tv_themeDA_reserve"
+                android:id="@+id/tv_themeDA_cafe"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="예약하기"
+                android:text="카페"
                 android:textAlignment="center"
                 android:textColor="@drawable/tv_click"
                 android:textSize="14dp"

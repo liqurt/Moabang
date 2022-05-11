@@ -28,6 +28,11 @@ class Repository private constructor(context: Context) {
             cafeDao.getAllCafe()
         }
 
+    suspend fun getCafe(cid : Int): Cafe =
+        database.withTransaction {
+            cafeDao.getCafe(cid)
+        }
+
     suspend fun getCafeByIsland(island: String): List<Cafe> =
         database.withTransaction {
             cafeDao.getCafeByIsland(island)

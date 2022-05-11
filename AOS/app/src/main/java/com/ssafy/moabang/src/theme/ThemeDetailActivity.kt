@@ -17,6 +17,7 @@ import com.ssafy.moabang.data.model.repository.Repository
 import com.ssafy.moabang.data.model.viewmodel.ThemeViewModel
 import com.ssafy.moabang.databinding.ActivityThemeDetailBinding
 import com.ssafy.moabang.src.main.ThemeFragment
+import com.ssafy.moabang.src.main.cafe.CafeDetailActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -130,10 +131,12 @@ class ThemeDetailActivity : AppCompatActivity() {
             // TODO: 테마 비교 Activity로 이동
         }
 
-        binding.tvThemeDAReserve.setOnClickListener {
-            // TODO: 제휴한 카페만 해당 프래그먼트 보이도록 해야 함
-            // TODO: 제휴된 카페가 아닐경우 해당 버튼 안보이게 하거나 버튼 클릭 시 토스트로 처리
-            setFragment(ThemeReserveFragment())
+        binding.tvThemeDACafe.setOnClickListener {
+            CoroutineScope(Dispatchers.Main).launch {
+                val cafe = Repository.get().getCafe(theme.cid)
+                startActivity(Intent(this@ThemeDetailActivity, CafeDetailActivity::class.java)
+                    .putExtra("cafe", cafe))
+            }
         }
     }
 
