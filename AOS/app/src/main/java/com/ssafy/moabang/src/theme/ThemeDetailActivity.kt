@@ -38,11 +38,7 @@ class ThemeDetailActivity : AppCompatActivity() {
         intent.getParcelableExtra<Theme>("theme")?.let {
             theme = it
             init()
-        } ?: noTheme()
-    }
-
-    private fun noTheme(){
-        finish()
+        } ?: finish()
     }
 
     private fun init(){
@@ -130,7 +126,7 @@ class ThemeDetailActivity : AppCompatActivity() {
         }
 
         binding.tvThemeDACompare.setOnClickListener {
-            // TODO: 테마 비교 Activity로 이동
+            startActivity(Intent(this, ThemeCompareActivity::class.java))
         }
 
         binding.tvThemeDACafe.setOnClickListener {
