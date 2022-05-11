@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.ssafy.moabang.data.model.dto.Theme
 import com.ssafy.moabang.data.model.repository.Repository
 import com.ssafy.moabang.data.model.repository.ThemeRepository
+import com.ssafy.moabang.data.model.response.ReviewStatResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,7 +22,12 @@ class ThemeViewModel: ViewModel() {
     val themeListLiveData : LiveData<List<Theme>>
         get() = _themeListLiveData
 
+    private val _themeStatLiveData = MutableLiveData<ReviewStatResponse>()
+    val themeStatLiveDate : LiveData<ReviewStatResponse>
+        get() = _themeStatLiveData
+
     private val totalThemeList = mutableListOf<Theme>()
+    private var themeStat:ReviewStatResponse? = null
 
     fun getAllTheme(jwtToken: String) = viewModelScope.launch {
         getTheme(jwtToken)
@@ -32,15 +38,19 @@ class ThemeViewModel: ViewModel() {
         changeLike(tid)
     }
 
+    fun themeStat(tid: Int) = viewModelScope.launch {
+        getThemeStat(tid)
+    }
+
     private suspend fun getTheme(jwtToken: String) = withContext(Dispatchers.IO) {
         val result: Response<List<Theme>>? = themeRepository.getAllTheme()
 
         if(result != null) {
             if (result.isSuccessful) {
-                CoroutineScope(Dispatchers.IO).launch { // 승일님 혹시 시간 되시면 ThemeViewModel 클래스 40번째 라인에 있는 Repository.get().insertThemes(result.body()!!)를 CoroutineScope(Dispatchers.IO).launch {}로 감싸고 테마 목록 잘 뜨는지 한번만 확인 부탁드려용
+                CoroutineScope(Dispatchers.IO).launch {
                     Repository.get().insertThemes(result.body()!!)
                 }
-                Log.d("THEME VIEWMODEL TEST", "getTheme: ${result.body()}")
+                Log.d("THEME VIEWMODEL TEST", "success: ${result.body()}")
                 result.body()!!.forEach {
                     if (!totalThemeList.contains(it)) {
                         totalThemeList.add(it)
@@ -69,6 +79,22 @@ class ThemeViewModel: ViewModel() {
             } else {
                 Log.d("THEME VIEWMODEL TEST", "changeLike FAILED: ${result.body()}")
             }
+        }
+    }
+
+    private suspend fun getThemeStat(tid: Int) = withContext(Dispatchers.IO) {
+        val result: Response<ReviewStatResponse>? = themeRepository.themeStat(tid)
+
+        if(result != null){
+            if(result.isSuccessful){
+                Log.d("THEME VIEWMODEL TEST", "getThemeStat SUCCESS: ${result.body()}")
+                themeStat = result.body()
+            } else {
+                Log.d("THEME VIEWMODEL TEST", "getThemeStat FAILED: ${result.body()}")
+            }
+            _themeStatLiveData.postValue(themeStat!!)
+        } else {
+            Log.d("THEME VIEWMODEL TEST", "getThemeStat FAILED: response is null}")
         }
     }
 }

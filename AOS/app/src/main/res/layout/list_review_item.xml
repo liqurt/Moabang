@@ -70,7 +70,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:isIndicator="true"
             android:max="5"
             android:numStars="5"
             app:layout_constraintStart_toStartOf="parent"
@@ -79,6 +78,7 @@
             app:srb_fillColor="@color/moabang_pink"
             app:srb_numberOfStars="5"
             app:srb_rating="3"
+            app:srb_isIndicator="true"
             app:srb_starSize="20dp"
             app:srb_stepSize="0.5" />
 
@@ -98,10 +98,10 @@
             android:id="@+id/tv_reviewL_revise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
+            android:layout_marginEnd="16dp"
             android:text="수정"
             android:textColor="@color/moabang_pink"
-            android:textSize="10dp"
+            android:textSize="14dp"
             app:layout_constraintBottom_toBottomOf="@+id/tv_reviewL_delete"
             app:layout_constraintEnd_toStartOf="@+id/tv_reviewL_delete" />
 
@@ -110,10 +110,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="24dp"
             android:text="삭제"
             android:textColor="@color/moabang_pink"
-            android:textSize="10dp"
+            android:textSize="14dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

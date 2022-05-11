@@ -42,8 +42,6 @@ class ThemeFragment : Fragment() {
     private var searchList = ArrayList<Theme>()
     private lateinit var tf: ThemeFilter
 
-    private val themeViewModel: ThemeViewModel by viewModels()
-
     private val activityResultLauncher : ActivityResultLauncher<Intent> = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ){
@@ -54,10 +52,6 @@ class ThemeFragment : Fragment() {
                 tf = returnValue
             }
             filter(returnValue!!)
-        }
-        if(it.resultCode == 2){
-            init()
-            if(::tf.isInitialized) filter(tf)
         }
     }
 
@@ -77,6 +71,15 @@ class ThemeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        CoroutineScope(Dispatchers.Main).launch {
+            originalList = repository.getAllTheme()
+            themeListRVAdapter.filterList(originalList)
+        }
+        if(::tf.isInitialized) filter(tf)
+        super.onViewStateRestored(savedInstanceState)
     }
 
     fun init(){
@@ -215,11 +218,16 @@ class ThemeFragment : Fragment() {
             maxp = 10
         }
 
+        var plist = ArrayList<Int>()
+        for(i in minp..maxp){
+            plist.add(i)
+        }
+
         CoroutineScope(Dispatchers.Main).launch {
             filteredList = if(tf.island == "전체"){
-                repository.filterThemesNoArea(tf.genre, tf.type, minp, maxp, tf.diff, tf.active)
+                repository.filterThemesNoArea(tf.genre, tf.type, plist, tf.diff, tf.active)
             } else {
-                repository.filterThemes(tf.island, tf.si, tf.genre, tf.type, minp, maxp, tf.diff, tf.active)
+                repository.filterThemes(tf.island, tf.si, tf.genre, tf.type, plist, tf.diff, tf.active)
             }
             themeListRVAdapter.filterList(filteredList)
         }
