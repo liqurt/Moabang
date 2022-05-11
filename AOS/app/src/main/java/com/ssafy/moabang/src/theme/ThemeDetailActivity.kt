@@ -22,6 +22,7 @@ import com.ssafy.moabang.databinding.ActivityThemeDetailBinding
 import com.ssafy.moabang.src.main.ThemeFragment
 import com.ssafy.moabang.src.main.cafe.CafeDetailActivity
 import com.ssafy.moabang.src.util.CompareList
+import com.ssafy.moabang.src.util.CustomDialog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -137,7 +138,13 @@ class ThemeDetailActivity : AppCompatActivity() {
             var dto = ThemeForCompare(theme.tid, theme.tname, theme.cname, cafe.lat, cafe.lon, theme.img, theme.genre, theme.grade, theme.difficulty, theme.time, theme.type, theme.activity, theme.rplayer)
             if(!CompareList.items.contains(dto)) CompareList.items.add(dto)
             Log.d("COMPARE LIST TEST", "LIST ITEMS - ${CompareList.items.size} : ${CompareList.items}")
-            startActivity(Intent(this, ThemeCompareActivity::class.java))
+
+            CustomDialog(this)
+                .setContent("리스트에 테마가 담겼습니다.\n비교하기 화면으로 이동하시겠습니까?")
+                .setPositiveButtonText("이동")
+                .setOnPositiveClickListener{
+                    startActivity(Intent(this, ThemeCompareActivity::class.java))
+                }.build().show()
         }
 
         binding.tvThemeDACafe.setOnClickListener {
