@@ -43,7 +43,7 @@ public class RecruitController {
 
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "JWT Token", required = true, dataType = "string", paramType = "header")})
     @ApiOperation(value = "모집 글 쓰기", notes = "모집 글 쓰기")
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<?> createRecruit(@Valid RecruitCreateRequest recruitCreateRequest, HttpServletRequest request) {
 
         String token = jwtTokenProvider.resolveToken(request);
@@ -117,7 +117,7 @@ public class RecruitController {
 
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "JWT Token", required = true, dataType = "string", paramType = "header")})
     @ApiOperation(value = "모집 글 리스트 읽기", notes = "모집 글 리스트 읽기")
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseEntity<?> getRecruitList() {
         List<Recruit> recruitList = recruitRepository.findAll();
         return new ResponseEntity<>(recruitList, HttpStatus.OK);
