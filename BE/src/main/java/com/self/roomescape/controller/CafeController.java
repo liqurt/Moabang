@@ -123,8 +123,6 @@ public class CafeController {
                     for (int j = 0; j < likeList.get().size(); j++) {
                         if (themeDetailDTOList.get(i).getTid() == likeList.get().get(j).getTheme().getTid()) {
                             tmp.setIslike(true);
-                        } else {
-                            tmp.setIslike(false);
                         }
                     }
                     themeDetailResDTOList.add(tmp);
