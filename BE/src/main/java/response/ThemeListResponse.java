@@ -8,6 +8,7 @@ import javax.persistence.*;
 public class ThemeListResponse {
     private int tid;
     private int cid;
+    private int difficulty;
     private String tname;
     private String img;
     private String description;
@@ -15,14 +16,7 @@ public class ThemeListResponse {
     private String time;
     private String genre;
     private String type;
-    private String cname;
-    private String curl;
-    private String island;
-    private String si;
-    private float difficulty;
-    private String grade;
+    private float grade;
+//    private int reviewCnt;
     private String activity;
-    private boolean islike;
-
-    private int TotalLike;
 }
