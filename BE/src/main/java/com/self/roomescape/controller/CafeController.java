@@ -60,7 +60,28 @@ public class CafeController {
     public ResponseEntity<?> findCafeTheme(@PathVariable("cid") int cid) {
         List<Theme> themeList = themeRepository.findByCafeCid(cid);
 
-        return new ResponseEntity<>(themeList, HttpStatus.OK);
+        List<ThemeListResponse> themeListResponses = new ArrayList<>();
+
+        for (Theme res : themeList
+        ) {
+            ThemeListResponse temp = new ThemeListResponse();
+            temp.setTname(res.getTname());
+            temp.setTime(res.getTime());
+            temp.setTid(res.getTid());
+            temp.setType(res.getType());
+            temp.setGrade(res.getGrade());
+            temp.setRplayer(res.getRplayer());
+            temp.setImg(res.getImg());
+            temp.setGenre(res.getGenre());
+            temp.setDescription(res.getDescription());
+            temp.setDifficulty(res.getDifficulty());
+            temp.setCid(res.getCafe().getCid());
+            temp.setActivity(res.getActivity());
+            themeListResponses.add(temp);
+        }
+
+
+        return new ResponseEntity<>(themeListResponses, HttpStatus.OK);
     }
 
     public String getUserPk(String token) {
