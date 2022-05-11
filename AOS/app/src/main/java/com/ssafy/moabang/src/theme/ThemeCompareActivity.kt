@@ -2,18 +2,20 @@ package com.ssafy.moabang.src.theme
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.moabang.R
 import com.ssafy.moabang.adapter.CompareThemeListRVAdapter
 import com.ssafy.moabang.adapter.CompareTitleListRVAdapter
+import com.ssafy.moabang.data.model.dto.ThemeForCompare
 import com.ssafy.moabang.databinding.ActivityThemeCompareBinding
 import com.ssafy.moabang.src.util.CompareList
 
 class ThemeCompareActivity : AppCompatActivity() {
     private lateinit var binding: ActivityThemeCompareBinding
     private lateinit var compareTitleListRVAdapter: CompareTitleListRVAdapter
-    private lateinit var compareThemeListRVAdapter: CompareThemeListRVAdapter
+    lateinit var compareThemeListRVAdapter: CompareThemeListRVAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +44,13 @@ class ThemeCompareActivity : AppCompatActivity() {
         }
 
         compareThemeListRVAdapter = CompareThemeListRVAdapter()
-        compareThemeListRVAdapter.data = CompareList.clist
+//        compareThemeListRVAdapter.data = CompareList.clist
+
+        CompareList.clistLiveData.observe(this){
+            compareThemeListRVAdapter.data = it as MutableList<ThemeForCompare>
+            Log.d("THEME COMPARE TEST", "setRVAdapter: $it")
+            compareThemeListRVAdapter.notifyDataSetChanged()
+        }
 
         binding.rvThemeCompare.apply {
             layoutManager = LinearLayoutManager(this@ThemeCompareActivity, LinearLayoutManager.HORIZONTAL, false)

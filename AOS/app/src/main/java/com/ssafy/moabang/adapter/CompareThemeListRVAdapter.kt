@@ -28,13 +28,16 @@ class CompareThemeListRVAdapter: RecyclerView.Adapter<CompareThemeListRVAdapter.
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
         fun bind(item: ThemeForCompare){
+            val img = itemView.findViewById<ImageView>(R.id.iv_tCompare_img)
+            Glide.with(img).load(item.img).centerCrop().into(img)
+
             itemView.findViewById<TextView>(R.id.tv_tCompare_theme_name).text = item.tname
             itemView.findViewById<TextView>(R.id.tv_tCompare_cafe_name).text = item.cname
 
             val current = LocationUtil().getCurrentLocation(itemView.context)
             if(current != null){
                 val distance = LocationUtil().getDistanceLatLngInKm(current!!.latitude, current!!.longitude, item.lat!!.toDouble(), item.lon!!.toDouble())
-                itemView.findViewById<TextView>(R.id.tv_tCompare_cafe_distance).text = distance.toString() + "km"
+                itemView.findViewById<TextView>(R.id.tv_tCompare_cafe_distance).text = String.format("%.1f", distance) + "km"
             } else {
                 itemView.findViewById<TextView>(R.id.tv_tCompare_cafe_distance).text = ""
             }
@@ -57,7 +60,7 @@ class CompareThemeListRVAdapter: RecyclerView.Adapter<CompareThemeListRVAdapter.
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(data[position])
 
-        holder.itemView.findViewById<TextView>(R.id.iv_tCompare_delete).setOnClickListener {
+        holder.itemView.findViewById<ImageView>(R.id.iv_tCompare_delete).setOnClickListener {
             data.removeAt(position)
             notifyItemRemoved(position)
             notifyItemRangeChanged(position, data.size)
