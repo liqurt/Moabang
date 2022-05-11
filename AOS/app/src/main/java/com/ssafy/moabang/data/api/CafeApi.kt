@@ -19,4 +19,7 @@ interface CafeApi {
         @Header("token") jwtToken : String?,
         @Path("cid") cid : Int
     ) : Call<List<Theme>>
+
+    @GET("/cafe/theme/list")
+    fun getAllThemeWithLike() : Call<List<Theme>>
 }
