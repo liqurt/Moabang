@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.moabang.R
+import com.ssafy.moabang.adapter.CompareThemeListRVAdapter
 import com.ssafy.moabang.adapter.CompareTitleListRVAdapter
 import com.ssafy.moabang.databinding.ActivityThemeCompareBinding
 import com.ssafy.moabang.src.util.CompareList
@@ -12,6 +13,7 @@ import com.ssafy.moabang.src.util.CompareList
 class ThemeCompareActivity : AppCompatActivity() {
     private lateinit var binding: ActivityThemeCompareBinding
     private lateinit var compareTitleListRVAdapter: CompareTitleListRVAdapter
+    private lateinit var compareThemeListRVAdapter: CompareThemeListRVAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +40,15 @@ class ThemeCompareActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@ThemeCompareActivity, LinearLayoutManager.VERTICAL, false)
             adapter = compareTitleListRVAdapter
         }
+
+        compareThemeListRVAdapter = CompareThemeListRVAdapter()
+        compareThemeListRVAdapter.data = CompareList.clist
+
+        binding.rvThemeCompare.apply {
+            layoutManager = LinearLayoutManager(this@ThemeCompareActivity, LinearLayoutManager.HORIZONTAL, false)
+            adapter = compareThemeListRVAdapter
+        }
+
 
     }
 }
