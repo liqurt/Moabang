@@ -5,7 +5,6 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import axios from "axios";
 import { createRoot } from 'react-dom/client';
-import "@babel/polyfill";
 
 
 axios.defaults.baseURL = "http://모아방.kr:8080";
