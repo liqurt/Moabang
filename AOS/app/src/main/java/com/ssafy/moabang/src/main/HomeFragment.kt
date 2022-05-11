@@ -14,10 +14,7 @@
 package com.ssafy.moabang.src.main
 
 import android.Manifest
-import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
-import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -35,6 +32,7 @@ import com.ssafy.moabang.data.model.dto.Cafe
 import com.ssafy.moabang.data.model.repository.Repository
 import com.ssafy.moabang.databinding.FragmentHomeBinding
 import com.ssafy.moabang.src.main.cafe.CafeDetailActivity
+import com.ssafy.moabang.src.util.LocationUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -63,23 +61,11 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-    @SuppressLint("MissingPermission")
-    private fun getCurrentLocation(): LatLng? {
-        val locationManager =
-            requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        val lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-        return if (lastKnownLocation != null) {
-            LatLng(lastKnownLocation.latitude, lastKnownLocation.longitude)
-        } else {
-            null
-        }
-    }
-
     private fun checkPermission() {
         val permissionListener = object : PermissionListener {
             override fun onPermissionGranted() {
                 val seoul = LatLng(37.566535, 126.9779692)
-                currentLocation = getCurrentLocation() ?: LatLng(seoul.latitude, seoul.longitude)
+                currentLocation = LocationUtil().getCurrentLocation(requireContext()) ?: LatLng(seoul.latitude, seoul.longitude)
                 Log.d("AAAAA", "HOME FRAGMENT_currentLocation : $currentLocation")
                 setNearCafeList()
             }
@@ -105,8 +91,6 @@ class HomeFragment : Fragment() {
 
         //test
         // 제주 동쪽 33.455988, 126.894981
-        currentLocation = LatLng(33.455988, 126.894981)
-
 
         if (currentLocation != null) {
             CoroutineScope(Dispatchers.Main).launch {
@@ -121,7 +105,7 @@ class HomeFragment : Fragment() {
                     } else {
                         val cafeLat = cafe.lat!!.toDouble()
                         val cafeLng = cafe.lon!!.toDouble()
-                        val distance = getDistanceLatLngInKm(
+                        val distance = LocationUtil().getDistanceLatLngInKm(
                             currentLocation!!.latitude,
                             currentLocation!!.longitude,
                             cafeLat,
@@ -156,27 +140,5 @@ class HomeFragment : Fragment() {
         })
         binding.rvHomeFNearCafe.adapter = nearCafeListRVAdapter
     }
-
-    private fun getDistanceLatLngInKm(
-        lat1: Double,
-        lon1: Double,
-        lat2: Double,
-        lon2: Double
-    ): Double {
-        val R = 6371 // radius of earth in km
-        val dLat = deg2rad(lat2 - lat1)
-        val dLng = deg2rad(lon2 - lon1)
-        val a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLng / 2) * Math.sin(
-            dLng / 2
-        )
-        val c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-        return R * c
-    }
-
-    private fun deg2rad(deg: Double): Double {
-        return deg * (Math.PI / 180)
-    }
-
 
 }
