@@ -20,6 +20,8 @@ public interface ThemeListMapping {
 
     String getGenre();
 
+    String getUrl();
+
     String getType();
 
     String getCname();
@@ -30,9 +32,11 @@ public interface ThemeListMapping {
 
     String getSi();
 
-    float getDifficulty();
+    int getDifficulty();
 
-    String getGrade();
+    float getGrade();
 
     String getActivity();
+
+    Long getCount();
 }

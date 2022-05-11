@@ -14,11 +14,13 @@ import java.util.List;
 
 @Repository
 @Transactional
-public class CafeRepoCommonImpl implements CafeRepoCommon{
+public class CafeRepoCommonImpl implements CafeRepoCommon {
     private final JPAQueryFactory queryFactory;
     private EntityManager em;
-    public CafeRepoCommonImpl(EntityManager em){
-        this.queryFactory= new JPAQueryFactory(em);        this.em=em;
+
+    public CafeRepoCommonImpl(EntityManager em) {
+        this.queryFactory = new JPAQueryFactory(em);
+        this.em = em;
     }
 
 //    @Override
@@ -35,7 +37,7 @@ public class CafeRepoCommonImpl implements CafeRepoCommon{
 //        }
 //    }
 
-//    @Override
+    //    @Override
 //    @Transactional
 //    public List<Tuple> getthemeList(){
 //        QTheme theme = QTheme.theme;
@@ -58,40 +60,41 @@ public class CafeRepoCommonImpl implements CafeRepoCommon{
 //    }
     @Override
     @Transactional
-    public  List<ThemeDetailDTO> getthemeList(){
+    public List<ThemeDetailDTO> getthemeList() {
         QTheme theme = QTheme.theme;
         QCafe cafe = QCafe.cafe;
         QUserLike userLike = QUserLike.userLike;
         List<ThemeDetailDTO> result = queryFactory
                 .select(Projections.constructor(ThemeDetailDTO.class,
-                theme.tid,
-                cafe.cid,
-                theme.tname,
-                theme.img,
-                theme.description,
-                theme.rplayer,
-                theme.time,
-                theme.genre,
-                theme.type,
-                theme.difficulty,
-                theme.grade,
-                theme.activity,
-                cafe.cname,
-                cafe.url,
-                cafe.island,
-                cafe.si,
-                queryFactory.select(userLike.count())
-                        .from(userLike)
-                        .where(userLike.theme.eq(theme))))
+                        theme.tid,
+                        cafe.cid,
+                        theme.tname,
+                        theme.img,
+                        theme.description,
+                        theme.rplayer,
+                        theme.time,
+                        theme.genre,
+                        theme.type,
+                        theme.difficulty,
+                        theme.grade,
+                        theme.activity,
+                        cafe.cname,
+                        cafe.url,
+                        cafe.island,
+                        cafe.si,
+                        queryFactory.select(userLike.count())
+                                .from(userLike)
+                                .where(userLike.theme.eq(theme))))
                 .from(theme, cafe)
-                .where(cafe.cid.eq(theme.cid))
+                .where(cafe.cid.eq(theme.cafe.cid))
                 .fetch();
 
         return result;
     }
+
     @Override
     @Transactional
-    public ThemeDetailDTO gettheme(int tid){
+    public ThemeDetailDTO gettheme(int tid) {
         QTheme theme = QTheme.theme;
         QCafe cafe = QCafe.cafe;
         QUserLike userLike = QUserLike.userLike;
@@ -117,7 +120,7 @@ public class CafeRepoCommonImpl implements CafeRepoCommon{
                                 .from(userLike)
                                 .where(userLike.theme.eq(theme))))
                 .from(theme, cafe)
-                .where(theme.tid.eq(tid).and(cafe.cid.eq(theme.cid)))
+                .where(theme.tid.eq(tid).and(cafe.cid.eq(theme.cafe.cid)))
                 .fetchOne();
 
         return result;

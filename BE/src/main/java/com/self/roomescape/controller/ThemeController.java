@@ -212,7 +212,16 @@ public class ThemeController {
     public ResponseEntity<?> rateReview(@PathVariable int tid) {
         List<Review> reviewList = reviewRepository.findByTid(tid).get();
         if (reviewList.size() == 0) {
-            return new ResponseEntity<>(false, HttpStatus.OK);
+            ThemeStatisticsReponse themeStatisticsReponse = new ThemeStatisticsReponse();
+            themeStatisticsReponse.setR_chaegamDif(0);
+            themeStatisticsReponse.setR_activity(null);
+            themeStatisticsReponse.setR_hint(0);
+            themeStatisticsReponse.setR_clearTime(0);
+            themeStatisticsReponse.setR_recPlayer(0);
+            themeStatisticsReponse.setR_rating(0);
+            themeStatisticsReponse.setR_isSuccess(0);
+
+            return new ResponseEntity<>(themeStatisticsReponse, HttpStatus.OK);
         }
 
         float s_rating = 0;

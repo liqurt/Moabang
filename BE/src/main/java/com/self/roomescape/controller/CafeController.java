@@ -58,7 +58,7 @@ public class CafeController {
     @ApiOperation(value = "해당 카페의 테마 검색", notes = "해당 tid에 해당하는 테마 정보를 반환")
     @GetMapping("/theme/{cid}")
     public ResponseEntity<?> findCafeTheme(@PathVariable("cid") int cid) {
-        List<Theme> themeList = themeRepository.findByCid(cid);
+        List<Theme> themeList = themeRepository.findByCafeCid(cid);
 
         return new ResponseEntity<>(themeList, HttpStatus.OK);
     }
@@ -123,6 +123,8 @@ public class CafeController {
                     for (int j = 0; j < likeList.get().size(); j++) {
                         if (themeDetailDTOList.get(i).getTid() == likeList.get().get(j).getTheme().getTid()) {
                             tmp.setIslike(true);
+                        } else {
+                            tmp.setIslike(false);
                         }
                     }
                     themeDetailResDTOList.add(tmp);
@@ -164,6 +166,7 @@ public class CafeController {
         }
         return new ResponseEntity<>(themeDetailResDTOList, HttpStatus.OK);
     }
+
 
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "Authorization", required = false, dataType = "string", paramType = "header")})
     @ApiOperation(value = "테마 상세 정보", notes = "해당 Tid를 통해서 테마 상세 정보 및 댓글 목록을 반환한다.")
