@@ -223,6 +223,15 @@
         app:layout_constraintStart_toEndOf="@+id/tv_themeL_active"
         app:layout_constraintTop_toTopOf="@+id/tv_themeL_active" />
 
+    <TextView
+        android:id="@+id/tv_themeL_like_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LIKE"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/iv_themeL_like"
+        app:layout_constraintStart_toStartOf="@+id/iv_themeL_like"
+        app:layout_constraintTop_toBottomOf="@+id/iv_themeL_like" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

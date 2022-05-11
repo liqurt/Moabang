@@ -1,5 +1,6 @@
 package com.ssafy.moabang.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,11 +15,13 @@ import com.ssafy.moabang.data.model.dto.Theme
 import com.ssafy.moabang.data.model.repository.Repository
 import com.ssafy.moabang.data.model.viewmodel.ThemeViewModel
 import com.ssafy.moabang.databinding.ListThemeItemBinding
+import com.ssafy.moabang.src.main.HomeFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class ThemeListRVAdapter: RecyclerView.Adapter<ThemeListRVAdapter.ViewHolder>() {
+    var from : String = ""
     var data: List<Theme> = emptyList()
     lateinit var binding: ListThemeItemBinding
     lateinit var itemClickListener: ItemClickListener
@@ -60,6 +63,14 @@ class ThemeListRVAdapter: RecyclerView.Adapter<ThemeListRVAdapter.ViewHolder>() 
             tvType.text = item.type
             tvActive.text = if(item.activity == "") "-" else item.activity
             tvPlayer.text = item.rplayer + "명"
+
+            if(from == "HomeFragment"){
+                val tvThemeLikeCount = itemView.findViewById<TextView>(R.id.tv_themeL_like_count)
+                tvThemeLikeCount.apply {
+                    visibility = View.VISIBLE
+                    text = item.count.toString() + "♡"
+                }
+            }
         }
     }
 

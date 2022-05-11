@@ -26,5 +26,6 @@ data class Theme(
     var url: String,
     var islike: Boolean,
     val min_player: Int,
-    val max_player: Int
+    val max_player: Int,
+    val count : Int,
 ): Parcelable
