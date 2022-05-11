@@ -16,10 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.ssafy.moabang.R
 import com.ssafy.moabang.adapter.ReviewListRVAdapter
-import com.ssafy.moabang.data.model.dto.Review
 import com.ssafy.moabang.data.model.dto.Theme
 import com.ssafy.moabang.data.model.response.ReviewResponse
-import com.ssafy.moabang.data.model.response.ReviewStatResponse
 import com.ssafy.moabang.data.model.viewmodel.ReviewViewModel
 import com.ssafy.moabang.data.model.viewmodel.ThemeViewModel
 import com.ssafy.moabang.databinding.FragmentThemeReviewBinding
@@ -32,10 +30,11 @@ class ThemeReviewFragment : Fragment() {
     private lateinit var theme: Theme
     private lateinit var list: List<ReviewResponse>
     private val reviewViewModel: ReviewViewModel by viewModels()
-    private val themeViewModel: ThemeViewModel by viewModels()
+    val themeViewModel: ThemeViewModel by viewModels()
 
     override fun onResume() {
         reviewViewModel.getReview(theme.tid)
+        themeViewModel.themeStat(theme.tid)
         super.onResume()
     }
 
@@ -106,8 +105,6 @@ class ThemeReviewFragment : Fragment() {
                 binding.tvThemeRVFHint.text = String.format("%.1f", it.r_hint) + "개"
             }
         }
-
-
     }
 
    private fun initRVA() {

@@ -12,8 +12,10 @@ import com.ssafy.moabang.R
 import com.ssafy.moabang.config.GlobalApplication.Companion.sp
 import com.ssafy.moabang.data.model.response.ReviewResponse
 import com.ssafy.moabang.data.model.viewmodel.ReviewViewModel
+import com.ssafy.moabang.data.model.viewmodel.ThemeViewModel
 import com.ssafy.moabang.databinding.ListReviewItemBinding
 import com.ssafy.moabang.src.theme.ReviewActivity
+import com.ssafy.moabang.src.theme.ThemeReviewFragment
 import com.ssafy.moabang.src.util.CustomDialog
 
 class ReviewListRVAdapter: RecyclerView.Adapter<ReviewListRVAdapter.ViewHolder>() {
