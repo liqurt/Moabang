@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.maps.android.clustering.ClusterItem
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -20,4 +21,7 @@ data class Cafe (
     var lon : String?,
     var island : String?, // 도(섬 도 島)
     var si : String?, // 시
-): Parcelable
+): Parcelable{
+    @IgnoredOnParcel
+    var distance : Double = 0.0
+}
