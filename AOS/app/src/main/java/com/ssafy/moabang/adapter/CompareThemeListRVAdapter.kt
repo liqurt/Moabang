@@ -5,26 +5,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ssafy.moabang.R
-import com.ssafy.moabang.config.GlobalApplication
-import com.ssafy.moabang.data.model.dto.Theme
 import com.ssafy.moabang.data.model.dto.ThemeForCompare
-import com.ssafy.moabang.data.model.repository.Repository
-import com.ssafy.moabang.data.model.viewmodel.ThemeViewModel
-import com.ssafy.moabang.databinding.ListThemeItemBinding
-import com.ssafy.moabang.src.util.CompareList
+import com.ssafy.moabang.databinding.ListCompareThemeItemBinding
 import com.ssafy.moabang.src.util.LocationUtil
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class CompareThemeListRVAdapter: RecyclerView.Adapter<CompareThemeListRVAdapter.ViewHolder>() {
     var data: MutableList<ThemeForCompare> = mutableListOf()
-    lateinit var binding: ListThemeItemBinding
-    lateinit var itemClickListener: CompareThemeListRVAdapter.ItemClickListener
+    lateinit var binding: ListCompareThemeItemBinding
+    lateinit var itemClickListener: ItemClickListener
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         init {
@@ -55,7 +46,7 @@ class CompareThemeListRVAdapter: RecyclerView.Adapter<CompareThemeListRVAdapter.
             itemView.findViewById<TextView>(R.id.tv_tCompare_diff).text = item.difficulty.toString()
             itemView.findViewById<TextView>(R.id.tv_tCompare_player).text = item.rplayer
             itemView.findViewById<TextView>(R.id.tv_tCompare_type).text = item.type
-            itemView.findViewById<TextView>(R.id.tv_tCompare_active).text = item.activity
+            itemView.findViewById<TextView>(R.id.tv_tCompare_active).text = if(item.activity == "") "-" else item.activity
         }
     }
 

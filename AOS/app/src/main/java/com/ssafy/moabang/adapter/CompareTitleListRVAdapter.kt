@@ -14,6 +14,7 @@ import com.ssafy.moabang.data.model.dto.Theme
 import com.ssafy.moabang.data.model.dto.ThemeForCompare
 import com.ssafy.moabang.data.model.repository.Repository
 import com.ssafy.moabang.data.model.viewmodel.ThemeViewModel
+import com.ssafy.moabang.databinding.ListCompareTitleItemBinding
 import com.ssafy.moabang.databinding.ListThemeItemBinding
 import com.ssafy.moabang.src.theme.ThemeCompareActivity
 import com.ssafy.moabang.src.util.CompareList
@@ -23,8 +24,7 @@ import kotlinx.coroutines.launch
 
 class CompareTitleListRVAdapter: RecyclerView.Adapter<CompareTitleListRVAdapter.ViewHolder>() {
     var data: MutableList<ThemeForCompare> = mutableListOf()
-    lateinit var binding: ListThemeItemBinding
-    lateinit var itemClickListener: CompareTitleListRVAdapter.ItemClickListener
+    lateinit var itemClickListener: ItemClickListener
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         init {
