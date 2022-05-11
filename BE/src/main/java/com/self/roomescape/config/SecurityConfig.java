@@ -45,6 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/cafe/**").permitAll()
                 .antMatchers("/theme/**").permitAll()
                 .antMatchers("/user/**").permitAll()
+                .antMatchers("/page/**").permitAll()
                 .anyRequest().hasRole("USER")
                 .and()
                 // 403 예외처리 핸들링
