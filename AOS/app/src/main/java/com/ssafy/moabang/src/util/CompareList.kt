@@ -12,8 +12,14 @@ object CompareList {
     val clistLiveData : LiveData<List<ThemeForCompare>>
         get() = _clistLiveData
 
-    fun addTheme(theme : ThemeForCompare){
-        if(!clist.contains(theme)) clist.add(theme)
-        _clistLiveData.postValue(clist)
+    fun addTheme(theme : ThemeForCompare) : Int {
+        if(!clist.contains(theme) && clist.size < 3) {
+            clist.add(theme)
+            _clistLiveData.postValue(clist)
+            return 1
+        }
+        if(clist.contains(theme)) return 2
+        if(clist.size >= 3) return 3
+        return 0
     }
 }

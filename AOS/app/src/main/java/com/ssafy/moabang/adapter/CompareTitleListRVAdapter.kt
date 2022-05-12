@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -48,7 +49,13 @@ class CompareTitleListRVAdapter: RecyclerView.Adapter<CompareTitleListRVAdapter.
         holder.bind(data[position])
 
         holder.itemView.findViewById<TextView>(R.id.tv_ctItem_add).setOnClickListener {
-            CompareList.addTheme(data[position])
+            val result = CompareList.addTheme(data[position])
+            if(result == 2){
+                Toast.makeText(holder.itemView.context, "이미 추가된 테마입니다.", Toast.LENGTH_SHORT).show()
+            } else if(result == 3){
+                Toast.makeText(holder.itemView.context, "동시에 세 개의 테마만 비교할 수 있습니다.", Toast.LENGTH_SHORT).show()
+            }
+
         }
 
         holder.itemView.findViewById<TextView>(R.id.tv_ctItem_delete).setOnClickListener {

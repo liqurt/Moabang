@@ -2,11 +2,11 @@ package com.ssafy.moabang.src.theme
 
 import android.content.Intent
 import android.graphics.Color
-import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
@@ -50,6 +50,7 @@ class ThemeCompareActivity : AppCompatActivity() {
 
         setRVAdapter()
         setChart()
+        setData2()
     }
 
     private fun setChart(){
@@ -252,7 +253,12 @@ class ThemeCompareActivity : AppCompatActivity() {
 
         compareTitleListRVAdapter.itemClickListener = object : CompareTitleListRVAdapter.ItemClickListener {
             override fun onClick(item: ThemeForCompare) {
-                CompareList.addTheme(item)
+                val result = CompareList.addTheme(item)
+                if(result == 2){
+                    Toast.makeText(this@ThemeCompareActivity, "이미 추가된 테마입니다.", Toast.LENGTH_SHORT).show()
+                } else if(result == 3){
+                    Toast.makeText(this@ThemeCompareActivity, "동시에 세 개의 테마만 비교할 수 있습니다.", Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
