@@ -1,0 +1,76 @@
+package com.ssafy.moabang.adapter
+
+import android.content.Context
+import android.graphics.Typeface
+import android.os.Build
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.annotation.RequiresApi
+import androidx.recyclerview.widget.RecyclerView
+import com.ssafy.moabang.R
+import com.ssafy.moabang.data.model.dto.Community
+import com.ssafy.moabang.databinding.ListCommunityItemBinding
+import java.time.LocalDateTime
+
+class CommunityRVAdapter : RecyclerView.Adapter<CommunityRVAdapter.CommunityRVAdapterViewHolder>() {
+
+    lateinit var mode : String
+    lateinit var context: Context
+    lateinit var data: List<Community>
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    inner class CommunityRVAdapterViewHolder(private val binding: ListCommunityItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        private val now = LocalDateTime.now()
+
+        fun bindInfo(community: Community) {
+            binding.tvCommuFHeader.text = community.header
+            binding.tvCommuFAuthor.text = community.user.nickname
+            binding.tvCommuFTitle.text = community.title
+            if(isToday(community.createDate)){
+                binding.tvCommuFTime.text = community.createDate.hour.toString() + ":" + community.createDate.minute.toString()
+            }else{
+                var monthStr = community.createDate.monthValue.toString()
+                var dayStr = community.createDate.dayOfMonth.toString()
+                if(community.createDate.monthValue < 10){
+                    monthStr = "0"+community.createDate.monthValue.toString()
+                }
+                if(community.createDate.dayOfMonth < 10){
+                    dayStr = "0"+community.createDate.dayOfMonth.toString()
+                }
+                binding.tvCommuFTime.text = monthStr+"."+dayStr
+            }
+            if(mode == "latest3Announcement"){
+                binding.tvCommuFTime.typeface = Typeface.DEFAULT_BOLD
+                binding.tvCommuFAuthor.typeface = Typeface.DEFAULT_BOLD
+                binding.tvCommuFTitle.typeface = Typeface.DEFAULT_BOLD
+                binding.tvCommuFHeader.typeface= Typeface.DEFAULT_BOLD
+            }
+        }
+
+        private fun isToday(time : LocalDateTime) : Boolean{
+            return now.toLocalDate() == time.toLocalDate()
+        }
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): CommunityRVAdapterViewHolder {
+        val binding = ListCommunityItemBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return CommunityRVAdapterViewHolder(binding)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onBindViewHolder(holder: CommunityRVAdapterViewHolder, position: Int) {
+        holder.bindInfo(data[position])
+    }
+
+    override fun getItemCount(): Int = data.size
+}

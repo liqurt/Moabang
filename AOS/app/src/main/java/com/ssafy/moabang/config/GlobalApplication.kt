@@ -47,8 +47,8 @@ class GlobalApplication : Application() {
     fun retrofitInit(){
         // 승관홈 : http://114.129.238.28/
         // 서-버 : http://k6d205.p.ssafy.io:8080/
-        // 모아방 : http://모아방.kr:8080/
-        val serverURL="http://모아방.kr:8080/"
+        // 모아방 : https://모아방.kr:8080/
+        val serverURL="https://모아방.kr:8080/"
 
         val client: OkHttpClient = OkHttpClient.Builder()
             .readTimeout(TIME_OUT, TimeUnit.MILLISECONDS)

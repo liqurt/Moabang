@@ -10,8 +10,9 @@ interface CommunityApi {
 
     @POST("/community")
     fun insertCommunity(
-        @Body content : String,
+        @Body header : String,
         @Body title : String,
+        @Body content : String,
     ) : Call<Boolean>
 
     @GET("/community/{rid}")
@@ -22,8 +23,9 @@ interface CommunityApi {
     @POST("/community/{rid}")
     fun updateCommunity(
         @Path("rid") rid : Int,
-        @Body content : String,
+        @Body header : String,
         @Body title : String,
+        @Body content : String,
     ) : Call<Boolean>
 
     @DELETE("/community/{rid}")
