@@ -88,7 +88,7 @@ const Carousels = () => {
         <div className="container">
 
             <div className='my-loc'>
-                <p> 내 근처 방탈출 카페 </p>
+                <p> 내 근처 방탈출 카페 해위</p>
             </div>
 
             <Slider {...settings}>
