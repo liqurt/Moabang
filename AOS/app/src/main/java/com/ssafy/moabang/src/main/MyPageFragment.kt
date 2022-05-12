@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.kakao.sdk.user.UserApiClient
 import com.ssafy.moabang.databinding.FragmentMyPageBinding
 import com.ssafy.moabang.src.login.LoginActivity
+import com.ssafy.moabang.src.theme.ThemeCompareActivity
 
 class MyPageFragment : Fragment() {
     private lateinit var binding: FragmentMyPageBinding
@@ -26,7 +27,32 @@ class MyPageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.tvMypageFLogout.setOnClickListener { logout() }
+
+        init()
+    }
+
+    private fun init(){
         setUIwithKakao()
+        initClickListeners()
+    }
+
+    private fun initClickListeners(){
+        binding.tvMypageFMenu1.setOnClickListener { // 선호정보 수정
+
+        }
+        binding.tvMypageFMenu2.setOnClickListener { // 찜한 테마
+
+        }
+        binding.tvMypageFMenu3.setOnClickListener { // 테마 비교
+            startActivity(Intent(requireContext(), ThemeCompareActivity::class.java))
+        }
+        binding.tvMypageFMenu4.setOnClickListener { // 이용한 테마
+
+        }
+        binding.tvMypageFMenu5.setOnClickListener { // 나의 방탈출 통계
+        }
+        binding.tvMypageFMenu6.setOnClickListener { // 작성글 관리
+        }
     }
 
     /**
