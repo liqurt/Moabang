@@ -15,6 +15,7 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.ssafy.moabang.R
 import com.ssafy.moabang.adapter.CompareThemeListRVAdapter
 import com.ssafy.moabang.adapter.CompareTitleListRVAdapter
@@ -266,12 +267,13 @@ class ThemeCompareActivity : AppCompatActivity() {
         }
 
     }
-}
 
-//data class citem(
-//    var grade : Double,
-//    var distance : Int,
-//    var diff : Int,
-//    var time : Int,
-//    var active : Int
-//)
+    override fun onBackPressed() {
+        var behavior = BottomSheetBehavior.from(binding.themeCompareBottomSheet)
+        if(behavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
+            super.onBackPressed()
+        } else {
+            behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        }
+    }
+}
