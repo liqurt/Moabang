@@ -10,7 +10,10 @@ const Mainpage = () => {
         <div>
             <Carousels />
             <PopularTheme />
-            <Community />
+            <div className='list_chart'>
+                {/* <Community /> */}
+                {/* <Community /> */}
+            </div>
         </div>
     );
 };
