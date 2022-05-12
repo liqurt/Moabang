@@ -29,7 +29,7 @@ const Navibar = () => {
                                     님 안녕하세요
                                 </Navbar.Text>
                             </Container>
-                            <Nav.Link className='logout' bg="secondary" onClick={handleLogoutClick}><a>Logout</a></Nav.Link>
+                            <Nav.Link className='logout' bg="secondary" onClick={handleLogoutClick}>Logout</Nav.Link>
                         </Navbar.Collapse>
                         :
                         <Button hidden={true} ></Button>
@@ -38,7 +38,7 @@ const Navibar = () => {
 
                     <Nav.Link href="#features">테마</Nav.Link>
                     <Nav.Link href="#pricing">카페</Nav.Link>
-                    <Nav.Link href="#pricing">커뮤니티</Nav.Link>
+                    <Nav.Link href="#community">커뮤니티</Nav.Link>
                     <Nav.Link href="https://drive.google.com/uc?export=download&id=1zRrn_S_lFrYk0uU3AEl5zr5LJYAdoAFM&confirm=t">앱 다운로드</Nav.Link>
                 </Nav>
             </Container>

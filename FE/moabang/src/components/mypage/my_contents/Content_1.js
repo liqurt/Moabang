@@ -2,7 +2,7 @@ import React from 'react';
 import { Card } from 'react-bootstrap';
 import './Content_1.css'
 
-const Content_1 = () => {
+const Content_1 = (props) => {
     return (
         <div>
             <Card className='content-card' >
