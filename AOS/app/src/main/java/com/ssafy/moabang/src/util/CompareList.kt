@@ -22,4 +22,8 @@ object CompareList {
         if(clist.size >= 3) return 3
         return 0
     }
+
+    fun deleteTheme() {
+        _clistLiveData.postValue(clist)
+    }
 }

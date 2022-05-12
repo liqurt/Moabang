@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.ssafy.moabang.R
 import com.ssafy.moabang.data.model.dto.ThemeForCompare
 import com.ssafy.moabang.databinding.ListCompareThemeItemBinding
+import com.ssafy.moabang.src.util.CompareList
 import com.ssafy.moabang.src.util.LocationUtil
 
 class CompareThemeListRVAdapter: RecyclerView.Adapter<CompareThemeListRVAdapter.ViewHolder>() {
@@ -60,6 +61,7 @@ class CompareThemeListRVAdapter: RecyclerView.Adapter<CompareThemeListRVAdapter.
 
         holder.itemView.findViewById<ImageView>(R.id.iv_tCompare_delete).setOnClickListener {
             data.removeAt(position)
+            CompareList.deleteTheme()
             notifyItemRemoved(position)
             notifyItemRangeChanged(position, data.size)
         }

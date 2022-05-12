@@ -50,7 +50,7 @@ class ThemeCompareActivity : AppCompatActivity() {
 
         setRVAdapter()
         setChart()
-        setData2()
+        setData()
     }
 
     private fun setChart(){
@@ -107,7 +107,7 @@ class ThemeCompareActivity : AppCompatActivity() {
         return active
     }
 
-    private fun setData2(){
+    private fun setData(){
         var valOne = floatArrayOf(0F, 0F, 0F, 0F)
         var valTwo = floatArrayOf(0F, 0F, 0F, 0F)
         var valThree = floatArrayOf(0F, 0F, 0F, 0F)
@@ -168,66 +168,6 @@ class ThemeCompareActivity : AppCompatActivity() {
         }
     }
 
-    private fun setData(){
-        val current = LocationUtil().getCurrentLocation(this)
-        var data = ArrayList<List<Float>>()
-
-        for(item in CompareList.clist){
-            var dis = 0F
-            if(current != null){
-                dis = LocationUtil().getDistanceLatLngInKm(current!!.latitude, current!!.longitude, item.lat!!.toDouble(), item.lon!!.toDouble()).toFloat()
-            }
-            var active = 0F
-            active = when(item.activity){
-                "적음" -> 1F
-                "보통" -> 2F
-                "많음" -> 3F
-                else -> 0F
-            }
-            data.add(listOf(item.grade.toFloat(), dis, item.difficulty.toFloat(), item.time.split("분")[0].toFloat(), active))
-        }
-
-        var bar = ArrayList<ArrayList<BarEntry>>()
-        for(i in 0..4){
-            for(j in CompareList.clist.indices) {
-                bar[j].add(BarEntry(j.toFloat(), data[j][i]))
-            }
-        }
-
-        var dataSets = ArrayList<IBarDataSet>()
-        if(bar[0].isNotEmpty()){
-            var set0 = BarDataSet(bar[0], CompareList.clist[0].tname)
-            set0.color = Color.RED
-            set0.isHighlightEnabled = false
-            set0.setDrawValues(false)
-            dataSets.add(set0)
-        }
-        if(bar[1].isNotEmpty()){
-            var set1 = BarDataSet(bar[1], CompareList.clist[1].tname)
-            set1.color = R.color.moabang_pink
-            set1.isHighlightEnabled = false
-            set1.setDrawValues(false)
-            dataSets.add(set1)
-        }
-        if(bar[2].isNotEmpty()){
-            var set2 = BarDataSet(bar[2], CompareList.clist[2].tname)
-            set2.color = Color.RED
-            set2.isHighlightEnabled = false
-            set2.setDrawValues(false)
-            dataSets.add(set2)
-        }
-
-        var graphData = BarData(dataSets)
-        graphData.barWidth = 0.3f
-        binding.barchartThemeCompare.apply{
-            setData(graphData)
-            setScaleEnabled(false)
-            setVisibleXRangeMaximum(6f)
-            groupBars(1f, 0.4f, 0f)
-            invalidate()
-        }
-    }
-
     private fun setRVAdapter(){
         compareTitleListRVAdapter = CompareTitleListRVAdapter()
         compareTitleListRVAdapter.data = CompareList.items
@@ -243,7 +183,7 @@ class ThemeCompareActivity : AppCompatActivity() {
             compareThemeListRVAdapter.data = it as MutableList<ThemeForCompare>
             Log.d("THEME COMPARE TEST", "setRVAdapter: $it")
             compareThemeListRVAdapter.notifyDataSetChanged()
-            setData2()
+            setData()
         }
 
         binding.rvThemeCompare.apply {
