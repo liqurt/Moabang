@@ -53,11 +53,31 @@
             android:textSize="24dp"
             android:textStyle="bold" />
 
-        <View
-            android:id="@+id/view2"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/teal_700" />
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_homeF_hot_theme_empty"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="텅"
+                android:textColor="@color/moabang_gray"
+                android:textSize="120dp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_homeF_hot_theme"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="5dp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+        </FrameLayout>
+
     </LinearLayout>
 
     <LinearLayout
@@ -77,10 +97,12 @@
             android:textSize="24dp"
             android:textStyle="bold" />
 
-        <View
-            android:id="@+id/view3"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_homeF_latest_5_community"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/teal_700" />
+            android:layout_height="match_parent"
+            android:background="@drawable/rounded_rectangle"
+            />
+
     </LinearLayout>
 </LinearLayout>

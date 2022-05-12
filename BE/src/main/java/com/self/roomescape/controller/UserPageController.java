@@ -4,9 +4,12 @@ import com.self.roomescape.config.JwtTokenProvider;
 import com.self.roomescape.entity.User;
 import com.self.roomescape.repository.ThemeRepository;
 import com.self.roomescape.repository.UserRepository;
+import com.self.roomescape.repository.mapping.MyPageTidMapping;
 import com.self.roomescape.repository.mapping.ThemeListMapping;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +24,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/page")
+@Api(tags = {"마이페이지 Api"})
+@RequestMapping("/mypage")
 public class UserPageController {
     /*
     1.
@@ -38,12 +42,13 @@ public class UserPageController {
 
     @GetMapping("/theme/list")
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "Authorization", required = false, dataType = "string", paramType = "header")})
+    @ApiOperation(value = "유저가 좋아요 한 테마 리스트", notes = " 리턴값은 /cafe/theme/list랑 동일하며 유저 인증 실패시 403Error 리턴 ")
     public ResponseEntity<?> UserLikeList(HttpServletRequest request) {
         String token = jwtTokenProvider.resolveToken(request);
         String useremail = jwtTokenProvider.getUserPk(token);
         Optional<User> user = userRepository.findByEmail(useremail);
         if (!user.isPresent()) {
-            return new ResponseEntity<>("해당 유저 없음", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("해당 유저 없음", HttpStatus.FORBIDDEN);
         }
         List<ThemeDetailResDTO> themeDetailResDTOList = new ArrayList<>();
         List<ThemeListMapping> themeList = themeRepository.findThemeFetch(user.get().getUid());
@@ -88,10 +93,71 @@ public class UserPageController {
     보낼거: 없음(헤더에 토큰만)
     받을거: 내가 리뷰 남긴 테마의 tid 리스트
     */
+    @GetMapping("/theme/tlist")
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "Authorization", required = false, dataType = "string", paramType = "header")})
+    @ApiOperation(value = "유저가 리뷰 남긴 테마의 tid 리스트", notes = " 리턴값은 tid들의 List로 보내지며 리뷰 남긴게 없다면 빈 배열이 반환 ")
+    public ResponseEntity<?> UserTidList(HttpServletRequest request) {
+        String token = jwtTokenProvider.resolveToken(request);
+        String useremail = jwtTokenProvider.getUserPk(token);
+        Optional<User> user = userRepository.findByEmail(useremail);
+        if (!user.isPresent()) {
+            return new ResponseEntity<>("해당 유저 없음", HttpStatus.BAD_REQUEST);
+        }
+        List<MyPageTidMapping> myPageTidResponses = themeRepository.findTidFetch(user.get().getUid());
+        return new ResponseEntity<>(myPageTidResponses, HttpStatus.OK);
+    }
+
     /*
     3.
     보낼거: 없음(헤더에 토큰만)
     받을거: 내가 리뷰 남긴 테마 리스트
 - 리턴값은 /cafe/theme/list랑 동일하게
      */
+    @GetMapping("/theme/review")
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "Authorization", required = false, dataType = "string", paramType = "header")})
+    @ApiOperation(value = "유저가 리뷰 남긴 테마 리스트", notes = " 리턴값은 /cafe/theme/list랑 동일하며 유저 인증 실패시 403Error 리턴 ")
+    public ResponseEntity<?> UserReviewList(HttpServletRequest request) {
+        String token = jwtTokenProvider.resolveToken(request);
+        String useremail = jwtTokenProvider.getUserPk(token);
+        Optional<User> user = userRepository.findByEmail(useremail);
+        if (!user.isPresent()) {
+            return new ResponseEntity<>("해당 유저 없음", HttpStatus.BAD_REQUEST);
+        }
+        List<ThemeDetailResDTO> themeDetailResDTOList = new ArrayList<>();
+        List<ThemeListMapping> themeList = themeRepository.findThemeAndReviewFetch(user.get().getUid());
+        for (int i = 0; i < themeList.size(); i++) {
+            ThemeDetailResDTO tmp = new ThemeDetailResDTO();
+            tmp.setActivity(themeList.get(i).getActivity());
+            tmp.setCid(themeList.get(i).getCid());
+            tmp.setCname(themeList.get(i).getCname());
+            tmp.setUrl(themeList.get(i).getUrl());
+            tmp.setDifficulty(themeList.get(i).getDifficulty());
+            tmp.setDescription(themeList.get(i).getDescription());
+            tmp.setGenre(themeList.get(i).getGenre());
+            tmp.setImg(themeList.get(i).getImg());
+            tmp.setIsland(themeList.get(i).getIsland());
+            tmp.setSi(themeList.get(i).getSi());
+            tmp.setGrade(themeList.get(i).getGrade());
+            tmp.setRplayer(themeList.get(i).getRplayer());
+            tmp.setTid(themeList.get(i).getTid());
+            tmp.setTime(themeList.get(i).getTime());
+            tmp.setType(themeList.get(i).getType());
+            tmp.setTname(themeList.get(i).getTname());
+            tmp.setCount(themeList.get(i).getCount());
+            tmp.setIslike(true);
+
+            String data = tmp.getRplayer();
+            String[] srr = data.split("~");
+            if (srr.length != 1) {
+                tmp.setMin_player(Integer.parseInt(srr[0]));
+                tmp.setMax_player(Integer.parseInt(srr[1]));
+            } else {
+                tmp.setMin_player(Integer.parseInt(srr[0]));
+                tmp.setMax_player(Integer.parseInt(srr[0]));
+            }
+            themeDetailResDTOList.add(tmp);
+
+        }
+        return new ResponseEntity<>(themeDetailResDTOList, HttpStatus.OK);
+    }
 }

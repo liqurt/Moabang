@@ -1,9 +1,8 @@
 import React from 'react';
-import Carousels from '../main/Contents/Carousels';
-import PopularTheme from '../main/Contents/Popular_theme';
-import Community from '../main/Contents/Community';
-import Footer from './Contents/Footer';
-
+import Carousels from './Contents/Myloc_cafe/Carousels';
+import PopularTheme from './Contents/Popular_theme/Popular_theme';
+import Community from './Contents/Community/Community';
+import './mainpage.css'
 
 const mainpage = () => {
 
@@ -11,8 +10,10 @@ const mainpage = () => {
         <div>
             <Carousels />
             <PopularTheme />
-            <Community />
-            <Footer />
+            <div className='list_chart'>
+                {/* <Community /> */}
+                {/* <Community /> */}
+            </div>
         </div>
     );
 };

@@ -1,22 +1,30 @@
 package com.ssafy.moabang.config
 
 import android.app.Application
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.google.gson.JsonDeserializer
 import com.kakao.sdk.common.KakaoSdk
 import com.ssafy.moabang.BuildConfig
 import com.ssafy.moabang.data.model.repository.Repository
 import com.ssafy.moabang.src.util.SharedPreferencesUtil
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import java.util.concurrent.TimeUnit
+
 
 class GlobalApplication : Application() {
     val TIME_OUT = 10000L
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate() {
         super.onCreate()
         instance = this
@@ -35,6 +43,7 @@ class GlobalApplication : Application() {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun retrofitInit(){
         // 승관홈 : http://114.129.238.28/
         // 서-버 : http://k6d205.p.ssafy.io:8080/
@@ -55,8 +64,40 @@ class GlobalApplication : Application() {
             .baseUrl(serverURL)
             .client(client)
             .addConverterFactory(ScalarsConverterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addConverterFactory(gsonConverterFactory())
             .build()
+    }
+
+    // String을 LocalDate, LocalTime, LocalDateTime 으로 변형하는걸 등록한다.
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun gsonConverterFactory(): GsonConverterFactory? {
+        val gson = GsonBuilder()
+            .registerTypeAdapter(
+                LocalDateTime::class.java,
+                JsonDeserializer<Any?> { json, typeOfT, context ->
+                    LocalDateTime.parse(
+                        json.asString,
+                        DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
+                    )
+                })
+            .registerTypeAdapter(
+                LocalDate::class.java,
+                JsonDeserializer<Any?> { json, typeOfT, context ->
+                    LocalDate.parse(
+                        json.asString,
+                        DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                    )
+                })
+            .registerTypeAdapter(
+                LocalTime::class.java,
+                JsonDeserializer<Any?> { json, typeOfT, context ->
+                    LocalTime.parse(
+                        json.asString,
+                        DateTimeFormatter.ofPattern("HH:mm:ss")
+                    )
+                })
+            .create()
+        return GsonConverterFactory.create(gson)
     }
 
     companion object {

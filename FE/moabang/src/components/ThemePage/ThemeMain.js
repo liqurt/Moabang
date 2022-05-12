@@ -10,24 +10,30 @@ import "./ThemeCSS/Theme.css"
 const ThemeMain = () => {
     //카페 리스트를 url로 가져옴
     const [themeData, setthemeData] = useState([]); //DB에서 받아온 데이터 저장
-    const [ThemeCount, setThemeCount] = useState(45); //Theme 총 개수
+    const [ThemeCount, setThemeCount] = useState(1682); //Theme 총 개수
+
+    const [tListRender, setTListRender] = useState(false);
     
+    console.log(localStorage.getItem("myToken"));
     async function getThemeData() {
-        axios.get('http://k6d205.p.ssafy.io:8080/cafe/theme/list')
+        await axios.get('http://k6d205.p.ssafy.io:8080/cafe/theme/list',
+            {
+                headers: {
+                    'Authorization': localStorage.getItem("myToken")
+                }
+            }
+        )
             .then(response => {
                 setthemeData(response.data);
                 setThemeCount(response.data.length);
-                console.log(response);
                 
 
         });
     }
     
-
-    //페이지 네이션
     useEffect(() => {
         getThemeData();
-    }, []);
+    }, [tListRender]);
     
     
   
@@ -35,7 +41,7 @@ const ThemeMain = () => {
     return (
         <div className='total'>
             <div >
-                <ThemeSearchbar searchItems={themeData} totalcnt={ThemeCount}/>
+                <ThemeSearchbar searchItems={themeData} totalcnt={ThemeCount} setTListRender={setTListRender}/>
             
             </div>
         </div>

@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card } from 'react-bootstrap';
+import axios from 'axios';
 
-const Content_2 = () => {
+const Content_4 = (props) => {
+
+
     return (
         <div>
             <Card className='content-card' >
@@ -17,4 +20,4 @@ const Content_2 = () => {
     );
 };
 
-export default Content_2;
+export default Content_4;

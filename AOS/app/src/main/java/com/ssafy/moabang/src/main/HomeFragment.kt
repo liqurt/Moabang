@@ -1,15 +1,9 @@
 /**
-1. UI 짜기(아~주 기초적인 것만) [DONE]
-2. 내 근처 카페
-- 권한 쳌[DONE]
-- 카페 데이터 초기화 - 로컬 DB [DONE] - 이미 LoginActivity에서 초기화함
-- 내 위치 파악[DONE]
-- 모든 카페 위치 파악[DONE]
-- 나랑 가까운 카페 파악[DONE]
-- {threshold} 값 이하인 카페 추출[DONE]
-- UI 상세 1 - recyclerView
-- 추출한 카페를 recyclerView의 adapter에 달아 놓는다.
-- UI 상세 2 - auto carousel -> 이거는 아래에 있는 인기 테마에다가 해야할듯
+1. **[/cafe/theme/list](http://k6d205.p.ssafy.io:8080/swagger-ui.html#/operations/%EC%B9%B4%ED%8E%98%20%EB%B0%8F%20%ED%85%8C%EB%A7%88%20Api/findAllThemeUsingGET) 로 GET 요청**
+2. Count 별로 줄 세우기
+3. 10개(?) 정도 골라서 어댑터에 담기
+4. 리사이클러뷰 설정
+5. 오토 캐러셀(요건 옵션)
  */
 package com.ssafy.moabang.src.main
 
@@ -23,12 +17,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
 import com.google.android.gms.maps.model.LatLng
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
-import com.ssafy.moabang.adapter.CafeListRVAdapter
+import com.ssafy.moabang.adapter.Latest5CommunityRVAdapter
 import com.ssafy.moabang.adapter.NearCafeListRVAdapter
+import com.ssafy.moabang.adapter.ThemeListRVAdapter
 import com.ssafy.moabang.data.model.dto.Cafe
+import com.ssafy.moabang.data.model.dto.Community
+import com.ssafy.moabang.data.model.dto.Theme
+import com.ssafy.moabang.data.model.repository.CafeRepository
+import com.ssafy.moabang.data.model.repository.CommunityRepository
 import com.ssafy.moabang.data.model.repository.Repository
 import com.ssafy.moabang.databinding.FragmentHomeBinding
 import com.ssafy.moabang.src.main.cafe.CafeDetailActivity
@@ -37,6 +37,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import com.ssafy.moabang.src.theme.ThemeDetailActivity
+import kotlinx.coroutines.*
+import retrofit2.Response
+
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -47,6 +51,18 @@ class HomeFragment : Fragment() {
     private var nearCafeListRVAdapter: NearCafeListRVAdapter = NearCafeListRVAdapter(listOf())
     private lateinit var nearCafeList: List<Cafe>
 
+    private var hotThemeListRVAdapter: ThemeListRVAdapter = ThemeListRVAdapter()
+    private var hotThemeList: List<Theme> = listOf()
+
+    private val snapHelperForNearCafe = LinearSnapHelper()
+    private val snapHelperForHotTheme = LinearSnapHelper()
+
+    private var cafeRepository = CafeRepository()
+
+    private lateinit var latest5CommunityList : List<Community>
+    private lateinit var latest5CommunityRVAdapter: Latest5CommunityRVAdapter
+
+    private var recruitRepository = CommunityRepository()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +75,12 @@ class HomeFragment : Fragment() {
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setHotThemeList()
+        setLatest5RecruitList()
     }
 
     private fun checkPermission() {
@@ -88,10 +110,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun setNearCafeList() {
-
         //test
         // 제주 동쪽 33.455988, 126.894981
-
         if (currentLocation != null) {
             CoroutineScope(Dispatchers.Main).launch {
                 var allCafeList = listOf<Cafe>()
@@ -119,26 +139,129 @@ class HomeFragment : Fragment() {
                 tempNearCafeList.sortBy { it.distance }
                 tempNearCafeList = tempNearCafeList.subList(0, 6)
                 nearCafeList = tempNearCafeList
-                initRCV()
+                initNearCafeRCV()
             }
         } else {
             Log.d("AAAAA", "HOME FRAGMENT : currentLocation is null")
         }
     }
 
-    private fun initRCV() {
-        binding.rvHomeFNearCafe.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        nearCafeListRVAdapter = NearCafeListRVAdapter(nearCafeList)
-        nearCafeListRVAdapter.setItemClickListener(object :
-            NearCafeListRVAdapter.CafeItemClickListener {
-            override fun onClick(cafe: Cafe) {
-                val intent =
-                    Intent(requireActivity(), CafeDetailActivity::class.java).putExtra("cafe", cafe)
-                startActivity(intent)
+    private fun setHotThemeList() {
+        var allThemeListWithLike = listOf<Theme>()
+        var tempThemeListWithLike = mutableListOf<Theme>()
+        CoroutineScope(Dispatchers.Main).launch {
+            CoroutineScope(Dispatchers.IO).async {
+                allThemeListWithLike = getAllThemeWithLike()
+            }.await()
+            for (theme in allThemeListWithLike) {
+                if (theme.count == 0) {
+                    continue
+                } else {
+                    tempThemeListWithLike.add(theme)
+                }
             }
-        })
-        binding.rvHomeFNearCafe.adapter = nearCafeListRVAdapter
+            tempThemeListWithLike.sortByDescending { it.count }
+            if (tempThemeListWithLike.size > 6) {
+                tempThemeListWithLike = tempThemeListWithLike.subList(0, 6)
+            }
+            hotThemeList = tempThemeListWithLike
+            Log.d("AAAAA", "HOME FRAGMENT_hotThemeList : $hotThemeList")
+            initHotThemeRCV()
+        }
     }
 
+    private fun setLatest5RecruitList() {
+        CoroutineScope(Dispatchers.Main).launch {
+            CoroutineScope(Dispatchers.IO).async {
+                latest5CommunityList = getLatest5Community()
+            }.await()
+            initLatest5CommunityRCV()
+        }
+    }
+
+    private fun initNearCafeRCV() {
+        if (nearCafeList.isNotEmpty()) {
+            binding.tvHomeFHotThemeEmpty.visibility = View.GONE
+
+            nearCafeListRVAdapter = NearCafeListRVAdapter(nearCafeList)
+            nearCafeListRVAdapter.setItemClickListener(object :
+                NearCafeListRVAdapter.CafeItemClickListener {
+                override fun onClick(cafe: Cafe) {
+                    val intent =
+                        Intent(requireActivity(), CafeDetailActivity::class.java).putExtra(
+                            "cafe",
+                            cafe
+                        )
+                    startActivity(intent)
+                }
+            })
+            binding.rvHomeFNearCafe.apply {
+                layoutManager =
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                adapter = nearCafeListRVAdapter
+                visibility = View.VISIBLE
+            }
+            snapHelperForNearCafe.attachToRecyclerView(binding.rvHomeFNearCafe)
+        } else {
+            binding.rvHomeFNearCafe.visibility = View.GONE
+            binding.tvHomeFHotThemeEmpty.visibility = View.VISIBLE
+        }
+    }
+
+    private fun initHotThemeRCV() {
+        hotThemeListRVAdapter.apply {
+            from = "HomeFragment"
+            data = hotThemeList
+            itemClickListener = object :
+                ThemeListRVAdapter.ItemClickListener {
+                override fun onClick(item: Theme) {
+                    val intent =
+                        Intent(requireActivity(), ThemeDetailActivity::class.java).putExtra(
+                            "theme",
+                            item
+                        )
+                    startActivity(intent)
+                }
+            }
+        }
+        binding.rvHomeFHotTheme.apply {
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            adapter = hotThemeListRVAdapter
+        }
+        snapHelperForHotTheme.attachToRecyclerView(binding.rvHomeFHotTheme)
+    }
+
+
+    private fun initLatest5CommunityRCV() {
+        if(latest5CommunityList.isNotEmpty()){
+            latest5CommunityRVAdapter = Latest5CommunityRVAdapter(latest5CommunityList)
+            binding.rvHomeFLatest5Community.apply {
+                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                adapter = latest5CommunityRVAdapter
+            }
+        }
+    }
+
+    private suspend fun getAllThemeWithLike(): List<Theme> = withContext(Dispatchers.IO) {
+        val result: Response<List<Theme>>? = cafeRepository.getAllThemeWithLike()
+        if (result != null) {
+            Log.d("AAAAA", "HOME FRAGMENT_getAllThemeWithLike : ${result.body()}")
+            return@withContext result.body()!!
+        } else {
+            Log.d("AAAAA", "HOME FRAGMENT_getAllThemeWithLike : null")
+            return@withContext emptyList()
+        }
+    }
+
+    private suspend fun getLatest5Community() : List<Community> = withContext(Dispatchers.IO) {
+        val result: Response<List<Community>>? = recruitRepository.getLatest5Community()
+        if (result != null) {
+            Log.d("AAAAA", "HOME FRAGMENT_getLatest5Community : ${result.body()}")
+            return@withContext result.body()!!
+        } else {
+            Log.d("AAAAA", "HOME FRAGMENT_getLatest5Community : null")
+            return@withContext emptyList()
+        }
+    }
 }

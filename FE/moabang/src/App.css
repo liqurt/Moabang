@@ -44,3 +44,9 @@
     font-weight:200;
     src: url("./fonts/나눔손글씨\ 성실체.ttf");
 }
+.top-button{
+    position: fixed;
+    bottom: 90px;
+    right: 10vh;
+    z-index: 1000;
+}
