@@ -1,12 +1,58 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Mypage.css'
 import { Card, Tab, Row, Nav, Col } from 'react-bootstrap';
 import Content_1 from '../mypage/my_contents/Content_1'
 import Content_2 from '../mypage/my_contents/Content_2'
 import Content_3 from '../mypage/my_contents/Content_3'
 import Content_4 from '../mypage/my_contents/Content_4'
+import axios from 'axios';
 
 const Mypage = () => {
+
+    const Token = localStorage.getItem('myToken');
+    const [myReview, setMyReview] = useState([]);
+
+    //카페 전체 데이터 배열에 저장
+    function getReviewData() {
+
+        axios.get('/mypage/theme/review', {
+            headers: {
+                Authorization: Token
+            }
+        })
+            .then((res) => {
+
+                // setThemeData(res.data);
+                // setSortData(res.data.length);
+                console.log(res);
+                setMyReview(res.data);
+                console.log(myReview);
+
+            })
+            .catch((error) => {
+                console.error(error);
+                // alert("error");
+            });
+    }
+
+    //한번만 실행
+    useEffect(() => {
+        getReviewData();
+    }, []);
+
+    //테마데이터가 저장되면 실행
+    useEffect(() => {
+        slice_ReviewData();
+    }, [myReview]);
+
+    function slice_ReviewData() {
+        myReview.map((data) => {
+            return console.log(data);
+        })
+        // console.log(myReview[0]);
+        return 0;
+    }
+
     return (
         <div>
 
@@ -15,7 +61,6 @@ const Mypage = () => {
                     <Col sm={4}>
                         <Card className='profile-card' >
                             <Card.Body className='profile-card-body'>
-
                                 <Card.Img className='profile-card-img' variant="top" src={localStorage.getItem('p_img')} />
                                 <Card.Title className='profile-card-username'>{localStorage.getItem('username')}</Card.Title>
                                 <Card.Text className='profile-card-email'>
@@ -55,15 +100,18 @@ const Mypage = () => {
                                 <Content_2 />
                             </Tab.Pane>
                             <Tab.Pane eventKey="third">
-                                <Content_2 />
+                                <Content_3 />
                             </Tab.Pane>
                             <Tab.Pane eventKey="fourth">
-                                <Content_2 />
+                                {myReview.map((data) => {
+                                    return <Content_4 data={data} key={data.cid} />
+                                })}
                             </Tab.Pane>
                         </Tab.Content>
                     </Col>
                 </Row>
             </Tab.Container>
+
         </div>
     );
 };
