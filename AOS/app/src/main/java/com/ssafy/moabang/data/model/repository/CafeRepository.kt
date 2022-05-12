@@ -9,7 +9,7 @@ import java.lang.Exception
 class CafeRepository {
     val cafeApi = GlobalApplication.retrofit.create(CafeApi::class.java)
 
-    suspend fun getAllThemeWithLike() : Response<List<Theme>>? {
+    fun getAllThemeWithLike() : Response<List<Theme>>? {
         try {
             return cafeApi.getAllThemeWithLike().execute()
         } catch (e: Exception) {

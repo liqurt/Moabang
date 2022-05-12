@@ -24,11 +24,14 @@ import androidx.recyclerview.widget.LinearSnapHelper
 import com.google.android.gms.maps.model.LatLng
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
+import com.ssafy.moabang.adapter.Latest5CommunityRVAdapter
 import com.ssafy.moabang.adapter.NearCafeListRVAdapter
 import com.ssafy.moabang.adapter.ThemeListRVAdapter
 import com.ssafy.moabang.data.model.dto.Cafe
+import com.ssafy.moabang.data.model.dto.Community
 import com.ssafy.moabang.data.model.dto.Theme
 import com.ssafy.moabang.data.model.repository.CafeRepository
+import com.ssafy.moabang.data.model.repository.CommunityRepository
 import com.ssafy.moabang.data.model.repository.Repository
 import com.ssafy.moabang.databinding.FragmentHomeBinding
 import com.ssafy.moabang.src.main.cafe.CafeDetailActivity
@@ -53,6 +56,10 @@ class HomeFragment : Fragment() {
 
     private var cafeRepository = CafeRepository()
 
+    private lateinit var latest5CommunityList : List<Community>
+    private lateinit var latest5CommunityRVAdapter: Latest5CommunityRVAdapter
+
+    private var recruitRepository = CommunityRepository()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +77,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHotThemeList()
+        setLatest5RecruitList()
     }
 
     @SuppressLint("MissingPermission")
@@ -169,6 +177,15 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun setLatest5RecruitList() {
+        CoroutineScope(Dispatchers.Main).launch {
+            CoroutineScope(Dispatchers.IO).async {
+                latest5CommunityList = getLatest5Community()
+            }.await()
+            initLatest5CommunityRCV()
+        }
+    }
+
     private fun initNearCafeRCV() {
         if (nearCafeList.isNotEmpty()) {
             binding.tvHomeFHotThemeEmpty.visibility = View.GONE
@@ -222,6 +239,17 @@ class HomeFragment : Fragment() {
         snapHelperForHotTheme.attachToRecyclerView(binding.rvHomeFHotTheme)
     }
 
+
+    private fun initLatest5CommunityRCV() {
+        if(latest5CommunityList.isNotEmpty()){
+            latest5CommunityRVAdapter = Latest5CommunityRVAdapter(latest5CommunityList)
+            binding.rvHomeFLatest5Community.apply {
+                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                adapter = latest5CommunityRVAdapter
+            }
+        }
+    }
+
     private fun getDistanceLatLngInKm(
         lat1: Double,
         lon1: Double,
@@ -250,6 +278,17 @@ class HomeFragment : Fragment() {
             return@withContext result.body()!!
         } else {
             Log.d("AAAAA", "HOME FRAGMENT_getAllThemeWithLike : null")
+            return@withContext emptyList()
+        }
+    }
+
+    private suspend fun getLatest5Community() : List<Community> = withContext(Dispatchers.IO) {
+        val result: Response<List<Community>>? = recruitRepository.getLatest5Community()
+        if (result != null) {
+            Log.d("AAAAA", "HOME FRAGMENT_getLatest5Community : ${result.body()}")
+            return@withContext result.body()!!
+        } else {
+            Log.d("AAAAA", "HOME FRAGMENT_getLatest5Community : null")
             return@withContext emptyList()
         }
     }
