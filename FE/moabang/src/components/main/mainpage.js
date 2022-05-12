@@ -4,7 +4,7 @@ import PopularTheme from './Contents/Popular_theme/Popular_theme';
 import Community from './Contents/Community/Community';
 import './Mainpage.css'
 
-const Mainpage = () => {
+const mainpage = () => {
 
     return (
         <div>
@@ -18,4 +18,4 @@ const Mainpage = () => {
     );
 };
 
-export default Mainpage;
+export default mainpage;
