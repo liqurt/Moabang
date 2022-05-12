@@ -11,3 +11,4 @@ sleep 10
 
 
 fi
+rm -f /var/lib/jenkins/workspace/test/FE/moabang/package-lock.json
