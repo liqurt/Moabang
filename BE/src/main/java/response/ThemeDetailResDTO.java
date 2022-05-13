@@ -1,8 +1,13 @@
 package response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import java.util.Date;
 
 
 @Getter
@@ -28,5 +33,9 @@ public class ThemeDetailResDTO {
     private boolean islike;
     private int min_player;
     private int max_player;
+    @JsonFormat(pattern = "yyyy.MM.dd")
+    @Temporal(TemporalType.DATE)
+    private Date playDate;
+    private boolean compare;
 
 }

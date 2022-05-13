@@ -170,6 +170,7 @@ public class CafeController {
             tmp.setType(themeDetailDTOList.get(i).getType());
             tmp.setTname(themeDetailDTOList.get(i).getTname());
             tmp.setCount(themeDetailDTOList.get(i).getCount());
+            tmp.setCompare(false);
             tmp.setIslike(false);
 
             String data = themeDetailDTOList.get(i).getRplayer();
