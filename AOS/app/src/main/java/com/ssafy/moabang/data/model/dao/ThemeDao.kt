@@ -23,10 +23,10 @@ interface ThemeDao {
     fun insertThemes(themeList : List<Theme>)
 
     @Query("SELECT * FROM Theme WHERE genre IN (:genre) AND type IN (:type) AND (min_player IN (:plist) OR max_player IN (:plist)) AND difficulty IN (:diff) AND activity IN (:active)")
-    fun filterThemesNoArea(genre: ArrayList<String>, type: ArrayList<String>, plist: ArrayList<Int>, diff : ArrayList<Int>, active : ArrayList<String>) : List<Theme>
+    fun filterThemesNoArea(genre: ArrayList<String>, type: ArrayList<String>, plist: ArrayList<Int>, diff : ArrayList<Int>, active : ArrayList<String>) : MutableList<Theme>
 
     @Query("SELECT * FROM Theme WHERE island = :island AND si IN (:si) AND genre IN (:genre) AND type IN (:type) AND (min_player IN (:plist) OR max_player IN (:plist)) AND difficulty IN (:diff) AND activity IN (:active)")
-    fun filterThemes(island: String, si: ArrayList<String>, genre: ArrayList<String>, type: ArrayList<String>, plist: ArrayList<Int>, diff : ArrayList<Int>, active : ArrayList<String>) : List<Theme>
+    fun filterThemes(island: String, si: ArrayList<String>, genre: ArrayList<String>, type: ArrayList<String>, plist: ArrayList<Int>, diff : ArrayList<Int>, active : ArrayList<String>) : MutableList<Theme>
 
     @Query("SELECT * FROM Theme WHERE islike = 1 AND genre IN (:genre) AND type IN (:type) AND (min_player IN (:plist) OR max_player IN (:plist)) AND difficulty IN (:diff) AND activity IN (:active)")
     fun filterLikeThemesNoArea(genre: ArrayList<String>, type: ArrayList<String>, plist: ArrayList<Int>, diff : ArrayList<Int>, active : ArrayList<String>) : List<Theme>
