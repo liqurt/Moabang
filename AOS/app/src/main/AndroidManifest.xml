@@ -16,6 +16,9 @@
         android:theme="@style/Theme.Moabang"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".src.mypage.MyDoneActivity"
+            android:exported="true" />
+        <activity
             android:name=".src.mypage.MyLikeActivity"
             android:exported="true" />
         <activity
