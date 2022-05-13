@@ -8,6 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.ssafy.moabang.data.model.dto.Theme
 import com.ssafy.moabang.data.model.repository.MyPageRepository
 import com.ssafy.moabang.data.model.repository.Repository
+import com.ssafy.moabang.data.model.response.DoneThemeResponse
+import com.ssafy.moabang.data.model.response.DoneTidResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,11 +23,29 @@ class MyPageViewModel: ViewModel() {
     val likeListLiveData : LiveData<List<Theme>>
         get() = _likeListLiveData
 
+    private val _doneThemeListLiveData = MutableLiveData<List<DoneThemeResponse>>()
+    val doneThemeListLiveData : LiveData<List<DoneThemeResponse>>
+        get() = _doneThemeListLiveData
+
+    private val _doneTidListLiveData = MutableLiveData<List<DoneTidResponse>>()
+    val doneTidListLiveData : LiveData<List<DoneTidResponse>>
+        get() = _doneTidListLiveData
+
     private val totalLikeList = mutableListOf<Theme>()
+    private val totalDoneThemeList = mutableListOf<DoneThemeResponse>()
+    private val totalDoneTidList = mutableListOf<DoneTidResponse>()
 
     fun getAllLikeTheme() = viewModelScope.launch {
         getLikeTheme()
         Log.d("VIEWMODEL TEST", "getAllLikeTheme: $totalLikeList")
+    }
+
+    fun getAllDoneTheme() = viewModelScope.launch {
+        getDoneTheme()
+    }
+
+    fun getAllDoneTid() = viewModelScope.launch {
+        getDoneTid()
     }
 
     private suspend fun getLikeTheme() = withContext(Dispatchers.IO) {
@@ -36,6 +56,46 @@ class MyPageViewModel: ViewModel() {
                 CoroutineScope(Dispatchers.IO).launch {
                     Repository.get().insertThemes(result.body()!!)
                 }
+                Log.d("THEME VIEWMODEL TEST", "success: ${result.body()}")
+                result.body()!!.forEach {
+                    if (!totalLikeList.contains(it)) {
+                        totalLikeList.add(it)
+                    }
+                }
+            }else{
+                Log.d("THEME VIEWMODEL TEST", "SAD: ${result.message()}")
+            }
+            _likeListLiveData.postValue(totalLikeList)
+        } else {
+            Log.d("THEME VIEWMODEL TEST", "getTheme: response is null")
+        }
+    }
+
+    private suspend fun getDoneTheme() = withContext(Dispatchers.IO) {
+        val result: Response<List<DoneThemeResponse>>? = mypageRepository.getDoneTheme()
+
+        if(result != null) {
+            if (result.isSuccessful) {
+                Log.d("THEME VIEWMODEL TEST", "success: ${result.body()}")
+                result.body()!!.forEach {
+                    if (!totalLikeList.contains(it)) {
+                        totalLikeList.add(it)
+                    }
+                }
+            }else{
+                Log.d("THEME VIEWMODEL TEST", "SAD: ${result.message()}")
+            }
+            _likeListLiveData.postValue(totalLikeList)
+        } else {
+            Log.d("THEME VIEWMODEL TEST", "getTheme: response is null")
+        }
+    }
+
+    private suspend fun getDoneTid() = withContext(Dispatchers.IO) {
+        val result: Response<List<DoneTidResponse>>? = mypageRepository.getDoneTid()
+
+        if(result != null) {
+            if (result.isSuccessful) {
                 Log.d("THEME VIEWMODEL TEST", "success: ${result.body()}")
                 result.body()!!.forEach {
                     if (!totalLikeList.contains(it)) {
