@@ -9,6 +9,7 @@ import com.self.roomescape.repository.CompareRepository;
 import com.self.roomescape.repository.ThemeRepository;
 import com.self.roomescape.repository.UserRepository;
 import com.self.roomescape.repository.mapping.ThemeListMapping;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -24,6 +25,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@Api(tags = {"비교하기 api"})
 @RequestMapping("/compare")
 public class CompareController {
     @Autowired
