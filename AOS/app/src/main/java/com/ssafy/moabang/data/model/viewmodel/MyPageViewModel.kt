@@ -53,21 +53,18 @@ class MyPageViewModel: ViewModel() {
 
         if(result != null) {
             if (result.isSuccessful) {
-                CoroutineScope(Dispatchers.IO).launch {
-                    Repository.get().insertThemes(result.body()!!)
-                }
-                Log.d("THEME VIEWMODEL TEST", "success: ${result.body()}")
+                Log.d("MYPAGE VIEWMODEL TEST", "success: ${result.body()}")
                 result.body()!!.forEach {
                     if (!totalLikeList.contains(it)) {
                         totalLikeList.add(it)
                     }
                 }
             }else{
-                Log.d("THEME VIEWMODEL TEST", "SAD: ${result.message()}")
+                Log.d("MYPAGE VIEWMODEL TEST", "SAD: ${result.message()}")
             }
             _likeListLiveData.postValue(totalLikeList)
         } else {
-            Log.d("THEME VIEWMODEL TEST", "getTheme: response is null")
+            Log.d("MYPAGE VIEWMODEL TEST", "getTheme: response is null")
         }
     }
 
@@ -76,18 +73,18 @@ class MyPageViewModel: ViewModel() {
 
         if(result != null) {
             if (result.isSuccessful) {
-                Log.d("THEME VIEWMODEL TEST", "success: ${result.body()}")
+                Log.d("MYPAGE VIEWMODEL TEST", "success: ${result.body()}")
                 result.body()!!.forEach {
-                    if (!totalLikeList.contains(it)) {
-                        totalLikeList.add(it)
+                    if (!totalDoneThemeList.contains(it)) {
+                        totalDoneThemeList.add(it)
                     }
                 }
             }else{
-                Log.d("THEME VIEWMODEL TEST", "SAD: ${result.message()}")
+                Log.d("MYPAGE VIEWMODEL TEST", "SAD: ${result.message()}")
             }
-            _likeListLiveData.postValue(totalLikeList)
+            _doneThemeListLiveData.postValue(totalDoneThemeList)
         } else {
-            Log.d("THEME VIEWMODEL TEST", "getTheme: response is null")
+            Log.d("MYPAGE VIEWMODEL TEST", "getTheme: response is null")
         }
     }
 
@@ -96,18 +93,18 @@ class MyPageViewModel: ViewModel() {
 
         if(result != null) {
             if (result.isSuccessful) {
-                Log.d("THEME VIEWMODEL TEST", "success: ${result.body()}")
+                Log.d("MYPAGE VIEWMODEL TEST", "success: ${result.body()}")
                 result.body()!!.forEach {
-                    if (!totalLikeList.contains(it)) {
-                        totalLikeList.add(it)
+                    if (!totalDoneTidList.contains(it)) {
+                        totalDoneTidList.add(it)
                     }
                 }
             }else{
-                Log.d("THEME VIEWMODEL TEST", "SAD: ${result.message()}")
+                Log.d("MYPAGE VIEWMODEL TEST", "SAD: ${result.message()}")
             }
-            _likeListLiveData.postValue(totalLikeList)
+            _doneTidListLiveData.postValue(totalDoneTidList)
         } else {
-            Log.d("THEME VIEWMODEL TEST", "getTheme: response is null")
+            Log.d("MYPAGE VIEWMODEL TEST", "getTheme: response is null")
         }
     }
 }
