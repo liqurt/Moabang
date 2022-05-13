@@ -37,11 +37,11 @@ class DoneThemeListRVAdapter: RecyclerView.Adapter<DoneThemeListRVAdapter.ViewHo
             val tvIsSuccess = itemView.findViewById<TextView>(R.id.tv_doneL_isSucess)
             val tvContent = itemView.findViewById<TextView>(R.id.tv_doneL_content)
 
-            Glide.with(themeImg).load(item.img).into(themeImg)
+            Glide.with(themeImg).load(item.img).centerCrop().into(themeImg)
             tvThemeName.text = item.tname
             tvCafeName.text = item.cname
             tvRating.text = item.rating.toString()
-            tvIsSuccess.text = if(item.isSuccess == 1) "성공" else "실패"
+            tvIsSuccess.text = if(item.isSuccess == 1) "탈출 성공" else "탈출 실패"
             tvContent.text = item.player.toString() + "명, " + item.playDate
         }
     }
@@ -53,6 +53,11 @@ class DoneThemeListRVAdapter: RecyclerView.Adapter<DoneThemeListRVAdapter.ViewHo
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(data[position])
+    }
+
+    fun filterList(list: List<DoneThemeResponse>){
+        data = list
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int = data.size

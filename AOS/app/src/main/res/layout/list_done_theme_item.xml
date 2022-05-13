@@ -12,7 +12,7 @@
     <ImageView
         android:id="@+id/iv_doneL_img"
         android:layout_width="100dp"
-        android:layout_height="130dp"
+        android:layout_height="90dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -49,9 +49,10 @@
         android:layout_marginStart="16dp"
         android:layout_marginBottom="8dp"
         android:text="탈출 성공"
-        android:textColor="@color/moabang_gray"
+        android:textColor="@color/moabang_pink"
         android:textSize="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/tv_doneL_content"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/iv_doneL_img" />
 
     <TextView
@@ -80,12 +81,12 @@
         android:id="@+id/tv_doneL_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
         android:text="2022.05.13, 2명"
         android:textColor="@color/moabang_gray"
         android:textSize="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/tv_doneL_isSucess" />
+        app:layout_constraintBottom_toBottomOf="@+id/tv_doneL_rate"
+        app:layout_constraintStart_toEndOf="@+id/tv_doneL_rate" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
