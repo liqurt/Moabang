@@ -149,17 +149,7 @@ public class UserPageController {
             myThemeDetailResDTOS.add(tmp);
 
         }
-
-        // 커뮤니티 글 읽는 부분
-        List<Community> communityList = communityRepository.findByUserUidOrderByCreateDate(user.get().getUid());
-
-
-        MyCommuAndReviewResDTO res = new MyCommuAndReviewResDTO();
-        res.setCommunityList(communityList);
-        res.setMyThemeDetailResDTO(myThemeDetailResDTOS);
-
-
-        return new ResponseEntity<>(res, HttpStatus.OK);
+        return new ResponseEntity<>(myThemeDetailResDTOS, HttpStatus.OK);
     }
 
     @GetMapping("/reviewcommunity")
@@ -172,11 +162,36 @@ public class UserPageController {
         if (!user.isPresent()) {
             return new ResponseEntity<>("해당 유저 없음", HttpStatus.BAD_REQUEST);
         }
+        // 리뷰 남긴 테마 정보
+        List<MyThemeDetailResDTO> myThemeDetailResDTOS = new ArrayList<>();
+        List<ThemeListMapping> themeList = themeRepository.findThemeAndReviewFetch(user.get().getUid());
+        for (int i = 0; i < themeList.size(); i++) {
+            MyThemeDetailResDTO tmp = new MyThemeDetailResDTO();
+            tmp.setCname(themeList.get(i).getCname());
+            tmp.setImg(themeList.get(i).getImg());
+            tmp.setTid(themeList.get(i).getTid());
+            tmp.setTname(themeList.get(i).getTname());
+            tmp.setPlayDate(themeList.get(i).getPlayDate());
+            tmp.setIsSuccess(themeList.get(i).getIsSuccess());
+            tmp.setPlayer(themeList.get(i).getPlayer());
+            tmp.setRating(themeList.get(i).getGrade());
+
+
+            myThemeDetailResDTOS.add(tmp);
+
+        }
+
+        //커뮤니티, 리뷰 부분
         List<Review> reviewList = reviewRepository.findAllByUserInfo_Uid(user.get().getUid());
         List<Community> communityList = communityRepository.findAllByUser_Uid(user.get().getUid());
         Map<String, List<?>> map = new HashMap<>();
         map.put("reviewList", reviewList);
         map.put("communityList", communityList);
-        return new ResponseEntity<>(map, HttpStatus.OK);
+
+        MyCommuAndReviewResDTO myCommuAndReviewResDTO = new MyCommuAndReviewResDTO();
+        myCommuAndReviewResDTO.setCommunityRes(map);
+        myCommuAndReviewResDTO.setReviewThemeRes(myThemeDetailResDTOS);
+
+        return new ResponseEntity<>(myCommuAndReviewResDTO, HttpStatus.OK);
     }
 }
