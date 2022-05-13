@@ -8,10 +8,7 @@
 package com.ssafy.moabang.src.main
 
 import android.Manifest
-import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
-import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -24,7 +21,7 @@ import androidx.recyclerview.widget.LinearSnapHelper
 import com.google.android.gms.maps.model.LatLng
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
-import com.ssafy.moabang.adapter.Latest5CommunityRVAdapter
+import com.ssafy.moabang.adapter.Latest3CommunityRVAdapter
 import com.ssafy.moabang.adapter.NearCafeListRVAdapter
 import com.ssafy.moabang.adapter.ThemeListRVAdapter
 import com.ssafy.moabang.data.model.dto.Cafe
@@ -35,9 +32,16 @@ import com.ssafy.moabang.data.model.repository.CommunityRepository
 import com.ssafy.moabang.data.model.repository.Repository
 import com.ssafy.moabang.databinding.FragmentHomeBinding
 import com.ssafy.moabang.src.main.cafe.CafeDetailActivity
+import com.ssafy.moabang.src.main.community.CommunityDetailActivity
+import com.ssafy.moabang.src.util.LocationUtil
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import com.ssafy.moabang.src.theme.ThemeDetailActivity
 import kotlinx.coroutines.*
 import retrofit2.Response
+
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -56,8 +60,8 @@ class HomeFragment : Fragment() {
 
     private var cafeRepository = CafeRepository()
 
-    private lateinit var latest5CommunityList : List<Community>
-    private lateinit var latest5CommunityRVAdapter: Latest5CommunityRVAdapter
+    private lateinit var latest3 : List<Community>
+    private lateinit var latest3CommunityRVAdapter: Latest3CommunityRVAdapter
 
     private var recruitRepository = CommunityRepository()
 
@@ -80,23 +84,11 @@ class HomeFragment : Fragment() {
         setLatest5RecruitList()
     }
 
-    @SuppressLint("MissingPermission")
-    private fun getCurrentLocation(): LatLng? {
-        val locationManager =
-            requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        val lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-        return if (lastKnownLocation != null) {
-            LatLng(lastKnownLocation.latitude, lastKnownLocation.longitude)
-        } else {
-            null
-        }
-    }
-
     private fun checkPermission() {
         val permissionListener = object : PermissionListener {
             override fun onPermissionGranted() {
                 val seoul = LatLng(37.566535, 126.9779692)
-                currentLocation = getCurrentLocation() ?: LatLng(seoul.latitude, seoul.longitude)
+                currentLocation = LocationUtil().getCurrentLocation(requireContext()) ?: LatLng(seoul.latitude, seoul.longitude)
                 Log.d("AAAAA", "HOME FRAGMENT_currentLocation : $currentLocation")
                 setNearCafeList()
             }
@@ -132,7 +124,7 @@ class HomeFragment : Fragment() {
                     } else {
                         val cafeLat = cafe.lat!!.toDouble()
                         val cafeLng = cafe.lon!!.toDouble()
-                        val distance = getDistanceLatLngInKm(
+                        val distance = LocationUtil().getDistanceLatLngInKm(
                             currentLocation!!.latitude,
                             currentLocation!!.longitude,
                             cafeLat,
@@ -180,9 +172,9 @@ class HomeFragment : Fragment() {
     private fun setLatest5RecruitList() {
         CoroutineScope(Dispatchers.Main).launch {
             CoroutineScope(Dispatchers.IO).async {
-                latest5CommunityList = getLatest5Community()
+                latest3 = getLatest5Community()
             }.await()
-            initLatest5CommunityRCV()
+            initLatest5()
         }
     }
 
@@ -240,35 +232,20 @@ class HomeFragment : Fragment() {
     }
 
 
-    private fun initLatest5CommunityRCV() {
-        if(latest5CommunityList.isNotEmpty()){
-            latest5CommunityRVAdapter = Latest5CommunityRVAdapter(latest5CommunityList)
+    private fun initLatest5() {
+        if(latest3.isNotEmpty()){
+            latest3CommunityRVAdapter = Latest3CommunityRVAdapter(latest3)
+            latest3CommunityRVAdapter.itemClickListener = object : Latest3CommunityRVAdapter.ItemClickListener {
+                override fun onClick(community: Community) {
+                    val intent = Intent(requireActivity(), CommunityDetailActivity::class.java).putExtra("community", community)
+                    startActivity(intent)
+                }
+            }
             binding.rvHomeFLatest5Community.apply {
                 layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                adapter = latest5CommunityRVAdapter
+                adapter = latest3CommunityRVAdapter
             }
         }
-    }
-
-    private fun getDistanceLatLngInKm(
-        lat1: Double,
-        lon1: Double,
-        lat2: Double,
-        lon2: Double
-    ): Double {
-        val R = 6371 // radius of earth in km
-        val dLat = deg2rad(lat2 - lat1)
-        val dLng = deg2rad(lon2 - lon1)
-        val a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLng / 2) * Math.sin(
-            dLng / 2
-        )
-        val c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-        return R * c
-    }
-
-    private fun deg2rad(deg: Double): Double {
-        return deg * (Math.PI / 180)
     }
 
     private suspend fun getAllThemeWithLike(): List<Theme> = withContext(Dispatchers.IO) {
@@ -292,5 +269,4 @@ class HomeFragment : Fragment() {
             return@withContext emptyList()
         }
     }
-
 }

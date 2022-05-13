@@ -1,7 +1,11 @@
 package com.ssafy.moabang.data.model.dto
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+import java.io.Serializable
 import java.time.LocalDateTime
 
+@Parcelize
 data class Community(
     var rid : Int,
     var user : User,
@@ -10,5 +14,5 @@ data class Community(
     var createDate : LocalDateTime,
     var updateDate : LocalDateTime,
     var header : String,
-)
+) : Parcelable
 // LocalDateTime

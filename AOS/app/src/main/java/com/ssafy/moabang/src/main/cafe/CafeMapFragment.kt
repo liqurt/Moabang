@@ -29,6 +29,7 @@ import com.ssafy.moabang.R
 import com.ssafy.moabang.data.model.dto.Cafe
 import com.ssafy.moabang.data.model.repository.Repository
 import com.ssafy.moabang.databinding.FragmentCafeMapBinding
+import com.ssafy.moabang.src.util.LocationUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -122,7 +123,6 @@ class CafeMapFragment : Fragment(), OnMapReadyCallback {
         infoWindow = requireActivity().layoutInflater.inflate(R.layout.info_window_custom, null)
     }
 
-
     @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {
         checkPermission()
@@ -130,24 +130,12 @@ class CafeMapFragment : Fragment(), OnMapReadyCallback {
         setUpClusterer()
     }
 
-    @SuppressLint("MissingPermission")
-    private fun getCurrentLocation(): LatLng? {
-        val locationManager =
-            requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        val lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-        return if (lastKnownLocation != null) {
-            LatLng(lastKnownLocation.latitude, lastKnownLocation.longitude)
-        } else {
-            null
-        }
-    }
-
     private fun checkPermission() {
         val permissionListener = object : PermissionListener {
             override fun onPermissionGranted() {
                 Log.d("AAAAA", "권한 설정됨")
                 val seoul = LatLng(37.566535, 126.9779692)
-                currentLocation = getCurrentLocation() ?: LatLng(seoul.latitude, seoul.longitude)
+                currentLocation = LocationUtil(). getCurrentLocation(requireContext()) ?: LatLng(seoul.latitude, seoul.longitude)
                 mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation!!, 16.0f))
             }
 

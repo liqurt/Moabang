@@ -1,7 +1,6 @@
 package response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,10 +8,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
 
-
 @Getter
 @Setter
-public class ThemeDetailResDTO {
+public class CompareResDTO {
     private int tid;
     private int cid;
     private String tname;
@@ -37,5 +35,6 @@ public class ThemeDetailResDTO {
     @Temporal(TemporalType.DATE)
     private Date playDate;
     private boolean compare;
-
+    private String lat;
+    private String lon;
 }

@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/tv_homeF_l5c_header"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="XX게시판"
@@ -19,9 +19,9 @@
 
     <TextView
         android:id="@+id/tv_homeF_l5c_content"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
+        android:layout_weight="4"
         android:text="타이틀"
         android:textColor="@color/moabang_gray"
         android:textSize="16dp"
