@@ -25,17 +25,15 @@ private val LOGTAG = "CommunityFragment"
 
 class CommunityFragment : Fragment() {
     private var currentHeader: String = "전체"
-    private lateinit var allCommunityList : List<Community>
+    private lateinit var allCommunityList: List<Community>
     private lateinit var currentCommunityList: List<Community>
     private lateinit var binding: FragmentCommunityBinding
 
     private var communityRepository = CommunityRepository()
     private var communityRVAdapter = CommunityRVAdapter()
 
-
     private var communityRVAdapterLatest3Announcement = CommunityRVAdapter()
-    private lateinit var latest3AnnouncementList : List<Community>
-
+    private lateinit var latest3AnnouncementList: List<Community>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,45 +46,55 @@ class CommunityFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setChips()
-        setCurrentCommunityList()
+        setAllCommunity()
     }
 
-    private fun setChips(){
+    private fun setChips() {
         binding.chipAll.setOnClickListener {
             currentHeader = "전체"
-            filterByCurrentHeader()
-            remove3AnnouncementRCV()
+            setCurrentCommunity()
             binding.rvCommuF3Announcement.visibility = View.VISIBLE
         }
         binding.chipAnnouncement.setOnClickListener {
             currentHeader = "공지"
-            filterByCurrentHeader()
+            setCurrentCommunity()
             binding.rvCommuF3Announcement.visibility = View.GONE
         }
         binding.chipFreeBoard.setOnClickListener {
             currentHeader = "자유"
-            filterByCurrentHeader()
+            setCurrentCommunity()
             binding.rvCommuF3Announcement.visibility = View.VISIBLE
         }
         binding.chipParty.setOnClickListener {
             currentHeader = "구인"
-            filterByCurrentHeader()
+            setCurrentCommunity()
             binding.rvCommuF3Announcement.visibility = View.VISIBLE
         }
     }
 
-    private fun setCurrentCommunityList() {
+    private fun setAllCommunity() {
         CoroutineScope(Dispatchers.Main).launch {
             CoroutineScope(Dispatchers.IO).async {
                 allCommunityList = getAllCommunityFromServer()
             }.await()
-            filterByCurrentHeader()
-            setLatest3AnnouncementList()
+            setLatest3()
+            setCurrentCommunity()
         }
     }
 
-    private fun setLatest3AnnouncementList(){
-        latest3AnnouncementList = allCommunityList.filter { it.header == "공지" }.subList(0,3)
+    private fun setCurrentCommunity() {
+        if (currentHeader == "전체") {
+            currentCommunityList = allCommunityList.filterNot{ it.header == "공지" && latest3AnnouncementList.contains(it) }
+        } else if (currentHeader == "공지") {
+            currentCommunityList = allCommunityList.filter { it.header == "공지" }
+        } else {
+            currentCommunityList = allCommunityList.filter { it.header == currentHeader }
+        }
+        initRcv()
+    }
+
+    private fun setLatest3() {
+        latest3AnnouncementList = allCommunityList.filter { it.header == "공지" }.subList(0, 3)
         init3AnnouncementRCV()
     }
 
@@ -98,7 +106,8 @@ class CommunityFragment : Fragment() {
         }
         binding.rvCommuF3Announcement.apply {
             adapter = communityRVAdapterLatest3Announcement
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
     }
 
@@ -110,23 +119,9 @@ class CommunityFragment : Fragment() {
         }
         binding.rvCommuF.apply {
             adapter = communityRVAdapter
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
-    }
-
-    private fun remove3AnnouncementRCV() {
-        val temp = currentCommunityList as MutableList<Community>
-        Log.d(LOGTAG,"$currentCommunityList")
-        Log.d(LOGTAG,"$latest3AnnouncementList")
-    }
-
-    private fun filterByCurrentHeader() {
-        if(currentHeader == "전체"){
-            currentCommunityList = allCommunityList
-        }else{
-            currentCommunityList = allCommunityList.filter { it.header == currentHeader }
-        }
-        initRcv()
     }
 
     private suspend fun getAllCommunityFromServer(): List<Community> =
