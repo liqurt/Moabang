@@ -1,13 +1,17 @@
 package com.ssafy.moabang.src.main.community
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ssafy.moabang.R
 import com.ssafy.moabang.adapter.CommunityRVAdapter
+import com.ssafy.moabang.adapter.Latest3CommunityRVAdapter
 import com.ssafy.moabang.data.model.dto.Community
 import com.ssafy.moabang.data.model.repository.CommunityRepository
 import com.ssafy.moabang.databinding.FragmentCommunityBinding
@@ -27,13 +31,14 @@ class CommunityFragment : Fragment() {
     private var currentHeader: String = "전체"
     private lateinit var allCommunityList: List<Community>
     private lateinit var currentCommunityList: List<Community>
+    private lateinit var latest3AnnouncementList: List<Community>
+
     private lateinit var binding: FragmentCommunityBinding
 
     private var communityRepository = CommunityRepository()
-    private var communityRVAdapter = CommunityRVAdapter()
 
+    private var communityRVAdapter = CommunityRVAdapter()
     private var communityRVAdapterLatest3Announcement = CommunityRVAdapter()
-    private lateinit var latest3AnnouncementList: List<Community>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -84,7 +89,9 @@ class CommunityFragment : Fragment() {
 
     private fun setCurrentCommunity() {
         if (currentHeader == "전체") {
-            currentCommunityList = allCommunityList.filterNot{ it.header == "공지" && latest3AnnouncementList.contains(it) }
+            currentCommunityList = allCommunityList.filterNot {
+                it.header == "공지" && latest3AnnouncementList.contains(it)
+            }
         } else if (currentHeader == "공지") {
             currentCommunityList = allCommunityList.filter { it.header == "공지" }
         } else {
@@ -103,6 +110,11 @@ class CommunityFragment : Fragment() {
             data = latest3AnnouncementList
             context = requireContext()
             mode = "latest3Announcement"
+            itemClickListener = object : CommunityRVAdapter.ItemClickListener {
+                override fun onClick(community: Community) {
+                    goToCommunityDetail(community)
+                }
+            }
         }
         binding.rvCommuF3Announcement.apply {
             adapter = communityRVAdapterLatest3Announcement
@@ -116,6 +128,11 @@ class CommunityFragment : Fragment() {
             data = currentCommunityList
             context = requireContext()
             mode = "normal"
+            itemClickListener = object : CommunityRVAdapter.ItemClickListener {
+                override fun onClick(community: Community) {
+                    goToCommunityDetail(community)
+                }
+            }
         }
         binding.rvCommuF.apply {
             adapter = communityRVAdapter
@@ -133,4 +150,11 @@ class CommunityFragment : Fragment() {
                 return@withContext emptyList()
             }
         }
+
+    private fun goToCommunityDetail(community: Community) {
+        val intent = Intent(requireContext(), CommunityDetailActivity::class.java)
+        intent.putExtra("community", community)
+        startActivity(intent)
+    }
+
 }

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.moabang.R
+import com.ssafy.moabang.data.model.dto.Cafe
 import com.ssafy.moabang.data.model.dto.Community
 import com.ssafy.moabang.databinding.ListCommunityItemBinding
 import java.time.LocalDateTime
@@ -17,10 +18,19 @@ class CommunityRVAdapter : RecyclerView.Adapter<CommunityRVAdapter.CommunityRVAd
     lateinit var mode : String
     lateinit var context: Context
     lateinit var data: List<Community>
-
+    lateinit var itemClickListener: ItemClickListener
     @RequiresApi(Build.VERSION_CODES.O)
     inner class CommunityRVAdapterViewHolder(private val binding: ListCommunityItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            itemView.setOnClickListener {
+                if(this@CommunityRVAdapter::itemClickListener.isInitialized){
+                    itemClickListener.onClick(data[adapterPosition])
+                }
+            }
+        }
+
         private val now = LocalDateTime.now()
 
         fun bindInfo(community: Community) {
@@ -74,4 +84,9 @@ class CommunityRVAdapter : RecyclerView.Adapter<CommunityRVAdapter.CommunityRVAd
     }
 
     override fun getItemCount(): Int = data.size
+
+    interface ItemClickListener {
+        fun onClick(community: Community)
+    }
+
 }
