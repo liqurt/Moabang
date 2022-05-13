@@ -37,7 +37,7 @@ public class CompareController {
 
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "Authorization", required = false, dataType = "string", paramType = "header")})
     @ApiOperation(value = "유저 비교 리스트 추가 및 삭제", notes = "비교 리스트 목록 추가 및 비교 리스트 목록 삭제")
-    @PostMapping("/{tid}")
+    @GetMapping("/{tid}")
     public ResponseEntity<?> addCompare(@PathVariable int tid, HttpServletRequest request) {
         String token = jwtTokenProvider.resolveToken(request);
         String useremail = jwtTokenProvider.getUserPk(token);

@@ -31,7 +31,7 @@ public interface ThemeRepository extends JpaRepository<Theme, Long> { // ,c.url 
 
     @Query("select " +
             "(select count(u) from UserLike u where u.theme.tid = t.tid ) as count,\n" +
-            "c.island as island,c.cname as cname,c.si as si,c.cid as cid,c.url as url,r.playDate as playDate,t.img as img,t.tid as tid,t.tname as tname,t.description as description,t.rplayer as rplayer,t.time as time,t.genre as genre,t.type as type,t.difficulty as difficulty,t.grade as grade,t.activity as activity " +
+            "c.cname as cname,r.playDate as playDate,t.img as img,t.tid as tid,t.tname as tname,t.grade as grade,r.isSuccess as isSuccess,r.player as player " +
             "from Theme t join t.cafe c " +
             "on t.cafe.cid=c.cid " +
             "join Review r " +
