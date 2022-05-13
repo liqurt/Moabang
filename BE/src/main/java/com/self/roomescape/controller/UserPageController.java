@@ -144,6 +144,7 @@ public class UserPageController {
             tmp.setType(themeList.get(i).getType());
             tmp.setTname(themeList.get(i).getTname());
             tmp.setCount(themeList.get(i).getCount());
+            tmp.setPlayDate(themeList.get(i).getPlayDate());
             tmp.setIslike(true);
 
             String data = tmp.getRplayer();

@@ -3,6 +3,8 @@ package com.self.roomescape.repository.mapping;
 import com.self.roomescape.entity.Cafe;
 import com.self.roomescape.entity.Theme;
 
+import java.util.Date;
+
 public interface ThemeListMapping {
     int getTid();
 
@@ -39,4 +41,6 @@ public interface ThemeListMapping {
     String getActivity();
 
     Long getCount();
+
+    Date getPlayDate();
 }
