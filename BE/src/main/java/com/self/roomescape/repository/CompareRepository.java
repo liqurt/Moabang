@@ -16,7 +16,7 @@ public interface CompareRepository extends JpaRepository<Compare, Long> {
 
     @Query("select " +
             "(select count(u) from UserLike u where u.theme.tid = t.tid ) as count,\n" +
-            "c.island as island,c.cname as cname,c.si as si,c.cid as cid,c.url as url,t.img as img,t.tid as tid,t.tname as tname,t.description as description,t.rplayer as rplayer,t.time as time,t.genre as genre,t.type as type,t.difficulty as difficulty,t.grade as grade,t.activity as activity " +
+            "c.island as island,c.cname as cname,c.si as si,c.cid as cid,c.url as url,c.lat as lat, c.lon as lon,t.img as img,t.tid as tid,t.tname as tname,t.description as description,t.rplayer as rplayer,t.time as time,t.genre as genre,t.type as type,t.difficulty as difficulty,t.grade as grade,t.activity as activity " +
             "from Theme t join t.cafe c " +
             "on t.cafe.cid=c.cid " +
             "where t.tid in (select co.theme.tid from Compare co where co.user.uid = :uid)")
