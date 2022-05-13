@@ -30,13 +30,12 @@ public interface ThemeRepository extends JpaRepository<Theme, Long> { // ,c.url 
     List<ThemeListMapping> findThemeFetch(@Param("uid") long uid);
 
     @Query("select " +
-            "(select count(u) from UserLike u where u.theme.tid = t.tid ) as count,\n" +
-            "c.cname as cname,r.playDate as playDate,t.img as img,t.tid as tid,t.tname as tname,t.grade as grade,r.isSuccess as isSuccess,r.player as player " +
+            "c.cname as cname,r.playDate as playDate,t.img as img,t.tid as tid,t.tname as tname,r.rating as grade,r.isSuccess as isSuccess,r.player as player " +
             "from Theme t join t.cafe c " +
             "on t.cafe.cid=c.cid " +
             "join Review r " +
             "on r.tid=t.tid  " +
-            "where t.tid in (select tid from Review r where r.userInfo.uid = :uid) ")
+            "where r.userInfo.uid = :uid ")
     List<ThemeListMapping> findThemeAndReviewFetch(@Param("uid") long uid);
 
     @Query("select t.tid as tid from Theme t left join Review r on t.tid=r.tid where r.userInfo.uid=:uid ")
