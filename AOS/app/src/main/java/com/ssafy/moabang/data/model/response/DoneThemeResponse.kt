@@ -1,10 +1,5 @@
 package com.ssafy.moabang.data.model.response
 
-import android.os.Parcelable
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import kotlinx.parcelize.Parcelize
-
 data class DoneThemeResponse(
     val tid: Int,
     val tname: String,
