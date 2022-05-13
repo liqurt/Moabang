@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import com.ssafy.moabang.R
 import com.ssafy.moabang.databinding.ActivityMainBinding
 import com.ssafy.moabang.src.main.cafe.CafeFragment
+import com.ssafy.moabang.src.main.community.CommunityFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
