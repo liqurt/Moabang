@@ -8,5 +8,8 @@ import java.util.List;
 
 public interface CommunityRepository extends JpaRepository<Community, Long> {
     public List<Community> findTop5ByOrderByCreateDateDesc();
+
     public List<Community> findAllByOrderByCreateDateDesc();
+
+    List<Community> findByUserUidOrderByCreateDate(long uid);
 }

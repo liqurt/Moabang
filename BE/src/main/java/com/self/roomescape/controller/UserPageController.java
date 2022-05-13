@@ -1,7 +1,9 @@
 package com.self.roomescape.controller;
 
 import com.self.roomescape.config.JwtTokenProvider;
+import com.self.roomescape.entity.Community;
 import com.self.roomescape.entity.User;
+import com.self.roomescape.repository.CommunityRepository;
 import com.self.roomescape.repository.ThemeRepository;
 import com.self.roomescape.repository.UserRepository;
 import com.self.roomescape.repository.mapping.MyPageTidMapping;
@@ -16,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import response.MyCommuAndReviewResDTO;
 import response.MyThemeDetailResDTO;
 import response.ThemeDetailResDTO;
 
@@ -40,6 +43,8 @@ public class UserPageController {
     private UserRepository userRepository;
     @Autowired
     private ThemeRepository themeRepository;
+    @Autowired
+    private CommunityRepository communityRepository;
 
     @GetMapping("/theme/list")
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "Authorization", required = false, dataType = "string", paramType = "header")})
@@ -141,6 +146,16 @@ public class UserPageController {
             myThemeDetailResDTOS.add(tmp);
 
         }
-        return new ResponseEntity<>(myThemeDetailResDTOS, HttpStatus.OK);
+
+        // 커뮤니티 글 읽는 부분
+        List<Community> communityList = communityRepository.findByUserUidOrderByCreateDate(user.get().getUid());
+
+
+        MyCommuAndReviewResDTO res = new MyCommuAndReviewResDTO();
+        res.setCommunityList(communityList);
+        res.setMyThemeDetailResDTO(myThemeDetailResDTOS);
+
+
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 }
