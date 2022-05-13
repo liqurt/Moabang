@@ -18,7 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class DoneThemeListRVAdapter: RecyclerView.Adapter<DoneThemeListRVAdapter.ViewHolder>() {
-    var data: List<DoneThemeResponse> = emptyList()
+    var data: List<DoneThemeResponse> = mutableListOf()
     lateinit var itemClickListener: ItemClickListener
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -30,33 +30,24 @@ class DoneThemeListRVAdapter: RecyclerView.Adapter<DoneThemeListRVAdapter.ViewHo
             }
         }
         fun bind(item: DoneThemeResponse){
-            val themeImg = itemView.findViewById<ImageView>(R.id.iv_themeL_img)
-            val tvThemeName = itemView.findViewById<TextView>(R.id.tv_themeL_theme_name)
-            val tvCafeName = itemView.findViewById<TextView>(R.id.tv_themeL_cafe_name)
-            val tvGenre = itemView.findViewById<TextView>(R.id.tv_themeL_genre)
-            val tvTime = itemView.findViewById<TextView>(R.id.tv_themeL_time)
-            val tvRating = itemView.findViewById<TextView>(R.id.tv_themeL_rating)
-            val tvDiff = itemView.findViewById<TextView>(R.id.tv_themeL_diff)
-            val tvType = itemView.findViewById<TextView>(R.id.tv_themeL_type)
-            val tvActive = itemView.findViewById<TextView>(R.id.tv_themeL_active)
-            val tvPlayer = itemView.findViewById<TextView>(R.id.tv_themeL_player)
-            itemView.findViewById<ImageView>(R.id.iv_themeL_like).visibility = View.GONE
+            val themeImg = itemView.findViewById<ImageView>(R.id.iv_doneL_img)
+            val tvThemeName = itemView.findViewById<TextView>(R.id.tv_doneL_tname)
+            val tvCafeName = itemView.findViewById<TextView>(R.id.tv_doneL_cname)
+            val tvRating = itemView.findViewById<TextView>(R.id.tv_doneL_rate)
+            val tvIsSuccess = itemView.findViewById<TextView>(R.id.tv_doneL_isSucess)
+            val tvContent = itemView.findViewById<TextView>(R.id.tv_doneL_content)
 
             Glide.with(themeImg).load(item.img).into(themeImg)
             tvThemeName.text = item.tname
             tvCafeName.text = item.cname
-            tvGenre.text = item.genre
-            tvTime.text = item.time
-            tvRating.text = item.grade.toString()
-            tvDiff.text = item.difficulty.toString()
-            tvType.text = item.type
-            tvActive.text = if(item.activity == "") "-" else item.activity
-            tvPlayer.text = item.rplayer + "명"
+            tvRating.text = item.rating.toString()
+            tvIsSuccess.text = if(item.isSuccess == 1) "성공" else "실패"
+            tvContent.text = item.player.toString() + "명, " + item.playDate
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder{
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_theme_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_done_theme_item, parent, false)
         return ViewHolder(view)
     }
 
