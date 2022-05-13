@@ -41,6 +41,7 @@ class CommunityRVAdapter : RecyclerView.Adapter<CommunityRVAdapter.CommunityRVAd
                 binding.tvCommuFTime.text = monthStr+"."+dayStr
             }
             if(mode == "latest3Announcement"){
+                binding.tvCommuFHeader.setTextColor(context.resources.getColor(R.color.moabang_gray, null))
                 binding.tvCommuFTime.typeface = Typeface.DEFAULT_BOLD
                 binding.tvCommuFAuthor.typeface = Typeface.DEFAULT_BOLD
                 binding.tvCommuFTitle.typeface = Typeface.DEFAULT_BOLD
