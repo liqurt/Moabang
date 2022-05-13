@@ -75,7 +75,13 @@ public class CompareController {
         List<ThemeListMapping> themeList = compareRepository.findThemeFetch(user.get().getUid());
         for (int i = 0; i < themeList.size(); i++) {
             CompareResDTO tmp = new CompareResDTO();
-            tmp.setActivity(themeList.get(i).getActivity());
+            if (themeList.get(i).getActivity().equals("많음")) {
+                tmp.setActivity(5);
+            } else if (themeList.get(i).getActivity().equals("보통")) {
+                tmp.setActivity(3);
+            } else {
+                tmp.setActivity(1);
+            }
             tmp.setCid(themeList.get(i).getCid());
             tmp.setCname(themeList.get(i).getCname());
             tmp.setUrl(themeList.get(i).getUrl());
