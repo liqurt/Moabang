@@ -43,4 +43,8 @@ public interface ThemeListMapping {
     Long getCount();
 
     Date getPlayDate();
+
+    int getIsSuccess();
+
+    int getPlayer();
 }
