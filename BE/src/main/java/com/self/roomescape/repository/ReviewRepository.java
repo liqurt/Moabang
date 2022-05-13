@@ -10,6 +10,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     Optional<List<Review>> findByTid(int tid);
 
     Optional<Review> findByRid(long rid);
+    List<Review> findAllByUserInfo_Uid(long uid);
 
     void deleteByRid(long rid);
 }

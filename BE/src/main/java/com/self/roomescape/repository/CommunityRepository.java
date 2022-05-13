@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface CommunityRepository extends JpaRepository<Community, Long> {
-    public List<Community> findTop5ByOrderByCreateDateDesc();
-    public List<Community> findAllByOrderByCreateDateDesc();
+    List<Community> findTop5ByOrderByCreateDateDesc();
+    List<Community> findAllByOrderByCreateDateDesc();
+    List<Community> findAllByUser_Uid(long uid);
 }

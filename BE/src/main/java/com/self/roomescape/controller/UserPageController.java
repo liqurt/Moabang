@@ -1,7 +1,11 @@
 package com.self.roomescape.controller;
 
 import com.self.roomescape.config.JwtTokenProvider;
+import com.self.roomescape.entity.Community;
+import com.self.roomescape.entity.Review;
 import com.self.roomescape.entity.User;
+import com.self.roomescape.repository.CommunityRepository;
+import com.self.roomescape.repository.ReviewRepository;
 import com.self.roomescape.repository.ThemeRepository;
 import com.self.roomescape.repository.UserRepository;
 import com.self.roomescape.repository.mapping.MyPageTidMapping;
@@ -19,9 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import response.ThemeDetailResDTO;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @Api(tags = {"마이페이지 Api"})
@@ -39,6 +41,10 @@ public class UserPageController {
     private UserRepository userRepository;
     @Autowired
     private ThemeRepository themeRepository;
+    @Autowired
+    private ReviewRepository reviewRepository;
+    @Autowired
+    private CommunityRepository communityRepository;
 
     @GetMapping("/theme/list")
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "Authorization", required = false, dataType = "string", paramType = "header")})
@@ -159,5 +165,23 @@ public class UserPageController {
 
         }
         return new ResponseEntity<>(themeDetailResDTOList, HttpStatus.OK);
+    }
+
+    @GetMapping("/reviewcommunity")
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "Authorization", required = false, dataType = "string", paramType = "header")})
+    @ApiOperation(value = "유저가 남긴 리뷰, 글", notes = "유저가 남긴 리뷰, 글 ")
+    public ResponseEntity<?> UserReviewCommunityList(HttpServletRequest request) {
+        String token = jwtTokenProvider.resolveToken(request);
+        String useremail = jwtTokenProvider.getUserPk(token);
+        Optional<User> user = userRepository.findByEmail(useremail);
+        if (!user.isPresent()) {
+            return new ResponseEntity<>("해당 유저 없음", HttpStatus.BAD_REQUEST);
+        }
+        List<Review> reviewList = reviewRepository.findAllByUserInfo_Uid(user.get().getUid());
+        List<Community> communityList = communityRepository.findAllByUser_Uid(user.get().getUid());
+        Map<String, List<?>> map = new HashMap<>();
+        map.put("reviewList", reviewList);
+        map.put("communityList", communityList);
+        return new ResponseEntity<>(map, HttpStatus.OK);
     }
 }
