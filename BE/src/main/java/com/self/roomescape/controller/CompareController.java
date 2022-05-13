@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import response.CompareResDTO;
 import response.ThemeDetailResDTO;
 
 import javax.servlet.http.HttpServletRequest;
@@ -70,10 +71,10 @@ public class CompareController {
         if (!user.isPresent()) {
             return new ResponseEntity<>("해당 유저 없음", HttpStatus.FORBIDDEN);
         }
-        List<ThemeDetailResDTO> themeDetailResDTOList = new ArrayList<>();
+        List<CompareResDTO> compareResDTOS = new ArrayList<>();
         List<ThemeListMapping> themeList = compareRepository.findThemeFetch(user.get().getUid());
         for (int i = 0; i < themeList.size(); i++) {
-            ThemeDetailResDTO tmp = new ThemeDetailResDTO();
+            CompareResDTO tmp = new CompareResDTO();
             tmp.setActivity(themeList.get(i).getActivity());
             tmp.setCid(themeList.get(i).getCid());
             tmp.setCname(themeList.get(i).getCname());
@@ -91,6 +92,8 @@ public class CompareController {
             tmp.setType(themeList.get(i).getType());
             tmp.setTname(themeList.get(i).getTname());
             tmp.setCount(themeList.get(i).getCount());
+            tmp.setLat(themeList.get(i).getLat());
+            tmp.setLon(themeList.get(i).getLon());
             tmp.setCompare(true);
             tmp.setIslike(true);
 
@@ -103,10 +106,10 @@ public class CompareController {
                 tmp.setMin_player(Integer.parseInt(srr[0]));
                 tmp.setMax_player(Integer.parseInt(srr[0]));
             }
-            themeDetailResDTOList.add(tmp);
+            compareResDTOS.add(tmp);
 
         }
-        return new ResponseEntity<>(themeDetailResDTOList, HttpStatus.OK);
+        return new ResponseEntity<>(compareResDTOS, HttpStatus.OK);
     }
 
 }

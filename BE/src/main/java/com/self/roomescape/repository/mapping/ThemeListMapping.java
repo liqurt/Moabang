@@ -47,4 +47,8 @@ public interface ThemeListMapping {
     int getIsSuccess();
 
     int getPlayer();
+
+    String getLon();
+
+    String getLat();
 }
