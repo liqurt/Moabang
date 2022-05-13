@@ -22,7 +22,7 @@ public class CompareResDTO {
     private String type;
     private int difficulty;
     private float grade;
-    private String activity;
+    private int activity;
     private String cname;
     private String url;
     private String island;
