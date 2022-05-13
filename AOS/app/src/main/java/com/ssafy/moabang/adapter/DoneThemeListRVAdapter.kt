@@ -10,27 +10,26 @@ import com.bumptech.glide.Glide
 import com.ssafy.moabang.R
 import com.ssafy.moabang.data.model.dto.Theme
 import com.ssafy.moabang.data.model.repository.Repository
+import com.ssafy.moabang.data.model.response.DoneThemeResponse
 import com.ssafy.moabang.data.model.viewmodel.ThemeViewModel
 import com.ssafy.moabang.databinding.ListThemeItemBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ThemeListRVAdapter: RecyclerView.Adapter<ThemeListRVAdapter.ViewHolder>() {
-    var from : String = ""
-    var data: List<Theme> = emptyList()
-    lateinit var binding: ListThemeItemBinding
+class DoneThemeListRVAdapter: RecyclerView.Adapter<DoneThemeListRVAdapter.ViewHolder>() {
+    var data: List<DoneThemeResponse> = emptyList()
     lateinit var itemClickListener: ItemClickListener
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         init {
             itemView.setOnClickListener {
-                if(this@ThemeListRVAdapter::itemClickListener.isInitialized){
+                if(this@DoneThemeListRVAdapter::itemClickListener.isInitialized){
                     itemClickListener.onClick(data[adapterPosition])
                 }
             }
         }
-        fun bind(item: Theme){
+        fun bind(item: DoneThemeResponse){
             val themeImg = itemView.findViewById<ImageView>(R.id.iv_themeL_img)
             val tvThemeName = itemView.findViewById<TextView>(R.id.tv_themeL_theme_name)
             val tvCafeName = itemView.findViewById<TextView>(R.id.tv_themeL_cafe_name)
@@ -41,13 +40,7 @@ class ThemeListRVAdapter: RecyclerView.Adapter<ThemeListRVAdapter.ViewHolder>() 
             val tvType = itemView.findViewById<TextView>(R.id.tv_themeL_type)
             val tvActive = itemView.findViewById<TextView>(R.id.tv_themeL_active)
             val tvPlayer = itemView.findViewById<TextView>(R.id.tv_themeL_player)
-            val like = itemView.findViewById<ImageView>(R.id.iv_themeL_like)
-
-            if(item.islike){
-                like.setImageResource(R.drawable.icon_like_after)
-            } else {
-                like.setImageResource(R.drawable.icon_like_before)
-            }
+            itemView.findViewById<ImageView>(R.id.iv_themeL_like).visibility = View.GONE
 
             Glide.with(themeImg).load(item.img).into(themeImg)
             tvThemeName.text = item.tname
@@ -59,14 +52,6 @@ class ThemeListRVAdapter: RecyclerView.Adapter<ThemeListRVAdapter.ViewHolder>() 
             tvType.text = item.type
             tvActive.text = if(item.activity == "") "-" else item.activity
             tvPlayer.text = item.rplayer + "명"
-
-            if(from == "HomeFragment"){
-                val tvThemeLikeCount = itemView.findViewById<TextView>(R.id.tv_themeL_like_count)
-                tvThemeLikeCount.apply {
-                    visibility = View.VISIBLE
-                    text = item.count.toString() + "♡"
-                }
-            }
         }
     }
 
@@ -77,29 +62,11 @@ class ThemeListRVAdapter: RecyclerView.Adapter<ThemeListRVAdapter.ViewHolder>() 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(data[position])
-
-        holder.itemView.findViewById<ImageView>(R.id.iv_themeL_like).setOnClickListener {
-            data[position].islike = !data[position].islike
-            if(data[position].islike){
-                holder.itemView.findViewById<ImageView>(R.id.iv_themeL_like).setImageResource(R.drawable.icon_like_after)
-            } else {
-                holder.itemView.findViewById<ImageView>(R.id.iv_themeL_like).setImageResource(R.drawable.icon_like_before)
-            }
-            CoroutineScope(Dispatchers.Main).launch{
-                Repository.get().setThemeLike(data[position].tid, data[position].islike)
-                ThemeViewModel().themeLike(data[position].tid)
-            }
-        }
-    }
-
-    fun filterList(list: List<Theme>){
-        data = list
-        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int = data.size
 
     interface ItemClickListener {
-        fun onClick(item: Theme)
+        fun onClick(item: DoneThemeResponse)
     }
 }
