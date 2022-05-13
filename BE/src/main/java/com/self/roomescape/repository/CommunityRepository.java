@@ -10,4 +10,5 @@ public interface CommunityRepository extends JpaRepository<Community, Long> {
     List<Community> findTop5ByOrderByCreateDateDesc();
     List<Community> findAllByOrderByCreateDateDesc();
     List<Community> findAllByUser_Uid(long uid);
+    List<Community> findByUserUidOrderByCreateDate(long uid);
 }
