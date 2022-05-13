@@ -5,7 +5,7 @@ import {
 import './App.css';
 import { useEffect, useState } from 'react';
 import Login from './components/login/loginpage';
-import Home from './components/main/Mainpage';
+import Home from './components/main/mainpage';
 import Mypage from './components/mypage/Mypage';
 import Footer from './components/utils/footer/Footer';
 import Navbar from './components/utils/nav/Navibar';

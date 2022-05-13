@@ -18,6 +18,7 @@ import android.text.Editable
 import android.util.Log
 import android.view.MenuInflater
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -230,6 +231,7 @@ class ThemeFragment : Fragment() {
                 repository.filterThemes(tf.island, tf.si, tf.genre, tf.type, plist, tf.diff, tf.active)
             }
             themeListRVAdapter.filterList(filteredList)
+            if(filteredList.isEmpty()) Toast.makeText(requireContext(), "조건에 해당하는 테마가 없습니다", Toast.LENGTH_SHORT).show()
         }
     }
 
