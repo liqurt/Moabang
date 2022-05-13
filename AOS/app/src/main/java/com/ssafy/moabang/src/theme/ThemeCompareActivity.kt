@@ -177,6 +177,11 @@ class ThemeCompareActivity : AppCompatActivity() {
             adapter = compareTitleListRVAdapter
         }
 
+        var behavior = BottomSheetBehavior.from(binding.themeCompareBottomSheet)
+        binding.tvTcbs.setOnClickListener {
+            behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        }
+
         compareThemeListRVAdapter = CompareThemeListRVAdapter()
 
         CompareList.clistLiveData.observe(this){
