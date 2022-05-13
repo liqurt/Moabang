@@ -207,7 +207,7 @@ class ThemeCompareActivity : AppCompatActivity() {
                 CoroutineScope(Dispatchers.Main).launch {
                     val theme = Repository.get().getTheme(item.tid)
                     startActivity(Intent(this@ThemeCompareActivity, ThemeDetailActivity::class.java)
-                        .putExtra("theme", theme))
+                        .putExtra("theme", theme.tid))
                 }
             }
         }

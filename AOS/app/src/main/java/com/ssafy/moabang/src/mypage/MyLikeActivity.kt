@@ -30,7 +30,7 @@ import kotlinx.coroutines.launch
 class MyLikeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMyLikeBinding
     private lateinit var repository: Repository
-    lateinit var themeListRVAdapter: ThemeListRVAdapter
+    private lateinit var themeListRVAdapter: ThemeListRVAdapter
     private val mypageViewModel: MyPageViewModel by viewModels()
 
     private lateinit var originalList: List<Theme>
@@ -82,7 +82,7 @@ class MyLikeActivity : AppCompatActivity() {
         themeListRVAdapter.itemClickListener = object : ThemeListRVAdapter.ItemClickListener {
             override fun onClick(item: Theme) {
                 if(item != null){
-                    val intent = Intent(this@MyLikeActivity, ThemeDetailActivity::class.java).putExtra("theme", item)
+                    val intent = Intent(this@MyLikeActivity, ThemeDetailActivity::class.java).putExtra("theme", item.tid)
                     activityResultLauncher.launch(intent)
                 }
             }

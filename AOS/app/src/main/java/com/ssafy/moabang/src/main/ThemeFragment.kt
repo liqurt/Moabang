@@ -100,7 +100,7 @@ class ThemeFragment : Fragment() {
         themeListRVAdapter.itemClickListener = object : ThemeListRVAdapter.ItemClickListener {
             override fun onClick(item: Theme) {
                 if(item != null){
-                    val intent = Intent(requireActivity(), ThemeDetailActivity::class.java).putExtra("theme", item)
+                    val intent = Intent(requireActivity(), ThemeDetailActivity::class.java).putExtra("theme", item.tid)
                     activityResultLauncher.launch(intent)
                 }
             }
