@@ -45,11 +45,8 @@ public class UserPageController {
     @Autowired
     private ThemeRepository themeRepository;
     @Autowired
-<<<<<<< HEAD
     private ReviewRepository reviewRepository;
     @Autowired
-=======
->>>>>>> feature/BE/userReviewListAndCommunity
     private CommunityRepository communityRepository;
 
     @GetMapping("/theme/list")
