@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.kakao.sdk.user.UserApiClient
 import com.ssafy.moabang.databinding.FragmentMyPageBinding
 import com.ssafy.moabang.src.login.LoginActivity
+import com.ssafy.moabang.src.mypage.MyLikeActivity
 import com.ssafy.moabang.src.theme.ThemeCompareActivity
 
 class MyPageFragment : Fragment() {
@@ -41,7 +42,7 @@ class MyPageFragment : Fragment() {
 
         }
         binding.tvMypageFMenu2.setOnClickListener { // 찜한 테마
-
+            startActivity(Intent(requireContext(), MyLikeActivity::class.java))
         }
         binding.tvMypageFMenu3.setOnClickListener { // 테마 비교
             startActivity(Intent(requireContext(), ThemeCompareActivity::class.java))
