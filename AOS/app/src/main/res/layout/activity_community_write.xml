@@ -12,15 +12,15 @@
         android:id="@+id/AuthorInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:orientation="vertical"
-        android:padding="5dp">
+        android:padding="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/civ_commuItemF"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_gravity="center"
             android:background="@android:color/transparent"
             android:src="@drawable/icon_profile"
@@ -36,60 +36,70 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="20dp"
             android:text="운영자"
             android:textColor="@color/moabang_gray" />
 
     </LinearLayout>
 
-
     <LinearLayout
         android:id="@+id/ArticleInfo"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/AuthorInfo"
-        app:layout_constraintStart_toEndOf="@+id/AuthorInfo"
-        app:layout_constraintTop_toTopOf="parent"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/AuthorInfo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/AuthorInfo"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/tv_commuItemF_header"
+        <Spinner
+            android:id="@+id/sp_commuItemF_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="공지"
-            android:textColor="@color/moabang_pink"
-            android:textSize="20dp"
-            android:textStyle="bold" />
+            android:minHeight="48dp"
+            tools:ignore="SpeakableTextPresentCheck" />
 
-        <TextView
-            android:id="@+id/tv_commuItemF_title"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="사용약관"
-            android:textColor="@color/moabang_gray"
-            android:textSize="20dp"
-            android:textStyle="bold" />
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_commuItemF_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="제목"
+                android:textColor="@color/moabang_gray"
+                tools:ignore="TouchTargetSizeCheck" />
+        </com.google.android.material.textfield.TextInputLayout>
+
     </LinearLayout>
-
 
     <LinearLayout
         android:id="@+id/Content"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ArticleInfo"
-        android:orientation="vertical">
+        app:layout_constraintTop_toBottomOf="@+id/ArticleInfo">
 
-        <TextView
-            android:id="@+id/tv_commuItemF_content"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="누구보다 빠르게 난 남들과는 다르게 색다르게 리듬을 타는 비트위의 나그네\n죠죠 슬픈 음악이 부를때 널 생각해애애애 죠죠 잔인한 너는 왜애애애 기다리지 않냐고\n헤이~ 마 죠죠 럽~ 예스 죠죠 스테이~ 뭘 잘못 했니 아 아 워즈 블라인ㄷ"
-            android:textColor="@color/moabang_gray" />
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_commuItemF_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="내용"
+                android:textColor="@color/moabang_gray"
+                tools:ignore="TouchTargetSizeCheck" />
+        </com.google.android.material.textfield.TextInputLayout>
+
     </LinearLayout>
 
     <LinearLayout
@@ -97,8 +107,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bt_commuWrite_write"

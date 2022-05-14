@@ -89,7 +89,6 @@ class HomeFragment : Fragment() {
             override fun onPermissionGranted() {
                 val seoul = LatLng(37.566535, 126.9779692)
                 currentLocation = LocationUtil().getCurrentLocation(requireContext()) ?: LatLng(seoul.latitude, seoul.longitude)
-                Log.d("AAAAA", "HOME FRAGMENT_currentLocation : $currentLocation")
                 setNearCafeList()
             }
 
@@ -164,7 +163,6 @@ class HomeFragment : Fragment() {
                 tempThemeListWithLike = tempThemeListWithLike.subList(0, 6)
             }
             hotThemeList = tempThemeListWithLike
-            Log.d("AAAAA", "HOME FRAGMENT_hotThemeList : $hotThemeList")
             initHotThemeRCV()
         }
     }
@@ -251,7 +249,6 @@ class HomeFragment : Fragment() {
     private suspend fun getAllThemeWithLike(): List<Theme> = withContext(Dispatchers.IO) {
         val result: Response<List<Theme>>? = cafeRepository.getAllThemeWithLike()
         if (result != null) {
-            Log.d("AAAAA", "HOME FRAGMENT_getAllThemeWithLike : ${result.body()}")
             return@withContext result.body()!!
         } else {
             Log.d("AAAAA", "HOME FRAGMENT_getAllThemeWithLike : null")
@@ -262,7 +259,6 @@ class HomeFragment : Fragment() {
     private suspend fun getLatest5Community() : List<Community> = withContext(Dispatchers.IO) {
         val result: Response<List<Community>>? = recruitRepository.getLatest5Community()
         if (result != null) {
-            Log.d("AAAAA", "HOME FRAGMENT_getLatest5Community : ${result.body()}")
             return@withContext result.body()!!
         } else {
             Log.d("AAAAA", "HOME FRAGMENT_getLatest5Community : null")

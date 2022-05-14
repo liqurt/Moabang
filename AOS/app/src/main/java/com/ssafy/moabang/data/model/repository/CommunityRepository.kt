@@ -25,10 +25,10 @@ class CommunityRepository {
     fun insertCommunity(_header : String, _title: String, _content : String ) : Response<Boolean>? {
         try {
             val res = communityApi.insertCommunity(_header,_title,_content).execute()
-            Log.d("AAAAA", "RecruitRepository_insertCommunity${res.body()}")
+            Log.d("BBBBB", "RecruitRepository_insertCommunity${res.body()}")
             return res
         } catch (e: Exception) {
-            Log.d("AAAAA", "RecruitRepository_insertCommunity ${e.message}")
+            Log.d("BBBBB", "RecruitRepository_insertCommunity ${e.message}")
             e.printStackTrace()
         }
         return null
