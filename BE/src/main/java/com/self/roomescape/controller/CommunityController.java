@@ -43,7 +43,7 @@ public class CommunityController {
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "JWT Token", required = true, dataType = "string", paramType = "header")})
     @ApiOperation(value = "글 쓰기", notes = "글 쓰기")
     @PostMapping("/write")
-    public ResponseEntity<?> createRecruit(@Valid RecruitCreateRequest recruitCreateRequest, HttpServletRequest request) {
+    public ResponseEntity<?> createRecruit(@RequestBody RecruitCreateRequest recruitCreateRequest, HttpServletRequest request) {
 
         String token = jwtTokenProvider.resolveToken(request);
         String useremail = jwtTokenProvider.getUserPk(token);
@@ -64,7 +64,7 @@ public class CommunityController {
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "JWT Token", required = true, dataType = "string", paramType = "header")})
     @ApiOperation(value = "글 수정", notes = "글 수정")
     @PutMapping("/update/{rid}")
-    public ResponseEntity<?> updateRecruit(@Valid RecruitCreateRequest recruitCreateRequest, @PathVariable long rid, HttpServletRequest request) {
+    public ResponseEntity<?> updateRecruit(@RequestBody RecruitCreateRequest recruitCreateRequest, @PathVariable long rid, HttpServletRequest request) {
         Optional<Community> recruit = communityRepository.findById(rid);
         if (recruit.isPresent()) {
             String token = jwtTokenProvider.resolveToken(request);
