@@ -3,7 +3,7 @@ const BoardList = ({boardList}) => {
 
     
     return (
-        <div>
+        <div className='List-container'>
             {boardList.map((item, index) => (
                 <div key={index}>{item.title}</div>
             ))
