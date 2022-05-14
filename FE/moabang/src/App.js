@@ -12,6 +12,8 @@ import Navbar from './components/utils/nav/Navibar';
 // import Error from './components/error/error';
 import CafeMain from './components/cafePage/cafeMain';
 import ThemeMain from './components/ThemePage/ThemeMain';
+import CompareMain from './components/CompareTheme/CompareMain';
+import BoardMain from './components/Board/BoardMain';
 
 import "./App.css";
 function App() {
@@ -52,6 +54,8 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/cafe" element={<CafeMain />} />
         <Route path="/theme" element={<ThemeMain />} />
+        <Route path="/compare" element={<CompareMain />} />
+        <Route path="/board" element={<BoardMain />} />
         {/* <Route path="/*" element={<Error />} /> */}
       </Routes>
       <svg

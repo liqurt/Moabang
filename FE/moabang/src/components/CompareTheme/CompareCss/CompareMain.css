@@ -1,0 +1,22 @@
+.CompareMain-container{
+  width: 100%;
+  
+}
+
+.CompareMain-selList{
+  margin-left: 250px;
+  display: flex;
+  flex-wrap:wrap;
+}
+
+.CompareMainThemeList{
+  margin-top: 10px;
+  margin-right: 20px;
+}
+.chartAndList{
+  height: 650px;
+}
+#text1{
+  text-align: left;
+  font-size: 50px;
+}
