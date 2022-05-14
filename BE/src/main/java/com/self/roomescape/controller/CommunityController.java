@@ -42,7 +42,7 @@ public class CommunityController {
 
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "JWT Token", required = true, dataType = "string", paramType = "header")})
     @ApiOperation(value = "글 쓰기", notes = "글 쓰기")
-    @PostMapping("")
+    @PostMapping("/write")
     public ResponseEntity<?> createRecruit(@Valid RecruitCreateRequest recruitCreateRequest, HttpServletRequest request) {
 
         String token = jwtTokenProvider.resolveToken(request);
@@ -63,62 +63,62 @@ public class CommunityController {
 
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "JWT Token", required = true, dataType = "string", paramType = "header")})
     @ApiOperation(value = "글 수정", notes = "글 수정")
-    @PostMapping("/{rid}")
-    public ResponseEntity<?> updateRecruit(@Valid RecruitCreateRequest recruitCreateRequest, @PathVariable long rid , HttpServletRequest request) {
+    @PutMapping("/update/{rid}")
+    public ResponseEntity<?> updateRecruit(@Valid RecruitCreateRequest recruitCreateRequest, @PathVariable long rid, HttpServletRequest request) {
         Optional<Community> recruit = communityRepository.findById(rid);
-        if(recruit.isPresent()){
+        if (recruit.isPresent()) {
             String token = jwtTokenProvider.resolveToken(request);
             String useremail = jwtTokenProvider.getUserPk(token);
             User user = userRepository.findUserByEmail(useremail);
-            if(recruit.get().getUser().getEmail().equals(user.getEmail())){
+            if (recruit.get().getUser().getEmail().equals(user.getEmail())) {
                 recruit.get().setContent(recruitCreateRequest.getContent());
                 recruit.get().setTitle(recruitCreateRequest.getTitle());
                 recruit.get().setHeader(recruitCreateRequest.getHeader());
                 communityRepository.save(recruit.get());
                 return new ResponseEntity<>(true, HttpStatus.OK);
-            }else{
+            } else {
                 return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
             }
-        }else{
+        } else {
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         }
     }
 
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "JWT Token", required = true, dataType = "string", paramType = "header")})
     @ApiOperation(value = "글 삭제", notes = "글 삭제")
-    @DeleteMapping("/{rid}")
-    public ResponseEntity<?> deleteRecruit(@PathVariable long rid ,HttpServletRequest request) {
+    @DeleteMapping("/delete/{rid}")
+    public ResponseEntity<?> deleteRecruit(@PathVariable long rid, HttpServletRequest request) {
         Optional<Community> recruit = communityRepository.findById(rid);
-        if(recruit.isPresent()){
+        if (recruit.isPresent()) {
             String token = jwtTokenProvider.resolveToken(request);
             String useremail = jwtTokenProvider.getUserPk(token);
             User user = userRepository.findUserByEmail(useremail);
-            if(recruit.get().getUser().getEmail().equals(user.getEmail())){
+            if (recruit.get().getUser().getEmail().equals(user.getEmail())) {
                 communityRepository.delete(recruit.get());
                 return new ResponseEntity<>(true, HttpStatus.OK);
-            }else{
+            } else {
                 return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
             }
-        }else{
+        } else {
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         }
     }
 
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "JWT Token", required = true, dataType = "string", paramType = "header")})
     @ApiOperation(value = "글 읽기", notes = "글 읽기")
-    @GetMapping("/{rid}")
+    @GetMapping("/read/{rid}")
     public ResponseEntity<?> getRecruit(@PathVariable long rid) {
         Optional<Community> recruit = communityRepository.findById(rid);
-        if(recruit.isPresent()){
+        if (recruit.isPresent()) {
             return new ResponseEntity<>(recruit.get(), HttpStatus.OK);
-        }else{
+        } else {
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         }
     }
 
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "JWT Token", required = true, dataType = "string", paramType = "header")})
     @ApiOperation(value = "글 리스트 읽기", notes = "글 리스트 읽기")
-    @GetMapping("")
+    @GetMapping("/read/list")
     public ResponseEntity<?> getRecruitList() {
         List<Community> communityList = communityRepository.findAllByOrderByCreateDateDesc();
         return new ResponseEntity<>(communityList, HttpStatus.OK);
