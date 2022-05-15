@@ -77,7 +77,7 @@ class CommunityDetailActivity : AppCompatActivity() {
             binding.wContent.visibility = View.VISIBLE
             binding.wCButtons.visibility = View.VISIBLE
 
-            ArrayAdapter.createFromResource(this, R.array.community_header, android.R.layout.simple_spinner_item).also {
+            val headerAdapter = ArrayAdapter.createFromResource(this, R.array.community_header, android.R.layout.simple_spinner_item).also {
                     adapter -> adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 binding.spCommuItemFHeader.adapter = adapter
             }
@@ -96,6 +96,8 @@ class CommunityDetailActivity : AppCompatActivity() {
                     }
                 }
             }else if (mode == "edit"){
+                binding.spCommuItemFHeader.setSelection(
+                    headerAdapter.getPosition(community.header))
                 binding.etCommuItemFTitle.setText(binding.tvCommuItemFTitle.text)
                 binding.etCommuItemFContent.setText(binding.tvCommuItemFContent.text)
                 binding.btCommuWriteWrite.setOnClickListener { edit() }

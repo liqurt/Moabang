@@ -24,7 +24,7 @@ class Latest3CommunityRVAdapter(var latest3CommunityList: List<Community>) :
 
         fun bindInfo(community: Community) {
             binding.tvHomeFL5cHeader.text = community.header
-            binding.tvHomeFL5cContent.text = community.content
+            binding.tvHomeFL5cContent.text = community.title
         }
     }
 
