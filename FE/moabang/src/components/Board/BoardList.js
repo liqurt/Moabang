@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import "./BoardCSS/BoardList.css";
 import Paging from './BoardPaging';
-import BoardDetail from './BoardDetail';
 
 const BoardList = ({ boardList }) => {
      //페이징 처리
