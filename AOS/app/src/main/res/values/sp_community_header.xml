@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="community_header">
+        <item>공지</item>
+        <item>자유</item>
+        <item>구인</item>
+    </string-array>
+
+</resources>

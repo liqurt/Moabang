@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.LinearSnapHelper
 import com.google.android.gms.maps.model.LatLng
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
-import com.ssafy.moabang.adapter.Latest3CommunityRVAdapter
+import com.ssafy.moabang.adapter.Latest5CommunityRVAdapter
 import com.ssafy.moabang.adapter.NearCafeListRVAdapter
 import com.ssafy.moabang.adapter.ThemeListRVAdapter
 import com.ssafy.moabang.data.model.dto.Cafe
@@ -61,7 +61,7 @@ class HomeFragment : Fragment() {
     private var cafeRepository = CafeRepository()
 
     private lateinit var latest3 : List<Community>
-    private lateinit var latest3CommunityRVAdapter: Latest3CommunityRVAdapter
+    private lateinit var latest3CommunityRVAdapter: Latest5CommunityRVAdapter
 
     private var recruitRepository = CommunityRepository()
 
@@ -78,8 +78,8 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onStart() {
+        super.onStart()
         setHotThemeList()
         setLatest5RecruitList()
     }
@@ -89,7 +89,6 @@ class HomeFragment : Fragment() {
             override fun onPermissionGranted() {
                 val seoul = LatLng(37.566535, 126.9779692)
                 currentLocation = LocationUtil().getCurrentLocation(requireContext()) ?: LatLng(seoul.latitude, seoul.longitude)
-                Log.d("AAAAA", "HOME FRAGMENT_currentLocation : $currentLocation")
                 setNearCafeList()
             }
 
@@ -164,7 +163,6 @@ class HomeFragment : Fragment() {
                 tempThemeListWithLike = tempThemeListWithLike.subList(0, 6)
             }
             hotThemeList = tempThemeListWithLike
-            Log.d("AAAAA", "HOME FRAGMENT_hotThemeList : $hotThemeList")
             initHotThemeRCV()
         }
     }
@@ -234,10 +232,10 @@ class HomeFragment : Fragment() {
 
     private fun initLatest5() {
         if(latest3.isNotEmpty()){
-            latest3CommunityRVAdapter = Latest3CommunityRVAdapter(latest3)
-            latest3CommunityRVAdapter.itemClickListener = object : Latest3CommunityRVAdapter.ItemClickListener {
+            latest3CommunityRVAdapter = Latest5CommunityRVAdapter(latest3)
+            latest3CommunityRVAdapter.itemClickListener = object : Latest5CommunityRVAdapter.ItemClickListener {
                 override fun onClick(community: Community) {
-                    val intent = Intent(requireActivity(), CommunityDetailActivity::class.java).putExtra("community", community)
+                    val intent = Intent(requireActivity(), CommunityDetailActivity::class.java).putExtra("community", community).putExtra("mode","read")
                     startActivity(intent)
                 }
             }
@@ -251,7 +249,6 @@ class HomeFragment : Fragment() {
     private suspend fun getAllThemeWithLike(): List<Theme> = withContext(Dispatchers.IO) {
         val result: Response<List<Theme>>? = cafeRepository.getAllThemeWithLike()
         if (result != null) {
-            Log.d("AAAAA", "HOME FRAGMENT_getAllThemeWithLike : ${result.body()}")
             return@withContext result.body()!!
         } else {
             Log.d("AAAAA", "HOME FRAGMENT_getAllThemeWithLike : null")
@@ -262,7 +259,6 @@ class HomeFragment : Fragment() {
     private suspend fun getLatest5Community() : List<Community> = withContext(Dispatchers.IO) {
         val result: Response<List<Community>>? = recruitRepository.getLatest5Community()
         if (result != null) {
-            Log.d("AAAAA", "HOME FRAGMENT_getLatest5Community : ${result.body()}")
             return@withContext result.body()!!
         } else {
             Log.d("AAAAA", "HOME FRAGMENT_getLatest5Community : null")
