@@ -22,13 +22,11 @@ const ThemeMain = () => {
                     'Authorization': localStorage.getItem("myToken")
                 }
             }
-        )
-            .then(response => {
-                setthemeData(response.data);
-                setThemeCount(response.data.length);
-                
-
+        ).then(response => {
+            setthemeData(response.data);
+            setThemeCount(response.data.length);
         });
+            
     }
     
     useEffect(() => {
