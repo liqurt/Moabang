@@ -1,0 +1,17 @@
+.board-container{
+    height: 900px;
+}
+
+.boardName{
+    text-align: left;
+    margin-left: 10%;
+    font-size: 80px;
+}
+.btnLocaion{
+    text-align: left;
+    margin-left: 12%;
+}
+.mainWriteBtn{
+    float: right;
+    margin-right: 15%;
+}

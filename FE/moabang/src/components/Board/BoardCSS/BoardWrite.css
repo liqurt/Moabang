@@ -1,0 +1,48 @@
+.boardWrite-container{
+    background-color: rgb(255, 208, 245);
+    width: 60%;
+    height: 500px;
+    margin-left: 20%;
+    position: relative;
+    border-radius: 10px;
+}
+
+.boardTitle{
+    position: absolute;
+    top: 10%;
+    left: 20%;
+    font-size: 30px;
+    
+}
+.inputTitle{
+    
+}
+
+.boardHeader{
+    position: absolute;
+    top:25%;
+    left: 20%;
+    font-size: 30px;
+}
+
+.boardContent{
+    position: absolute;
+    top: 45%;
+    left: 20%;
+}
+.inputContent{
+    font-size: 20px;
+    width: 600px;
+    height: 200px;
+}
+
+.boardWriteBtn{
+    position: absolute;
+    bottom: 10px;
+    right: 100px;
+}
+.boardCancelBtn{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
