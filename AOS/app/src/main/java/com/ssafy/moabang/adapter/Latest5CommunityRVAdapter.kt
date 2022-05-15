@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.moabang.data.model.dto.Community
 import com.ssafy.moabang.databinding.ListLatest5CommunityBinding
 
-class Latest3CommunityRVAdapter(var latest3CommunityList: List<Community>) :
-    RecyclerView.Adapter<Latest3CommunityRVAdapter.Latest3CommunityViewHolder>() {
+class Latest5CommunityRVAdapter(var data: List<Community>) :
+    RecyclerView.Adapter<Latest5CommunityRVAdapter.Latest3CommunityViewHolder>() {
 
     lateinit var itemClickListener: ItemClickListener
 
@@ -16,8 +16,8 @@ class Latest3CommunityRVAdapter(var latest3CommunityList: List<Community>) :
 
         init {
             itemView.setOnClickListener {
-                if(this@Latest3CommunityRVAdapter::itemClickListener.isInitialized){
-                    itemClickListener.onClick(latest3CommunityList[adapterPosition])
+                if(this@Latest5CommunityRVAdapter::itemClickListener.isInitialized){
+                    itemClickListener.onClick(data[adapterPosition])
                 }
             }
         }
@@ -38,13 +38,13 @@ class Latest3CommunityRVAdapter(var latest3CommunityList: List<Community>) :
     }
 
     override fun onBindViewHolder(
-        holder: Latest3CommunityRVAdapter.Latest3CommunityViewHolder,
+        holder: Latest5CommunityRVAdapter.Latest3CommunityViewHolder,
         position: Int
     ) {
-        holder.bindInfo(latest3CommunityList[position])
+        holder.bindInfo(data[position])
     }
 
-    override fun getItemCount(): Int = latest3CommunityList.size
+    override fun getItemCount(): Int = data.size
 
     interface ItemClickListener {
         fun onClick(community: Community)

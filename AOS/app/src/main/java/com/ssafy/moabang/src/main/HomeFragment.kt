@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.LinearSnapHelper
 import com.google.android.gms.maps.model.LatLng
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
-import com.ssafy.moabang.adapter.Latest3CommunityRVAdapter
+import com.ssafy.moabang.adapter.Latest5CommunityRVAdapter
 import com.ssafy.moabang.adapter.NearCafeListRVAdapter
 import com.ssafy.moabang.adapter.ThemeListRVAdapter
 import com.ssafy.moabang.data.model.dto.Cafe
@@ -61,7 +61,7 @@ class HomeFragment : Fragment() {
     private var cafeRepository = CafeRepository()
 
     private lateinit var latest3 : List<Community>
-    private lateinit var latest3CommunityRVAdapter: Latest3CommunityRVAdapter
+    private lateinit var latest3CommunityRVAdapter: Latest5CommunityRVAdapter
 
     private var recruitRepository = CommunityRepository()
 
@@ -232,8 +232,8 @@ class HomeFragment : Fragment() {
 
     private fun initLatest5() {
         if(latest3.isNotEmpty()){
-            latest3CommunityRVAdapter = Latest3CommunityRVAdapter(latest3)
-            latest3CommunityRVAdapter.itemClickListener = object : Latest3CommunityRVAdapter.ItemClickListener {
+            latest3CommunityRVAdapter = Latest5CommunityRVAdapter(latest3)
+            latest3CommunityRVAdapter.itemClickListener = object : Latest5CommunityRVAdapter.ItemClickListener {
                 override fun onClick(community: Community) {
                     val intent = Intent(requireActivity(), CommunityDetailActivity::class.java).putExtra("community", community).putExtra("mode","read")
                     startActivity(intent)

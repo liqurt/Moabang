@@ -26,7 +26,7 @@ class CommunityFragment : Fragment() {
     private var currentHeader: String = "전체"
     private lateinit var allCommunityList: List<Community>
     private lateinit var currentCommunityList: List<Community>
-    private lateinit var latest3AnnouncementList: List<Community>
+    private lateinit var latest3AnnouncementList: List<Community> // 최근 공지사항 3개
 
     private lateinit var binding: FragmentCommunityBinding
 
