@@ -1,6 +1,7 @@
 package com.ssafy.moabang.data.api
 
 import com.ssafy.moabang.data.model.dto.Community
+import com.ssafy.moabang.data.model.dto.RecruitCreateRequest
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -10,9 +11,7 @@ interface CommunityApi {
 
     @POST("/community/write")
     fun insertCommunity(
-        @Body header : String,
-        @Body title : String,
-        @Body content : String,
+        @Body requestCreateRequest: RecruitCreateRequest
     ) : Call<Boolean>
 
     @GET("/community/read/{rid}")
@@ -20,12 +19,10 @@ interface CommunityApi {
         @Path("rid") rid : Int
     ) : Call<Community>
 
-    @POST("/community/update/{rid}")
+    @PUT("/community/update/{rid}")
     fun updateCommunity(
         @Path("rid") rid : Int,
-        @Body header : String,
-        @Body title : String,
-        @Body content : String,
+        @Body requestCreateRequest: RecruitCreateRequest
     ) : Call<Boolean>
 
     @DELETE("/community/delete/{rid}")

@@ -46,6 +46,10 @@ class CommunityFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setButtons()
+    }
+
+    override fun onStart() {
+        super.onStart()
         setAllCommunity()
     }
 
@@ -71,7 +75,8 @@ class CommunityFragment : Fragment() {
             binding.rvCommuF3Announcement.visibility = View.VISIBLE
         }
         binding.fabWrite.setOnClickListener {
-            val intent = Intent(context, CommunityWriteActivity::class.java)
+            val intent = Intent(context, CommunityDetailActivity::class.java)
+            intent.putExtra("mode", "write")
             startActivity(intent)
         }
     }
@@ -100,7 +105,11 @@ class CommunityFragment : Fragment() {
     }
 
     private fun setLatest3() {
-        latest3AnnouncementList = allCommunityList.filter { it.header == "공지" }.subList(0, 3)
+        latest3AnnouncementList = if(allCommunityList.filter { it.header == "공지" }.size >= 3) {
+            allCommunityList.filter { it.header == "공지" }.take(3)
+        } else {
+            allCommunityList.filter { it.header == "공지" }
+        }
         init3AnnouncementRCV()
     }
 
@@ -154,6 +163,7 @@ class CommunityFragment : Fragment() {
     private fun goToCommunityDetail(community: Community) {
         val intent = Intent(requireContext(), CommunityDetailActivity::class.java)
         intent.putExtra("community", community)
+        intent.putExtra("mode", "read")
         startActivity(intent)
     }
 
