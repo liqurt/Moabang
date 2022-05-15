@@ -8,15 +8,15 @@ import retrofit2.Response
 import java.lang.Exception
 
 class CommunityRepository {
-    val communityApi: CommunityApi = GlobalApplication.retrofit.create(CommunityApi::class.java)
+    private val communityApi: CommunityApi = GlobalApplication.retrofit.create(CommunityApi::class.java)
 
     fun getAllCommunity() : Response<List<Community>>?{
         try {
             val res = communityApi.getAllCommunity().execute()
-            Log.d("AAAAA", "RecruitRepository_getAllCommunity${res.body()}")
+            Log.d("AAAAA", "CommunityRepository_getAllCommunity ${res.body()}")
             return res
         } catch (e: Exception) {
-            Log.d("AAAAA", "RecruitRepository_getAllCommunity ${e.message}")
+            Log.d("AAAAA", "CommunityRepository_getAllCommunity ${e.message}")
             e.printStackTrace()
         }
         return null
@@ -25,10 +25,10 @@ class CommunityRepository {
     fun insertCommunity(_header : String, _title: String, _content : String ) : Response<Boolean>? {
         try {
             val res = communityApi.insertCommunity(_header,_title,_content).execute()
-            Log.d("BBBBB", "RecruitRepository_insertCommunity${res.body()}")
+            Log.d("BBBBB", "CommunityRepository_insertCommunity${res.body()}")
             return res
         } catch (e: Exception) {
-            Log.d("BBBBB", "RecruitRepository_insertCommunity ${e.message}")
+            Log.d("BBBBB", "CommunityRepository_insertCommunity ${e.message}")
             e.printStackTrace()
         }
         return null
@@ -37,10 +37,10 @@ class CommunityRepository {
     fun getCommunity(_rid : Int) : Response<Community>?{
         try {
             val res = communityApi.getCommunity(_rid).execute()
-            Log.d("AAAAA", "RecruitRepository_getCommunity${res.body()}")
+            Log.d("AAAAA", "CommunityRepository_getCommunity${res.body()}")
             return res
         } catch (e: Exception) {
-            Log.d("AAAAA", "RecruitRepository_getCommunity ${e.message}")
+            Log.d("AAAAA", "CommunityRepository_getCommunity ${e.message}")
             e.printStackTrace()
         }
         return null
@@ -49,10 +49,10 @@ class CommunityRepository {
     fun updateCommunity(_rid: Int, _header : String, _title: String, _content : String ) : Response<Boolean>?{
         try {
             val res = communityApi.updateCommunity(_rid, _header, _title,_content).execute()
-            Log.d("AAAAA", "RecruitRepository_updateCommunity${res.body()}")
+            Log.d("AAAAA", "CommunityRepository_updateCommunity${res.body()}")
             return res
         } catch (e: Exception) {
-            Log.d("AAAAA", "RecruitRepository_updateCommunity ${e.message}")
+            Log.d("AAAAA", "CommunityRepository_updateCommunity ${e.message}")
             e.printStackTrace()
         }
         return null
@@ -61,10 +61,10 @@ class CommunityRepository {
     fun deleteCommunity(_rid: Int) : Response<Boolean>?{
         try {
             val res = communityApi.deleteCommunity(_rid,).execute()
-            Log.d("AAAAA", "RecruitRepository_deleteCommunity${res.body()}")
+            Log.d("AAAAA", "CommunityRepository_deleteCommunity${res.body()}")
             return res
         } catch (e: Exception) {
-            Log.d("AAAAA", "RecruitRepository_deleteCommunity ${e.message}")
+            Log.d("AAAAA", "CommunityRepository_deleteCommunity ${e.message}")
             e.printStackTrace()
         }
         return null
@@ -73,10 +73,10 @@ class CommunityRepository {
     fun getLatest5Community() : Response<List<Community>>?{
         try {
             val res = communityApi.getLatest5Community().execute()
-            Log.d("AAAAA", "RecruitRepository_getLatest5Community${res.body()}")
+            Log.d("AAAAA", "CommunityRepository_getLatest5Community${res.body()}")
             return res
         } catch (e: Exception) {
-            Log.d("AAAAA", "RecruitRepository_getLatest5Community ${e.message}")
+            Log.d("AAAAA", "CommunityRepository_getLatest5Community ${e.message}")
             e.printStackTrace()
         }
         return null

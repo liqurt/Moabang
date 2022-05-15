@@ -9,10 +9,10 @@ import java.time.LocalDateTime
 data class Community(
     var rid : Int,
     var user : User,
-    var title : String,
-    var content : String,
+    var title : String?,
+    var content : String?,
     var createDate : LocalDateTime,
     var updateDate : LocalDateTime,
-    var header : String,
+    var header : String?,
 ) : Parcelable
 // LocalDateTime

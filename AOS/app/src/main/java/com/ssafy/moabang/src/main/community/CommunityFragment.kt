@@ -2,6 +2,7 @@ package com.ssafy.moabang.src.main.community
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -142,6 +143,7 @@ class CommunityFragment : Fragment() {
     private suspend fun getAllCommunityFromServer(): List<Community> =
         withContext(Dispatchers.IO) {
             val result = communityRepository.getAllCommunity()
+            Log.d("AAAAA", "CommunityFragment_getAllCommunityFromServer : $result")
             if (result != null) {
                 return@withContext result.body()!!
             } else {
