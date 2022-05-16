@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingTop="5dp"
-    android:paddingBottom="5dp">
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp">
 
 
     <TextView
@@ -12,18 +12,20 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:layout_gravity="center_vertical"
         android:text="XX게시판"
+        android:textAlignment="center"
         android:textColor="@color/moabang_pink"
-        android:textSize="16dp"
+        android:textSize="18dp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_homeF_l5c_content"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:layout_weight="4"
         android:text="타이틀"
         android:textColor="@color/moabang_gray"
-        android:textSize="16dp"
-        android:textStyle="bold" />
+        android:textSize="16dp" />
 </LinearLayout>

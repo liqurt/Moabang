@@ -64,8 +64,9 @@ class ThemeListRVAdapter: RecyclerView.Adapter<ThemeListRVAdapter.ViewHolder>() 
                 val tvThemeLikeCount = itemView.findViewById<TextView>(R.id.tv_themeL_like_count)
                 tvThemeLikeCount.apply {
                     visibility = View.VISIBLE
-                    text = item.count.toString() + "♡"
+                    text = "+" + item.count.toString()
                 }
+                tvThemeName.textSize = 20F
             }else if(from == "CafeDetailActivity"){
                 itemView.findViewById<TextView>(R.id.tv_themeL_like_count).apply {
                     visibility = View.GONE
