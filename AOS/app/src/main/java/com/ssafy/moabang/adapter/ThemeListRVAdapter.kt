@@ -66,6 +66,13 @@ class ThemeListRVAdapter: RecyclerView.Adapter<ThemeListRVAdapter.ViewHolder>() 
                     visibility = View.VISIBLE
                     text = item.count.toString() + "♡"
                 }
+            }else if(from == "CafeDetailActivity"){
+                itemView.findViewById<TextView>(R.id.tv_themeL_like_count).apply {
+                    visibility = View.GONE
+                }
+                itemView.findViewById<ImageView>(R.id.iv_themeL_like).apply {
+                    visibility = View.GONE
+                }
             }
         }
     }
@@ -82,10 +89,14 @@ class ThemeListRVAdapter: RecyclerView.Adapter<ThemeListRVAdapter.ViewHolder>() 
             data[position].islike = !data[position].islike
             if(data[position].islike){
                 holder.itemView.findViewById<ImageView>(R.id.iv_themeL_like).setImageResource(R.drawable.icon_like_after)
+                data[position].count += 1
             } else {
                 holder.itemView.findViewById<ImageView>(R.id.iv_themeL_like).setImageResource(R.drawable.icon_like_before)
+                data[position].count -= 1
             }
             CoroutineScope(Dispatchers.Main).launch{
+
+                holder.itemView.findViewById<TextView>(R.id.tv_themeL_like_count).text = (data[position].count).toString() + "♡"
                 Repository.get().setThemeLike(data[position].tid, data[position].islike)
                 ThemeViewModel().themeLike(data[position].tid)
             }

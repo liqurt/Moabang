@@ -75,6 +75,7 @@ class CafeDetailActivity : AppCompatActivity() {
                     Log.d("AAAAA", "themeList : $data")
                     themeList = data
                     themeListRVAdapter.data = themeList
+                    themeListRVAdapter.from = "CafeDetailActivity"
                     binding.rvCafeDetailFThemeByCafe.apply {
                         adapter = themeListRVAdapter
                         layoutManager = LinearLayoutManager(this@CafeDetailActivity, LinearLayoutManager.VERTICAL, false)

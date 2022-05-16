@@ -194,7 +194,7 @@ public class ThemeController {
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
-    @ApiOperation(value = "해당 테마 리뷰 읽기", notes = "테마 리뷰 읽기 성공 시 HttpStatus 200 및 리스트 목록 없을 시 200 및 false 반환")
+    @ApiOperation(value = "tid로 해당 테마 리뷰 읽기", notes = "테마 리뷰 읽기 성공 시 HttpStatus 200 및 리스트 목록 없을 시 200 및 false 반환")
     @GetMapping("/review/list/{tid}")
     public ResponseEntity<?> showReviewList(@PathVariable int tid) {
         Optional<List<Review>> rlist = reviewRepository.findByTid(tid);
@@ -205,6 +205,19 @@ public class ThemeController {
 
 
         return new ResponseEntity<>(rlist.get(), HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "rid로 해당 테마 리뷰 읽기", notes = "테마 리뷰 읽기 성공 시 HttpStatus 200 및 리스트 목록 없을 시 200 및 false 반환")
+    @GetMapping("/review/{rid}")
+    public ResponseEntity<?> showReview(@PathVariable long rid) {
+        Optional<Review> review = reviewRepository.findByRid(rid);
+
+        if (!review.isPresent()) {
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        }
+
+
+        return new ResponseEntity<>(review.get(), HttpStatus.OK);
     }
 
     @ApiOperation(value = "해당 테마 리뷰 통계 정보", notes = "리뷰 통계 읽기 성공 시 HttpStatus 200 및 리스트 목록 없을 시 200 및 false 반환")

@@ -99,7 +99,6 @@ class LoginActivity : AppCompatActivity() {
                     val jwtToken = response.headers()["Authorization"]
                     if (jwtToken != null) {
                         sp.putString("moabangToken", jwtToken.toString())
-                        Log.d("AAAAA","jwtToken : $jwtToken")
                         sp.putInt("uid", response.body()!!.uid!!)
                     }
                     getCafesFromServer(jwtToken.toString())// 2. 서버에서 전체 카페 데이터를 가져오고, 이를 로컬 DB에 저장한다.
@@ -120,7 +119,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun getCafesFromServer(jwtToken: String) {
-        Log.d("AAAAA","getCafesAndMoveIntoLocalDB param : $jwtToken")
+        Log.d("AAAAA","JWT토큰: $jwtToken")
         val cafeService = GlobalApplication.retrofit.create(CafeApi::class.java)
         cafeService.getAllCafe(jwtToken).enqueue(object : Callback<List<Cafe>>{
             override fun onResponse(call: Call<List<Cafe>>, response: Response<List<Cafe>>) {
