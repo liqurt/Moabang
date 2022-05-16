@@ -70,6 +70,13 @@ class ThemeListRVAdapter: RecyclerView.Adapter<ThemeListRVAdapter.ViewHolder>() 
                     visibility = View.VISIBLE
                     text = item.count.toString() + "♡"
                 }
+            }else if(from == "CafeDetailActivity"){
+                itemView.findViewById<TextView>(R.id.tv_themeL_like_count).apply {
+                    visibility = View.GONE
+                }
+                itemView.findViewById<ImageView>(R.id.iv_themeL_like).apply {
+                    visibility = View.GONE
+                }
             }
         }
     }
