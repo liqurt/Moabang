@@ -58,14 +58,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_pritem_tname">
 
-        <ImageView
-            android:id="@+id/iv_pritem_img"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_pritem"
             android:layout_width="90dp"
             android:layout_height="110dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            app:cardCornerRadius="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+        <ImageView
+            android:id="@+id/iv_pritem_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             app:srcCompat="@drawable/img_themejpg" />
+
+        </androidx.cardview.widget.CardView>
 
         <com.iarcuschin.simpleratingbar.SimpleRatingBar
             android:id="@+id/ratingBar_pritem"
@@ -75,7 +84,7 @@
             android:layout_marginTop="16dp"
             android:max="5"
             android:numStars="5"
-            app:layout_constraintStart_toEndOf="@+id/iv_pritem_img"
+            app:layout_constraintStart_toEndOf="@+id/cv_pritem"
             app:layout_constraintTop_toTopOf="parent"
             app:srb_borderColor="@color/moabang_pink"
             app:srb_fillColor="@color/moabang_pink"
@@ -130,7 +139,7 @@
             android:textSize="14dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/iv_pritem_img"
+            app:layout_constraintStart_toEndOf="@+id/cv_pritem"
             app:layout_constraintTop_toBottomOf="@+id/ratingBar_pritem" />
 
         <LinearLayout
@@ -142,7 +151,7 @@
             android:layout_marginEnd="8dp"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/iv_pritem_img"
+            app:layout_constraintStart_toEndOf="@+id/cv_pritem"
             app:layout_constraintTop_toBottomOf="@+id/tv_pritem_detail">
 
             <LinearLayout
@@ -267,11 +276,11 @@
 
         <TextView
             android:id="@+id/tv_pritem_desc"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginBottom="8dp"
             android:maxHeight="80dp"
             android:scrollbars="vertical"
@@ -281,7 +290,7 @@
             android:textSize="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cv_pritem"
             app:layout_constraintTop_toBottomOf="@+id/ll_pritem" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,7 +8,7 @@ data class ReviewList(
     var content: String,
     var rid: Int,
     var cname: String,
-    var image: String,
+    var img: String,
     var tid: Int,
     var tname: String,
     var playDate: String,
