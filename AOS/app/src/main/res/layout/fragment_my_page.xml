@@ -45,6 +45,7 @@
             android:id="@+id/tv_mypageF_userName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:text="USER NAME"
             android:textColor="@color/moabang_gray"
             android:textSize="24sp"
@@ -57,69 +58,125 @@
             android:id="@+id/tv_mypageF_userEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:text="useremail@email.com"
             android:textColor="@color/moabang_pink"
             android:textSize="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/ll_mypageF"
             app:layout_constraintStart_toEndOf="@+id/civ_mypageF"
-            app:layout_constraintStart_toStartOf="@+id/ll_mypageF"
             app:layout_constraintTop_toBottomOf="@+id/tv_mypageF_userName" />
 
-        <LinearLayout
-            android:id="@+id/ll_mypageF"
+        <TextView
+            android:id="@+id/mypageF_success"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.23"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="5dp"
+            android:text="탈출 성공률"
+            android:textColor="@color/moabang_gray"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toStartOf="@+id/tv_mypageF_success"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@+id/civ_mypageF"
-            app:layout_constraintTop_toBottomOf="@+id/tv_mypageF_userEmail">
+            app:layout_constraintTop_toBottomOf="@+id/tv_mypageF_userEmail" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="선호정보"
-                android:paddingEnd="10dp"
-                android:textColor="@color/moabang_gray"
-                android:textSize="16dp"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tv_mypageF_success"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="66.6"
+            android:textColor="@color/moabang_pink"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/mypageF_success"
+            app:layout_constraintEnd_toStartOf="@+id/mypageF_successrate"
+            app:layout_constraintStart_toEndOf="@+id/mypageF_success" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+        <TextView
+            android:id="@+id/mypageF_successrate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="%"
+            android:textColor="@color/moabang_gray"
+            android:textSize="18dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_mypageF_success"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_mypageF_success" />
 
-                <TextView
-                    android:id="@+id/tv_mypageF_prefer_area"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="강남, 홍대"
-                    android:paddingBottom="4dp"
-                    android:textColor="@color/moabang_pink"
-                    android:textSize="16dp" />
+        <TextView
+            android:id="@+id/mypageF_try"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="도전한 테마"
+            android:textColor="@color/moabang_gray"
+            android:textSize="14dp"
+            app:layout_constraintEnd_toStartOf="@+id/tv_mypageF_try"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@+id/mypageF_done"
+            app:layout_constraintTop_toBottomOf="@+id/mypageF_success" />
 
-                <TextView
-                    android:id="@+id/tv_mypageF_prefer_genre"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="공포"
-                    android:paddingBottom="4dp"
-                    android:textColor="@color/moabang_pink"
-                    android:textSize="16dp" />
+        <TextView
+            android:id="@+id/tv_mypageF_try"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="6"
+            android:textColor="@color/moabang_pink"
+            android:textSize="14dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/mypageF_try"
+            app:layout_constraintEnd_toStartOf="@+id/mypageF_try2"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/mypageF_try" />
 
-                <TextView
-                    android:id="@+id/tv_mypageF_prefer_difficulty"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="난이도 3, 4"
-                    android:textColor="@color/moabang_pink"
-                    android:textSize="16dp" />
-            </LinearLayout>
-        </LinearLayout>
+        <TextView
+            android:id="@+id/mypageF_try2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="개"
+            android:textColor="@color/moabang_gray"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_mypageF_try"
+            app:layout_constraintEnd_toEndOf="@+id/mypageF_done2"
+            app:layout_constraintStart_toEndOf="@+id/tv_mypageF_try" />
+
+        <TextView
+            android:id="@+id/mypageF_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="성공한 테마"
+            android:textColor="@color/moabang_gray"
+            android:textSize="14dp"
+            app:layout_constraintEnd_toStartOf="@+id/tv_mypageF_done"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@+id/mypageF_success"
+            app:layout_constraintTop_toBottomOf="@+id/mypageF_try" />
+
+        <TextView
+            android:id="@+id/tv_mypageF_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="6"
+            android:textColor="@color/moabang_pink"
+            android:textSize="14dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/mypageF_done"
+            app:layout_constraintEnd_toStartOf="@+id/mypageF_done2"
+            app:layout_constraintStart_toEndOf="@+id/mypageF_done" />
+
+        <TextView
+            android:id="@+id/mypageF_done2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="개"
+            android:textColor="@color/moabang_gray"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_mypageF_done"
+            app:layout_constraintEnd_toEndOf="@+id/mypageF_successrate"
+            app:layout_constraintStart_toEndOf="@+id/tv_mypageF_done" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -139,14 +196,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cl_mypageF_profile">
 
-        <TextView
-            android:id="@+id/tv_mypageF_menu1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="선호정보 수정"
-            android:textColor="@color/moabang_gray"
-            android:textSize="16dp" />
 
         <TextView
             android:id="@+id/tv_mypageF_menu2"
@@ -182,7 +231,8 @@
             android:layout_weight="1"
             android:text="나의 방탈출 통계"
             android:textColor="@color/moabang_gray"
-            android:textSize="16dp" />
+            android:textSize="16dp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_mypageF_menu6"
@@ -197,7 +247,7 @@
             android:id="@+id/tv_mypageF_blank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_weight="7"
             android:text=""
             android:textColor="@color/moabang_gray"
             android:textSize="16dp"/>
