@@ -18,6 +18,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
+            android:name=".src.mypage.MyPostActivity"
+            android:exported="true" />
+        <activity
             android:name=".src.main.community.CommunityDetailActivity"
             android:exported="false" />
         <activity

@@ -16,6 +16,7 @@ import com.ssafy.moabang.databinding.FragmentMyPageBinding
 import com.ssafy.moabang.src.login.LoginActivity
 import com.ssafy.moabang.src.mypage.MyDoneActivity
 import com.ssafy.moabang.src.mypage.MyLikeActivity
+import com.ssafy.moabang.src.mypage.MyPostActivity
 import com.ssafy.moabang.src.theme.ThemeCompareActivity
 
 class MyPageFragment : Fragment() {
@@ -70,6 +71,7 @@ class MyPageFragment : Fragment() {
         binding.tvMypageFMenu5.setOnClickListener { // 나의 방탈출 통계
         }
         binding.tvMypageFMenu6.setOnClickListener { // 작성글 관리
+            startActivity(Intent(requireContext(), MyPostActivity::class.java))
         }
     }
 
