@@ -30,4 +30,10 @@ interface ReviewApi {
     fun deleteReview(
         @Path("rid") rid: Int
     ) : Call<String>
+
+
+    @GET("theme/review/{rid}")
+    fun getReview(
+        @Path("rid") rid: Int
+    ) : Call<ReviewResponse>
 }
