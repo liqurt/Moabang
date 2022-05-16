@@ -9,6 +9,7 @@ import com.self.roomescape.repository.ReviewRepository;
 import com.self.roomescape.entity.User;
 import com.self.roomescape.repository.ThemeRepository;
 import com.self.roomescape.repository.UserRepository;
+import com.self.roomescape.repository.mapping.MyPageReviewListMapping;
 import com.self.roomescape.repository.mapping.MyPageTidMapping;
 import com.self.roomescape.repository.mapping.ThemeListMapping;
 import io.swagger.annotations.Api;
@@ -164,7 +165,7 @@ public class UserPageController {
         }
 
         //커뮤니티, 리뷰 부분
-        List<Review> reviewList = reviewRepository.findAllByUserInfo_Uid(user.get().getUid());
+        List<MyPageReviewListMapping> reviewList = reviewRepository.findByReviewData(user.get().getUid());
         List<Community> communityList = communityRepository.findAllByUser_Uid(user.get().getUid());
         Map<String, List<?>> map = new HashMap<>();
         map.put("reviewList", reviewList);
