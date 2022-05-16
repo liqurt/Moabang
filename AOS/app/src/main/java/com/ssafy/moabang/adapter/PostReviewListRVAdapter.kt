@@ -14,6 +14,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.iarcuschin.simpleratingbar.SimpleRatingBar
 import com.ssafy.moabang.R
 import com.ssafy.moabang.data.model.dto.ReviewList
+import com.ssafy.moabang.data.model.viewmodel.MyPageViewModel
 import com.ssafy.moabang.data.model.viewmodel.ReviewViewModel
 import com.ssafy.moabang.src.theme.ReviewActivity
 import com.ssafy.moabang.src.util.CustomDialog
@@ -79,6 +80,7 @@ class PostReviewListRVAdapter: RecyclerView.Adapter<PostReviewListRVAdapter.View
                 .setPositiveButtonText("삭제")
                 .setOnPositiveClickListener{
                     ReviewViewModel().reviewDelete(data[position].rid)
+                    MyPageViewModel().getAllDoneTheme()
                     data.removeAt(position)
                     notifyItemRemoved(position)
                     notifyItemRangeChanged(position, data.size)

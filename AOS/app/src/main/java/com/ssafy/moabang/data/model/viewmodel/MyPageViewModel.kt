@@ -37,7 +37,7 @@ class MyPageViewModel: ViewModel() {
         get() = _myPostLiveData
 
     private val totalLikeList = mutableListOf<Theme>()
-    private val totalDoneThemeList = mutableListOf<DoneThemeResponse>()
+    private var totalDoneThemeList = mutableListOf<DoneThemeResponse>()
     private val totalDoneTidList = mutableListOf<DoneTidResponse>()
     private var totalPost:MyPostResponse? = null
 
@@ -83,6 +83,7 @@ class MyPageViewModel: ViewModel() {
 
         if(result != null) {
             if (result.isSuccessful) {
+                totalDoneThemeList = mutableListOf<DoneThemeResponse>()
                 Log.d("MYPAGE VIEWMODEL TEST", "success: ${result.body()}")
                 result.body()!!.forEach {
                     if (!totalDoneThemeList.contains(it)) {
