@@ -11,7 +11,7 @@ const CafeMain = () => {
     const [cafeData, setCafeData] = useState([]); //DB에서 받아온 데이터 저장
     const [cafeCount, setCafeCount] = useState(45); //cafe 총 개수
     async function getCafeData() {
-        axios.get('http://k6d205.p.ssafy.io:8080/cafe/list')
+        await axios.get('/cafe/list')
             .then(response => {
                 setCafeData(response.data);
                 setCafeCount(response.data.length);

@@ -6,6 +6,7 @@ import ReviewWrite from '../Review/ReviewWrite';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+
 const ThemeDetail = (props) => {
     //리뷰 더미 데이터
     const [listRender, setListRender] = useState(true);//리뷰의 상태가 변하면 리랜더링을 하기 위한 state
@@ -13,7 +14,26 @@ const ThemeDetail = (props) => {
     const [likeCheck, setLikeCheck] = useState(false);//좋아요 true false 인지 저장하기 윈한 state
     const [isLikes, setIsLike]= useState(false);//좋아요 변화를 감지해서 리랜더링을 하기 위한 state
     const [reviewRating, setReviewRating] = useState([]);
-    
+
+
+    //비교하기 리스트에 테마 추가
+    const addCompareList = () => {
+        axios.get(`/compare/${props.Theme.tid}`,
+            {
+                headers: {
+                    'Authorization': localStorage.getItem("myToken")
+                }
+            }
+        ).then(res => {
+            Swal.fire({
+                icon: 'success',
+                title: res.data
+            })
+        }).catch(error => {
+            console.error(error);
+        });
+
+    }
 
     //테마 리스트를 가져온다.
     const getThemeList = () => {
@@ -88,7 +108,6 @@ const ThemeDetail = (props) => {
 
     const heartChange = (event) => {
         //좋아요 버튼
-        
         axios.get(`/theme/${event.target.alt}/like/`,
             {
                 headers: {
@@ -115,6 +134,7 @@ const ThemeDetail = (props) => {
         return +(Math.round(num + "e+1")  + "e-1");
     }
 
+    
 
     return (
         <div className='ThemeDetailTotal'>
@@ -160,8 +180,10 @@ const ThemeDetail = (props) => {
                 </div>
 
             </div>
-            
-
+            <div>
+                <a href='/compare'>비교하기 이동 </a>
+                <button id='compareBtn' onClick={addCompareList}> 비교 리스트 추가</button>
+            </div>
             <ReviewWrite tid={Theme.tid} setListRender={setListRender}/>
             <div>
                 <ReviewList tid={Theme.tid} listRender={listRender} setListRender={setListRender} />

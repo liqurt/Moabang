@@ -13,7 +13,7 @@ const CafeDetail = (props) => {
     //카페이 있는 테마 정보를 가저온다.
     const [themeData, setThemeData] = useState([]); //DB에서 받아온 데이터 저장
     async function getThemeData() {
-        axios.get(`http://k6d205.p.ssafy.io:8080/cafe/theme/${cafe.cid}`)
+        axios.get(`/cafe/theme/${cafe.cid}`)
             .then(response => {
                 setThemeData(response.data);
         });

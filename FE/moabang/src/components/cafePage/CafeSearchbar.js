@@ -46,7 +46,7 @@ const CafeSearchbar = (props) => {
     useEffect(() => {
         setPageCnt((c) => c = filteredProducts.length);
         
-    }, [searchValue]);
+    }, [filteredProducts]);
 
     
 

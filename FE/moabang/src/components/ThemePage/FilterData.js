@@ -125,7 +125,7 @@ export const diffBtn = [
         name: "3명",
         value:3
     },
-    {
+    {  
         name: "4명",
         value:4
     },
