@@ -1,6 +1,8 @@
 package com.ssafy.moabang.src.main.cafe
 
 import android.content.DialogInterface
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -27,6 +29,7 @@ class CafeListDialog : DialogFragment(), AdapterView.OnItemSelectedListener {
         savedInstanceState: Bundle?
     ): View {
         binding = CafeListDialogFragmentBinding.inflate(inflater, container, false)
+        dialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         return binding.root
     }
 
@@ -37,7 +40,7 @@ class CafeListDialog : DialogFragment(), AdapterView.OnItemSelectedListener {
             adapter = ArrayAdapter.createFromResource(
                 requireContext(),
                 R.array.cafe_list_island,
-                android.R.layout.simple_spinner_dropdown_item
+                R.layout.spinner_text
             )
             onItemSelectedListener = this@CafeListDialog
         }
@@ -46,7 +49,7 @@ class CafeListDialog : DialogFragment(), AdapterView.OnItemSelectedListener {
             adapter = ArrayAdapter.createFromResource(
                 requireContext(),
                 R.array.cafe_list_si_seoul,
-                android.R.layout.simple_spinner_dropdown_item
+                R.layout.spinner_text
             )
             onItemSelectedListener = this@CafeListDialog
         }
@@ -76,49 +79,49 @@ class CafeListDialog : DialogFragment(), AdapterView.OnItemSelectedListener {
                     binding.spSi.adapter = ArrayAdapter.createFromResource(
                         requireContext(),
                         R.array.cafe_list_si_seoul,
-                        android.R.layout.simple_spinner_dropdown_item
+                        R.layout.spinner_text
                     )
                 }
                 "경기/인천" -> {
                     binding.spSi.adapter = ArrayAdapter.createFromResource(
                         requireContext(),
                         R.array.cafe_list_si_gyeonggi_incheon,
-                        android.R.layout.simple_spinner_dropdown_item
+                        R.layout.spinner_text
                     )
                 }
                 "충청" -> {
                     binding.spSi.adapter = ArrayAdapter.createFromResource(
                         requireContext(),
                         R.array.cafe_list_si_chungcheong,
-                        android.R.layout.simple_spinner_dropdown_item
+                        R.layout.spinner_text
                     )
                 }
                 "강원" -> {
                     binding.spSi.adapter = ArrayAdapter.createFromResource(
                         requireContext(),
                         R.array.cafe_list_si_gangwon,
-                        android.R.layout.simple_spinner_dropdown_item
+                        R.layout.spinner_text
                     )
                 }
                 "경상" -> {
                     binding.spSi.adapter = ArrayAdapter.createFromResource(
                         requireContext(),
                         R.array.cafe_list_si_gyeongsang,
-                        android.R.layout.simple_spinner_dropdown_item
+                        R.layout.spinner_text
                     )
                 }
                 "전라" -> {
                     binding.spSi.adapter = ArrayAdapter.createFromResource(
                         requireContext(),
                         R.array.cafe_list_si_jeolla,
-                        android.R.layout.simple_spinner_dropdown_item
+                        R.layout.spinner_text
                     )
                 }
                 "제주" -> {
                     binding.spSi.adapter = ArrayAdapter.createFromResource(
                         requireContext(),
                         R.array.cafe_list_si_jeju,
-                        android.R.layout.simple_spinner_dropdown_item
+                        R.layout.spinner_text
                     )
                 }
             }
