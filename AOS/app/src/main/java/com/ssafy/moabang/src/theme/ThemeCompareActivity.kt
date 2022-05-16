@@ -44,7 +44,7 @@ class ThemeCompareActivity : AppCompatActivity() {
 
     private fun init(){
         binding.toolbarThemeCompare.ivToolbarIcon.setOnClickListener { finish() }
-        binding.toolbarThemeCompare.tvToolbarTitle.text = "테마 비교하기"
+        binding.toolbarThemeCompare.tvToolbarTitle.text = "테마 비교"
 
         if(CompareList.items.isNotEmpty()) binding.tvTcbsBlank.visibility = View.GONE
 
