@@ -13,4 +13,10 @@
         <item name="android:statusBarColor">@color/moabang_pink</item>
         <!-- Customize your theme here. -->
     </style>
+    <style name="Theme.Moabang.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.Moabang.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.Moabang.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

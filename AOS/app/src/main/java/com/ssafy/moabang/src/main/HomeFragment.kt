@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.LinearSnapHelper
 import com.google.android.gms.maps.model.LatLng
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
-import com.ssafy.moabang.adapter.Latest5CommunityRVAdapter
+import com.ssafy.moabang.adapter.Latest3CommunityRVAdapter
 import com.ssafy.moabang.adapter.NearCafeListRVAdapter
 import com.ssafy.moabang.adapter.ThemeListRVAdapter
 import com.ssafy.moabang.data.model.dto.Cafe
@@ -32,6 +32,7 @@ import com.ssafy.moabang.data.model.repository.CommunityRepository
 import com.ssafy.moabang.data.model.repository.Repository
 import com.ssafy.moabang.databinding.FragmentHomeBinding
 import com.ssafy.moabang.src.main.cafe.CafeDetailActivity
+import com.ssafy.moabang.src.main.community.CommunityDetailActivity
 import com.ssafy.moabang.src.util.LocationUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -59,8 +60,8 @@ class HomeFragment : Fragment() {
 
     private var cafeRepository = CafeRepository()
 
-    private lateinit var latest5CommunityList : List<Community>
-    private lateinit var latest5CommunityRVAdapter: Latest5CommunityRVAdapter
+    private lateinit var latest3 : List<Community>
+    private lateinit var latest3CommunityRVAdapter: Latest3CommunityRVAdapter
 
     private var recruitRepository = CommunityRepository()
 
@@ -110,8 +111,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun setNearCafeList() {
-        //test
-        // 제주 동쪽 33.455988, 126.894981
         if (currentLocation != null) {
             CoroutineScope(Dispatchers.Main).launch {
                 var allCafeList = listOf<Cafe>()
@@ -173,9 +172,9 @@ class HomeFragment : Fragment() {
     private fun setLatest5RecruitList() {
         CoroutineScope(Dispatchers.Main).launch {
             CoroutineScope(Dispatchers.IO).async {
-                latest5CommunityList = getLatest5Community()
+                latest3 = getLatest5Community()
             }.await()
-            initLatest5CommunityRCV()
+            initLatest5()
         }
     }
 
@@ -233,12 +232,18 @@ class HomeFragment : Fragment() {
     }
 
 
-    private fun initLatest5CommunityRCV() {
-        if(latest5CommunityList.isNotEmpty()){
-            latest5CommunityRVAdapter = Latest5CommunityRVAdapter(latest5CommunityList)
+    private fun initLatest5() {
+        if(latest3.isNotEmpty()){
+            latest3CommunityRVAdapter = Latest3CommunityRVAdapter(latest3)
+            latest3CommunityRVAdapter.itemClickListener = object : Latest3CommunityRVAdapter.ItemClickListener {
+                override fun onClick(community: Community) {
+                    val intent = Intent(requireActivity(), CommunityDetailActivity::class.java).putExtra("community", community)
+                    startActivity(intent)
+                }
+            }
             binding.rvHomeFLatest5Community.apply {
                 layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                adapter = latest5CommunityRVAdapter
+                adapter = latest3CommunityRVAdapter
             }
         }
     }
