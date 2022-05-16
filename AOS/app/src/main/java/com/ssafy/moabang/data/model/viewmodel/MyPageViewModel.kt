@@ -10,6 +10,7 @@ import com.ssafy.moabang.data.model.repository.MyPageRepository
 import com.ssafy.moabang.data.model.repository.Repository
 import com.ssafy.moabang.data.model.response.DoneThemeResponse
 import com.ssafy.moabang.data.model.response.DoneTidResponse
+import com.ssafy.moabang.data.model.response.MyPostResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -31,9 +32,14 @@ class MyPageViewModel: ViewModel() {
     val doneTidListLiveData : LiveData<List<DoneTidResponse>>
         get() = _doneTidListLiveData
 
+    private val _myPostLiveData = MutableLiveData<MyPostResponse>()
+    val myPostLiveData: LiveData<MyPostResponse>
+        get() = _myPostLiveData
+
     private val totalLikeList = mutableListOf<Theme>()
     private val totalDoneThemeList = mutableListOf<DoneThemeResponse>()
     private val totalDoneTidList = mutableListOf<DoneTidResponse>()
+    private var totalPost:MyPostResponse? = null
 
     fun getAllLikeTheme() = viewModelScope.launch {
         getLikeTheme()
@@ -46,6 +52,10 @@ class MyPageViewModel: ViewModel() {
 
     fun getAllDoneTid() = viewModelScope.launch {
         getDoneTid()
+    }
+
+    fun getAllPost() = viewModelScope.launch {
+        getMyPost()
     }
 
     private suspend fun getLikeTheme() = withContext(Dispatchers.IO) {
@@ -64,7 +74,7 @@ class MyPageViewModel: ViewModel() {
             }
             _likeListLiveData.postValue(totalLikeList)
         } else {
-            Log.d("MYPAGE VIEWMODEL TEST", "getTheme: response is null")
+            Log.d("MYPAGE VIEWMODEL TEST", "getLikeTheme: response is null")
         }
     }
 
@@ -84,7 +94,7 @@ class MyPageViewModel: ViewModel() {
             }
             _doneThemeListLiveData.postValue(totalDoneThemeList)
         } else {
-            Log.d("MYPAGE VIEWMODEL TEST", "getTheme: response is null")
+            Log.d("MYPAGE VIEWMODEL TEST", "getDoneTheme: response is null")
         }
     }
 
@@ -104,7 +114,23 @@ class MyPageViewModel: ViewModel() {
             }
             _doneTidListLiveData.postValue(totalDoneTidList)
         } else {
-            Log.d("MYPAGE VIEWMODEL TEST", "getTheme: response is null")
+            Log.d("MYPAGE VIEWMODEL TEST", "getDoneTid: response is null")
+        }
+    }
+
+    private suspend fun getMyPost() = withContext(Dispatchers.IO) {
+        val result: Response<MyPostResponse>? = mypageRepository.getMyPost()
+
+        if(result != null) {
+            if (result.isSuccessful) {
+                Log.d("MYPAGE VIEWMODEL TEST", "success: ${result.body()}")
+                totalPost = result.body()
+            }else{
+                Log.d("MYPAGE VIEWMODEL TEST", "getMyPost fail: ${result.message()}")
+            }
+            _myPostLiveData.postValue(totalPost!!)
+        } else {
+            Log.d("MYPAGE VIEWMODEL TEST", "getMyPost: response is null")
         }
     }
 }

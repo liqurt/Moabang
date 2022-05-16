@@ -7,6 +7,7 @@ import com.ssafy.moabang.data.api.MyPageApi
 import com.ssafy.moabang.data.model.dto.Theme
 import com.ssafy.moabang.data.model.response.DoneThemeResponse
 import com.ssafy.moabang.data.model.response.DoneTidResponse
+import com.ssafy.moabang.data.model.response.MyPostResponse
 import java.lang.Exception
 import retrofit2.Response
 
@@ -46,4 +47,14 @@ class MyPageRepository {
         return null
     }
 
+    fun getMyPost(): Response<MyPostResponse>? {
+        try{
+            var res = mypageApi.getMyPost().execute()
+            Log.d("Mypage Repository Test","getMyPost 성공")
+            return res
+        } catch (e: Exception){
+            e.printStackTrace()
+        }
+        return null
+    }
 }
