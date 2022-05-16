@@ -13,7 +13,7 @@ public interface MyPageReviewListMapping {
 
     String getCname();
 
-    String getUrl();
+    String getImg();
 
     String getRating();
 
