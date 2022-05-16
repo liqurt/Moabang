@@ -67,7 +67,7 @@ class ReviewListRVAdapter: RecyclerView.Adapter<ReviewListRVAdapter.ViewHolder>(
         holder.itemView.findViewById<TextView>(R.id.tv_reviewL_revise).setOnClickListener {
             val intent = Intent(holder.itemView.context, ReviewActivity::class.java)
                 .putExtra("type", "수정")
-                .putExtra("review", data[position])
+                .putExtra("review", data[position].rid)
             ContextCompat.startActivity(holder.itemView.context, intent, null)
         }
 

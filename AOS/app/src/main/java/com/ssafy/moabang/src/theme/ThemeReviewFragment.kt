@@ -39,7 +39,7 @@ class ThemeReviewFragment : Fragment() {
     private lateinit var doneList: List<DoneTidResponse>
 
     override fun onResume() {
-        reviewViewModel.getReview(theme.tid)
+        reviewViewModel.getAllReview(theme.tid)
         themeViewModel.themeStat(theme.tid)
         myPageViewModel.getAllDoneTid()
         super.onResume()
