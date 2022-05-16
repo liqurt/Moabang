@@ -90,7 +90,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="누구보다 빠르게 난 남들과는 다르게 색다르게 리듬을 타는 비트위의 나그네\n죠죠 슬픈 음악이 부를때 널 생각해애애애 죠죠 잔인한 너는 왜애애애 기다리지 않냐고\n헤이~ 마 죠죠 럽~ 예스 죠죠 스테이~ 뭘 잘못 했니 아 아 워즈 블라인ㄷ"
-            android:textColor="@color/moabang_gray" />
+            android:textColor="@color/moabang_gray"
+            android:textSize="16dp" />
     </LinearLayout>
 
     <LinearLayout

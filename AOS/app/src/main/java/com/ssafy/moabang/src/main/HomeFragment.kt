@@ -215,7 +215,7 @@ class HomeFragment : Fragment() {
                     val intent =
                         Intent(requireActivity(), ThemeDetailActivity::class.java).putExtra(
                             "theme",
-                            item
+                            item.tid
                         )
                     startActivity(intent)
                 }

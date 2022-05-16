@@ -40,10 +40,12 @@ class ThemeDetailActivity : AppCompatActivity() {
         binding = ActivityThemeDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         Log.d("token", "onCreate token : ${sp.getString("moabangToken")}")
-        intent.getParcelableExtra<Theme>("theme")?.let {
-            theme = it
-            init()
-        } ?: finish()
+        intent.getIntExtra("theme", 0).let {
+            CoroutineScope(Dispatchers.Main).launch {
+                theme = Repository.get().getTheme(it)
+                init()
+            }
+        }
     }
 
     private fun init(){

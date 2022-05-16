@@ -59,4 +59,14 @@ class ReviewRepository {
         return null
     }
 
+    fun getReview(rid: Int): Response<ReviewResponse>? {
+        try {
+            var res = reviewApi.getReview(rid).execute()
+            Log.d("Review Repository Test", "get 성공")
+            return res
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return null
+    }
 }

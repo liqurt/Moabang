@@ -7,14 +7,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.viewModels
+import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.kakao.sdk.user.UserApiClient
+import com.ssafy.moabang.data.model.viewmodel.MyPageViewModel
 import com.ssafy.moabang.databinding.FragmentMyPageBinding
 import com.ssafy.moabang.src.login.LoginActivity
+import com.ssafy.moabang.src.mypage.MyDoneActivity
+import com.ssafy.moabang.src.mypage.MyLikeActivity
+import com.ssafy.moabang.src.mypage.MyPostActivity
 import com.ssafy.moabang.src.theme.ThemeCompareActivity
 
 class MyPageFragment : Fragment() {
     private lateinit var binding: FragmentMyPageBinding
+    private val mypageViewModel: MyPageViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,31 +34,44 @@ class MyPageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.tvMypageFLogout.setOnClickListener { logout() }
+    }
 
+    override fun onResume() {
         init()
+        super.onResume()
     }
 
     private fun init(){
         setUIwithKakao()
         initClickListeners()
+        var cnt = 0
+
+        mypageViewModel.getAllDoneTheme()
+        mypageViewModel.doneThemeListLiveData.observe(this){
+            cnt = 0
+            for(item in it){
+                if(item.isSuccess == 1) cnt++
+            }
+            binding.tvMypageFTry.text = it.size.toString()
+            binding.tvMypageFDone.text = cnt.toString()
+            binding.tvMypageFSuccess.text = String.format("%.1f", cnt.toDouble()/it.size * 100)
+        }
     }
 
     private fun initClickListeners(){
-        binding.tvMypageFMenu1.setOnClickListener { // 선호정보 수정
-
-        }
         binding.tvMypageFMenu2.setOnClickListener { // 찜한 테마
-
+            startActivity(Intent(requireContext(), MyLikeActivity::class.java))
         }
         binding.tvMypageFMenu3.setOnClickListener { // 테마 비교
             startActivity(Intent(requireContext(), ThemeCompareActivity::class.java))
         }
         binding.tvMypageFMenu4.setOnClickListener { // 이용한 테마
-
+            startActivity(Intent(requireContext(), MyDoneActivity::class.java))
         }
         binding.tvMypageFMenu5.setOnClickListener { // 나의 방탈출 통계
         }
         binding.tvMypageFMenu6.setOnClickListener { // 작성글 관리
+            startActivity(Intent(requireContext(), MyPostActivity::class.java))
         }
     }
 

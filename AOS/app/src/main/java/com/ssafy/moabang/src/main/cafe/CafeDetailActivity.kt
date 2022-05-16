@@ -92,7 +92,7 @@ class CafeDetailActivity : AppCompatActivity() {
                                 val intent = Intent(
                                     this@CafeDetailActivity,
                                     ThemeDetailActivity::class.java
-                                ).putExtra("theme", item)
+                                ).putExtra("theme", item.tid)
                                 startActivity(intent)
                             }
                         }

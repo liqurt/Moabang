@@ -25,14 +25,19 @@ class ReviewViewModel: ViewModel() {
     val reviewListLiveData : LiveData<List<ReviewResponse>>
         get() = _reviewListLiveData
 
+    private val _reviewLiveData = MutableLiveData<ReviewResponse>()
+    val reviewLiveData : LiveData<ReviewResponse>
+        get() = _reviewLiveData
+
     private val totalReviewList = mutableListOf<ReviewResponse>()
+    private var review: ReviewResponse? = null
 
     fun reviewAdd(review: ReviewForCreate) = viewModelScope.launch {
         addReview(review)
     }
 
-    fun getReview(tid: Int) = viewModelScope.launch {
-        readReview(tid)
+    fun getAllReview(rid: Int) = viewModelScope.launch {
+        readReview(rid)
     }
 
     fun reviewUpdate(rid: Int, review: ReviewForUpdate) = viewModelScope.launch {
@@ -41,6 +46,10 @@ class ReviewViewModel: ViewModel() {
 
     fun reviewDelete(rid: Int) = viewModelScope.launch {
         deleteReview(rid)
+    }
+
+    fun getReview(rid: Int) = viewModelScope.launch {
+        getOneReview(rid)
     }
 
     private suspend fun addReview(review: ReviewForCreate) = withContext(Dispatchers.IO) {
@@ -108,5 +117,19 @@ class ReviewViewModel: ViewModel() {
             }
         }
         _reviewListLiveData.postValue(totalReviewList)
+    }
+
+    private suspend fun getOneReview(rid: Int) = withContext(Dispatchers.IO) {
+        val result: Response<ReviewResponse>? = reviewRepository.getReview(rid)
+
+        if(result != null){
+            if(result.isSuccessful){
+                review = result.body()
+                Log.d("REVIEW VIEWMODEL TEST", "getReview SUCCESS: ${result.body()}")
+                _reviewLiveData.postValue(review!!)
+            } else {
+                Log.d("REVIEW VIEWMODEL TEST", "getReview FAILED: ${result.body()}")
+            }
+        }
     }
 }

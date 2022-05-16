@@ -7,52 +7,46 @@
     android:layout_margin="4dp">
 
     <TextView
-        android:id="@+id/tv_reviewL_name"
+        android:id="@+id/tv_pritem_tname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="334dp"
-        android:text="방탈굿"
+        android:layout_marginBottom="4dp"
+        android:text="꼬레아 우라"
         android:textColor="@color/moabang_gray"
         android:textSize="16dp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/tv_reviewL_info"
+        app:layout_constraintBottom_toTopOf="@+id/cl_pritem"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_reviewL_info"
+        android:id="@+id/tv_pritem_cname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="2인, 탈출 성공"
+        android:text="코드케이 홍대점"
         android:textColor="@color/moabang_pink"
         android:textSize="14dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_reviewL_name"
-        app:layout_constraintStart_toEndOf="@+id/tv_reviewL_name" />
-
-    <View
-        android:id="@+id/reviewL_blank"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_reviewL_info"
-        app:layout_constraintEnd_toStartOf="@+id/tv_reviewL_date"
-        app:layout_constraintStart_toEndOf="@+id/tv_reviewL_info" />
+        app:layout_constraintBottom_toBottomOf="@+id/tv_pritem_tname"
+        app:layout_constraintStart_toEndOf="@+id/tv_pritem_tname" />
 
     <TextView
-        android:id="@+id/tv_reviewL_date"
+        android:id="@+id/tv_pritem_regDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="4dp"
         android:text="2022.04.15"
         android:textColor="@color/moabang_gray"
         android:textSize="12dp"
-        app:layout_constraintBottom_toBottomOf="@+id/reviewL_blank"
+        app:layout_constraintBottom_toTopOf="@+id/cl_pritem"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/reviewL_blank" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_pritem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
@@ -62,17 +56,35 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_reviewL_name">
+        app:layout_constraintTop_toBottomOf="@+id/tv_pritem_tname">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_pritem"
+            android:layout_width="90dp"
+            android:layout_height="110dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            app:cardCornerRadius="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+        <ImageView
+            android:id="@+id/iv_pritem_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/img_themejpg" />
+
+        </androidx.cardview.widget.CardView>
 
         <com.iarcuschin.simpleratingbar.SimpleRatingBar
-            android:id="@+id/ratingBar_reviewL"
+            android:id="@+id/ratingBar_pritem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:max="5"
             android:numStars="5"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cv_pritem"
             app:layout_constraintTop_toTopOf="parent"
             app:srb_borderColor="@color/moabang_pink"
             app:srb_fillColor="@color/moabang_pink"
@@ -83,30 +95,30 @@
             app:srb_stepSize="0.5" />
 
         <TextView
-            android:id="@+id/tv_reviewL_rating"
+            android:id="@+id/tv_pritem_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="4.1"
             android:textColor="@color/moabang_gray"
             android:textSize="14dp"
-            app:layout_constraintBottom_toBottomOf="@+id/ratingBar_reviewL"
-            app:layout_constraintStart_toEndOf="@+id/ratingBar_reviewL"
-            app:layout_constraintTop_toTopOf="@+id/ratingBar_reviewL" />
+            app:layout_constraintBottom_toBottomOf="@+id/ratingBar_pritem"
+            app:layout_constraintStart_toEndOf="@+id/ratingBar_pritem"
+            app:layout_constraintTop_toTopOf="@+id/ratingBar_pritem" />
 
         <TextView
-            android:id="@+id/tv_reviewL_revise"
+            android:id="@+id/tv_pritem_revise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:text="수정"
             android:textColor="@color/moabang_pink"
             android:textSize="14dp"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_reviewL_delete"
-            app:layout_constraintEnd_toStartOf="@+id/tv_reviewL_delete" />
+            app:layout_constraintBottom_toBottomOf="@+id/tv_pritem_delete"
+            app:layout_constraintEnd_toStartOf="@+id/tv_pritem_delete" />
 
         <TextView
-            android:id="@+id/tv_reviewL_delete"
+            android:id="@+id/tv_pritem_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -117,17 +129,30 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:id="@+id/ll_reviewL"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tv_pritem_detail"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp"
+            android:text="2022.05.16, 2명, 탈출 성공"
+            android:textColor="@color/moabang_gray"
+            android:textSize="14dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cv_pritem"
+            app:layout_constraintTop_toBottomOf="@+id/ratingBar_pritem" />
+
+        <LinearLayout
+            android:id="@+id/ll_pritem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ratingBar_reviewL">
+            app:layout_constraintStart_toEndOf="@+id/cv_pritem"
+            app:layout_constraintTop_toBottomOf="@+id/tv_pritem_detail">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -135,7 +160,6 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/reviewL_diff"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -144,31 +168,30 @@
                     android:textSize="12dp" />
 
                 <TextView
-                    android:id="@+id/tv_reviewL_diff"
+                    android:id="@+id/tv_pritem_diff"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="5"
-                    android:textSize="12dp"
-                    android:textColor="@color/moabang_gray" />
+                    android:textColor="@color/moabang_gray"
+                    android:textSize="12dp" />
 
                 <TextView
-                    android:id="@+id/reviewL_time"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="소요시간"
-                    android:textSize="12dp"
-                    android:textColor="@color/moabang_pink" />
+                    android:textColor="@color/moabang_pink"
+                    android:textSize="12dp" />
 
                 <TextView
-                    android:id="@+id/tv_reviewL_time"
+                    android:id="@+id/tv_pritem_time"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="63"
-                    android:textSize="12dp"
-                    android:textColor="@color/moabang_gray" />
+                    android:textColor="@color/moabang_gray"
+                    android:textSize="12dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -177,40 +200,38 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/reviewL_active"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="체감 활동성"
-                    android:textSize="12dp"
-                    android:textColor="@color/moabang_pink" />
+                    android:textColor="@color/moabang_pink"
+                    android:textSize="12dp" />
 
                 <TextView
-                    android:id="@+id/tv_reviewL_active"
+                    android:id="@+id/tv_pritem_active"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="보통"
-                    android:textSize="12dp"
-                    android:textColor="@color/moabang_gray" />
+                    android:textColor="@color/moabang_gray"
+                    android:textSize="12dp" />
 
                 <TextView
-                    android:id="@+id/reviewL_hint"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="사용 힌트수"
-                    android:textSize="12dp"
-                    android:textColor="@color/moabang_pink" />
+                    android:textColor="@color/moabang_pink"
+                    android:textSize="12dp" />
 
                 <TextView
-                    android:id="@+id/tv_reviewL_hint"
+                    android:id="@+id/tv_pritem_hint"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="3개"
-                    android:textSize="12dp"
-                    android:textColor="@color/moabang_gray" />
+                    android:textColor="@color/moabang_gray"
+                    android:textSize="12dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -219,48 +240,47 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/reviewL_player"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="추천 인원"
-                    android:textSize="12dp"
-                    android:textColor="@color/moabang_pink" />
+                    android:textColor="@color/moabang_pink"
+                    android:textSize="12dp" />
 
                 <TextView
-                    android:id="@+id/tv_reviewL_player"
+                    android:id="@+id/tv_pritem_player"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="3명"
-                    android:textSize="12dp"
-                    android:textColor="@color/moabang_gray" />
+                    android:textColor="@color/moabang_gray"
+                    android:textSize="12dp" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text=""
-                    android:textSize="12dp"
-                    android:textColor="@color/moabang_pink" />
+                    android:textColor="@color/moabang_pink"
+                    android:textSize="12dp" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text=""
-                    android:textSize="12dp"
-                    android:textColor="@color/moabang_gray" />
+                    android:textColor="@color/moabang_gray"
+                    android:textSize="12dp" />
             </LinearLayout>
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_reviewL_desc"
-            android:layout_width="match_parent"
+            android:id="@+id/tv_pritem_desc"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginBottom="8dp"
             android:maxHeight="80dp"
             android:scrollbars="vertical"
@@ -270,8 +290,8 @@
             android:textSize="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ll_reviewL" />
+            app:layout_constraintStart_toEndOf="@+id/cv_pritem"
+            app:layout_constraintTop_toBottomOf="@+id/ll_pritem" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

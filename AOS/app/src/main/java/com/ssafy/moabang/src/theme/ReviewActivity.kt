@@ -28,7 +28,8 @@ class ReviewActivity : AppCompatActivity() {
     private lateinit var binding: ActivityReviewBinding
     private val reviewViewModel: ReviewViewModel by viewModels()
     private var tid:Int = 0
-    private var review:ReviewResponse? = null
+    private var rid = 0
+    private var review: ReviewResponse? = null
     private var type = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +40,7 @@ class ReviewActivity : AppCompatActivity() {
         if(type == "등록") {
             tid = intent.getIntExtra("tid", 0)
         } else if(type == "수정"){
-            review = intent.getParcelableExtra("review")
+            rid = intent.getIntExtra("review", 0)
         }
 
         init()
@@ -75,38 +76,50 @@ class ReviewActivity : AppCompatActivity() {
     }
 
     private fun initRevise(){
-        binding.tvReviewOk.text = "수정"
-        binding.toolbarReview.tvToolbarTitle.text = "리뷰 수정"
-        initDate(review!!.playDate)
-        binding.etReviewPlayer.setText(review!!.player.toString())
 
-        if(review!!.isSuccess == 1){
-            binding.cgReviewSuccess.findViewById<Chip>(binding.cgReviewSuccess[0].id).isChecked = true
-        } else if(review!!.isSuccess == 0){
-            binding.cgReviewSuccess.findViewById<Chip>(binding.cgReviewSuccess[1].id).isChecked = true
+        reviewViewModel.getReview(rid)
+        reviewViewModel.reviewLiveData.observe(this) {
+            review = it
+
+            binding.tvReviewOk.text = "수정"
+            binding.toolbarReview.tvToolbarTitle.text = "리뷰 수정"
+            initDate(review!!.playDate)
+            binding.etReviewPlayer.setText(review!!.player.toString())
+
+            if (review!!.isSuccess == 1) {
+                binding.cgReviewSuccess.findViewById<Chip>(binding.cgReviewSuccess[0].id).isChecked =
+                    true
+            } else if (review!!.isSuccess == 0) {
+                binding.cgReviewSuccess.findViewById<Chip>(binding.cgReviewSuccess[1].id).isChecked =
+                    true
+            }
+
+            binding.etReviewTimeLeft.setText(review!!.clearTime.toString())
+            binding.etReviewHint.setText(review!!.hint.toString())
+
+            binding.cgReviewDiff.findViewById<Chip>(binding.cgReviewDiff[review!!.chaegamDif - 1].id).isChecked =
+                true
+
+            when (review!!.active) {
+                "적음" -> {
+                    binding.cgReviewActive.findViewById<Chip>(binding.cgReviewActive[0].id).isChecked =
+                        true
+                }
+                "보통" -> {
+                    binding.cgReviewActive.findViewById<Chip>(binding.cgReviewActive[1].id).isChecked =
+                        true
+                }
+                "많음" -> {
+                    binding.cgReviewActive.findViewById<Chip>(binding.cgReviewActive[2].id).isChecked =
+                        true
+                }
+            }
+
+            binding.etReviewRplayer.setText(review!!.recPlayer.toString())
+            binding.ratingBarReview.rating = review!!.rating / 2
+            binding.tvReviewRating.text = review!!.rating.toString() + "/10"
+            binding.etReviewContent.setText(review!!.content)
         }
-
-        binding.etReviewTimeLeft.setText(review!!.clearTime.toString())
-        binding.etReviewHint.setText(review!!.hint.toString())
-
-        binding.cgReviewDiff.findViewById<Chip>(binding.cgReviewDiff[review!!.chaegamDif-1].id).isChecked = true
-
-        when(review!!.active){
-            "적음" -> {
-                binding.cgReviewActive.findViewById<Chip>(binding.cgReviewActive[0].id).isChecked = true
-            }
-            "보통" -> {
-                binding.cgReviewActive.findViewById<Chip>(binding.cgReviewActive[1].id).isChecked = true
-            }
-            "많음" -> {
-                binding.cgReviewActive.findViewById<Chip>(binding.cgReviewActive[2].id).isChecked = true
-            }
-        }
-
-        binding.etReviewRplayer.setText(review!!.recPlayer.toString())
-        binding.ratingBarReview.rating = review!!.rating/2
-        binding.tvReviewRating.text = review!!.rating.toString() + "/10"
-        binding.etReviewContent.setText(review!!.content)
     }
 
     private fun registerReview(){

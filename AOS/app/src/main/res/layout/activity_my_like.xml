@@ -5,14 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/moabang_lightGray"
-    tools:context=".src.main.ThemeFragment">
+    tools:context=".src.mypage.MyLikeActivity">
+
+    <include
+        android:id="@+id/toolbar_like"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <EditText
-        android:id="@+id/et_themeF_search"
+        android:id="@+id/et_myLike_search"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/rounded_rectangle_search"
         android:drawableEnd="@drawable/icon_search_mini"
@@ -27,28 +37,27 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_like" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_themeF_filter"
+        android:id="@+id/btn_myLike_filter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
         android:background="@android:color/transparent"
         android:drawableLeft="@drawable/icon_filter_mini"
-        android:paddingStart="10dp"
         android:text="필터"
         android:textColor="@color/moabang_gray"
         android:textSize="14dp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/btn_themeF_sort"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_themeF_search" />
+        app:layout_constraintEnd_toStartOf="@+id/btn_myLike_sort"
+        app:layout_constraintTop_toBottomOf="@+id/et_myLike_search" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_themeF_sort"
+        android:id="@+id/btn_myLike_sort"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
         android:background="@android:color/transparent"
         android:drawableLeft="@drawable/icon_sort_mini"
         android:paddingStart="10dp"
@@ -56,50 +65,19 @@
         android:textColor="@color/moabang_gray"
         android:textSize="14dp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/blank_themeF"
-        app:layout_constraintStart_toEndOf="@+id/btn_themeF_filter"
-        app:layout_constraintTop_toTopOf="@+id/btn_themeF_filter" />
-
-    <View
-        android:id="@+id/blank_themeF"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/btn_themeF_sort"
-        app:layout_constraintEnd_toStartOf="@+id/switch_themeF"
-        app:layout_constraintStart_toEndOf="@+id/btn_themeF_sort"
-        app:layout_constraintTop_toTopOf="@+id/btn_themeF_sort" />
-
-    <Switch
-        android:id="@+id/switch_themeF"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_weight="1"
-        android:switchPadding="10dp"
-        android:text="이용한 테마 숨기기"
-        android:textColor="@color/moabang_gray"
-        android:textSize="14dp"
-        android:textStyle="bold"
-        android:thumb="@drawable/switch_thumb_selector"
-        android:track="@drawable/switch_track_selector"
-        app:layout_constraintBottom_toBottomOf="@+id/blank_themeF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/blank_themeF"
-        app:layout_constraintTop_toTopOf="@+id/blank_themeF"
-        tools:checked="false" />
+        app:layout_constraintBottom_toBottomOf="@+id/btn_myLike_filter"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_themeF"
+        android:id="@+id/rv_myLike"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_themeF_sort" />
-
+        app:layout_constraintTop_toBottomOf="@+id/btn_myLike_sort" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

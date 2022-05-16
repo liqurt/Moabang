@@ -18,8 +18,17 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
+            android:name=".src.mypage.MyPostActivity"
+            android:exported="true" />
+        <activity
             android:name=".src.main.community.CommunityDetailActivity"
             android:exported="false" />
+        <activity
+            android:name=".src.mypage.MyDoneActivity"
+            android:exported="true" />
+        <activity
+            android:name=".src.mypage.MyLikeActivity"
+            android:exported="true" />
         <activity
             android:name=".src.theme.ThemeCompareActivity"
             android:exported="true" />
