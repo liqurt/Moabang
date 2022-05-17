@@ -1,7 +1,6 @@
 package com.ssafy.moabang.data.api
 
-import com.ssafy.moabang.data.model.dto.Community
-import com.ssafy.moabang.data.model.dto.RecruitCreateRequest
+import com.ssafy.moabang.data.model.dto.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -32,5 +31,29 @@ interface CommunityApi {
 
     @GET("/community/new")
     fun getLatest5Community() : Call<List<Community>>
+
+    // 댓글 생성
+    @POST("/community/comment/create")
+    fun insertComment(
+        @Body commentRequest: CommentRequest
+    ) : Call<Boolean>
+
+    // 댓글 삭제
+    @DELETE("/community/comment/delete/{coid}")
+    fun deleteComment(
+        @Path("coid") coid : Int
+    ) : Call<Boolean>
+
+    // 댓글 목록 불러오기
+    @GET("/community/comment/list/{community_id}")
+    fun getCommentList(
+        @Path("community_id") community_id : Int
+    ) : Call<List<Comment>>
+
+    // 댓글 수정
+    @PUT("/community/comment/update")
+    fun updateComment(
+        @Body commentUpdateRequest: CommentUpdateRequest
+    ) : Call<Boolean>
 
 }
