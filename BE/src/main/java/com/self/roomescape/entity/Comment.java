@@ -24,6 +24,7 @@ public class Comment {
     @CreationTimestamp
     private Timestamp regDate;
     @ManyToOne
+    @JoinColumn(name = "uid")
     private User user;
     private long communityId;
 }
