@@ -24,7 +24,7 @@ const Myloc_Card = (props) => {
             <Card.Body className='card-body'>
                 <Card.Title className='card-title'>{props.data.cname}</Card.Title>
                 <Card.Text className='card-text'>
-                    영업시간 : {props.data.time ? props.data.time : "-"} <br />
+                    주소 : {props.data.location}<br />
                     전화번호 : {props.data.cphone ? props.data.cphone : "-"} <br />
                 </Card.Text>
                 <Button variant="primary" onClick={() => window.open(props.data.url, '_blank')}>바로가기</Button>

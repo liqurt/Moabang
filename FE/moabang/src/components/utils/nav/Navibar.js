@@ -39,7 +39,7 @@ const Navibar = () => {
                     <Nav.Link href="/cafe">카페</Nav.Link>
                     <Nav.Link href="/board">커뮤니티</Nav.Link>
                     <Nav.Link href="/compare">비교하기</Nav.Link>
-                    <Nav.Link href="https://drive.google.com/uc?export=download&id=1zRrn_S_lFrYk0uU3AEl5zr5LJYAdoAFM&confirm=t">앱 다운로드</Nav.Link>
+                    <Nav.Link href="https://drive.google.com/uc?export=download&id=12Vb7eHOqJiGvC90cWkBu9ycjzidQubfC&confirm=t">앱 다운로드</Nav.Link>
                 </Nav>
             </Container>
         </Navbar>
