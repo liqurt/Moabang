@@ -75,22 +75,28 @@ const BoardWrite = ({ setShowList }) => {
 
     }
     return (
-        <div className='boardWrite-container'>
-            <div className='boardTitle'>제목: 
-                <input className='inputTitle' type="text" onChange={TitleHandler} value={title}></input>
+        <div className='Board-Write-Main'>
+            <div id='Board-Write-Main-Title'>커뮤니티</div>
+            <div className='boardWrite-container'>
+                <div className='boardTitle'>
+                    <span id='boardWriteText'>제목<span id='TextStar'>*</span></span> 
+                    <input className='inputTitle' placeholder='제목을 입력해주세요' type="text" onChange={TitleHandler} value={title}></input>
+                </div>
+                <div className='boardHeader'>
+                    <span id='boardWriteText'>게시판<span id='TextStar'>*</span></span>
+                    <select className='BoardWriteinputSelect' onChange={HeaderSelectHandler} value={header}>
+                        <option value="-1">선택</option>
+                        <option value="자유">자유</option>
+                        <option value="구인">구인</option>
+                    </select>
+                </div>
+                <div className='boardContent'>
+                    <span id='boardWriteText'>내용<span id='TextStar'>*</span></span> 
+                    <textarea className='inputContent' type="text" placeholder='내용을 입력해 주세요'  value={content} onChange={ContentHandler}></textarea>
+                </div>
+                <button className='boardWriteBtn '  onClick={WriteSummitBtn}>확인</button>
+                <button className='boardCancelBtn' onClick={WriteCancelBtn}>취소</button>
             </div>
-            <div className='boardHeader'>카테고리:  
-                <select onChange={HeaderSelectHandler} value={header}>
-                    <option value="-1">선택</option>
-                    <option value="자유">자유</option>
-                    <option value="구인">구인</option>
-                </select>
-            </div>
-            <div className='boardContent'>
-                <textarea className='inputContent' type="text" placeholder='내용을 입력해 주세요'  value={content} onChange={ContentHandler}></textarea>
-            </div>
-            <button className='boardWriteBtn' onClick={WriteSummitBtn}>작성</button>
-            <button className='boardCancelBtn' onClick={WriteCancelBtn}>취소</button>
         </div>
     );
 

@@ -186,7 +186,7 @@ const ReviewWrite = ({tid, setListRender}) => {
                 <img id='reviewImg' src='https://cdn-icons-png.flaticon.com/512/651/651191.png' alt='reviewImg' />
             </summary>
                 
-                <div><span>탈출 </span>
+                <div><span id='ReviewIsCleared'>탈출 </span>
                 {succAndfailBtn &&
                     succAndfailBtn.map((type, index) => (
                         <button className='filterBtn5' key={index} value={type.value} onClick={handleCleared}>
@@ -199,7 +199,7 @@ const ReviewWrite = ({tid, setListRender}) => {
                     &nbsp; &nbsp; &nbsp; &nbsp;
                     <span id='ReviewHint'>사용 힌트 수<input id='input2' type={"number"}  onChange={handleSetHint} value={hint }/>개</span>
                     &nbsp; &nbsp;
-                    <span id='ReviewJoinNum'>
+                    <span id='ReviewJoinDiff'>
                         체감 난이도:
                         <select onChange={handleDiff} value={diff}>
                             <option value="-1">선택</option>

@@ -183,3 +183,56 @@
     top: 140px;
     left: 260px;
 }
+#ThemeRatingText{
+    font-family: "Jalnsn";
+    font-size: 18px;
+    color: #a750dd;
+}
+
+/*테마 디테일 홈페이지 비교하기 등등 이동*/
+.ThemeDetailNav{
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    height: 60px;
+    position: relative;
+}
+
+#homepageMove{
+    position: absolute;
+    left: 100px;
+    top: 15px;
+    color: #c09ee9;
+    font-weight: 900;
+    font-size: 20px;
+}
+#bar1{
+    position: absolute;
+    left: 300px;
+    top: 12px;
+    font-size: 20px;
+}
+
+#compareMove{
+    position: absolute;
+    left: 390px;
+    top: 15px;
+    color: #c09ee9;
+    font-weight: 900;
+    font-size: 20px;
+}
+
+#bar2{
+    position: absolute;
+    right: 300px;
+    top: 12px;
+    font-size: 20px;
+}
+#compareBtn{
+    position: absolute;
+    right: 100px;
+    top: 15px;
+    color: #c09ee9;
+    font-weight: 900;
+    font-size: 20px;
+}

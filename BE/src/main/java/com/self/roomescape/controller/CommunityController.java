@@ -3,6 +3,7 @@ package com.self.roomescape.controller;
 import com.self.roomescape.config.JwtTokenProvider;
 import com.self.roomescape.entity.*;
 import com.self.roomescape.repository.*;
+import com.self.roomescape.repository.mapping.CommunityMapping;
 import com.self.roomescape.request.CommentRequest;
 import com.self.roomescape.request.CommentUpdateRequest;
 import com.self.roomescape.request.RecruitCreateRequest;
@@ -119,7 +120,8 @@ public class CommunityController {
     @ApiOperation(value = "글 리스트 읽기", notes = "글 리스트 읽기")
     @GetMapping("/read/list")
     public ResponseEntity<?> getRecruitList() {
-        List<Community> communityList = communityRepository.findAllByOrderByCreateDateDesc();
+//        List<Community> communityList = communityRepository.findAllByOrderByCreateDateDesc();
+        List<CommunityMapping> communityList = communityRepository.findCustomList();
         return new ResponseEntity<>(communityList, HttpStatus.OK);
     }
 
@@ -144,7 +146,7 @@ public class CommunityController {
         }
 
         List<CommunityRes> communityRes = new ArrayList<>();
-        List<Comment> commentList = commentRepository.findByCommunityId(community_id);
+        List<Comment> commentList = commentRepository.findByCommunityIdOrderByRegDateDesc(community_id);
 
         for (Comment c : commentList
         ) {
@@ -153,9 +155,9 @@ public class CommunityController {
             temp.setContent(c.getContent());
             temp.setCoid(c.getCoid());
             temp.setRegDate(c.getRegDate());
-            temp.setUserName(user.get().getNickname());
-            temp.setUserProfile(user.get().getPimg());
-            temp.setUid(user.get().getUid());
+            temp.setUserName(c.getUser().getNickname());
+            temp.setUserProfile(c.getUser().getPimg());
+            temp.setUid(c.getUser().getUid());
 
             communityRes.add(temp);
         }
@@ -175,7 +177,7 @@ public class CommunityController {
             return new ResponseEntity<>("회원 정보가 없습니다.", HttpStatus.BAD_REQUEST);
         }
 
-        commentRepository.save(Comment.builder().content(commentRequest.getContent()).uid(user.get().getUid()).communityId(commentRequest.getCommunityId()).build());
+        commentRepository.save(Comment.builder().content(commentRequest.getContent()).user(user.get()).communityId(commentRequest.getCommunityId()).build());
 
         return new ResponseEntity<>("댓글 달기 ok", HttpStatus.OK);
     }
@@ -197,7 +199,7 @@ public class CommunityController {
             return new ResponseEntity<>("해당 coid가 없습니다.", HttpStatus.BAD_REQUEST);
         }
 
-        if (comment.get().getUid() != user.get().getUid()) {
+        if (comment.get().getUser().getUid() != user.get().getUid()) {
             return new ResponseEntity<>("댓글의 uid와 해당 유저의 uid가 다릅니다.", HttpStatus.BAD_REQUEST);
         }
 
@@ -226,7 +228,7 @@ public class CommunityController {
             return new ResponseEntity<>("해당 coid가 없습니다.", HttpStatus.BAD_REQUEST);
         }
 
-        if (comment.get().getUid() != user.get().getUid()) {
+        if (comment.get().getUser().getUid() != user.get().getUid()) {
             return new ResponseEntity<>("댓글의 uid와 해당 유저의 uid가 다릅니다.", HttpStatus.BAD_REQUEST);
         }
 

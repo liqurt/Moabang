@@ -47,17 +47,22 @@ const BoardMain = () => {
 
     return (
         <div className='board-container'>
-            <div className='boardName'>게시판</div>
+            
             {showList ?
                 <div>
+                    <div className='boardName'>커뮤니티</div>
                     <div className='btnLocaion'>
-                    구분:
-                        <select onChange={Categoryhandler} value={category}>
-                            <option value="전체">전체</option>
-                            <option value="구인">구인</option>
-                            <option value="자유">자유</option>
-                        </select>
-                        <button className='mainWriteBtn' onClick={WriteBtnHandler}>글쓰기</button>
+                        <span>
+                                <select id='boardSelect' onChange={Categoryhandler} value={category}>
+                                    <option value="전체">전체</option>
+                                    <option value="구인">구인</option>
+                                    <option value="자유">자유</option>
+                                </select>
+                        </span>
+                        <button className='mainWriteBtn' onClick={WriteBtnHandler}>
+                            <img id='pencilImg' alt='pencil' src='https://w7.pngwing.com/pngs/759/500/png-transparent-drawing-pencil-sketch-pencil-pencil-illustrator-material-thumbnail.png'></img>
+                            <span id='pencilText'>글쓰기</span>
+                        </button>
                     </div>
                     <BoardList boardList={filteredProducts}/>
                 </div>

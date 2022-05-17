@@ -1,16 +1,16 @@
 import React from 'react';
 import { Card, Button } from 'react-bootstrap';
+import './Theme_Card.css'
 
 const Theme_Card = (props) => {
     return (
-        <div>
-            <div className='pop-picture'>
-                <img src={props.data.img} alt="img" />
-
-                <Card className='theme-info'>
+        <div className='flip-card'>
+            <Card className='flip-card-inner'>
+                <Card.Img className='flip-card-front' variant="top" src={props.data.img} />
+                <Card className='flip-card-back'>
                     <Card.Body>
                         <Card.Title>{props.data.tname}</Card.Title>
-                        <Card.Subtitle className="mb-2 text-muted">{props.data.cname}</Card.Subtitle>
+                        <Card.Subtitle>{props.data.cname}</Card.Subtitle>
                         <Card.Text>
                             {props.data.genre} {props.data.time} ☆ {props.data.grade}
                             <br />
@@ -22,8 +22,9 @@ const Theme_Card = (props) => {
                         <Button variant="primary" onClick={() => window.open(props.data.url, '_blank')}>카페 홈페이지</Button>
                     </Card.Body>
                 </Card>
-            </div>
+            </Card >
         </div>
+
     );
 };
 

@@ -1,7 +1,4 @@
-body {
-    background-color: #FFE2E2;
-    
-  }
+
 .slick-slide {
     height: fit-content;
     border: 1vh solid #8785A2;
@@ -20,6 +17,9 @@ body {
       margin: 5vh 0 3vh 10px;
       font-size: 20px;
       font-family: 'BMJUA';
+  }
+  .card-text{
+    text-overflow: ellipsis;
   }
 
 

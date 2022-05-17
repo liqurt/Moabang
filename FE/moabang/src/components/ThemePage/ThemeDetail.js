@@ -171,18 +171,21 @@ const ThemeDetail = (props) => {
                     <div id='ThemeRatingTitle'>리뷰 통계</div>
                     <img id='ThemeRatingImg' src='https://emojigraph.org/media/facebook/star_2b50.png' alt='starscore'></img>
                     <div id='ThemeRatingStar'>x {roundToTwo(reviewRating.r_rating)}</div>
-                    <div id='ThemeRatingDiff'>체감 난이도:&nbsp;{reviewRating.r_chaegamDif}</div>
-                    <div id='ThemeRatingActive'>체감 활동성:&nbsp;{reviewRating.r_activity}</div>
-                    <div id='ThemeRatingRecNum'>추천 인원:&nbsp;{reviewRating.r_recPlayer}명</div>
-                    <div id='ThemeRatingClear'>탈출 성공률: {roundToTwo((reviewRating.r_isSuccess*100))}%</div>
-                    <div id='ThemeRatingTime'>클리어 타임: {reviewRating.r_clearTime}분</div>
-                    <div id='ThemeRatingHint'>사용 힌트수: {roundToTwo(reviewRating.r_hint)}개</div>
+                    <div id='ThemeRatingDiff'><span id='ThemeRatingText'>체감 난이도:</span>&nbsp;{reviewRating.r_chaegamDif}</div>
+                    <div id='ThemeRatingActive'><span id='ThemeRatingText'>체감 활동성:</span>&nbsp;{reviewRating.r_activity}</div>
+                    <div id='ThemeRatingRecNum'><span id='ThemeRatingText'>추천 인원:</span>&nbsp;{reviewRating.r_recPlayer}명</div>
+                    <div id='ThemeRatingClear'><span id='ThemeRatingText'>탈출 성공률: </span>{roundToTwo((reviewRating.r_isSuccess*100))}%</div>
+                    <div id='ThemeRatingTime'><span id='ThemeRatingText'>클리어 타임: </span>{reviewRating.r_clearTime}분</div>
+                    <div id='ThemeRatingHint'><span id='ThemeRatingText'>사용 힌트수:</span> {roundToTwo(reviewRating.r_hint)}개</div>
                 </div>
 
             </div>
-            <div>
-                <a href='/compare'>비교하기 이동 </a>
-                <button id='compareBtn' onClick={addCompareList}> 비교 리스트 추가</button>
+            <div className='ThemeDetailNav'>
+                <a id='homepageMove' href={Theme.url} >홈페이지 이동</a>
+                <span id='bar1'>|</span>
+                <a id='compareMove' href='/compare'>비교하기 페이지 이동</a>
+                <span id='bar2'>|</span>
+                <span id='compareBtn' onClick={addCompareList}> 비교 리스트 추가</span>
             </div>
             <ReviewWrite tid={Theme.tid} setListRender={setListRender}/>
             <div>

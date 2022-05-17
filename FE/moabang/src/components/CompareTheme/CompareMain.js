@@ -81,9 +81,9 @@ const CompareMain = () => {
 						<XAxis dataKey="tname" />
 						<YAxis />
 						<Legend />
-						<Bar name='평점' dataKey="grade" fill="#8884d8" />
-						<Bar name='난이도' dataKey="difficulty" fill="#82ca9d" />
-						<Bar name='활동성' dataKey="activity" fill="blue" />
+						<Bar name='평점' dataKey="grade" fill="#c09ee9" />
+						<Bar name='난이도' dataKey="difficulty" fill="#20c7d8" />
+						<Bar name='활동성' dataKey="activity" fill="#ffa9d1" />
 						<div> Some text </div>
 					</BarChart>
 

@@ -5,25 +5,29 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.kakao.sdk.user.UserApiClient
 import com.ssafy.moabang.R
+import com.ssafy.moabang.adapter.CommentRVAdapter
 import com.ssafy.moabang.config.GlobalApplication.Companion.sp
-import com.ssafy.moabang.data.model.dto.Community
-import com.ssafy.moabang.data.model.dto.RecruitCreateRequest
+import com.ssafy.moabang.data.model.dto.*
 import com.ssafy.moabang.data.model.repository.CommunityRepository
 import com.ssafy.moabang.databinding.ActivityCommunityDetailBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 
 class CommunityDetailActivity : AppCompatActivity() {
 
-    private lateinit var mode : String // "write" or "read"
+    private lateinit var mode: String // "write" or "read"
     private lateinit var community: Community
     private lateinit var binding: ActivityCommunityDetailBinding
     private var communityRepository = CommunityRepository()
+
+    private lateinit var commentAdapter: CommentRVAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,15 +41,34 @@ class CommunityDetailActivity : AppCompatActivity() {
         initView()
     }
 
-    private fun setMode(){
+    private fun setAdapter() {
+        CoroutineScope(Dispatchers.Main).launch {
+            var commentList : List<Comment> = emptyList()
+            CoroutineScope(Dispatchers.IO).async {
+                commentList = communityRepository.getCommentList(community_id = community.rid)?.body()!!
+            }.await()
+            commentAdapter = CommentRVAdapter()
+            commentAdapter.data = commentList as MutableList<Comment>
+            binding.rRcvComment.apply {
+                adapter = commentAdapter
+                layoutManager =
+                    androidx.recyclerview.widget.LinearLayoutManager(this@CommunityDetailActivity)
+            }
+        }
+
+
+    }
+
+    private fun setMode() {
         mode = intent.getStringExtra("mode")!!
-        if(mode == "read"){
+        if (mode == "read") {
             community = intent.getParcelableExtra("community")!!
         }
     }
 
     private fun initView() {
-        if(mode == "read"){
+        if (mode == "read") {
+            binding.rComment.visibility = View.VISIBLE
             binding.rArticleInfo.visibility = View.VISIBLE
             binding.rContent.visibility = View.VISIBLE
             binding.rUDButtons.visibility = View.VISIBLE
@@ -62,6 +85,8 @@ class CommunityDetailActivity : AppCompatActivity() {
                 .placeholder(R.drawable.door)
                 .into(binding.civCommuItemF)
 
+            binding.btCommuItemFWriteComment.setOnClickListener { commentWrite() }
+
             if (isMine()) {
                 binding.rUDButtons.visibility = View.VISIBLE
                 binding.btCommuItemFRemove.setOnClickListener { removeCommunity() }
@@ -69,7 +94,10 @@ class CommunityDetailActivity : AppCompatActivity() {
             } else {
                 binding.rUDButtons.visibility = View.GONE
             }
-        }else if(mode == "write" || mode == "edit"){
+
+            setAdapter()
+        } else if (mode == "write" || mode == "edit") {
+            binding.rComment.visibility = View.GONE
             binding.rArticleInfo.visibility = View.GONE
             binding.rContent.visibility = View.GONE
             binding.rUDButtons.visibility = View.GONE
@@ -77,27 +105,31 @@ class CommunityDetailActivity : AppCompatActivity() {
             binding.wContent.visibility = View.VISIBLE
             binding.wCButtons.visibility = View.VISIBLE
 
-            val headerAdapter = ArrayAdapter.createFromResource(this, R.array.community_header, android.R.layout.simple_spinner_item).also {
-                    adapter -> adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            val headerAdapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.community_header,
+                android.R.layout.simple_spinner_item
+            ).also { adapter ->
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 binding.spCommuItemFHeader.adapter = adapter
             }
 
-            if(mode == "write"){
+            if (mode == "write") {
                 binding.btCommuWriteWrite.setOnClickListener { write() }
                 UserApiClient.instance.me { user, error ->
                     if (error != null) {
                         Log.e("AAAAA", "사용자 정보 요청 실패", error)
-                    }
-                    else if (user != null) {
+                    } else if (user != null) {
                         binding.tvCommuItemFAuthor.text = user.kakaoAccount?.profile?.nickname
                         Glide.with(this)
                             .load(user.kakaoAccount?.profile?.thumbnailImageUrl)
                             .into(binding.civCommuItemF)
                     }
                 }
-            }else if (mode == "edit"){
+            } else if (mode == "edit") {
                 binding.spCommuItemFHeader.setSelection(
-                    headerAdapter.getPosition(community.header))
+                    headerAdapter.getPosition(community.header)
+                )
                 binding.etCommuItemFTitle.setText(binding.tvCommuItemFTitle.text)
                 binding.etCommuItemFContent.setText(binding.tvCommuItemFContent.text)
                 binding.btCommuWriteWrite.setOnClickListener { edit() }
@@ -121,7 +153,7 @@ class CommunityDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun write(){
+    private fun write() {
         CoroutineScope(Dispatchers.IO).launch {
             val header = binding.spCommuItemFHeader.selectedItem.toString()
             val title = binding.etCommuItemFTitle.text.toString()
@@ -132,7 +164,20 @@ class CommunityDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun edit(){
+    private fun commentWrite(){
+        val tempContent = binding.etCommuItefFCommentInput.text.toString()
+        val tempCR = CommentRequest(community.rid, tempContent)
+        binding.etCommuItefFCommentInput.setText("")
+        CoroutineScope(Dispatchers.Main).launch {
+            CoroutineScope(Dispatchers.IO).async {
+                communityRepository.insertComment(tempCR)
+            }.await()
+            initView()
+        }
+    }
+
+
+    private fun edit() {
         Log.d("BBBBB", "edit: ")
         CoroutineScope(Dispatchers.IO).launch {
             val header = binding.spCommuItemFHeader.selectedItem.toString()

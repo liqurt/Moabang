@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-    List<Comment> findByCommunityId(long community_id);
+    List<Comment> findByCommunityIdOrderByRegDateDesc(long community_id);
 
     Optional<Comment> findByCoid(long coid);
 }

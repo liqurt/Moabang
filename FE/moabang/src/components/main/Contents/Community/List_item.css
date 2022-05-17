@@ -1,0 +1,22 @@
+body{
+    color: #000;
+}
+.fw-bold{
+    display: flex;
+    /* border: 0.1vh solid #8785A2; */
+    width: 70vh;
+}
+
+.header {
+    width: 20%;
+    /* border: 0.1vh solid #8785A2; */
+    text-align: left;
+    padding-left: 2vh;
+    color: brown;
+}
+.title {
+    width: 50%;
+    /* border: 0.1vh solid #8785A2; */
+    text-align: center;
+    padding-left: 2vh;
+}
