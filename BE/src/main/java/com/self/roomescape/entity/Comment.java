@@ -23,6 +23,7 @@ public class Comment {
     @JsonFormat(pattern = "yyyy.MM.dd")
     @CreationTimestamp
     private Timestamp regDate;
-    private long uid;
+    @ManyToOne
+    private User user;
     private long communityId;
 }
