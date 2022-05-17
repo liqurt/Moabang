@@ -34,6 +34,9 @@ const ModalList = (props) => {
     const Water = () => {
         return <img id='water' src='https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Tilde.svg/1200px-Tilde.svg.png' alt="water" ></img>
     }
+    const ChangeImg = (event) => {
+        event.target.src="https://cdn.discordapp.com/attachments/963307192025485326/975564975617744946/unknown.png"
+    }
 
     return (
         <div className='ModalDetailList'>
@@ -42,7 +45,7 @@ const ModalList = (props) => {
                 <div className='Modal-container' key={index} onClick={() => {
                     
                 }}>
-                    <img className='ThemeListImg' alt='profile' src={item.img}/>
+                    <img className='ThemeListImg' onError={ChangeImg} alt='profile' src={item.img}/>
                     
                     <div className='ThemeListInfo'>
                         <div id='ThemeListName'>{item.tname}</div>

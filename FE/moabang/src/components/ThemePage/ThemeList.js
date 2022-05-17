@@ -85,12 +85,15 @@ const ThemeList = (props) => {
         return <img id='starscore' src='https://emojigraph.org/media/facebook/star_2b50.png' alt='starscore'></img>
     }
 
+    const ChangeImg = (event) => {
+        event.target.src="https://cdn.discordapp.com/attachments/963307192025485326/975564975617744946/unknown.png"
+    }
     return (
         <div className='detailList' >
             {Theme.map((item, index) => (
                 
                 <div className='detail-container' key={index} >
-                    <img className='ThemeImg' alt='profile' src={item.img} onClick={() => {
+                    <img className='ThemeImg' onError={ChangeImg} alt='profile' src={item.img} onClick={() => {
                         openModal();
                         setModalData(item);
                     }} />

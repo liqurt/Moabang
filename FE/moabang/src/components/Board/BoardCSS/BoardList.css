@@ -19,14 +19,8 @@
     color: #fff; /* header text color */
     font-weight: 600;
   }
-  tr {
-    
-    padding: 0;
-  }
-  td {
-    vertical-align: middle;
-  }
-  tr:nth-child(even) td { /* striped background color */
-    
-  }
   
+  #BoardListCommentCount{
+    margin-left: 10px;
+    color: blue;
+  }

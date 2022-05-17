@@ -45,7 +45,7 @@ const BoardList = ({ boardList }) => {
                         currentPosts(boardList).map((item, index) => (
                             <tr key={index} onClick={()=>(goBoardDetail(item))}>
                                 <td>{index + 1}</td>
-                                <td>{item.title}</td>
+                                <td>{item.title}<span id='BoardListCommentCount'>[{item.count}]</span></td>
                                 <td>{item.updateDate.replace('T', '   ')}</td>
                                 <td>{item.header}</td>
                                 <td>{item.user.nickname}</td>
