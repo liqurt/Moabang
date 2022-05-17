@@ -3,8 +3,7 @@ package com.ssafy.moabang.data.model.repository
 import android.util.Log
 import com.ssafy.moabang.config.GlobalApplication
 import com.ssafy.moabang.data.api.CommunityApi
-import com.ssafy.moabang.data.model.dto.Community
-import com.ssafy.moabang.data.model.dto.RecruitCreateRequest
+import com.ssafy.moabang.data.model.dto.*
 import retrofit2.Response
 import java.lang.Exception
 
@@ -14,8 +13,10 @@ class CommunityRepository {
     fun getAllCommunity() : Response<List<Community>>?{
         try {
             val res = communityApi.getAllCommunity().execute()
+            Log.d("AAAAA", "getAllCommunity OK: ${res}")
             return res
         } catch (e: Exception) {
+            Log.d("AAAAA", "getAllCommunity NOT OK: ${e}")
             e.printStackTrace()
         }
         return null
@@ -42,13 +43,10 @@ class CommunityRepository {
     }
 
     fun updateCommunity(_rid: Int, _recruitCreateRequest : RecruitCreateRequest) : Response<Boolean>?{
-        Log.d("BBBBB", "C_U input : ${_rid}, ${_recruitCreateRequest}")
         try {
             val res = communityApi.updateCommunity(_rid, _recruitCreateRequest).execute()
-            Log.d("BBBBB", "C_U1 : ${res}")
             return res
         } catch (e: Exception) {
-            Log.d("BBBBB", "C_U2 ${e.message}")
             e.printStackTrace()
         }
         return null
@@ -57,9 +55,12 @@ class CommunityRepository {
     fun deleteCommunity(_rid: Int) : Response<Boolean>?{
         try {
             val res = communityApi.deleteCommunity(_rid,).execute()
+            Log.d("BBBBB", "deleteCommunity: OK $res")
             return res
         } catch (e: Exception) {
             e.printStackTrace()
+            Log.d("BBBBB", "deleteCommunity: NOT OK $e")
+
         }
         return null
     }
@@ -69,6 +70,52 @@ class CommunityRepository {
             val res = communityApi.getLatest5Community().execute()
             return res
         } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return null
+    }
+
+    fun insertComment(commentRequest: CommentRequest) : Response<Boolean>?{
+        try {
+            return communityApi.insertComment(commentRequest).execute()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return null
+    }
+
+    fun deleteComment(coid: Int) : Response<Boolean>?{
+        try {
+            val result = communityApi.deleteComment(coid).execute()
+            Log.d("BBBBB", "deleteComment OK : ${result}")
+            return result
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.d("BBBBB", "deleteComment NOT OK: ${e}")
+        }
+        return null
+    }
+
+    fun getCommentList(community_id : Int) : Response<List<Comment>>?{
+        try {
+            val result = communityApi.getCommentList(community_id).execute()
+            Log.d("BBBBB", "getCommentList OK : ${result}")
+            return result
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.d("BBBBB", "getCommentList NOT OK: ${e}")
+        }
+        return null
+    }
+
+    fun updateComment(commentUpdateRequest: CommentUpdateRequest) : Response<Boolean>?{
+        Log.d("BBBBB", "Input : ${commentUpdateRequest}")
+        try {
+            val result = communityApi.updateComment(commentUpdateRequest).execute()
+            Log.d("BBBBB", "Output OK : ${result}")
+            return result
+        } catch (e: Exception) {
+            Log.d("BBBBB", "Output NOT OK : ${e}")
             e.printStackTrace()
         }
         return null

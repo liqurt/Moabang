@@ -7,6 +7,7 @@ import java.time.LocalDateTime
 
 @Parcelize
 data class Community(
+    var count : Int, // 댓글 수
     var rid : Int,
     var user : User,
     var title : String?,
