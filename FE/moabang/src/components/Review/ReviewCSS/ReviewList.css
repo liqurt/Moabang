@@ -52,6 +52,12 @@
     float: right;
     margin-right: 160px;
 }
+
+#ReviewListText{
+    font-family: "Jalnsn";
+    font-size: 18px;
+    color: #a750dd;
+}
 /*
 ---------------------------------------
 리뷰 리스트 CSS

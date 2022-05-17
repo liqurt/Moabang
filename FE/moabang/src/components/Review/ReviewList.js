@@ -111,19 +111,19 @@ const ReviewList = ({tid, listRender, setListRender}) => {
                                     <span id='ReviewNemNum'>{review.player}명</span>
                                     <span id='ReviewSuccAndFail'>{SuccAndFailToString(review.isSuccess)}</span>
                                     <button id='ReviewDelete' value={review.rid} onClick={ReviewDeleteHandler}>삭제</button>
-                                    <button id='ReviewUpdate'>수정</button>
+                                    
                                 </div>
                                 
                                 <div className='ReviewDetail' >
                                     <br></br>
                                     <span id='ReviewListStar'>{starScore()}&nbsp;x&nbsp;{review.rating }</span>
-                                    <div id='ReviewListDiff'>체감 난이도:&nbsp;{review.chaegamDif}</div>
-                                    <div id='ReviewListTime'>클리어 타임:&nbsp;{review.clearTime }분</div>
-                                    <div id='ReviewListActive'>활동성:&nbsp;{review.active }</div>
-                                    <div id='ReviewListHint'>사용 힌트수:&nbsp;{review.hint}개</div>
-                                    <div id='ReviewListRecNum'>추천인원:&nbsp;{review.recPlayer }명</div>
+                                    <div id='ReviewListDiff'><span id='ReviewListText'>체감 난이도:</span>&nbsp;{review.chaegamDif}</div>
+                                    <div id='ReviewListTime'><span id='ReviewListText'>클리어 타임:</span>&nbsp;{review.clearTime }분</div>
+                                    <div id='ReviewListActive'><span id='ReviewListText'>활동성:</span>&nbsp;{review.active }</div>
+                                    <div id='ReviewListHint'><span id='ReviewListText'>사용 힌트수:</span>&nbsp;{review.hint}개</div>
+                                    <div id='ReviewListRecNum'><span id='ReviewListText'>추천인원:</span>&nbsp;{review.recPlayer }명</div>
                                    
-                                    <div id='ReviewListContent'>내용:{review.content}</div>
+                                    <div id='ReviewListContent'><span id='ReviewListText'>내용:</span>{review.content}</div>
                                 </div>
                             </div>
                         ))}

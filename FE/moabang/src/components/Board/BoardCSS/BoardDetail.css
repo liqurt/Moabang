@@ -1,0 +1,103 @@
+.BoardDetailTotal{
+    background-color: #FFFFFF;
+    height: 1200px;   
+    width: 100%;
+}
+#BoardDetailMainText{
+    font-size:50px;
+    text-align: left;
+    margin-left: 10%;
+
+}
+#hr1{
+    width: 80%;
+    margin-left: 10%;
+}
+.BoardDetailTitleContainer{
+    text-align: left;
+}
+#BoardDetailTitle{
+    text-align: left;
+    font-size: 30px;
+    font-weight: 800;
+    margin-left: 15%;
+}
+#BoardDetailDate{
+    margin-left: 15%;
+}
+#hr2{
+    width: 70%;
+    margin-left: 15%;
+}
+#hr3{
+    margin-top: 100px;
+    width: 70%;
+    margin-left: 15%;
+}
+
+#BoardDetailImg{
+    width: 50px;
+    height: 50px; 
+    border-radius: 70%;
+    overflow: hidden;
+}
+.BoardDetailContent{
+    text-align: left;
+    margin-left: 16%;
+}
+
+.BoardDetailWriteBtn{
+    background-color: #FFFFFF;
+    padding: 5px 7px;
+    border: 1px solid rgb(122, 122, 122);
+    margin-left: 60%;
+    border-radius: 3px;
+}
+.BoardDetailCancelBtn{
+    background-color: #FFFFFF;
+    padding: 5px 7px;
+    border: 1px solid rgb(122, 122, 122);
+    margin-left: 10px;
+    border-radius: 3px;
+}
+.goList{
+    background-color: #FFFFFF;
+    padding: 5px 7px;
+    border: 1px solid rgb(122, 122, 122);
+    margin-left: 10px;
+    border-radius: 3px;
+
+}
+
+.tailMain{
+    margin-top: 50px;
+    text-align: left;
+    margin-left: 15%;
+}
+.tailForm{
+    margin-top: 10px;
+    border: 1px solid;
+    padding: 10px;
+    width: 60%;
+    height: 150px;
+    margin-left: 15%;
+    position: relative;
+}
+#tailContent{
+    width: 90%;
+    height: 80px;
+}
+#tailWriteBtn{
+    position: absolute;
+    right: 6%;
+    bottom: 10px;
+    background-color: #FFFFFF;
+    color: blue;
+    border: 1px solid blue;
+    padding: 5px 7px;
+}
+#tailCnt{
+    position: absolute;
+    right: 14%;
+    bottom: 13px;
+}

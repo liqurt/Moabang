@@ -44,6 +44,11 @@
     font-weight:200;
     src: url("./fonts/나눔손글씨\ 성실체.ttf");
 }
+@font-face {
+    font-family: "Jalnan";
+    font-weight:200;
+    src: url("./fonts/Jalnan.ttf");
+}
 .top-button{
     position: fixed;
     bottom: 90px;

@@ -11,7 +11,7 @@ const BoardList = ({ boardList }) => {
         setPage(page);
         
     };
-
+    console.log(boardList);
     const indexOfLast = page * 10;
     const indexOfFirst = indexOfLast - 10;
     function currentPosts(tmp) {
@@ -37,7 +37,7 @@ const BoardList = ({ boardList }) => {
             <table >
                 <thead>
                     <tr>
-                    <th>번호</th><th>제목</th><th>날짜</th><th>구분</th>
+                    <th>번호</th><th>제목</th><th>날짜</th><th>구분</th><th>작성자</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,8 +46,9 @@ const BoardList = ({ boardList }) => {
                             <tr key={index} onClick={()=>(goBoardDetail(item))}>
                                 <td>{index + 1}</td>
                                 <td>{item.title}</td>
-                                <td>{item.updateDate.split('T', 1)}</td>
+                                <td>{item.updateDate.replace('T', '   ')}</td>
                                 <td>{item.header}</td>
+                                <td>{item.user.nickname}</td>
                             </tr>
                         ))
                     }

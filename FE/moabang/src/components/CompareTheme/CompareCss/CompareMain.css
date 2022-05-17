@@ -4,6 +4,7 @@
 }
 
 .CompareMain-selList{
+  height: 230px;
   margin-left: 250px;
   display: flex;
   flex-wrap:wrap;

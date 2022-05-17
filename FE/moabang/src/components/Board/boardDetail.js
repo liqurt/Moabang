@@ -1,13 +1,22 @@
+import { border } from '@mui/system';
 import axios from 'axios';
 import { useState ,useEffect } from 'react';
 import Swal from 'sweetalert2';
-
+import "./BoardCSS/BoardWrite.css";
+import "./BoardCSS/BoardDetail.css"
+import CommentList from './CommentList';
 const BoardDetail = () => {
     const [board, setBoard] = useState([]);
     const [checkUpdate, setCheckUpdate] = useState(true);
     const [header, setHeader] = useState();
     const [content, setContent] = useState();
     const [title, setTitle] = useState();
+    const [nickname, setNickname] = useState();
+    const [date, setDate] = useState();
+    const [tailCnt, setTailCnt] = useState(0);
+    const [comment, setComment] = useState();
+    const [pimg, setPimg] = useState();
+    const [checkComment, setCheckComment] = useState(true);
 
     const HeaderSelectHandler = (event) => {
         console.log(event.target.value);
@@ -93,8 +102,8 @@ const BoardDetail = () => {
     }
 
     //게시글 상세 정보 가져오기
-    const getBoard = () => {
-        axios.get(`/community/read/${getParameterByName('rid')}`,
+    const getBoard = async() => {
+        await axios.get(`/community/read/${getParameterByName('rid')}`,
             {
                 headers: {
                     'Authorization': localStorage.getItem("myToken")
@@ -105,14 +114,17 @@ const BoardDetail = () => {
             setHeader(res.data.header);
             setContent(res.data.content);
             setTitle(res.data.title);
+            setNickname(res.data.user.nickname);
+            setDate(res.data.updateDate.replace('T', ' '))
+            setPimg(res.data.user.pimg);
 		}).catch(error => {
 			console.error(error);
 		});
     }
-
     useEffect(() => {
         getBoard();
-    }, []);
+        getCommentList();
+    }, [checkComment]);
 
     
 
@@ -149,39 +161,118 @@ const BoardDetail = () => {
         })
         
     }
+    const goList = () => {
+        window.location.href = `/board`;
+    }
+
+    
+    //===============================================
+    //밑으로 댓글 기능
+    const [commentList, setCommentList] = useState([]);
+    //댓글 생성
+    const CreateTail = () => {
+        axios.post('/community/comment/create',
+            {
+                communityId: board.rid,
+                content: comment
+            },
+            {
+                headers: {
+                    'Authorization': localStorage.getItem("myToken")
+                }
+            }
+        ).then(res => {
+            Swal.fire({
+                icon: 'success',
+                title: "댓글 작성."
+            })
+            setComment("");
+            setCheckComment(e=>e=!e);
+        })
+
+    }
+    //댓글 리스트 가져오기
+    const getCommentList = () => {
+        axios.get(`/community/comment/list/${getParameterByName('rid')}`, 
+            {
+                headers: {
+                    'Authorization': localStorage.getItem("myToken")
+                }
+            }
+        ).then(res => {
+            setCommentList(res.data);
+        })
+    }
+
+    //입력 받은 댓글
+    const CountTail = (event) => {
+        setComment(event.target.value);//댓글
+        setTailCnt(event.target.value.length);// 댓글 수
+    }
+
+    
     return (
-        <div>
+        <div className='BoardDetailTotal'> 
+            <div id='BoardDetailMainText'>커뮤니티</div>
+            
             {checkUpdate ?
-                <div className='boardWrite-container'>
-                    <div className='boardTitle'>제목: 
-                        {board.title}
+                <div className='BoardDetailContainer'>
+                    <hr id='hr1'></hr>
+                    <div className='BoardDetailTitleContainer'>
+                        <div id='BoardDetailTitle'>{board.title}</div>
+                        <span id='BoardDetailDate'>
+                            <img id='BoardDetailImg' alt='profile' src={pimg}/>
+                            &nbsp;&nbsp;&nbsp;{nickname}&nbsp;&nbsp;&nbsp;
+                            {date}&nbsp;&nbsp;&nbsp;
+                            {board.header}
+                        </span>
                     </div>
-                    <div className='boardHeader'>카테고리:  
-                        {board.header}
+                    <hr id='hr2'></hr>
+                    <div className='BoardDetailContent'>
+                        {board.content}
                     </div>
-                    <div className='boardContent'>
-                        {board.content} </div>
-                    <button className='boardWriteBtn' onClick={UpdateBtn}>수정</button>
-                    <button className='boardCancelBtn' onClick={DeleteBtn}>삭제</button>
+                    <hr id='hr3'></hr>
+                   
+                    <button className='BoardDetailWriteBtn '  onClick={UpdateBtn}>수정</button>
+                    <button className='BoardDetailCancelBtn' onClick={DeleteBtn}>삭제</button>
+                    <button className='goList' onClick={goList}>목록</button>
+                    <div>
+                        <div className='tailMain'>댓글</div>
+                        <div className='tailForm'>
+                            <textarea id='tailContent'  maxLength='100' onChange={CountTail} value={comment}></textarea>
+                            <span id='tailCnt'>{tailCnt}/100자</span>
+                            <button id='tailWriteBtn' onClick={CreateTail}>등록</button>
+                        </div>
+                    </div>
+                    <CommentList commentList={commentList} setCheckComment={setCheckComment}/>
+
                 </div>
+                    
+                
                 :
-                <div className='boardWrite-container'>
-                    <div className='boardTitle'>제목: 
-                        <input className='inputTitle' type="text" onChange={TitleHandler} value={title}></input>
+                <div className='Board-Write-Main'>
+                    <div className='boardWrite-container'>
+                        <div className='boardTitle'>
+                            <span id='boardWriteText'>제목<span id='TextStar'>*</span></span> 
+                            <input className='inputTitle' placeholder='제목을 입력해주세요' type="text" onChange={TitleHandler} value={title}></input>
+                        </div>
+                        <div className='boardHeader'>
+                            <span id='boardWriteText'>게시판<span id='TextStar'>*</span></span>
+                            <select className='BoardWriteinputSelect' onChange={HeaderSelectHandler} value={header}>
+                                <option value="-1">선택</option>
+                                <option value="자유">자유</option>
+                                <option value="구인">구인</option>
+                            </select>
+                        </div>
+                        <div className='boardContent'>
+                            <span id='boardWriteText'>내용<span id='TextStar'>*</span></span> 
+                            <textarea className='inputContent' type="text" placeholder='내용을 입력해 주세요'  value={content} onChange={ContentHandler}></textarea>
+                        </div>
+                        <button className='boardWriteBtn '  onClick={WriteSummitBtn}>확인</button>
+                        <button className='boardCancelBtn' onClick={WriteCancelBtn}>취소</button>
                     </div>
-                    <div className='boardHeader'>카테고리:  
-                        <select onChange={HeaderSelectHandler} value={header}>
-                            <option value="-1">선택</option>
-                            <option value="자유">자유</option>
-                            <option value="구인">구인</option>
-                        </select>
-                    </div>
-                    <div className='boardContent'>
-                        <textarea className='inputContent' type="text" placeholder='내용을 입력해 주세요'  value={content} onChange={ContentHandler}></textarea>
-                    </div>
-                    <button className='boardWriteBtn' onClick={WriteSummitBtn}>작성</button>
-                    <button className='boardCancelBtn' onClick={WriteCancelBtn}>취소</button>
                 </div>
+                
             }
             
         </div>
