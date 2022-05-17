@@ -24,9 +24,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="4dp"
+        android:textSize="20dp"
         android:text="테마 이름"
         android:textColor="@color/moabang_gray"
-        android:textSize="20dp"
         app:layout_constraintEnd_toStartOf="@+id/iv_themeL_like"
         app:layout_constraintStart_toEndOf="@+id/iv_themeL_img"
         app:layout_constraintTop_toTopOf="parent" />
@@ -39,8 +39,20 @@
         android:text="카페이름"
         android:textColor="@color/moabang_pink"
         android:textSize="14dp"
+        app:layout_constraintBottom_toTopOf="@+id/themeL_blank3"
         app:layout_constraintStart_toStartOf="@+id/tv_themeL_theme_name"
         app:layout_constraintTop_toBottomOf="@+id/tv_themeL_theme_name" />
+
+    <View
+        android:id="@+id/themeL_blank3"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_themeL_genre"
+        app:layout_constraintStart_toEndOf="@+id/iv_themeL_img"
+        app:layout_constraintTop_toBottomOf="@+id/tv_themeL_cafe_name" />
 
     <View
         android:id="@+id/themeL_blank"
@@ -72,9 +84,9 @@
         android:textColor="@color/moabang_gray"
         android:textSize="12dp"
         app:layout_constraintBottom_toTopOf="@+id/themeL_diff"
-
         app:layout_constraintEnd_toStartOf="@+id/tv_themeL_time"
-        app:layout_constraintStart_toEndOf="@+id/iv_themeL_img" />
+        app:layout_constraintStart_toEndOf="@+id/iv_themeL_img"
+        app:layout_constraintTop_toBottomOf="@+id/themeL_blank3" />
 
     <TextView
         android:id="@+id/tv_themeL_time"
@@ -123,7 +135,8 @@
         android:textSize="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/tv_themeL_diff"
-        app:layout_constraintStart_toEndOf="@+id/iv_themeL_img" />
+        app:layout_constraintStart_toEndOf="@+id/iv_themeL_img"
+        app:layout_constraintTop_toBottomOf="@+id/tv_themeL_genre" />
 
     <TextView
         android:id="@+id/tv_themeL_diff"
