@@ -2,6 +2,7 @@ package com.self.roomescape.repository.mapping;
 
 import com.self.roomescape.entity.User;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public interface CommunityMapping {
@@ -15,9 +16,9 @@ public interface CommunityMapping {
 
     String getHeader();
 
-    Date getCreateDate();
+    LocalDateTime getCreateDate();
 
-    Date getUpdateDate();
+    LocalDateTime getUpdateDate();
 
     int getCount();
 }
