@@ -41,6 +41,7 @@ import kotlinx.coroutines.launch
 import com.ssafy.moabang.src.theme.ThemeDetailActivity
 import kotlinx.coroutines.*
 import retrofit2.Response
+import kotlin.math.roundToInt
 
 
 class HomeFragment : Fragment() {
@@ -121,14 +122,15 @@ class HomeFragment : Fragment() {
                     if (cafe.lat == null || cafe.lat == "" || cafe.lon == null || cafe.lon == "") {
                         continue
                     } else {
-                        val cafeLat = cafe.lat!!.toDouble()
-                        val cafeLng = cafe.lon!!.toDouble()
-                        val distance = LocationUtil().getDistanceLatLngInKm(
-                            currentLocation!!.latitude,
-                            currentLocation!!.longitude,
-                            cafeLat,
-                            cafeLng
-                        )
+                        val distance = if(cafe.lat == "" || cafe.lon == "" ) 0.0
+                        else {
+                            LocationUtil().getDistanceLatLngInKm(
+                                currentLocation!!.latitude,
+                                currentLocation!!.longitude,
+                                cafe.lat!!.toDouble(),
+                                cafe.lon!!.toDouble()
+                            )
+                        }
 
                         cafe.distance = distance
                         tempNearCafeList.add(cafe)

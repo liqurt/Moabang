@@ -37,7 +37,8 @@ class CafeListRVAdapter(var cafeList: List<Cafe>) :
 
         fun bindInfo(cafe : Cafe) {
             val cur = LocationUtil().getCurrentLocation(binding.root.context) ?: LatLng(37.566535, 126.9779692)
-            val distance = LocationUtil().getDistanceLatLngInKm(cur!!.latitude, cur!!.longitude, cafe.lat!!.toDouble(), cafe.lon!!.toDouble())
+            var distance = if (cafe.lat == "" || cafe.lon == "") "알수없음"
+            else LocationUtil().getDistanceLatLngInKm(cur!!.latitude, cur!!.longitude, cafe.lat!!.toDouble(), cafe.lon!!.toDouble()).roundToInt().toString() + "km"
 
             Glide.with(binding.root.context)
                 .load(cafe.img)
@@ -46,7 +47,7 @@ class CafeListRVAdapter(var cafeList: List<Cafe>) :
                 .into(binding.iv1)
             binding.tv1.text = cafe.cname
             binding.tv2.text = cafe.island + " " + cafe.si
-            binding.tv3.text = distance.roundToInt().toString() + "km"
+            binding.tv3.text = distance
 
             itemView.setOnClickListener {
                 listener.onClick(cafe)
