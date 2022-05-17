@@ -20,6 +20,7 @@ import com.google.maps.android.clustering.ClusterManager
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
 import com.ssafy.moabang.R
+import com.ssafy.moabang.data.model.dto.Cafe
 import com.ssafy.moabang.data.model.repository.Repository
 import com.ssafy.moabang.databinding.FragmentCafeMapBinding
 import com.ssafy.moabang.src.util.LocationUtil
@@ -67,8 +68,16 @@ class CafeMapFragment : Fragment(), OnMapReadyCallback {
             })
 
             clusterManager.markerCollection.setOnInfoWindowClickListener { marker ->
-                val intent = Intent(requireContext(), CafeDetailActivity::class.java).putExtra("cname", marker.title)
-                ContextCompat.startActivity(requireContext(), intent, null)
+                var cafee: Cafe? = null
+                CoroutineScope(Dispatchers.Main).launch {
+                    cafee = repository.getCafeByNameExactly(marker.title!!)
+                    Log.d("CAFE MAP FRAG", "setUpClusterer: $cafee")
+                    val intent = Intent(requireContext(), CafeDetailActivity::class.java).putExtra(
+                        "cafe",
+                        cafee
+                    )
+                    ContextCompat.startActivity(requireContext(), intent, null)
+                }
             }
         }
     }
