@@ -31,7 +31,12 @@ const BoardList = ({ boardList }) => {
         console.log(e)
         window.location.href = `/board/detail/?rid=${e.rid}`;
     }
-    
+    const changeDate = (date) => {
+        let res = date.replace('T', ' ');
+        let right = res.split('.', 1); 
+        console.log(right);
+        return right;
+    }
     return (
         <div className='List-container'>
             <table >
@@ -46,7 +51,7 @@ const BoardList = ({ boardList }) => {
                             <tr key={index} onClick={()=>(goBoardDetail(item))}>
                                 <td>{index + 1}</td>
                                 <td>{item.title}<span id='BoardListCommentCount'>[{item.count}]</span></td>
-                                <td>{item.updateDate.replace('T', '   ')}</td>
+                                <td>{changeDate(item.updateDate)}</td>
                                 <td>{item.header}</td>
                                 <td>{item.user.nickname}</td>
                             </tr>
