@@ -3,6 +3,7 @@ package com.self.roomescape.controller;
 import com.self.roomescape.config.JwtTokenProvider;
 import com.self.roomescape.entity.*;
 import com.self.roomescape.repository.*;
+import com.self.roomescape.repository.mapping.CommunityMapping;
 import com.self.roomescape.request.CommentRequest;
 import com.self.roomescape.request.CommentUpdateRequest;
 import com.self.roomescape.request.RecruitCreateRequest;
@@ -119,7 +120,8 @@ public class CommunityController {
     @ApiOperation(value = "글 리스트 읽기", notes = "글 리스트 읽기")
     @GetMapping("/read/list")
     public ResponseEntity<?> getRecruitList() {
-        List<Community> communityList = communityRepository.findAllByOrderByCreateDateDesc();
+//        List<Community> communityList = communityRepository.findAllByOrderByCreateDateDesc();
+        List<CommunityMapping> communityList = communityRepository.findCustomList();
         return new ResponseEntity<>(communityList, HttpStatus.OK);
     }
 
