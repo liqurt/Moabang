@@ -17,7 +17,6 @@ import kotlin.math.roundToInt
 
 class CompareThemeListRVAdapter: RecyclerView.Adapter<CompareThemeListRVAdapter.ViewHolder>() {
     var data: MutableList<ThemeForCompare> = mutableListOf()
-    lateinit var binding: ListCompareThemeItemBinding
     lateinit var itemClickListener: ItemClickListener
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -35,7 +34,7 @@ class CompareThemeListRVAdapter: RecyclerView.Adapter<CompareThemeListRVAdapter.
             itemView.findViewById<TextView>(R.id.tv_tCompare_theme_name).text = item.tname
             itemView.findViewById<TextView>(R.id.tv_tCompare_cafe_name).text = item.cname
 
-            val cur = LocationUtil().getCurrentLocation(binding.root.context) ?: LatLng(37.566535, 126.9779692)
+            val cur = LocationUtil().getCurrentLocation(itemView.context) ?: LatLng(37.566535, 126.9779692)
             var distance = if (item.lat == "" || item.lon == "") "알수없음"
             else LocationUtil().getDistanceLatLngInKm(cur!!.latitude, cur!!.longitude, item.lat!!.toDouble(), item.lon!!.toDouble()).roundToInt().toString() + "km"
             itemView.findViewById<TextView>(R.id.tv_tCompare_cafe_distance).text = distance
