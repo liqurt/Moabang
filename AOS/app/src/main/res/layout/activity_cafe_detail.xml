@@ -133,7 +133,7 @@
                     android:layout_marginTop="16dp"
                     android:text="위치"
                     android:textColor="@color/moabang_pink"
-                    android:textSize="34sp"
+                    android:textSize="34dp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -202,7 +202,7 @@
                     android:layout_marginTop="16dp"
                     android:text="테마"
                     android:textColor="@color/moabang_pink"
-                    android:textSize="34sp"
+                    android:textSize="34dp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
