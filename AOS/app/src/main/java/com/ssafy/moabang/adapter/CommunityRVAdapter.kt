@@ -39,6 +39,7 @@ class CommunityRVAdapter : RecyclerView.Adapter<CommunityRVAdapter.CommunityRVAd
             Glide.with(binding.civCommuF).load(community.user.pimg)
                 .placeholder(R.drawable.icon_profile).into(binding.civCommuF)
 
+            binding.tvCommuFComment.text = community.count.toString()
             binding.tvCommuFHeader.text = community.header
             binding.tvCommuFAuthor.text = community.user.nickname
             binding.tvCommuFTitle.text = community.title
