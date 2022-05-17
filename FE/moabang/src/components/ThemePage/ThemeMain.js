@@ -13,10 +13,10 @@ const ThemeMain = () => {
     const [ThemeCount, setThemeCount] = useState(1682); //Theme 총 개수
 
     const [tListRender, setTListRender] = useState(false);
-    
-    console.log(localStorage.getItem("myToken"));
+
+    // console.log(localStorage.getItem("myToken"));
     async function getThemeData() {
-        await axios.get('http://k6d205.p.ssafy.io:8080/cafe/theme/list',
+        await axios.get('/cafe/theme/list',
             {
                 headers: {
                     'Authorization': localStorage.getItem("myToken")
@@ -26,23 +26,20 @@ const ThemeMain = () => {
             .then(response => {
                 setthemeData(response.data);
                 setThemeCount(response.data.length);
-                
 
-        });
+
+            });
     }
-    
+
     useEffect(() => {
         getThemeData();
     }, [tListRender]);
-    
-    
-  
 
     return (
         <div className='total'>
             <div >
-                <ThemeSearchbar searchItems={themeData} totalcnt={ThemeCount} setTListRender={setTListRender}/>
-            
+                <ThemeSearchbar searchItems={themeData} totalcnt={ThemeCount} setTListRender={setTListRender} />
+
             </div>
         </div>
     );

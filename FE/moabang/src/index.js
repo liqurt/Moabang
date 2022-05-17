@@ -7,7 +7,7 @@ import axios from "axios";
 import { createRoot } from 'react-dom/client';
 
 
-axios.defaults.baseURL = "http://모아방.kr:8080";
+axios.defaults.baseURL = "https://모아방.kr:8080";
 axios.defaults.withCredentials = true;
 // axios.defaults.headers['Access-Control-Allow-Origin'] = '*';
 const root = createRoot(document.getElementById('root'));
