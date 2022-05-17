@@ -204,7 +204,8 @@
             android:layout_weight="1"
             android:text="찜한 테마"
             android:textColor="@color/moabang_gray"
-            android:textSize="16dp" />
+            android:gravity="center_vertical"
+            android:textSize="18dp"  />
 
         <TextView
             android:id="@+id/tv_mypageF_menu3"
@@ -213,7 +214,8 @@
             android:layout_weight="1"
             android:text="테마 비교"
             android:textColor="@color/moabang_gray"
-            android:textSize="16dp" />
+            android:gravity="center_vertical"
+            android:textSize="18dp" />
 
         <TextView
             android:id="@+id/tv_mypageF_menu4"
@@ -222,7 +224,8 @@
             android:layout_weight="1"
             android:text="이용한 테마"
             android:textColor="@color/moabang_gray"
-            android:textSize="16dp" />
+            android:gravity="center_vertical"
+            android:textSize="18dp" />
 
         <TextView
             android:id="@+id/tv_mypageF_menu5"
@@ -231,7 +234,8 @@
             android:layout_weight="1"
             android:text="나의 방탈출 통계"
             android:textColor="@color/moabang_gray"
-            android:textSize="16dp"
+            android:gravity="center_vertical"
+            android:textSize="18dp"
             android:visibility="gone" />
 
         <TextView
@@ -241,7 +245,8 @@
             android:layout_weight="1"
             android:text="작성글 관리"
             android:textColor="@color/moabang_gray"
-            android:textSize="16dp" />
+            android:gravity="center_vertical"
+            android:textSize="18dp" />
 
         <TextView
             android:id="@+id/tv_mypageF_blank"
