@@ -3,38 +3,30 @@ package com.ssafy.moabang.src.main.cafe
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.bumptech.glide.Glide
-import com.google.android.gms.location.*
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.maps.android.clustering.ClusterManager
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
 import com.ssafy.moabang.R
-import com.ssafy.moabang.data.model.dto.Cafe
 import com.ssafy.moabang.data.model.repository.Repository
 import com.ssafy.moabang.databinding.FragmentCafeMapBinding
 import com.ssafy.moabang.src.util.LocationUtil
+import com.ssafy.moabang.src.util.MarkerRenderer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.*
-
 
 class CafeMapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var binding: FragmentCafeMapBinding
@@ -50,6 +42,7 @@ class CafeMapFragment : Fragment(), OnMapReadyCallback {
         if (mMap != null) {
             mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(37.566535, 126.9779692), 10f))
             clusterManager = ClusterManager(context, mMap)
+            clusterManager.renderer = MarkerRenderer(context, mMap, clusterManager)
             mMap?.apply {
                 setOnCameraIdleListener(clusterManager)
                 setOnMarkerClickListener(clusterManager)
@@ -68,15 +61,7 @@ class CafeMapFragment : Fragment(), OnMapReadyCallback {
                         R.layout.info_window_custom,
                         null
                     )
-                    val tvTitle = v.findViewById<TextView>(R.id.info_window_cname)
-                    val ivImg = v.findViewById<ImageView>(R.id.info_window_img)
-
-                    tvTitle.text = marker.title
-                    Glide.with(requireContext())
-                        .load(marker.snippet)
-                        .placeholder(R.drawable.door)
-                        .centerCrop()
-                        .into(ivImg)
+                    v.findViewById<TextView>(R.id.info_window_cname).text = marker.title
                     return v
                 }
             })
