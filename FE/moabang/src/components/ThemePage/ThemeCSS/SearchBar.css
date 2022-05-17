@@ -45,35 +45,38 @@
 .locationGerne{
   position: absolute;
   top: 70px;
-  left: 150px;
+  left: 300px;
 
 }
 .locationDiff{
   position: absolute;
   top: 110px;
-  left: 450px;
+  left: 750px;
 }
 
 
 .locationType{
+  
   position: absolute;
-  top: 110px;
-  left: 150px;
+  top: 150px;
+  left: 300px;
 
 }
 
 .locationNum{
   position: absolute;
-  top: 150px;
-  left: 150px;
+  top: 110px;
+  left: 300px;
 }
 
 .locationSort{
   position: absolute;
   top: 200px;
-  left: 150px;
+  left: 300px;
 }
-
+#filterText{
+  font-family: GothicA1;
+}
 
 
 
@@ -124,8 +127,6 @@
   background-color: rgb(241, 97, 241);
   color: #FFFFFF;
 }
-
-
 
 
 

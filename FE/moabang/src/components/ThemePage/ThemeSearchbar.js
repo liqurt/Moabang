@@ -197,17 +197,17 @@ const ThemeSearchbar = (props) => {
                     {shouldDisplayButton && <button className='button4' onClick={handleInputClear}>검색 초기화</button>}
                     <input type="text" className="search__input" value={searchValue} placeholder='검색어 입력' onChange={handleInputChange} />
                 </div>
-                <div className='locationGerne'><span>장르</span>
-                    {gerneBtn &&
-                        gerneBtn.map((type, index) => (
-                            <button className='filterBtn1' key={index} value={type.value} onClick={handleGerne}>
-                                {type.name}
-                            </button>
-                        ))
-                    }
+                <div className='locationGerne'><span id='filterText'>장르&nbsp;&nbsp;</span>
+                {gerneBtn &&
+                    gerneBtn.map((type, index) => (
+                        <button className='filterBtn1' key={index} value={type.value} onClick={handleGerne}>
+                            {type.name}
+                        </button>
+                    ))
+                }
                 </div>
                 <div className='locationType'>
-                    <span >타입</span>
+                    <span id='filterText'>타입&nbsp;&nbsp;</span>
                     {typeBtn &&
                         typeBtn.map((type, index) => (
                             <button className='filterBtn2' key={index} value={type.value} onClick={handleType}>
@@ -217,7 +217,7 @@ const ThemeSearchbar = (props) => {
                     }
                 </div>
                 <div className='locationDiff'>
-                    <span >난이도</span>
+                    <span id='filterText'>난이도&nbsp;&nbsp;</span>
                     {diffBtn &&
                         diffBtn.map((type, index) => (
                             <button className='filterBtn3' key={index} value={type.value} onClick={handleDiff}>
@@ -226,25 +226,25 @@ const ThemeSearchbar = (props) => {
                         ))
                     }
                 </div>
-                <div className='locationNum'><span>인원</span>
-                    {memberCntBtn &&
-                        memberCntBtn.map((type, index) => (
-                            <button className='filterBtn4' key={index} value={type.value} onClick={handleMemberCnt}>
-                                {type.name}
-                            </button>
-                        ))
-                    }
+                <div className='locationNum'><span id='filterText'>인원&nbsp;&nbsp;</span>
+                {memberCntBtn &&
+                    memberCntBtn.map((type, index) => (
+                        <button className='filterBtn4' key={index} value={type.value} onClick={handleMemberCnt}>
+                            {type.name}
+                        </button>
+                    ))
+                }
                 </div>
-
-
-                <div className='locationSort'><span>정렬</span>
-                    {sortBtn &&
-                        sortBtn.map((type, index) => (
-                            <button className='filterBtn5' key={index} value={type.value} onClick={handleSort}>
-                                {type.name}
-                            </button>
-                        ))
-                    }
+                
+                
+                <div className='locationSort'><span id='filterText'>순서&nbsp;&nbsp;</span>
+                {sortBtn &&
+                    sortBtn.map((type, index) => (
+                        <button className='filterBtn5' key={index} value={type.value} onClick={handleSort}>
+                            {type.name}
+                        </button>
+                    ))
+                }
                 </div>
 
             </div>
@@ -260,10 +260,11 @@ const ThemeSearchbar = (props) => {
                 <ThemeList Theme={currentPosts(sortFilter)} setTListRender={props.setTListRender} />
 
             </div>
-
+            <br></br>
             <div>
                 <Paging page={page} count={pageCnt} setPage={handlePageChange} />
             </div>
+            <br></br>
         </div>
 
     )

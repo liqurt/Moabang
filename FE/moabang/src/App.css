@@ -42,6 +42,13 @@
     font-weight:200;
     src: url("./fonts/나눔손글씨\ 성실체.ttf");
 }
+<<<<<<< HEAD
+@font-face {
+    font-family: "Jalnan";
+    font-weight:200;
+    src: url("./fonts/Jalnan.ttf");
+}
+=======
 
 @font-face {
     font-family: 'BMJUA';
@@ -50,6 +57,7 @@
     font-style: normal;
 }
 
+>>>>>>> 64906028764161c2c3cbce13af6dcd286796ad95
 .top-button{
     position: fixed;
     bottom: 90px;

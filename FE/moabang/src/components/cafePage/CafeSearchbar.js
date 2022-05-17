@@ -64,10 +64,11 @@ const CafeSearchbar = (props) => {
                 <CafeList cafe={currentPosts(filteredProducts)} />
                 
             </div>
-
+            <br></br>
             <div>
                 <Paging page={page} count={pageCnt} setPage={handlePageChange }/>
             </div>
+            <br></br>
         </div>
 
     )

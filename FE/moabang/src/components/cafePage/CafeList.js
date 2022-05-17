@@ -21,10 +21,10 @@ const CafeList = (props) => {
     };
 
     return (
-        <div className='detailList' >
+        <div className='cafedetailList' >
             {cafe.map((item, index) => (
                 
-                <div className='detail-container' key={index} onClick={() => {
+                <div className='cafe-detail-container' key={index} onClick={() => {
                     openModal();
                     setModalData(item);
                 }}>
