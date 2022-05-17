@@ -144,7 +144,7 @@ public class CommunityController {
         }
 
         List<CommunityRes> communityRes = new ArrayList<>();
-        List<Comment> commentList = commentRepository.findByCommunityId(community_id);
+        List<Comment> commentList = commentRepository.findByCommunityIdOrderByRegDateDesc(community_id);
 
         for (Comment c : commentList
         ) {
