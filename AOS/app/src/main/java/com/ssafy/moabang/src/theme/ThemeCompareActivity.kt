@@ -65,7 +65,6 @@ class ThemeCompareActivity : AppCompatActivity() {
             legend.form = Legend.LegendForm.CIRCLE
             legend.textColor = R.color.moabang_gray
             axisRight.isEnabled = false
-
         }
 
         binding.barchartThemeCompare.xAxis.apply{
@@ -163,6 +162,7 @@ class ThemeCompareActivity : AppCompatActivity() {
             setData(data)
             setScaleEnabled(false)
             setVisibleXRangeMaximum(6f)
+            animateXY(500, 500)
             groupBars(0f, 0.4f,0f)
             invalidate()
         }
