@@ -52,6 +52,7 @@
                         android:layout_height="30dp"
                         android:layout_gravity="left"
                         android:autoSizeMaxTextSize="24dp"
+                        android:autoSizeMinTextSize="8dp"
                         android:autoSizeTextType="uniform"
                         android:gravity="start"
                         android:maxLines="1"

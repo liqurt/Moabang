@@ -18,7 +18,7 @@
             android:layout_marginTop="8dp"
             android:text="지역 선택"
             android:textColor="@color/moabang_pink"
-            android:textSize="24sp"
+            android:textSize="24dp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
