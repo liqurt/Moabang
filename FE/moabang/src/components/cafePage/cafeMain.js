@@ -11,11 +11,7 @@ const CafeMain = () => {
     const [cafeData, setCafeData] = useState([]); //DB에서 받아온 데이터 저장
     const [cafeCount, setCafeCount] = useState(45); //cafe 총 개수
     async function getCafeData() {
-<<<<<<< HEAD
         await axios.get('/cafe/list')
-=======
-        axios.get('/cafe/list')
->>>>>>> feature/FE/mypage
             .then(response => {
                 setCafeData(response.data);
                 setCafeCount(response.data.length);
