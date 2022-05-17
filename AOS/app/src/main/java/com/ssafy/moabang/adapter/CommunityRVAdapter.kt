@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Typeface
 import android.os.Build
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
@@ -56,6 +57,9 @@ class CommunityRVAdapter : RecyclerView.Adapter<CommunityRVAdapter.CommunityRVAd
                 binding.tvCommuFAuthor.typeface = Typeface.DEFAULT_BOLD
                 binding.tvCommuFTitle.typeface = Typeface.DEFAULT_BOLD
                 binding.tvCommuFHeader.typeface= Typeface.DEFAULT_BOLD
+            }
+            if(mode == "mypost"){
+                binding.tvCommuFAuthor.visibility = View.GONE
             }
         }
 

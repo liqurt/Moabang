@@ -2,18 +2,20 @@ import React from 'react';
 import Carousels from './Contents/Myloc_cafe/Carousels';
 import PopularTheme from './Contents/Popular_theme/Popular_theme';
 import Community from './Contents/Community/Community';
+import Chart from './Contents/Chart/Charts';
 import './mainpage.css'
 
 const mainpage = () => {
 
     return (
-        <div>
+        <div className='mainpage'>
             <Carousels />
-            <PopularTheme />
+            {/* <PopularTheme /> */}
             <div className='list_chart'>
-                {/* <Community /> */}
-                {/* <Community /> */}
+                <Community />
+                <PopularTheme />
             </div>
+
         </div>
     );
 };

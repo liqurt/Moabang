@@ -16,23 +16,23 @@ const CafeMain = () => {
                 setCafeData(response.data);
                 setCafeCount(response.data.length);
                 console.log(response);
-                
 
-        });
+
+            });
     }
-    
+
 
     //페이지 네이션
     useEffect(() => {
         getCafeData();
     }, []);
-  
+
 
     return (
         <div className='total'>
             <div >
-                <CafeSearchbar searchItems={cafeData} totalcnt={cafeCount}/>
-            
+                <CafeSearchbar searchItems={cafeData} totalcnt={cafeCount} />
+
             </div>
         </div>
     );

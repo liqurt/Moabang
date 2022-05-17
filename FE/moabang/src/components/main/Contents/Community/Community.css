@@ -1,4 +1,30 @@
-.community{
-    width: 50%;
-    margin: 2vh 0 8vh 4vh;
+.new_list{
+    margin: 7vh 0 7vh 14vh;
+    border: 1vh solid #8785A2;
+    width: 100vh;
+}
+
+.list_group{
+    width: 80vh;
+    border: 0.1vh solid #8785A2;
+}
+
+.new_community p{
+    text-align: left;
+    margin: 2vh 0 3vh 4vh;
+    font-size: 20px;
+    font-family: 'BMJUA';
+    /* border: 0.1vh solid #8785A2; */
+}
+.new_community a{
+    text-align: right;
+    margin: 2vh 0 3vh 4vh;
+    font-size: 15px;
+    font-family: 'BMJUA';
+    /* border: 0.1vh solid #8785A2; */
+}
+.new_community{
+    display: inline-flex;
+    /* border: 0.1vh solid #8785A2; */
+    width: 80vh;
 }

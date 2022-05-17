@@ -26,6 +26,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import com.ssafy.moabang.R
 import com.ssafy.moabang.data.model.repository.Repository
+import com.ssafy.moabang.data.model.response.DoneTidResponse
+import com.ssafy.moabang.data.model.viewmodel.MyPageViewModel
 import com.ssafy.moabang.data.model.viewmodel.ThemeViewModel
 import com.ssafy.moabang.src.theme.ThemeFilter
 import kotlinx.coroutines.CoroutineScope
@@ -37,10 +39,13 @@ class ThemeFragment : Fragment() {
     private lateinit var binding: FragmentThemeBinding
     private lateinit var repository: Repository
     lateinit var themeListRVAdapter: ThemeListRVAdapter
+    private val myPageViewModel: MyPageViewModel by viewModels()
 
-    private lateinit var originalList: List<Theme>
-    private lateinit var filteredList: List<Theme>
+    private lateinit var originalList: MutableList<Theme>
+    private lateinit var filteredList: MutableList<Theme>
+    private lateinit var doneList: List<DoneTidResponse>
     private var searchList = ArrayList<Theme>()
+    private var doneThemeList = ArrayList<Theme>()
     private lateinit var tf: ThemeFilter
 
     private val activityResultLauncher : ActivityResultLauncher<Intent> = registerForActivityResult(
@@ -61,10 +66,15 @@ class ThemeFragment : Fragment() {
         repository = Repository.get()
     }
 
+    override fun onResume() {
+        myPageViewModel.getAllDoneTid()
+        super.onResume()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentThemeBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -76,7 +86,7 @@ class ThemeFragment : Fragment() {
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         CoroutineScope(Dispatchers.Main).launch {
-            originalList = repository.getAllTheme()
+            originalList = repository.getAllTheme() as MutableList<Theme>
             themeListRVAdapter.filterList(originalList)
         }
         if(::tf.isInitialized) filter(tf)
@@ -87,10 +97,16 @@ class ThemeFragment : Fragment() {
         themeListRVAdapter = ThemeListRVAdapter()
         themeListRVAdapter.notifyDataSetChanged()
 
+        myPageViewModel.doneTidListLiveData.observe(this){
+            doneList = it
+        }
+
         CoroutineScope(Dispatchers.Main).launch {
-            originalList = repository.getAllTheme()
+            originalList = repository.getAllTheme() as MutableList<Theme>
             themeListRVAdapter.filterList(originalList)
         }
+
+        binding.switchThemeF.setOnCheckedChangeListener(SwitchListener())
 
         binding.rvThemeF.apply{
             layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
@@ -100,7 +116,7 @@ class ThemeFragment : Fragment() {
         themeListRVAdapter.itemClickListener = object : ThemeListRVAdapter.ItemClickListener {
             override fun onClick(item: Theme) {
                 if(item != null){
-                    val intent = Intent(requireActivity(), ThemeDetailActivity::class.java).putExtra("theme", item)
+                    val intent = Intent(requireActivity(), ThemeDetailActivity::class.java).putExtra("theme", item.tid)
                     activityResultLauncher.launch(intent)
                 }
             }
@@ -128,33 +144,39 @@ class ThemeFragment : Fragment() {
         popup.setOnMenuItemClickListener { it ->
             when(it.itemId){
                 R.id.sort_by_rate_descending -> {
-                    list = list.sortedByDescending { it.grade }
+                    list = list.sortedByDescending { it.grade } as MutableList<Theme>
                     themeListRVAdapter.filterList((list))
+                    filteredList = list
                     true
                 }
                 R.id.sort_by_rate_ascending -> {
-                    list = list.sortedBy { it.grade }
+                    list = list.sortedBy { it.grade } as MutableList<Theme>
                     themeListRVAdapter.filterList((list))
+                    filteredList = list
                     true
                 }
                 R.id.sort_by_tname_descending -> {
-                    list = list.sortedByDescending { it.tname }
+                    list = list.sortedByDescending { it.tname } as MutableList<Theme>
                     themeListRVAdapter.filterList((list))
+                    filteredList = list
                     true
                 }
                 R.id.sort_by_tname_ascending -> {
-                    list = list.sortedBy { it.tname }
+                    list = list.sortedBy { it.tname } as MutableList<Theme>
                     themeListRVAdapter.filterList((list))
+                    filteredList = list
                     true
                 }
                 R.id.sort_by_cname_descending -> {
-                    list = list.sortedByDescending { it.cname }
+                    list = list.sortedByDescending { it.cname } as MutableList<Theme>
                     themeListRVAdapter.filterList((list))
+                    filteredList = list
                     true
                 }
                 R.id.sort_by_cname_ascending -> {
-                    list = list.sortedBy { it.cname }
+                    list = list.sortedBy { it.cname } as MutableList<Theme>
                     themeListRVAdapter.filterList((list))
+                    filteredList = list
                     true
                 }
             else -> false
@@ -260,10 +282,19 @@ class ThemeFragment : Fragment() {
 
     inner class SwitchListener: CompoundButton.OnCheckedChangeListener{
         override fun onCheckedChanged(button: CompoundButton, isChecked: Boolean) {
+            val list = if(!::filteredList.isInitialized || filteredList.isEmpty()) originalList else filteredList
+            doneThemeList = ArrayList<Theme>()
             if(isChecked){
-                // TODO
+                for(item in list){
+                    if(!doneList.contains(DoneTidResponse(item.tid))){
+                        doneThemeList.add(item)
+                    }
+                }
+                themeListRVAdapter.filterList(doneThemeList)
+
             } else {
-                // TODO
+                themeListRVAdapter.filterList(list)
+
             }
         }
 

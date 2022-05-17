@@ -1,19 +1,23 @@
 .profile-card{
     border-radius: 2vh;
     margin: 3vh 0 3vh 5vh;
+    border: 0.1vh solid #8785A2;
 }
 .profile-card-img
 {
     width: 30vh;
     height: 30vh;
-    border: 5px white solid;
-    border-radius: 30vh ;
+    border: 1px rgb(0, 0, 0) solid;
+    border-radius: 30vh ; 
     text-align: left;
+    
 }
 .flex-column{
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     border-radius: 2vh;
     margin: 3vh 0 3vh 5vh;
+    border: 0.1vh solid #8785A2;
+    padding: 1vh;
 }
 .profile-tab-item-1-text,
 .profile-tab-item-2-text,
@@ -21,7 +25,5 @@
 .profile-tab-item-4-text
 {
     color: #8785A2;
-}
-.profile-tab-item-1{
-    background-color: white;
+    
 }

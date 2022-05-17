@@ -18,10 +18,13 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.ssafy.moabang.R
 import com.ssafy.moabang.adapter.ReviewListRVAdapter
 import com.ssafy.moabang.data.model.dto.Theme
+import com.ssafy.moabang.data.model.response.DoneTidResponse
 import com.ssafy.moabang.data.model.response.ReviewResponse
+import com.ssafy.moabang.data.model.viewmodel.MyPageViewModel
 import com.ssafy.moabang.data.model.viewmodel.ReviewViewModel
 import com.ssafy.moabang.data.model.viewmodel.ThemeViewModel
 import com.ssafy.moabang.databinding.FragmentThemeReviewBinding
+import com.ssafy.moabang.src.util.CustomDialog
 
 class ThemeReviewFragment : Fragment() {
     private lateinit var binding: FragmentThemeReviewBinding
@@ -31,11 +34,14 @@ class ThemeReviewFragment : Fragment() {
     private lateinit var theme: Theme
     private lateinit var list: List<ReviewResponse>
     private val reviewViewModel: ReviewViewModel by viewModels()
-    val themeViewModel: ThemeViewModel by viewModels()
+    private val themeViewModel: ThemeViewModel by viewModels()
+    private val myPageViewModel: MyPageViewModel by viewModels()
+    private lateinit var doneList: List<DoneTidResponse>
 
     override fun onResume() {
-        reviewViewModel.getReview(theme.tid)
+        reviewViewModel.getAllReview(theme.tid)
         themeViewModel.themeStat(theme.tid)
+        myPageViewModel.getAllDoneTid()
         super.onResume()
     }
 
@@ -62,14 +68,32 @@ class ThemeReviewFragment : Fragment() {
         initInfo()
         initRVA()
 
+        myPageViewModel.doneTidListLiveData.observe(this){
+            doneList = it
+        }
+
         binding.btnThemeRVFSort.setOnClickListener {
             showPopup(binding.btnThemeRVFSort)
         }
 
         binding.btnThemeRVFReview.setOnClickListener {
-            startActivity(Intent(requireContext(), ReviewActivity::class.java)
-                .putExtra("type", "등록")
-                .putExtra("tid", theme.tid))
+            if(doneList.contains(DoneTidResponse(theme.tid))){
+                CustomDialog(requireContext())
+                    .setContent("해당 테마에 이미 작성한 리뷰가 있습니다.\n리뷰 수정 혹은 삭제 후 다시 작성해주세요.")
+                    .setNegativeButtonText("")
+                    .setPositiveButtonText("확인")
+                    .build().show()
+            } else {
+                CustomDialog(requireContext())
+                    .setContent("리뷰를 작성하시면 해당 테마를 플레이한것으로 간주됩니다.\n 리뷰를 작성하시겠습니까?")
+                    .setOnPositiveClickListener {
+                        startActivity(
+                            Intent(requireContext(), ReviewActivity::class.java)
+                                .putExtra("type", "등록")
+                                .putExtra("tid", theme.tid)
+                        )
+                    }.build().show()
+            }
         }
 
         callback = object : OnBackPressedCallback(true) {

@@ -1,21 +1,17 @@
 package com.ssafy.moabang.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ssafy.moabang.R
-import com.ssafy.moabang.config.GlobalApplication
 import com.ssafy.moabang.data.model.dto.Theme
 import com.ssafy.moabang.data.model.repository.Repository
 import com.ssafy.moabang.data.model.viewmodel.ThemeViewModel
 import com.ssafy.moabang.databinding.ListThemeItemBinding
-import com.ssafy.moabang.src.main.HomeFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -70,6 +66,13 @@ class ThemeListRVAdapter: RecyclerView.Adapter<ThemeListRVAdapter.ViewHolder>() 
                     visibility = View.VISIBLE
                     text = item.count.toString() + "♡"
                 }
+            }else if(from == "CafeDetailActivity"){
+                itemView.findViewById<TextView>(R.id.tv_themeL_like_count).apply {
+                    visibility = View.GONE
+                }
+                itemView.findViewById<ImageView>(R.id.iv_themeL_like).apply {
+                    visibility = View.GONE
+                }
             }
         }
     }
@@ -86,10 +89,14 @@ class ThemeListRVAdapter: RecyclerView.Adapter<ThemeListRVAdapter.ViewHolder>() 
             data[position].islike = !data[position].islike
             if(data[position].islike){
                 holder.itemView.findViewById<ImageView>(R.id.iv_themeL_like).setImageResource(R.drawable.icon_like_after)
+                data[position].count += 1
             } else {
                 holder.itemView.findViewById<ImageView>(R.id.iv_themeL_like).setImageResource(R.drawable.icon_like_before)
+                data[position].count -= 1
             }
             CoroutineScope(Dispatchers.Main).launch{
+
+                holder.itemView.findViewById<TextView>(R.id.tv_themeL_like_count).text = (data[position].count).toString() + "♡"
                 Repository.get().setThemeLike(data[position].tid, data[position].islike)
                 ThemeViewModel().themeLike(data[position].tid)
             }

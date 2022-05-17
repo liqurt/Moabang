@@ -1,6 +1,4 @@
-.App{
-    background-color: #F6F6F6;
-}
+
 
 @font-face {
     font-family: "GothicA1";
@@ -44,11 +42,22 @@
     font-weight:200;
     src: url("./fonts/나눔손글씨\ 성실체.ttf");
 }
+<<<<<<< HEAD
 @font-face {
     font-family: "Jalnan";
     font-weight:200;
     src: url("./fonts/Jalnan.ttf");
 }
+=======
+
+@font-face {
+    font-family: 'BMJUA';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+>>>>>>> 64906028764161c2c3cbce13af6dcd286796ad95
 .top-button{
     position: fixed;
     bottom: 90px;

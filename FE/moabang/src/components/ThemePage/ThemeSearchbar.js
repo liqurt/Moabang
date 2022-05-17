@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react"
 import ThemeList from './ThemeList';
 import Paging from './Paging';
-import { gerneBtn ,memberCntBtn,sortBtn ,typeBtn, diffBtn } from './FilterData';
+import { gerneBtn, memberCntBtn, sortBtn, typeBtn, diffBtn } from './FilterData';
 
 import "./ThemeCSS/Theme.css"
 import "./ThemeCSS/Paging.css"
 import "./ThemeCSS/SearchBar.css";
- 
+
 const ThemeSearchbar = (props) => {
     const products = props.searchItems;
     const [searchValue, setSearchValue] = useState("");
@@ -16,7 +16,7 @@ const ThemeSearchbar = (props) => {
     const [themetype, setThemetype] = useState("");
     const [diff, setDiff] = useState(0);
 
-    const handleInputChange = (event) => {      
+    const handleInputChange = (event) => {
         setSearchValue(event.target.value)//입력된 텍스트 답아옴
     }
 
@@ -26,32 +26,32 @@ const ThemeSearchbar = (props) => {
         setSearchValue("")
     }
 
-    
-    
+
+
     //검색창 필터
-    const filteredProducts = products.filter((res) => { 
+    const filteredProducts = products.filter((res) => {
         return res.tname.includes(searchValue);//검색창에 입력된 내용과 비교하여 출력
     })
     //장르별 필터
     const resFilter = filteredProducts.filter((res) => {
-        
+
         return res.genre.includes(gerne);
     });
     //인원별 필터
     const memberCntFilter = resFilter.filter((res) => {
-        const min = parseInt(res.rplayer.substr(-3,1));
+        const min = parseInt(res.rplayer.substr(-3, 1));
         const max = parseInt(res.rplayer.substr(-1));
         if (memberCnt == 0) {
-            return memberCnt >=0;
+            return memberCnt >= 0;
         } else {
             const resTF = (min <= memberCnt) && (memberCnt <= max);
             return resTF
         }
-        
+
     });
     //타입
-    const typeFilter=memberCntFilter.filter((res) => {
-        
+    const typeFilter = memberCntFilter.filter((res) => {
+
         return res.type.includes(themetype);
     });
 
@@ -59,14 +59,14 @@ const ThemeSearchbar = (props) => {
         if (diff == 0) {
             return true;
         } else {
-            return res.difficulty==diff;
+            return res.difficulty == diff;
         }
-        
-        
+
+
     });
     //정렬
     const sortFilter = diffFilter.sort((a, b) => {
-        
+
         if (sortList === "이름순") {
             let x = a.tname.toLowerCase();
             let y = b.tname.toLowerCase();
@@ -78,12 +78,12 @@ const ThemeSearchbar = (props) => {
             }
             return 0;
         } else if (sortList === "평점순") {
-            
-            return b.grade-a.grade;
-        } else if(sortList === "인기순"){
+
+            return b.grade - a.grade;
+        } else if (sortList === "인기순") {
             return b.count - a.count;
         }
-        
+
     })
 
 
@@ -95,18 +95,18 @@ const ThemeSearchbar = (props) => {
             setGerne("");
         else
             setGerne(event.target.value);
-        
+
         //클릭 시 색 변하게 하기 위한 코드
         const nameId = document.getElementsByClassName('filterBtn1');
-        
+
         for (var i = 0; i < nameId.length; i++) {
             nameId[i].classList.remove("clicked");
         }
 
         event.target.classList.add("clicked");
-        
-    }   
-    
+
+    }
+
     //타입
     const handleType = (event) => {
         setPage(1);
@@ -114,7 +114,7 @@ const ThemeSearchbar = (props) => {
             setThemetype("");
         else
             setThemetype(event.target.value);
-        
+
         //클릭 시 색 변하게 하기 위한 코드
         const nameId = document.getElementsByClassName('filterBtn2');
         for (var i = 0; i < nameId.length; i++) {
@@ -148,7 +148,7 @@ const ThemeSearchbar = (props) => {
         event.target.classList.add("clicked");
     }
 
-    
+
     //정렬
     const handleSort = (event) => {
         setPage(1);
@@ -162,16 +162,15 @@ const ThemeSearchbar = (props) => {
 
         event.target.classList.add("clicked");
     }
-    
+
 
     //위로 체크 박스 영역-----------------------------
     //페이징 처리
     const [page, setPage] = useState(1);
     const [pageCnt, setPageCnt] = useState(45);
-    
+
     const handlePageChange = (page) => {
         setPage(page);
-        
     };
 
 
@@ -185,18 +184,18 @@ const ThemeSearchbar = (props) => {
     }
 
     useEffect(() => {
-        setPageCnt((cnt) =>cnt = sortFilter.length );
-        
+        setPageCnt((cnt) => cnt = sortFilter.length);
+
     }, [sortFilter]);
 
-    
 
-    return(
+
+    return (
         <div className="searchBar">
             <div className='filter'>
                 <div>
                     {shouldDisplayButton && <button className='button4' onClick={handleInputClear}>검색 초기화</button>}
-                    <input type="text" className="search__input" value={searchValue} placeholder='검색어 입력'  onChange={handleInputChange}/>
+                    <input type="text" className="search__input" value={searchValue} placeholder='검색어 입력' onChange={handleInputChange} />
                 </div>
                 <div className='locationGerne'><span id='filterText'>장르&nbsp;&nbsp;</span>
                 {gerneBtn &&
@@ -247,7 +246,7 @@ const ThemeSearchbar = (props) => {
                     ))
                 }
                 </div>
-                
+
             </div>
             <br></br>
             <div>
@@ -259,21 +258,21 @@ const ThemeSearchbar = (props) => {
 
             <div >
                 <ThemeList Theme={currentPosts(sortFilter)} setTListRender={props.setTListRender} />
-                
+
             </div>
             <br></br>
             <div>
-                <Paging page={page} count={pageCnt} setPage={handlePageChange }/>
+                <Paging page={page} count={pageCnt} setPage={handlePageChange} />
             </div>
             <br></br>
         </div>
 
     )
 
-    
+
 
 }
 
- 
+
 
 export default ThemeSearchbar;

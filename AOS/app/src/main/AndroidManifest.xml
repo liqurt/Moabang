@@ -18,8 +18,17 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
+            android:name=".src.mypage.MyPostActivity"
+            android:exported="true" />
+        <activity
             android:name=".src.main.community.CommunityDetailActivity"
             android:exported="false" />
+        <activity
+            android:name=".src.mypage.MyDoneActivity"
+            android:exported="true" />
+        <activity
+            android:name=".src.mypage.MyLikeActivity"
+            android:exported="true" />
         <activity
             android:name=".src.theme.ThemeCompareActivity"
             android:exported="true" />
@@ -49,9 +58,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Redirect URI: "kakao{NATIVE_APP_KEY}://oauth" -->
+                <data android:host="oauth"
+                    android:scheme="kakao820ce25b76fd9aa6a17890fffe8ca018" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".src.main.MainActivity"
             android:exported="true" />
     </application>
 
 </manifest>
+

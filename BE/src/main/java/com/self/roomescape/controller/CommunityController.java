@@ -3,6 +3,8 @@ package com.self.roomescape.controller;
 import com.self.roomescape.config.JwtTokenProvider;
 import com.self.roomescape.entity.*;
 import com.self.roomescape.repository.*;
+import com.self.roomescape.request.CommentRequest;
+import com.self.roomescape.request.CommentUpdateRequest;
 import com.self.roomescape.request.RecruitCreateRequest;
 
 import io.swagger.annotations.Api;
@@ -12,32 +14,29 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import response.CommunityRes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/community")
-@Api(tags = {"커뮤니티"})
+@Api(tags = {"커뮤니티 및 댓글 Api"})
 public class CommunityController {
-
-    private final CafeRepository cafeRepository;
-
-    private final ThemeRepository themeRepository;
 
     private final JwtTokenProvider jwtTokenProvider;
 
     private final UserRepository userRepository;
 
-    private final UserLikeRepository userLikeRepository;
-
-    private final ReviewRepository reviewRepository;
-
     private final CommunityRepository communityRepository;
+
+    private final CommentRepository commentRepository;
 
 
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "JWT Token", required = true, dataType = "string", paramType = "header")})
@@ -130,6 +129,110 @@ public class CommunityController {
     public ResponseEntity<?> getRecruit5() {
         List<Community> communityList = communityRepository.findTop5ByOrderByCreateDateDesc();
         return new ResponseEntity<>(communityList, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "댓글 목록 불러오기", notes = " community_id를 입력 시 해당 게시글의 댓글 목록을 반환, 성공시 200, 실패 시 에러 메세지와 401리턴")
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "JWT Token", required = true, dataType = "string", paramType = "header")})
+    @GetMapping("/comment/list/{community_id}")
+    public ResponseEntity<?> getCommentList(@PathVariable long community_id, HttpServletRequest request) {
+        String token = jwtTokenProvider.resolveToken(request);
+        String useremail = jwtTokenProvider.getUserPk(token);
+        Optional<User> user = userRepository.findByEmail(useremail);
+
+        if (!user.isPresent()) {
+            return new ResponseEntity<>("회원 정보가 없습니다.", HttpStatus.BAD_REQUEST);
+        }
+
+        List<CommunityRes> communityRes = new ArrayList<>();
+        List<Comment> commentList = commentRepository.findByCommunityIdOrderByRegDateDesc(community_id);
+
+        for (Comment c : commentList
+        ) {
+            CommunityRes temp = new CommunityRes();
+            temp.setCommunityId(c.getCommunityId());
+            temp.setContent(c.getContent());
+            temp.setCoid(c.getCoid());
+            temp.setRegDate(c.getRegDate());
+            temp.setUserName(user.get().getNickname());
+            temp.setUserProfile(user.get().getPimg());
+            temp.setUid(user.get().getUid());
+
+            communityRes.add(temp);
+        }
+
+        return new ResponseEntity<>(communityRes, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "댓글 생성", notes = " RequestBody에 해당되는 목록 입력 후, 성공시 200, 실패 시 에러 메세지와 401리턴")
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "JWT Token", required = true, dataType = "string", paramType = "header")})
+    @PostMapping("/comment/create")
+    public ResponseEntity<?> createComment(@RequestBody CommentRequest commentRequest, HttpServletRequest request) {
+        String token = jwtTokenProvider.resolveToken(request);
+        String useremail = jwtTokenProvider.getUserPk(token);
+        Optional<User> user = userRepository.findByEmail(useremail);
+
+        if (!user.isPresent()) {
+            return new ResponseEntity<>("회원 정보가 없습니다.", HttpStatus.BAD_REQUEST);
+        }
+
+        commentRepository.save(Comment.builder().content(commentRequest.getContent()).uid(user.get().getUid()).communityId(commentRequest.getCommunityId()).build());
+
+        return new ResponseEntity<>("댓글 달기 ok", HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "댓글 수정", notes = "해당 댓글의 uid와 token의 uid가 같으며 변경사항 반영, 성공시 200, 실패 시 에러 메세지와 401리턴")
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "JWT Token", required = true, dataType = "string", paramType = "header")})
+    @PutMapping("/comment/update")
+    public ResponseEntity<?> updateComment(@RequestBody CommentUpdateRequest commentUpdateRequest, HttpServletRequest request) {
+        String token = jwtTokenProvider.resolveToken(request);
+        String useremail = jwtTokenProvider.getUserPk(token);
+        Optional<User> user = userRepository.findByEmail(useremail);
+
+        if (!user.isPresent()) {
+            return new ResponseEntity<>("회원 정보가 없습니다.", HttpStatus.BAD_REQUEST);
+        }
+
+        Optional<Comment> comment = commentRepository.findByCoid(commentUpdateRequest.getCoid());
+        if (!comment.isPresent()) {
+            return new ResponseEntity<>("해당 coid가 없습니다.", HttpStatus.BAD_REQUEST);
+        }
+
+        if (comment.get().getUid() != user.get().getUid()) {
+            return new ResponseEntity<>("댓글의 uid와 해당 유저의 uid가 다릅니다.", HttpStatus.BAD_REQUEST);
+        }
+
+        comment.get().setContent(commentUpdateRequest.getContent());
+        commentRepository.save(comment.get());
+
+        return new ResponseEntity<>("댓글 수정 ok", HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "댓글 삭제", notes = " 댓글 삭제 성공시 200, 실패 시 에러 메세지와 401리턴")
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "JWT Token", required = true, dataType = "string", paramType = "header")})
+    @DeleteMapping("/comment/delete/{coid}")
+    @Transactional
+    public ResponseEntity<?> deleteComment(@PathVariable long coid, HttpServletRequest request) {
+
+        String token = jwtTokenProvider.resolveToken(request);
+        String useremail = jwtTokenProvider.getUserPk(token);
+        Optional<User> user = userRepository.findByEmail(useremail);
+
+        if (!user.isPresent()) {
+            return new ResponseEntity<>("회원 정보가 없습니다.", HttpStatus.BAD_REQUEST);
+        }
+
+        Optional<Comment> comment = commentRepository.findByCoid(coid);
+        if (!comment.isPresent()) {
+            return new ResponseEntity<>("해당 coid가 없습니다.", HttpStatus.BAD_REQUEST);
+        }
+
+        if (comment.get().getUid() != user.get().getUid()) {
+            return new ResponseEntity<>("댓글의 uid와 해당 유저의 uid가 다릅니다.", HttpStatus.BAD_REQUEST);
+        }
+
+        commentRepository.delete(comment.get());
+
+        return new ResponseEntity<>("댓글 삭제 성공", HttpStatus.OK);
     }
 
 }
