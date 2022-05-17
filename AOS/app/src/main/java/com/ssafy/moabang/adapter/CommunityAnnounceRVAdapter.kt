@@ -12,22 +12,23 @@ import com.bumptech.glide.Glide
 import com.ssafy.moabang.R
 import com.ssafy.moabang.data.model.dto.Cafe
 import com.ssafy.moabang.data.model.dto.Community
+import com.ssafy.moabang.databinding.ListCommunityAnnouncementItemBinding
 import com.ssafy.moabang.databinding.ListCommunityItemBinding
 import java.time.LocalDateTime
 
-class CommunityRVAdapter : RecyclerView.Adapter<CommunityRVAdapter.CommunityRVAdapterViewHolder>() {
+class CommunityAnnounceRVAdapter : RecyclerView.Adapter<CommunityAnnounceRVAdapter.CommunityAnnounceRVAdapterViewHolder>() {
 
     lateinit var mode : String
     lateinit var context: Context
     lateinit var data: List<Community>
     lateinit var itemClickListener: ItemClickListener
     @RequiresApi(Build.VERSION_CODES.O)
-    inner class CommunityRVAdapterViewHolder(private val binding: ListCommunityItemBinding) :
+    inner class CommunityAnnounceRVAdapterViewHolder(private val binding: ListCommunityAnnouncementItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         init {
             itemView.setOnClickListener {
-                if(this@CommunityRVAdapter::itemClickListener.isInitialized){
+                if(this@CommunityAnnounceRVAdapter::itemClickListener.isInitialized){
                     itemClickListener.onClick(data[adapterPosition])
                 }
             }
@@ -36,14 +37,10 @@ class CommunityRVAdapter : RecyclerView.Adapter<CommunityRVAdapter.CommunityRVAd
         private val now = LocalDateTime.now()
 
         fun bindInfo(community: Community) {
-            Glide.with(binding.civCommuF).load(community.user.pimg)
-                .placeholder(R.drawable.icon_profile).into(binding.civCommuF)
-
-            binding.tvCommuFHeader.text = community.header
-            binding.tvCommuFAuthor.text = community.user.nickname
-            binding.tvCommuFTitle.text = community.title
+            binding.tvCommuAFHeader.text = community.header
+            binding.tvCommuAFTitle.text = community.title
             if(isToday(community.createDate)){
-                binding.tvCommuFTime.text = community.createDate.hour.toString() + ":" + community.createDate.minute.toString()
+                binding.tvCommuAFTime.text = community.createDate.hour.toString() + ":" + community.createDate.minute.toString()
             }else{
                 var monthStr = community.createDate.monthValue.toString()
                 var dayStr = community.createDate.dayOfMonth.toString()
@@ -53,17 +50,7 @@ class CommunityRVAdapter : RecyclerView.Adapter<CommunityRVAdapter.CommunityRVAd
                 if(community.createDate.dayOfMonth < 10){
                     dayStr = "0"+community.createDate.dayOfMonth.toString()
                 }
-                binding.tvCommuFTime.text = monthStr+"."+dayStr
-            }
-            if(mode == "latest3Announcement"){
-                binding.tvCommuFHeader.setTextColor(context.resources.getColor(R.color.moabang_gray, null))
-                binding.tvCommuFTime.typeface = Typeface.DEFAULT_BOLD
-                binding.tvCommuFAuthor.typeface = Typeface.DEFAULT_BOLD
-                binding.tvCommuFTitle.typeface = Typeface.DEFAULT_BOLD
-                binding.tvCommuFHeader.typeface= Typeface.DEFAULT_BOLD
-            }
-            if(mode == "mypost"){
-                binding.tvCommuFAuthor.visibility = View.GONE
+                binding.tvCommuAFTime.text = monthStr+"."+dayStr
             }
         }
 
@@ -77,17 +64,17 @@ class CommunityRVAdapter : RecyclerView.Adapter<CommunityRVAdapter.CommunityRVAd
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): CommunityRVAdapterViewHolder {
-        val binding = ListCommunityItemBinding.inflate(
+    ): CommunityAnnounceRVAdapterViewHolder {
+        val binding = ListCommunityAnnouncementItemBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
         )
-        return CommunityRVAdapterViewHolder(binding)
+        return CommunityAnnounceRVAdapterViewHolder(binding)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun onBindViewHolder(holder: CommunityRVAdapterViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CommunityAnnounceRVAdapter.CommunityAnnounceRVAdapterViewHolder, position: Int) {
         holder.bindInfo(data[position])
     }
 
