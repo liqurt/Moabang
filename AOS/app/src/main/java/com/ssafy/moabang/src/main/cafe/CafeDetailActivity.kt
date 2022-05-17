@@ -1,13 +1,28 @@
 package com.ssafy.moabang.src.main.cafe
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.ssafy.moabang.adapter.ThemeListRVAdapter
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.MapView
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+import com.gun0912.tedpermission.PermissionListener
+import com.gun0912.tedpermission.normal.TedPermission
+import com.ssafy.moabang.R
+import com.ssafy.moabang.adapter.HorizontalThemeListRVAdapter
 import com.ssafy.moabang.config.GlobalApplication
 import com.ssafy.moabang.data.api.CafeApi
 import com.ssafy.moabang.data.model.dto.Cafe
@@ -21,25 +36,42 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlin.properties.Delegates
 
-class CafeDetailActivity : AppCompatActivity() {
+class CafeDetailActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var binding: ActivityCafeDetailBinding
     private lateinit var themeList: List<Theme>
-    private var themeListRVAdapter : ThemeListRVAdapter = ThemeListRVAdapter()
+    private var themeListRVAdapter : HorizontalThemeListRVAdapter = HorizontalThemeListRVAdapter()
     private lateinit var cafe: Cafe
     private var repository = Repository.get()
+    private var mMap: GoogleMap? = null
+    private lateinit var mapView: MapView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCafeDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        mapView = binding.cafeDetailMap
+        mapView.getMapAsync(this)
+
         intent.getParcelableExtra<Cafe>("cafe")?.let {
             cafe = it
             initView()
         } ?: findCafeWithTitle()
 
+        if(mapView != null){
+            mapView.onCreate(savedInstanceState)
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mapView.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapView.onResume()
     }
 
     private fun findCafeWithTitle() {
@@ -56,11 +88,17 @@ class CafeDetailActivity : AppCompatActivity() {
     }
 
     private fun initView() {
+        binding.toolbarCafeDetail.ivToolbarIcon.setOnClickListener { finish() }
+        binding.toolbarCafeDetail.tvToolbarTitle.text = cafe.cname
+        binding.ivCafeUrl.setOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(cafe.url)))
+        }
+
         // cafe
         Glide.with(this)
             .load(cafe.img)
+            .centerCrop()
             .into(binding.ivCafeDetailFImg)
-        binding.tvCafeDetailFCname.text = cafe.cname
         binding.tvCafeDetailFCphone.text = cafe.cphone
         binding.tvCafeDetailFLocation.text = cafe.location
         binding.tvCafeDetailFTime.text = cafe.time
@@ -75,11 +113,10 @@ class CafeDetailActivity : AppCompatActivity() {
                     Log.d("AAAAA", "themeList : $data")
                     themeList = data
                     themeListRVAdapter.data = themeList
-                    themeListRVAdapter.from = "CafeDetailActivity"
                     binding.rvCafeDetailFThemeByCafe.apply {
                         adapter = themeListRVAdapter
-                        layoutManager = LinearLayoutManager(this@CafeDetailActivity, LinearLayoutManager.VERTICAL, false)
-                        themeListRVAdapter.itemClickListener = object : ThemeListRVAdapter.ItemClickListener {
+                        layoutManager = LinearLayoutManager(this@CafeDetailActivity, LinearLayoutManager.HORIZONTAL, false)
+                        themeListRVAdapter.itemClickListener = object : HorizontalThemeListRVAdapter.ItemClickListener {
                             override fun onClick(item: Theme) {
                                 Log.d("AAAAA", "CAFE : $cafe")
                                 item.apply {
@@ -109,5 +146,43 @@ class CafeDetailActivity : AppCompatActivity() {
                     .show()
             }
         })
+    }
+
+    @SuppressLint("MissingPermission")
+    override fun onMapReady(googleMap: GoogleMap) {
+        checkPermission()
+        mMap = googleMap
+
+    }
+
+    private fun checkPermission() {
+        val permissionListener = object : PermissionListener {
+            override fun onPermissionGranted() {
+                if(cafe.lat != "" && cafe.lon != "") {
+                    var loc = LatLng(cafe.lat!!.toDouble(), cafe.lon!!.toDouble())
+                    val icon = AppCompatResources.getDrawable(this@CafeDetailActivity, R.drawable.ic_marker)!!.toBitmap(100, 100, null)
+                    var markerOptions = MarkerOptions()
+                    markerOptions.position(loc)
+                    markerOptions.icon(BitmapDescriptorFactory.fromBitmap(icon))
+                    mMap?.addMarker(markerOptions)
+                    mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, 13.0F))
+                }
+            }
+
+            override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
+                Toast.makeText(this@CafeDetailActivity, "위치 권한이 거부되었습니다.", Toast.LENGTH_SHORT).show()
+            }
+        }
+        TedPermission.create()
+            .setPermissionListener(permissionListener)
+            .setRationaleMessage("방탈출 카페를 보기위해 권한이 필요합니다.")
+            .setDeniedMessage("[설정] 에서 위치 접근 권한을 부여해야만 사용이 가능합니다.")
+            .setPermissions(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+            .setGotoSettingButton(true)
+            .setGotoSettingButtonText("[설정] 에서 위치 접근 권한을 허용 할 수 있습니다.")
+            .check()
     }
 }

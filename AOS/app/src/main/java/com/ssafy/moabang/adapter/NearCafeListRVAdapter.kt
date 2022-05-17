@@ -41,7 +41,8 @@ class NearCafeListRVAdapter (var cafeList: List<Cafe>) :
                 .into(binding.ivHomeFImg)
             binding.tvHomeFCname.text = cafe.cname
             binding.tvHomeFLocation.text = cafe.location
-            binding.tvHomeFDistance.text = cafe.distance.roundToInt().toString() + "km"
+            binding.tvHomeFDistance.text = if(cafe.distance == 0.0) "알수없음"
+            else cafe.distance.roundToInt().toString() + "km"
 
             itemView.setOnClickListener {
                 listener.onClick(cafe)

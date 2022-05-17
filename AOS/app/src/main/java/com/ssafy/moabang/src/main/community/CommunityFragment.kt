@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ssafy.moabang.adapter.CommunityAnnounceRVAdapter
 import com.ssafy.moabang.adapter.CommunityRVAdapter
 import com.ssafy.moabang.data.model.dto.Community
 import com.ssafy.moabang.data.model.repository.CommunityRepository
@@ -33,7 +34,7 @@ class CommunityFragment : Fragment() {
     private var communityRepository = CommunityRepository()
 
     private var communityRVAdapter = CommunityRVAdapter()
-    private var communityRVAdapterLatest3Announcement = CommunityRVAdapter()
+    private var communityRVAdapterLatest3Announcement = CommunityAnnounceRVAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -118,7 +119,7 @@ class CommunityFragment : Fragment() {
             data = latest3AnnouncementList
             context = requireContext()
             mode = "latest3Announcement"
-            itemClickListener = object : CommunityRVAdapter.ItemClickListener {
+            itemClickListener = object : CommunityAnnounceRVAdapter.ItemClickListener {
                 override fun onClick(community: Community) {
                     goToCommunityDetail(community)
                 }

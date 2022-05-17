@@ -7,15 +7,16 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.gms.maps.model.LatLng
 import com.ssafy.moabang.R
 import com.ssafy.moabang.data.model.dto.ThemeForCompare
 import com.ssafy.moabang.databinding.ListCompareThemeItemBinding
 import com.ssafy.moabang.src.util.CompareList
 import com.ssafy.moabang.src.util.LocationUtil
+import kotlin.math.roundToInt
 
 class CompareThemeListRVAdapter: RecyclerView.Adapter<CompareThemeListRVAdapter.ViewHolder>() {
     var data: MutableList<ThemeForCompare> = mutableListOf()
-    lateinit var binding: ListCompareThemeItemBinding
     lateinit var itemClickListener: ItemClickListener
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -33,13 +34,10 @@ class CompareThemeListRVAdapter: RecyclerView.Adapter<CompareThemeListRVAdapter.
             itemView.findViewById<TextView>(R.id.tv_tCompare_theme_name).text = item.tname
             itemView.findViewById<TextView>(R.id.tv_tCompare_cafe_name).text = item.cname
 
-            val current = LocationUtil().getCurrentLocation(itemView.context)
-            if(current != null){
-                val distance = LocationUtil().getDistanceLatLngInKm(current!!.latitude, current!!.longitude, item.lat!!.toDouble(), item.lon!!.toDouble())
-                itemView.findViewById<TextView>(R.id.tv_tCompare_cafe_distance).text = String.format("%.1f", distance) + "km"
-            } else {
-                itemView.findViewById<TextView>(R.id.tv_tCompare_cafe_distance).text = ""
-            }
+            val cur = LocationUtil().getCurrentLocation(itemView.context) ?: LatLng(37.566535, 126.9779692)
+            var distance = if (item.lat == "" || item.lon == "") "알수없음"
+            else LocationUtil().getDistanceLatLngInKm(cur!!.latitude, cur!!.longitude, item.lat!!.toDouble(), item.lon!!.toDouble()).roundToInt().toString() + "km"
+            itemView.findViewById<TextView>(R.id.tv_tCompare_cafe_distance).text = distance
 
             itemView.findViewById<TextView>(R.id.tv_tCompare_genre).text = item.genre
             itemView.findViewById<TextView>(R.id.tv_tCompare_time).text = item.time
