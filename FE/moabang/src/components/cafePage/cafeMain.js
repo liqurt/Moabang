@@ -32,7 +32,6 @@ const CafeMain = () => {
         <div className='total'>
             <div >
                 <CafeSearchbar searchItems={cafeData} totalcnt={cafeCount} />
-
             </div>
         </div>
     );
