@@ -14,6 +14,7 @@ import com.ssafy.moabang.config.GlobalApplication.Companion.sp
 import com.ssafy.moabang.data.model.dto.*
 import com.ssafy.moabang.data.model.repository.CommunityRepository
 import com.ssafy.moabang.databinding.ActivityCommunityDetailBinding
+import com.ssafy.moabang.src.util.ReportDialog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -55,8 +56,6 @@ class CommunityDetailActivity : AppCompatActivity() {
                     androidx.recyclerview.widget.LinearLayoutManager(this@CommunityDetailActivity)
             }
         }
-
-
     }
 
     private fun setMode() {
@@ -68,37 +67,45 @@ class CommunityDetailActivity : AppCompatActivity() {
 
     private fun initView() {
         if (mode == "read") {
-            binding.rComment.visibility = View.VISIBLE
-            binding.rArticleInfo.visibility = View.VISIBLE
-            binding.rContent.visibility = View.VISIBLE
-            binding.rUDButtons.visibility = View.VISIBLE
-            binding.wArticleInfo.visibility = View.GONE
-            binding.wContent.visibility = View.GONE
-            binding.wCButtons.visibility = View.GONE
-
-
-            binding.tvCommuItemFAuthor.text = community.user.nickname
-            binding.tvCommuItemFContent.text = community.content
-            binding.tvCommuItemFHeader.text = community.header
-            binding.tvCommuItemFTitle.text = community.title
-            Glide.with(this)
-                .load(community.user.pimg)
-                .placeholder(R.drawable.door)
-                .into(binding.civCommuItemF)
-
-            binding.btCommuItemFWriteComment.setOnClickListener { commentWrite() }
-
-            if (isMine()) {
-                binding.btCommuItemFReport.visibility = View.GONE
+            if(community.reportCnt <= 3){
+                binding.rComment.visibility = View.VISIBLE
+                binding.rArticleInfo.visibility = View.VISIBLE
+                binding.rContent.visibility = View.VISIBLE
                 binding.rUDButtons.visibility = View.VISIBLE
-                binding.btCommuItemFRemove.setOnClickListener { removeCommunity() }
-                binding.btCommuItemFEdit.setOnClickListener { modeChangeToEdit() }
-            } else {
-                binding.btCommuItemFReport.visibility = View.VISIBLE
-                binding.rUDButtons.visibility = View.GONE
+                binding.wArticleInfo.visibility = View.GONE
+                binding.wContent.visibility = View.GONE
+                binding.wCButtons.visibility = View.GONE
+
+
+                binding.tvCommuItemFAuthor.text = community.user.nickname
+                binding.tvCommuItemFContent.text = community.content
+                binding.tvCommuItemFHeader.text = community.header
+                binding.tvCommuItemFTitle.text = community.title
+                Glide.with(this)
+                    .load(community.user.pimg)
+                    .placeholder(R.drawable.door)
+                    .into(binding.civCommuItemF)
+
+                binding.btCommuItemFWriteComment.setOnClickListener { commentWrite() }
+
+                if (isMine()) {
+                    binding.btCommuItemFReport.visibility = View.GONE
+                    binding.rUDButtons.visibility = View.VISIBLE
+                    binding.btCommuItemFRemove.setOnClickListener { removeCommunity() }
+                    binding.btCommuItemFEdit.setOnClickListener { modeChangeToEdit() }
+                } else {
+                    binding.btCommuItemFReport.visibility = View.VISIBLE
+                    binding.rUDButtons.visibility = View.GONE
+
+                    binding.btCommuItemFReport.setOnClickListener { report() }
+                }
+
+                setAdapter()
+            }else{
+                Toast.makeText(this, "신고된 게시글을 열람할 권한이 없습니다.", Toast.LENGTH_SHORT).show()
+                finish()
             }
 
-            setAdapter()
         } else if (mode == "write" || mode == "edit") {
             binding.rComment.visibility = View.GONE
             binding.rArticleInfo.visibility = View.GONE
@@ -196,5 +203,14 @@ class CommunityDetailActivity : AppCompatActivity() {
 
     private fun isMine(): Boolean {
         return community.user.uid == sp.getInt("uid")
+    }
+
+
+    private fun report(){
+        // TODO
+        // 게시글 신고
+        Toast.makeText(this, "게시글 신고 미 구현", Toast.LENGTH_SHORT).show()
+        val dialog = ReportDialog(this, community.rid, 1, community.content!!)
+        dialog.show()
     }
 }
