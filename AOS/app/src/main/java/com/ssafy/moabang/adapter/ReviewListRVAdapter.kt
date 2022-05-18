@@ -27,13 +27,16 @@ class ReviewListRVAdapter: RecyclerView.Adapter<ReviewListRVAdapter.ViewHolder>(
 
             val revise = itemView.findViewById<TextView>(R.id.tv_reviewL_revise)
             val delete = itemView.findViewById<TextView>(R.id.tv_reviewL_delete)
+            val report = itemView.findViewById<TextView>(R.id.tv_reviewL_report)
 
             if(item.userInfo.uid != sp.getInt("uid")){
                 revise.visibility = View.GONE
                 delete.visibility = View.GONE
+                report.visibility = View.VISIBLE
             }else{
                 revise.visibility = View.VISIBLE
                 delete.visibility = View.VISIBLE
+                report.visibility = View.GONE
             }
 
             val userInfo = itemView.findViewById<TextView>(R.id.tv_reviewL_info)
@@ -80,6 +83,25 @@ class ReviewListRVAdapter: RecyclerView.Adapter<ReviewListRVAdapter.ViewHolder>(
                     data.removeAt(position)
                     notifyItemRemoved(position)
                     notifyItemRangeChanged(position, data.size)
+                }.build().show()
+        }
+
+        // TODO: 신고 버튼 눌렀을때 처리
+        holder.itemView.findViewById<TextView>(R.id.tv_reviewL_report).setOnClickListener {
+            // 이미 신고한 리뷰일때
+            CustomDialog(holder.itemView.context)
+                .setContent("이미 신고한 리뷰입니다.")
+                .setNegativeButtonText("")
+                .build().show()
+
+            // 처음 신고하는 리뷰일때
+            CustomDialog(holder.itemView.context)
+                .setContent("해당 리뷰를 신고하시겠습니까?")
+                .setNegativeButtonText("취소")
+                .setPositiveButtonText("신고하기")
+                .setOnPositiveClickListener{
+                    // TODO: 신고 기능 구현
+                    // 누적 신고 수가 n개 미만일 때, n개 이상일 때 다르게 처리해야함
                 }.build().show()
         }
     }

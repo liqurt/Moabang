@@ -16,6 +16,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:autoSizeMaxTextSize="16dp"
+        android:autoSizeMinTextSize="8dp"
         android:autoSizeTextType="uniform"
         android:gravity="center_vertical"
         android:text="THEME TITLE"

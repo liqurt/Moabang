@@ -317,7 +317,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cl_review_1">
 
-
         <RatingBar
             android:id="@+id/ratingBar_review"
             style="@style/Widget.AppCompat.RatingBar"

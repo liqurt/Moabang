@@ -48,7 +48,7 @@
             android:layout_marginTop="8dp"
             android:text="USER NAME"
             android:textColor="@color/moabang_gray"
-            android:textSize="34sp"
+            android:textSize="24dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/tv_mypageF_userEmail"
             app:layout_constraintStart_toEndOf="@+id/civ_mypageF"

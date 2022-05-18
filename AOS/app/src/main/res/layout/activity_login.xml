@@ -12,33 +12,21 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/moabang_lightPink"
+        android:background="@color/moabang_lightGray"
         tools:context=".src.login.LoginActivity">
 
         <ImageView
             android:id="@+id/imageView_loginA"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
             android:layout_marginTop="120dp"
-            app:layout_constraintBottom_toTopOf="@id/tv_loginA"
+            app:layout_constraintBottom_toTopOf="@id/kakao_login_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/door"
+            app:srcCompat="@drawable/main_logo"
             android:contentDescription="모아방 앱 로고"/>
 
-        <TextView
-            android:id="@+id/tv_loginA"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/app_name_kor"
-            android:textColor="@color/moabang_gray"
-            android:textSize="34sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageView_loginA" />
 
         <TextView
             android:id="@+id/tv_loginA_tmp"
@@ -55,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:backgroundTint="@color/moabang_lightPink"
+            android:backgroundTint="#00F6F6F6"
             android:contentDescription="카카오 로그인 버튼"
             android:onClick="@{activity.kakaoLogin}"
             app:layout_constraintBottom_toTopOf="@+id/tv_loginA_tmp"
