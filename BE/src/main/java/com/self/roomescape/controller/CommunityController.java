@@ -3,6 +3,7 @@ package com.self.roomescape.controller;
 import com.self.roomescape.config.JwtTokenProvider;
 import com.self.roomescape.entity.*;
 import com.self.roomescape.repository.*;
+import com.self.roomescape.repository.mapping.CommentListMapping;
 import com.self.roomescape.repository.mapping.CommunityMapping;
 import com.self.roomescape.request.CommentRequest;
 import com.self.roomescape.request.CommentUpdateRequest;
@@ -146,18 +147,19 @@ public class CommunityController {
         }
 
         List<CommunityRes> communityRes = new ArrayList<>();
-        List<Comment> commentList = commentRepository.findByCommunityIdOrderByRegDateDesc(community_id);
+        List<CommentListMapping> commentList = commentRepository.findByCustomCommentList(community_id);
 
-        for (Comment c : commentList
+        for (CommentListMapping c : commentList
         ) {
             CommunityRes temp = new CommunityRes();
             temp.setCommunityId(c.getCommunityId());
             temp.setContent(c.getContent());
             temp.setCoid(c.getCoid());
             temp.setRegDate(c.getRegDate());
-            temp.setUserName(c.getUser().getNickname());
-            temp.setUserProfile(c.getUser().getPimg());
-            temp.setUid(c.getUser().getUid());
+            temp.setUserName(c.getUserName());
+            temp.setUserProfile(c.getUserProfile());
+            temp.setUid(c.getUid());
+            temp.setReportCnt(c.getReportCnt());
 
             communityRes.add(temp);
         }

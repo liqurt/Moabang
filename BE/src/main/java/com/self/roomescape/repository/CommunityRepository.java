@@ -14,7 +14,7 @@ public interface CommunityRepository extends JpaRepository<Community, Long> {
     List<Community> findAllByOrderByCreateDateDesc();
 
     @Query("select u as user,c.rid as rid,c.title as title,c.content as content,c.header as header," +
-            "c.createDate as createDate,c.updateDate as updateDate, (select count(co) from Comment co where co.communityId=c.rid ) as count " +
+            "c.createDate as createDate,c.updateDate as updateDate, (select count(co) from Comment co where co.communityId=c.rid ) as count,(select count(r) from Report r where r.category=1 and r.targetId=c.rid )as reportCnt " +
             "from Community c left join User u on c.user.uid=u.uid " +
             "order by c.createDate desc "
     )
