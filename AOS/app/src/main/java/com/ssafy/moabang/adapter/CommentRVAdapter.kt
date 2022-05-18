@@ -1,6 +1,7 @@
 package com.ssafy.moabang.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -36,6 +37,7 @@ class CommentRVAdapter : RecyclerView.Adapter<CommentRVAdapter.CommentRVAdapterV
             if(comment.uid == GlobalApplication.sp.getInt("uid")){
                 binding.btCommentRemove.visibility = ViewGroup.VISIBLE
                 binding.btCommentEdit.visibility = ViewGroup.VISIBLE
+                binding.btCommentReport.visibility = View.GONE
 
                 binding.btCommentRemove.setOnClickListener {
                     CoroutineScope(Dispatchers.IO).launch { communityRepository.deleteComment(comment.coid) }
@@ -67,6 +69,7 @@ class CommentRVAdapter : RecyclerView.Adapter<CommentRVAdapter.CommentRVAdapterV
             }else{
                 binding.btCommentRemove.visibility = ViewGroup.GONE
                 binding.btCommentEdit.visibility = ViewGroup.GONE
+                binding.btCommentReport.visibility = View.VISIBLE
             }
         }
 

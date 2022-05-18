@@ -76,6 +76,7 @@ class CommunityDetailActivity : AppCompatActivity() {
             binding.wContent.visibility = View.GONE
             binding.wCButtons.visibility = View.GONE
 
+
             binding.tvCommuItemFAuthor.text = community.user.nickname
             binding.tvCommuItemFContent.text = community.content
             binding.tvCommuItemFHeader.text = community.header
@@ -88,10 +89,12 @@ class CommunityDetailActivity : AppCompatActivity() {
             binding.btCommuItemFWriteComment.setOnClickListener { commentWrite() }
 
             if (isMine()) {
+                binding.btCommuItemFReport.visibility = View.GONE
                 binding.rUDButtons.visibility = View.VISIBLE
                 binding.btCommuItemFRemove.setOnClickListener { removeCommunity() }
                 binding.btCommuItemFEdit.setOnClickListener { modeChangeToEdit() }
             } else {
+                binding.btCommuItemFReport.visibility = View.VISIBLE
                 binding.rUDButtons.visibility = View.GONE
             }
 
@@ -104,6 +107,7 @@ class CommunityDetailActivity : AppCompatActivity() {
             binding.wArticleInfo.visibility = View.VISIBLE
             binding.wContent.visibility = View.VISIBLE
             binding.wCButtons.visibility = View.VISIBLE
+            binding.btCommuItemFReport.visibility = View.GONE
 
             val headerAdapter = ArrayAdapter.createFromResource(
                 this,
