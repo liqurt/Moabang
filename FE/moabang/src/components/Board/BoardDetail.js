@@ -19,15 +19,12 @@ const BoardDetail = () => {
     const [email, setEmail] = useState();
 
     const HeaderSelectHandler = (event) => {
-        console.log(event.target.value);
         setHeader(event.target.value);
     }
     const ContentHandler = (event) => {
-        console.log(event.target.value);
         setContent(event.target.value);
     }
     const TitleHandler = (event) => {
-        console.log(event.target.value);
         setTitle(event.target.value)
     }
 
@@ -219,9 +216,54 @@ const BoardDetail = () => {
         }
         
     }
-    
+    //위에 커뮤니티 누를시 커뮤니티 리스트 페이질 이동
     const goCommunity = () => {
         window.location.href = `/board`;
+    }
+
+    //신고하기 버튼
+    const BoardReportBtn = () => {
+        const Report = Swal.fire({
+            input: 'textarea',
+            inputLabel: '신고',
+            inputPlaceholder: '신고 사유를 입력해 주세요',
+            inputAttributes: {
+                'aria-label': 'Type your message here'
+            },
+            showCancelButton: true,
+            confirmButtonText: '확인',
+            cancelButtonText:'취소',
+        }).then((res) => {
+            if (res.isConfirmed) {
+                axios.post('/report/create',
+                    {
+                        category: 1,
+                        reason: res.value,
+                        target_id: getParameterByName('rid'),
+                
+                    },
+                    {
+                        headers: {
+                            'Authorization': localStorage.getItem("myToken")
+                        }
+                    }
+                ).then((response) => {
+                    if (response.data) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: "신고 되었습니다."
+                        })
+                    } else {
+                        Swal.fire({
+                            icon: 'success',
+                            title: "이미 신고 하였습니다.."
+                        })
+                    }
+                    
+                })
+            }
+
+        })
     }
     return (
         <div className='BoardDetailTotal'> 
@@ -237,6 +279,12 @@ const BoardDetail = () => {
                             <span id='Detailname'>{nickname}</span>
                             <span id='DatailDate'><span id='cog'>●</span><span id='cogDate'>{date}</span></span>
                             <span id='DetailH'><span id='cog2'>●</span><span id='cogDate'>{board.header}</span></span>
+                            {
+                                localStorage.getItem('email') === email ?
+                                    <span></span>
+                                    :
+                                    <button id='BoardRepotyBtn' value={board.communityId} onClick={BoardReportBtn}>신고하기</button>
+                            }
                         </div>
                     </div>
                     <hr id='hr2'></hr>

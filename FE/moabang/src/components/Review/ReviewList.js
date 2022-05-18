@@ -7,16 +7,12 @@ import Paging from '../ThemePage/PagingReview';
 
 const ReviewList = ({tid, listRender, setListRender}) => {
     const [review, setReview] = useState([]);
-    const [email, setEmail] = useState();
      //리뷰 리스트를 가져온다.
     const getReviewData=async()=>{
         await axios.get(`/theme/review/list/${tid}`)
             .then(res => {
-                console.log(res.data[0].userInfo);
                 setReview(res.data);
-                setEmail(res.data.userInfo.email)
-            }).catch(error => {
-            });
+            })
     }
     
     useEffect(() => {
@@ -96,7 +92,53 @@ const ReviewList = ({tid, listRender, setListRender}) => {
         return <img id='ReviewListStarImg' src='https://emojigraph.org/media/facebook/star_2b50.png' alt='starscore'></img>
     }
 
-    console.log(review);
+
+    const ReviewReportBtn = (event) => {
+        console.log(event.target.value);
+        const Report = Swal.fire({
+            input: 'textarea',
+            inputLabel: '신고',
+            inputPlaceholder: '신고 사유를 입력해 주세요',
+            inputAttributes: {
+                'aria-label': 'Type your message here'
+            },
+            showCancelButton: true,
+            confirmButtonText: '확인',
+            cancelButtonText:'취소',
+        }).then((res) => {
+            if (res.isConfirmed) {
+                axios.post('/report/create',
+                    {
+                        category: 0,
+                        reason: res.value,
+                        target_id: event.target.value,
+                
+                    },
+                    {
+                        headers: {
+                            'Authorization': localStorage.getItem("myToken")
+                        }
+                    }
+                ).then((response) => {
+                    if (response.data) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: "신고 되었습니다."
+                        })
+                    } else {
+                        Swal.fire({
+                            icon: 'success',
+                            title: "이미 신고 하였습니다.."
+                        })
+                    }
+                    
+                })
+            }
+
+        })
+    }
+
+
     return (
         <div >
             {
@@ -107,36 +149,57 @@ const ReviewList = ({tid, listRender, setListRender}) => {
                     
                     :
                     <div>
-                        {currentPosts(review).map((review, index) => (
-                            <div key={index} className='review-container'>
-                                <div className='ReviewHead'>
-                                    <img alt='reviewImg' id='reviewListImg' src='https://thumb.ac-illust.com/44/44924d4d6082fc1256d9784422ff3604_t.jpeg'></img>
-                                    <span id='playDate'>{review.playDate}</span>
-                                    <span id='ReviewNemNum'>{review.player}명</span>
-                                    <span id='ReviewSuccAndFail'>{SuccAndFailToString(review.isSuccess)}</span>
-                                    {
-                                        localStorage.getItem('email') === review.userInfo.email ?
-                                            <button id='ReviewDelete' value={review.rid} onClick={ReviewDeleteHandler}>삭제</button>
-                                            :
-                                            <span></span>
-                                    }
-                                    
-                                    
-                                </div>
-                                
-                                <div className='ReviewDetail' >
-                                    <br></br>
-                                    <span id='ReviewListStar'>{starScore()}&nbsp;x&nbsp;{review.rating }</span>
-                                    <div id='ReviewListDiff'><span id='ReviewListText'>체감 난이도:</span>&nbsp;{review.chaegamDif}</div>
-                                    <div id='ReviewListTime'><span id='ReviewListText'>클리어 타임:</span>&nbsp;{review.clearTime }분</div>
-                                    <div id='ReviewListActive'><span id='ReviewListText'>활동성:</span>&nbsp;{review.active }</div>
-                                    <div id='ReviewListHint'><span id='ReviewListText'>사용 힌트수:</span>&nbsp;{review.hint}개</div>
-                                    <div id='ReviewListRecNum'><span id='ReviewListText'>추천인원:</span>&nbsp;{review.recPlayer }명</div>
-                                   
-                                    <div id='ReviewListContent'><span id='ReviewListText'>내용:</span>{review.content}</div>
-                                </div>
-                            </div>
-                        ))}
+                        {
+                            currentPosts(review).map((review, index) => { 
+                                if (review.reportCnt >= 3) {
+                                    return (
+                                        <div key={index} className='review-container'>
+                                        
+                                            <div className='ReviewDetailReport' >
+                                                <br></br>
+                                                이 리뷰는 블라인트 처리 되었습니다.
+                                            </div>
+                                        </div>
+                                    )
+                                } else {
+                                    return (
+                                        <div key={index} className='review-container'>
+                                            <div className='ReviewHead'>
+                                            <img alt='reviewImg' id='reviewListImg' src='https://thumb.ac-illust.com/44/44924d4d6082fc1256d9784422ff3604_t.jpeg'></img>
+                                            <span id='playDate'>{review.playDate}</span>
+                                            <span id='ReviewNemNum'>{review.player}명</span>
+                                            <span id='ReviewSuccAndFail'>{SuccAndFailToString(review.isSuccess)}</span>
+                                            {
+                                                localStorage.getItem('email') === review.userInfo.email ?
+                                                    <span></span>
+                                                    :
+                                                    <button id='ReviewReportBtn' value={review.rid} onClick={ReviewReportBtn}>신고하기</button>
+                                            }
+                                            {
+                                                localStorage.getItem('email') === review.userInfo.email ?
+                                                    <button id='ReviewDelete' value={review.rid} onClick={ReviewDeleteHandler}>삭제</button>
+                                                    :
+                                                    <span></span>
+                                                }
+                                                
+                                            </div>
+                                                        
+                                            <div className='ReviewDetail' > 
+                                                <br></br> 
+                                                <span id='ReviewListStar'>{starScore()}&nbsp;x&nbsp;{review.rating}</span>
+                                                <div id='ReviewListDiff'><span id='ReviewListText'>체감 난이도:</span>&nbsp;{review.chaegamDif}</div>
+                                                <div id='ReviewListTime'><span id='ReviewListText'>클리어 타임:</span>&nbsp;{review.clearTime }분</div>
+                                                <div id='ReviewListActive'><span id='ReviewListText'>활동성:</span>&nbsp;{review.active }</div>
+                                                <div id='ReviewListHint'><span id='ReviewListText'>사용 힌트수:</span>&nbsp;{review.hint}개</div>
+                                                <div id='ReviewListRecNum'><span id='ReviewListText'>추천인원:</span>&nbsp;{review.recPlayer }명</div>
+                                                <div id='ReviewListContent'><span id='ReviewListText'>내용:</span>{review.content}</div>
+                                            </div>
+                                        </div>
+                                    )
+                                }
+                            
+                            })
+                        }
                         <br></br>
                         <br></br>
                         <div>

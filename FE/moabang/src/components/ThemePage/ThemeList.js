@@ -11,7 +11,6 @@ import "../cafePage/Modal/ModalList.css"//난이도와 인원제한 사진 CSS�
 
 const ThemeList = (props) => {
     const Theme = props.Theme;
-    console.log(Theme);
     const heartChange = (event) => {
         //좋아요 버튼
         console.log(event.target.alt)
