@@ -1,7 +1,6 @@
 package com.ssafy.moabang.src.theme
 
 import android.app.DatePickerDialog
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -18,15 +17,16 @@ import com.ssafy.moabang.data.model.dto.ReviewForUpdate
 import com.ssafy.moabang.data.model.response.ReviewResponse
 import com.ssafy.moabang.data.model.viewmodel.ReviewViewModel
 import com.ssafy.moabang.src.util.CustomDialog
+import com.ssafy.moabang.src.util.KeyboardVisibilityUtils
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.Calendar.DATE
 
 
 class ReviewActivity : AppCompatActivity() {
     private lateinit var binding: ActivityReviewBinding
     private val reviewViewModel: ReviewViewModel by viewModels()
+    private lateinit var keyboardVisibilityUtils: KeyboardVisibilityUtils
     private var tid:Int = 0
     private var rid = 0
     private var review: ReviewResponse? = null
@@ -42,6 +42,13 @@ class ReviewActivity : AppCompatActivity() {
         } else if(type == "수정"){
             rid = intent.getIntExtra("review", 0)
         }
+
+        keyboardVisibilityUtils = KeyboardVisibilityUtils(window,
+            onShowKeyboard = { keyboardHeight ->
+                binding.svReviewRoot.run {
+                    smoothScrollTo(scrollX, scrollY + keyboardHeight)
+                }
+            })
 
         init()
         if(type == "등록") initAdd()
@@ -310,5 +317,10 @@ class ReviewActivity : AppCompatActivity() {
             .setOnPositiveClickListener{
                 super.onBackPressed()
             }.build().show()
+    }
+
+    override fun onDestroy() {
+        keyboardVisibilityUtils.detachKeyboardListeners()
+        super.onDestroy()
     }
 }
