@@ -14,6 +14,7 @@ import com.ssafy.moabang.config.GlobalApplication.Companion.sp
 import com.ssafy.moabang.data.model.dto.*
 import com.ssafy.moabang.data.model.repository.CommunityRepository
 import com.ssafy.moabang.databinding.ActivityCommunityDetailBinding
+import com.ssafy.moabang.src.util.KeyboardVisibilityUtils
 import com.ssafy.moabang.src.util.ReportDialog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -29,11 +30,20 @@ class CommunityDetailActivity : AppCompatActivity() {
     private var communityRepository = CommunityRepository()
 
     private lateinit var commentAdapter: CommentRVAdapter
+    private lateinit var keyboardVisibilityUtils: KeyboardVisibilityUtils
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCommunityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        keyboardVisibilityUtils = KeyboardVisibilityUtils(window,
+            onShowKeyboard = { keyboardHeight ->
+                binding.svCommRoot.run {
+                    smoothScrollTo(scrollX, scrollY + keyboardHeight)
+                }
+            })
+
         setMode()
     }
 
@@ -247,5 +257,10 @@ class CommunityDetailActivity : AppCompatActivity() {
         Toast.makeText(this, "게시글 신고 미 구현", Toast.LENGTH_SHORT).show()
         val dialog = ReportDialog(this, community.rid, 1, community.content!!)
         dialog.show()
+    }
+
+    override fun onDestroy() {
+        keyboardVisibilityUtils.detachKeyboardListeners()
+        super.onDestroy()
     }
 }
