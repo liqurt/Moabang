@@ -51,17 +51,22 @@ class ReviewListRVAdapter : RecyclerView.Adapter<ReviewListRVAdapter.ViewHolder>
             itemView.findViewById<TextView>(R.id.tv_reviewL_name).text = item.userInfo.nickname
             itemView.findViewById<TextView>(R.id.tv_reviewL_date).text = item.regDate
 
-            if(item.reportCnt<=3){
+            if (item.reportCnt <= 3) {
                 itemView.findViewById<TextView>(R.id.tv_reviewL_active).text = item.active
-                itemView.findViewById<SimpleRatingBar>(R.id.ratingBar_reviewL).rating = item.rating / 2
-                itemView.findViewById<TextView>(R.id.tv_reviewL_rating).text = item.rating.toString()
-                itemView.findViewById<TextView>(R.id.tv_reviewL_diff).text = item.chaegamDif.toString()
-                itemView.findViewById<TextView>(R.id.tv_reviewL_time).text = item.clearTime.toString()
-                itemView.findViewById<TextView>(R.id.tv_reviewL_hint).text = item.hint.toString() + "개"
+                itemView.findViewById<SimpleRatingBar>(R.id.ratingBar_reviewL).rating =
+                    item.rating / 2
+                itemView.findViewById<TextView>(R.id.tv_reviewL_rating).text =
+                    item.rating.toString()
+                itemView.findViewById<TextView>(R.id.tv_reviewL_diff).text =
+                    item.chaegamDif.toString()
+                itemView.findViewById<TextView>(R.id.tv_reviewL_time).text =
+                    item.clearTime.toString()
+                itemView.findViewById<TextView>(R.id.tv_reviewL_hint).text =
+                    item.hint.toString() + "개"
                 itemView.findViewById<TextView>(R.id.tv_reviewL_player).text =
                     item.recPlayer.toString() + "명"
                 itemView.findViewById<TextView>(R.id.tv_reviewL_desc).text = item.content
-            }else{
+            } else {
                 itemView.findViewById<ConstraintLayout>(R.id.cl_reviewL_item).visibility = View.GONE
                 itemView.findViewById<FrameLayout>(R.id.blindReview).visibility = View.VISIBLE
             }
@@ -97,29 +102,14 @@ class ReviewListRVAdapter : RecyclerView.Adapter<ReviewListRVAdapter.ViewHolder>
                 }.build().show()
         }
 
-        // TODO: 신고 버튼 눌렀을때 처리
-        // 리뷰 신고
         holder.itemView.findViewById<TextView>(R.id.tv_reviewL_report).setOnClickListener {
-            // 이미 신고한 리뷰일때
-//            CustomDialog(holder.itemView.context)
-//                .setContent("이미 신고한 리뷰입니다.")
-//                .setNegativeButtonText("")
-//                .build().show()
-
-            // 처음 신고하는 리뷰일때
-            CustomDialog(holder.itemView.context)
-                .setContent("해당 리뷰를 신고하시겠습니까?")
-                .setNegativeButtonText("취소")
-                .setPositiveButtonText("신고하기")
-                .setOnPositiveClickListener {
-                    val dialog = ReportDialog(
-                        holder.itemView.context,
-                        data[holder.adapterPosition].rid,
-                        0,
-                        data[holder.adapterPosition].content
-                    )
-                    dialog.show()
-                }.build().show()
+            val dialog = ReportDialog( // "신고 할려?" 안 묻기
+                holder.itemView.context,
+                data[holder.adapterPosition].rid,
+                0,
+                data[holder.adapterPosition].content
+            )
+            dialog.show()
         }
     }
 
