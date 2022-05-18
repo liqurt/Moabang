@@ -1,6 +1,5 @@
 .pop .slick-slide {
-    height: fit-content;
-    border: 0vh solid #ffffff;
+    /* border: 0vh solid #ffffff; */
     box-sizing: border-box;
     font-family: 'BMJUA';
     margin-bottom: 15px;
@@ -9,17 +8,17 @@
 .pop-theme p{
     text-align: left;
     margin: 2vh 0 3vh 4vh;
-    font-size: 20px;
     font-family: 'BMJUA';
 }
 .pop{
-    width: 60vh;
-    margin: 7vh 0 7vh 3vh;
-    border: 1vh solid #8785A2;
+    width: 55vh;
+    margin: 7vh 0 7vh 10vh;
+    padding: 1vh 4vh 1vh 4vh;
+    /* border: 1vh solid #8785A2; */
+    background-color: #FFFFFF;
+    box-shadow: 0 6px 10px 0 rgba(0,0,0,0.2), 0 6px 10px 0 rgba(0,0,0,0.19);
+    border-radius: 2vh;
 }
-
-
-
   .theme-info{
     width: max;
     height: 68vh;

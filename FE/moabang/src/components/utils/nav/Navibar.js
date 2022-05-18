@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Navbar, Nav, Container, Button, NavDropdown } from 'react-bootstrap';
 import './Navibar.css'
+import Web_logo from '../../../image/Web_logo.png';
 
 const Navibar = () => {
 
@@ -19,7 +20,13 @@ const Navibar = () => {
     return (
         <Navbar className='navbar' bg="dark" variant="dark">
             <Container>
-                <Navbar.Brand className='brand' href="/">모아방</Navbar.Brand>
+                <Navbar.Brand className='brand' href="/">
+                    <img
+                        src={Web_logo}
+                        className="d-inline-block align-top"
+                        alt="React Bootstrap logo"
+                    />
+                </Navbar.Brand>
                 <Nav className="justify-content-end">
                     {localStorage.getItem('myToken') ?
                         <Navbar.Collapse className='justify-content-center'>
@@ -28,13 +35,14 @@ const Navibar = () => {
                                     <a href='/mypage'>{localStorage.getItem('username')}</a>
                                     님 안녕하세요
                                 </Navbar.Text>
+
                             </Container>
                             <Nav.Link className='logout' bg="secondary" onClick={handleLogoutClick}>Logout</Nav.Link>
                         </Navbar.Collapse>
                         :
                         <Button hidden={true} ></Button>
                     }
-                    <Nav.Link href="/home">홈</Nav.Link>
+                    {/* <Nav.Link href="/home">홈</Nav.Link> */}
                     <Nav.Link href="/theme">테마</Nav.Link>
                     <Nav.Link href="/cafe">카페</Nav.Link>
                     <Nav.Link href="/board">커뮤니티</Nav.Link>

@@ -19,5 +19,6 @@ data class ReviewResponse(
     val chaegamDif: Int,
     val playDate: String,
     val regDate: String,
-    val content: String
+    val content: String,
+    val reportCnt : Int, // 3개 넘어가면 안 보이게 할것임
 ): Parcelable

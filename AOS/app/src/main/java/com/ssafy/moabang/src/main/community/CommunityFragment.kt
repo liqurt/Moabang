@@ -15,14 +15,6 @@ import com.ssafy.moabang.data.model.repository.CommunityRepository
 import com.ssafy.moabang.databinding.FragmentCommunityBinding
 import kotlinx.coroutines.*
 
-/**
- * 1. chip 바탕으로 header 선정(default : null)
- * 2. 모든 글을 불러온다.
- * 3. header에 맞는 글만 추려낸다.
- * 4. 뷰에 적용
- * 5. clickListener를 단다.
- */
-
 class CommunityFragment : Fragment() {
     private var currentHeader: String = "전체"
     private lateinit var allCommunityList: List<Community>

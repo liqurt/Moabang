@@ -3,6 +3,7 @@ package com.self.roomescape.controller;
 import com.self.roomescape.config.JwtTokenProvider;
 import com.self.roomescape.entity.*;
 import com.self.roomescape.repository.*;
+import com.self.roomescape.repository.mapping.ReviewListMapping;
 import com.self.roomescape.repository.mapping.ThemeListMapping;
 import com.self.roomescape.request.ReviewCreateRequest;
 import com.self.roomescape.request.ReviewUpdateRequest;
@@ -197,7 +198,7 @@ public class ThemeController {
     @ApiOperation(value = "tid로 해당 테마 리뷰 읽기", notes = "테마 리뷰 읽기 성공 시 HttpStatus 200 및 리스트 목록 없을 시 200 및 false 반환")
     @GetMapping("/review/list/{tid}")
     public ResponseEntity<?> showReviewList(@PathVariable int tid) {
-        Optional<List<Review>> rlist = reviewRepository.findByTid(tid);
+        Optional<List<ReviewListMapping>> rlist = reviewRepository.findByCustomReviewList(tid);
 
         if (rlist.get().size() == 0) {
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);

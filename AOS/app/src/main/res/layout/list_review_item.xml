@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:backgroundTint="#00FFFFFF"
@@ -53,8 +54,9 @@
         app:layout_constraintStart_toEndOf="@+id/reviewL_blank" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_reviewL_item"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="4dp"
@@ -76,9 +78,9 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srb_borderColor="@color/moabang_pink"
             app:srb_fillColor="@color/moabang_pink"
+            app:srb_isIndicator="true"
             app:srb_numberOfStars="5"
             app:srb_rating="3"
-            app:srb_isIndicator="true"
             app:srb_starSize="20dp"
             app:srb_stepSize="0.5" />
 
@@ -162,8 +164,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="5"
-                    android:textSize="12dp"
-                    android:textColor="@color/moabang_gray" />
+                    android:textColor="@color/moabang_gray"
+                    android:textSize="12dp" />
 
                 <TextView
                     android:id="@+id/reviewL_time"
@@ -171,8 +173,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="소요시간"
-                    android:textSize="12dp"
-                    android:textColor="@color/moabang_pink" />
+                    android:textColor="@color/moabang_pink"
+                    android:textSize="12dp" />
 
                 <TextView
                     android:id="@+id/tv_reviewL_time"
@@ -180,8 +182,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="63"
-                    android:textSize="12dp"
-                    android:textColor="@color/moabang_gray" />
+                    android:textColor="@color/moabang_gray"
+                    android:textSize="12dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -195,8 +197,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="체감 활동성"
-                    android:textSize="12dp"
-                    android:textColor="@color/moabang_pink" />
+                    android:textColor="@color/moabang_pink"
+                    android:textSize="12dp" />
 
                 <TextView
                     android:id="@+id/tv_reviewL_active"
@@ -204,8 +206,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="보통"
-                    android:textSize="12dp"
-                    android:textColor="@color/moabang_gray" />
+                    android:textColor="@color/moabang_gray"
+                    android:textSize="12dp" />
 
                 <TextView
                     android:id="@+id/reviewL_hint"
@@ -213,8 +215,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="사용 힌트수"
-                    android:textSize="12dp"
-                    android:textColor="@color/moabang_pink" />
+                    android:textColor="@color/moabang_pink"
+                    android:textSize="12dp" />
 
                 <TextView
                     android:id="@+id/tv_reviewL_hint"
@@ -222,8 +224,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="3개"
-                    android:textSize="12dp"
-                    android:textColor="@color/moabang_gray" />
+                    android:textColor="@color/moabang_gray"
+                    android:textSize="12dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -237,8 +239,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="추천 인원"
-                    android:textSize="12dp"
-                    android:textColor="@color/moabang_pink" />
+                    android:textColor="@color/moabang_pink"
+                    android:textSize="12dp" />
 
                 <TextView
                     android:id="@+id/tv_reviewL_player"
@@ -246,24 +248,24 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="3명"
-                    android:textSize="12dp"
-                    android:textColor="@color/moabang_gray" />
+                    android:textColor="@color/moabang_gray"
+                    android:textSize="12dp" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text=""
-                    android:textSize="12dp"
-                    android:textColor="@color/moabang_pink" />
+                    android:textColor="@color/moabang_pink"
+                    android:textSize="12dp" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text=""
-                    android:textSize="12dp"
-                    android:textColor="@color/moabang_gray" />
+                    android:textColor="@color/moabang_gray"
+                    android:textSize="12dp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -285,6 +287,25 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ll_reviewL" />
+
+        <FrameLayout
+            android:id="@+id/blindReview"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/moabang_pink"
+            android:backgroundTint="@color/moabang_pink"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="※ 본 리뷰는 검토중입니다.※" />
+        </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

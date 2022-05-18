@@ -12,8 +12,8 @@ const mainpage = () => {
             <Carousels />
             {/* <PopularTheme /> */}
             <div className='list_chart'>
-                <Community />
-                <PopularTheme />
+                <Community className='community' />
+                <PopularTheme className='populartheme' />
             </div>
 
         </div>

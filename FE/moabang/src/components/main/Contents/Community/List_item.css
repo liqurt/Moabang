@@ -5,6 +5,7 @@ body{
     display: flex;
     /* border: 0.1vh solid #8785A2; */
     width: 70vh;
+    
 }
 
 .header {
@@ -13,10 +14,14 @@ body{
     text-align: left;
     padding-left: 2vh;
     color: brown;
+    
 }
 .title {
     width: 50%;
     /* border: 0.1vh solid #8785A2; */
     text-align: center;
     padding-left: 2vh;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    white-space: nowrap; 
 }

@@ -1,4 +1,3 @@
-import { border } from '@mui/system';
 import axios from 'axios';
 import { useState ,useEffect } from 'react';
 import Swal from 'sweetalert2';
@@ -17,6 +16,7 @@ const BoardDetail = () => {
     const [comment, setComment] = useState();
     const [pimg, setPimg] = useState();
     const [checkComment, setCheckComment] = useState(true);
+    const [email, setEmail] = useState();
 
     const HeaderSelectHandler = (event) => {
         console.log(event.target.value);
@@ -117,6 +117,7 @@ const BoardDetail = () => {
             setNickname(res.data.user.nickname);
             setDate(res.data.updateDate.replace('T', ' '))
             setPimg(res.data.user.pimg);
+            setEmail(res.data.user.email)
 		}).catch(error => {
 			console.error(error);
 		});
@@ -210,34 +211,51 @@ const BoardDetail = () => {
         setTailCnt(event.target.value.length);// 댓글 수
     }
 
+    const SelectImg = ({ profile }) => {
+        if (profile === null) {
+            return<img id='BoardDetailImg' alt='profile' src="https://cdn.discordapp.com/attachments/963307192025485326/975564975617744946/unknown.png"/>
+        } else {
+            return <img id='BoardDetailImg' alt='profile' src={pimg}/>
+        }
+        
+    }
     
+    const goCommunity = () => {
+        window.location.href = `/board`;
+    }
     return (
         <div className='BoardDetailTotal'> 
-            <div id='BoardDetailMainText'>커뮤니티</div>
+            <div id='BoardDetailMainText' onClick={goCommunity}>커뮤니티</div>
             
             {checkUpdate ?
                 <div className='BoardDetailContainer'>
                     <hr id='hr1'></hr>
                     <div className='BoardDetailTitleContainer'>
                         <div id='BoardDetailTitle'>{board.title}</div>
-                        <span id='BoardDetailDate'>
-                            <img id='BoardDetailImg' alt='profile' src={pimg}/>
-                            &nbsp;&nbsp;&nbsp;{nickname}&nbsp;&nbsp;&nbsp;
-                            {date}&nbsp;&nbsp;&nbsp;
-                            {board.header}
-                        </span>
+                        <div id='BoardDetailDate'>
+                            <SelectImg profile={pimg} />
+                            <span id='Detailname'>{nickname}</span>
+                            <span id='DatailDate'><span id='cog'>●</span><span id='cogDate'>{date}</span></span>
+                            <span id='DetailH'><span id='cog2'>●</span><span id='cogDate'>{board.header}</span></span>
+                        </div>
                     </div>
                     <hr id='hr2'></hr>
                     <div className='BoardDetailContent'>
                         {board.content}
                     </div>
                     <hr id='hr3'></hr>
-                   
-                    <button className='BoardDetailWriteBtn '  onClick={UpdateBtn}>수정</button>
-                    <button className='BoardDetailCancelBtn' onClick={DeleteBtn}>삭제</button>
+                    {
+                        localStorage.getItem('email') === email ?
+                            <span>
+                                <button className='BoardDetailWriteBtn '  onClick={UpdateBtn}>수정</button>
+                                <button className='BoardDetailCancelBtn' onClick={DeleteBtn}>삭제</button>
+                            </span>
+                            :
+                            <span className='emtpy'> </span>
+                    }
                     <button className='goList' onClick={goList}>목록</button>
                     <div>
-                        <div className='tailMain'>댓글</div>
+                        <div className='tailMain'>댓글<span id='comCnt'>{commentList.length}</span></div>
                         <div className='tailForm'>
                             <textarea id='tailContent'  maxLength='100' onChange={CountTail} value={comment}></textarea>
                             <span id='tailCnt'>{tailCnt}/100자</span>

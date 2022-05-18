@@ -21,4 +21,6 @@ public interface CommunityMapping {
     LocalDateTime getUpdateDate();
 
     int getCount();
+
+    int getReportCnt();
 }

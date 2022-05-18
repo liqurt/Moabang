@@ -7,12 +7,14 @@ import Paging from '../ThemePage/PagingReview';
 
 const ReviewList = ({tid, listRender, setListRender}) => {
     const [review, setReview] = useState([]);
-    
+    const [email, setEmail] = useState();
      //리뷰 리스트를 가져온다.
     const getReviewData=async()=>{
         await axios.get(`/theme/review/list/${tid}`)
             .then(res => {
+                console.log(res.data[0].userInfo);
                 setReview(res.data);
+                setEmail(res.data.userInfo.email)
             }).catch(error => {
             });
     }
@@ -93,6 +95,8 @@ const ReviewList = ({tid, listRender, setListRender}) => {
     const starScore = () => {
         return <img id='ReviewListStarImg' src='https://emojigraph.org/media/facebook/star_2b50.png' alt='starscore'></img>
     }
+
+    console.log(review);
     return (
         <div >
             {
@@ -110,7 +114,13 @@ const ReviewList = ({tid, listRender, setListRender}) => {
                                     <span id='playDate'>{review.playDate}</span>
                                     <span id='ReviewNemNum'>{review.player}명</span>
                                     <span id='ReviewSuccAndFail'>{SuccAndFailToString(review.isSuccess)}</span>
-                                    <button id='ReviewDelete' value={review.rid} onClick={ReviewDeleteHandler}>삭제</button>
+                                    {
+                                        localStorage.getItem('email') === review.userInfo.email ?
+                                            <button id='ReviewDelete' value={review.rid} onClick={ReviewDeleteHandler}>삭제</button>
+                                            :
+                                            <span></span>
+                                    }
+                                    
                                     
                                 </div>
                                 
