@@ -47,11 +47,12 @@ class CommunityFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setButtons()
+        setAllCommunity()
     }
 
     override fun onStart() {
         super.onStart()
-        setAllCommunity()
+//        setAllCommunity()
     }
 
     private fun setButtons() {
