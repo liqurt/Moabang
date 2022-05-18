@@ -55,7 +55,7 @@ const CafeSearchbar = (props) => {
             <div className='filter'>
                 <div>
                     {shouldDisplayButton && <button className='button4' onClick={handleInputClear}>검색 초기화</button>}
-                    <input type="text" className="search__input" value={searchValue} placeholder='검색어 입력'  onChange={handleInputChange}/>
+                    <input type="text" className="search__input" value={searchValue} placeholder='카페 이름 or 지역 이름으로 검색 가능'  onChange={handleInputChange}/>
                 </div>
             </div>
             

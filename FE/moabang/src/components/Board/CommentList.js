@@ -56,7 +56,12 @@ const CommentList = ({ commentList,setCheckComment }) => {
                                 
                                 <span id='CommentUserName'>{item.userName}</span>
                                 <span id='CommentDate'>{item.regDate}</span>
-                                <button id='CommentDeleteBtn'value={item.coid} onClick={CommentDeleteBtn}>삭제</button>
+                                {
+                                    localStorage.getItem('username') === item.userName ?
+                                        <button id='CommentDeleteBtn' value={item.coid} onClick={CommentDeleteBtn}>삭제</button>
+                                        :
+                                        <span></span>
+                                }
                                 <div id='CommentContent'>{item.content}</div>
                                 <hr id='hrSize'></hr>
                             </div> 

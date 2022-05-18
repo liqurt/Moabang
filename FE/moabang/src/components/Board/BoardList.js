@@ -34,7 +34,6 @@ const BoardList = ({ boardList }) => {
     const changeDate = (date) => {
         let res = date.replace('T', ' ');
         let right = res.split('.', 1); 
-        console.log(right);
         return right;
     }
     return (

@@ -25,6 +25,8 @@
     height: 650px;
     background-color: #FFFFFF;
     position: relative;
+    border: 1px solid rgb(230, 230, 230);
+    padding: 1px 1px;
 }
 
 .ThemeImg{
