@@ -3,10 +3,8 @@ package com.ssafy.moabang.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.kakao.sdk.user.UserApiClient
 import com.ssafy.moabang.R
 import com.ssafy.moabang.config.GlobalApplication
 import com.ssafy.moabang.data.model.dto.Comment
@@ -33,49 +31,71 @@ class CommentRVAdapter : RecyclerView.Adapter<CommentRVAdapter.CommentRVAdapterV
                 .centerCrop()
                 .into(binding.civCommentItem)
             binding.tvCommentItemAuthor.text = comment.userName
-            binding.tvCommentDate.text = comment.regDate
-            binding.tvCommentContent.text = comment.content
 
-            if(comment.uid == GlobalApplication.sp.getInt("uid")){
-                binding.btCommentRemove.visibility = ViewGroup.VISIBLE
-                binding.btCommentEdit.visibility = ViewGroup.VISIBLE
-                binding.btCommentReport.visibility = View.GONE
+            if(comment.reportCnt <= 3){
+                binding.tvCommentDate.text = comment.regDate
+                binding.tvCommentContent.text = comment.content
 
-                binding.btCommentRemove.setOnClickListener {
-                    CoroutineScope(Dispatchers.IO).launch { communityRepository.deleteComment(comment.coid) }
-                    data.removeAt(adapterPosition)
-                    notifyItemRemoved(adapterPosition)
-                    notifyItemRangeChanged(adapterPosition, data.size)
-                }
-
-                binding.btCommentEdit.setOnClickListener {
-                    binding.tvCommentContent.visibility = ViewGroup.GONE
-                    binding.etCommentContent.visibility = ViewGroup.VISIBLE
-                    binding.btCommentEdit.visibility = ViewGroup.GONE
-                    binding.btCommentEditDone.visibility = ViewGroup.VISIBLE
-                }
-
-                binding.btCommentEditDone.setOnClickListener {
-                    binding.tvCommentContent.visibility = ViewGroup.VISIBLE
-                    binding.etCommentContent.visibility = ViewGroup.GONE
+                if (comment.uid == GlobalApplication.sp.getInt("uid")) {
+                    binding.btCommentRemove.visibility = ViewGroup.VISIBLE
                     binding.btCommentEdit.visibility = ViewGroup.VISIBLE
-                    binding.btCommentEditDone.visibility = ViewGroup.GONE
+                    binding.btCommentReport.visibility = View.GONE
+
+                    binding.btCommentRemove.setOnClickListener {
+                        CoroutineScope(Dispatchers.IO).launch {
+                            communityRepository.deleteComment(
+                                comment.coid
+                            )
+                        }
+                        data.removeAt(adapterPosition)
+                        notifyItemRemoved(adapterPosition)
+                        notifyItemRangeChanged(adapterPosition, data.size)
+                    }
+
+                    binding.btCommentEdit.setOnClickListener {
+                        binding.tvCommentContent.visibility = ViewGroup.GONE
+                        binding.etCommentContent.visibility = ViewGroup.VISIBLE
+                        binding.btCommentEdit.visibility = ViewGroup.GONE
+                        binding.btCommentEditDone.visibility = ViewGroup.VISIBLE
+                    }
+
+                    binding.btCommentEditDone.setOnClickListener {
+                        binding.tvCommentContent.visibility = ViewGroup.VISIBLE
+                        binding.etCommentContent.visibility = ViewGroup.GONE
+                        binding.btCommentEdit.visibility = ViewGroup.VISIBLE
+                        binding.btCommentEditDone.visibility = ViewGroup.GONE
 
 
-                    binding.tvCommentContent.text = binding.etCommentContentInput.text.toString()
-                    CoroutineScope(Dispatchers.IO).launch {
-                        val temp = CommentUpdateRequest( comment.coid,binding.etCommentContentInput.text.toString())
-                        communityRepository.updateComment(temp)
+                        binding.tvCommentContent.text = binding.etCommentContentInput.text.toString()
+                        CoroutineScope(Dispatchers.IO).launch {
+                            val temp = CommentUpdateRequest(
+                                comment.coid,
+                                binding.etCommentContentInput.text.toString()
+                            )
+                            communityRepository.updateComment(temp)
+                        }
+                    }
+                } else {
+                    binding.btCommentRemove.visibility = ViewGroup.GONE
+                    binding.btCommentEdit.visibility = ViewGroup.GONE
+                    binding.btCommentReport.visibility = View.VISIBLE
+                    binding.btCommentReport.setOnClickListener {
+                        val dialog = ReportDialog(
+                            binding.root.context,
+                            data[adapterPosition].coid,
+                            2,
+                            data[adapterPosition].content
+                        )
+                        dialog.show()
                     }
                 }
-            }else{
+            }
+            else{
+                binding.tvCommentDate.visibility = ViewGroup.GONE
+                binding.tvCommentContent.text = "※신고된 댓글입니다※"
                 binding.btCommentRemove.visibility = ViewGroup.GONE
                 binding.btCommentEdit.visibility = ViewGroup.GONE
-                binding.btCommentReport.visibility = View.VISIBLE
-                binding.btCommentReport.setOnClickListener {
-                    val dialog = ReportDialog(binding.root.context, data[adapterPosition].coid, "댓글", data[adapterPosition].content)
-                    dialog.show()
-                }
+                binding.btCommentReport.visibility = View.GONE
             }
         }
 

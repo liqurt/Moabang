@@ -15,5 +15,6 @@ data class Community(
     var createDate : LocalDateTime,
     var updateDate : LocalDateTime,
     var header : String?,
+    var reportCnt : Int,
 ) : Parcelable
 // LocalDateTime

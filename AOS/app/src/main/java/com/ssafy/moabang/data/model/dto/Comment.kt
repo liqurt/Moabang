@@ -8,5 +8,6 @@ data class Comment(
     val regDate: String,
     val uid: Int,
     val userProfile: String,
-    val userName: String
+    val userName: String,
+    val reportCnt : Int
 )
