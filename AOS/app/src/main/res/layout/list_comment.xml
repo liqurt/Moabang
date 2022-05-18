@@ -84,7 +84,8 @@
             android:id="@+id/et_comment_content_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white" />
+            android:background="@color/white"
+            style="@style/EditTextStyle"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView

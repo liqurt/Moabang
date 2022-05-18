@@ -26,4 +26,10 @@
         <item name="android:textSize">16dp</item>
     </style>
 
+    <style name="EditTextStyle" parent="Widget.Design.TextInputLayout">
+        <item name="colorControlNormal">@color/moabang_gray</item>  // unFocus 상태일때 밑줄 색.
+        <item name="boxStrokeColor">@color/moabang_pink</item> // Focus 상태일때 밑줄 색.
+        <item name="android:textCursorDrawable">@color/moabang_pink</item>  // cursor 색.
+    </style>
+
 </resources>

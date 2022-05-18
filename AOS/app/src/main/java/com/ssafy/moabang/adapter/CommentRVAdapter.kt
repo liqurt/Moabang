@@ -51,7 +51,7 @@ class CommentRVAdapter : RecyclerView.Adapter<CommentRVAdapter.CommentRVAdapterV
                     binding.etCommentContent.visibility = ViewGroup.VISIBLE
                     binding.btCommentEdit.visibility = ViewGroup.GONE
                     binding.btCommentEditDone.visibility = ViewGroup.VISIBLE
-                    binding.etCommentContentInput.setText(comment.content)
+                    binding.etCommentContentInput.setText(binding.tvCommentContent.text)
                 }
 
                 binding.btCommentEditDone.setOnClickListener {
