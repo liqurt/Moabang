@@ -159,6 +159,7 @@ public class CommunityController {
             temp.setUserName(c.getUserName());
             temp.setUserProfile(c.getUserProfile());
             temp.setUid(c.getUid());
+            temp.setEmail(c.getEmail());
             temp.setReportCnt(c.getReportCnt());
 
             communityRes.add(temp);

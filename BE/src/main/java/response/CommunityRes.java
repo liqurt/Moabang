@@ -19,5 +19,6 @@ public class CommunityRes {
     private long communityId;
     private String userProfile;
     private String userName;
+    private String Email;
     private int reportCnt;
 }

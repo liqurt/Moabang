@@ -17,5 +17,7 @@ public interface CommentListMapping {
 
     String getUserName();
 
+    String getEmail();
+
     int getReportCnt();
 }
