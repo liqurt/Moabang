@@ -27,7 +27,7 @@ class CommentRVAdapter : RecyclerView.Adapter<CommentRVAdapter.CommentRVAdapterV
         fun bindInfo(comment: Comment) {
             Glide.with(binding.root.context)
                 .load(comment.userProfile)
-                .placeholder(R.drawable.door)
+                .placeholder(R.drawable.icon_profile)
                 .centerCrop()
                 .into(binding.civCommentItem)
             binding.tvCommentItemAuthor.text = comment.userName
@@ -57,6 +57,7 @@ class CommentRVAdapter : RecyclerView.Adapter<CommentRVAdapter.CommentRVAdapterV
                         binding.etCommentContent.visibility = ViewGroup.VISIBLE
                         binding.btCommentEdit.visibility = ViewGroup.GONE
                         binding.btCommentEditDone.visibility = ViewGroup.VISIBLE
+                        binding.etCommentContentInput.setText(binding.tvCommentContent.text)
                     }
 
                     binding.btCommentEditDone.setOnClickListener {

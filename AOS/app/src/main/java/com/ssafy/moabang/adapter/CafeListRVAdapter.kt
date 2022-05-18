@@ -42,7 +42,7 @@ class CafeListRVAdapter(var cafeList: List<Cafe>) :
 
             Glide.with(binding.root.context)
                 .load(cafe.img)
-                .placeholder(R.drawable.door)
+                .placeholder(R.drawable.web_logo)
                 .centerCrop()
                 .into(binding.iv1)
             binding.tv1.text = cafe.cname

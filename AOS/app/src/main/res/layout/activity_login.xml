@@ -12,7 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/moabang_lightGray"
+        android:background="#F4E5E5"
         tools:context=".src.login.LoginActivity">
 
         <ImageView
