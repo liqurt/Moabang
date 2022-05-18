@@ -1,10 +1,3 @@
-/**
-1. **[/cafe/theme/list](http://k6d205.p.ssafy.io:8080/swagger-ui.html#/operations/%EC%B9%B4%ED%8E%98%20%EB%B0%8F%20%ED%85%8C%EB%A7%88%20Api/findAllThemeUsingGET) 로 GET 요청**
-2. Count 별로 줄 세우기
-3. 10개(?) 정도 골라서 어댑터에 담기
-4. 리사이클러뷰 설정
-5. 오토 캐러셀(요건 옵션)
- */
 package com.ssafy.moabang.src.main
 
 import android.Manifest
@@ -41,7 +34,6 @@ import kotlinx.coroutines.launch
 import com.ssafy.moabang.src.theme.ThemeDetailActivity
 import kotlinx.coroutines.*
 import retrofit2.Response
-import kotlin.math.roundToInt
 
 
 class HomeFragment : Fragment() {
@@ -61,8 +53,8 @@ class HomeFragment : Fragment() {
 
     private var cafeRepository = CafeRepository()
 
-    private lateinit var latest3 : List<Community>
-    private lateinit var latest3CommunityRVAdapter: Latest5CommunityRVAdapter
+    private lateinit var latest5 : List<Community>
+    private lateinit var latest5CommunityRVAdapter: Latest5CommunityRVAdapter
 
     private var recruitRepository = CommunityRepository()
 
@@ -172,7 +164,8 @@ class HomeFragment : Fragment() {
     private fun setLatest5RecruitList() {
         CoroutineScope(Dispatchers.Main).launch {
             CoroutineScope(Dispatchers.IO).async {
-                latest3 = getLatest5Community()
+                latest5 = getLatest5Community()
+                Log.d("AAAAA", "setLatest5RecruitList: $latest5")
             }.await()
             initLatest5()
         }
@@ -233,9 +226,9 @@ class HomeFragment : Fragment() {
 
 
     private fun initLatest5() {
-        if(latest3.isNotEmpty()){
-            latest3CommunityRVAdapter = Latest5CommunityRVAdapter(latest3)
-            latest3CommunityRVAdapter.itemClickListener = object : Latest5CommunityRVAdapter.ItemClickListener {
+        if(latest5.isNotEmpty()){
+            latest5CommunityRVAdapter = Latest5CommunityRVAdapter(latest5)
+            latest5CommunityRVAdapter.itemClickListener = object : Latest5CommunityRVAdapter.ItemClickListener {
                 override fun onClick(community: Community) {
                     val intent = Intent(requireActivity(), CommunityDetailActivity::class.java).putExtra("community", community).putExtra("mode","read")
                     startActivity(intent)
@@ -243,7 +236,7 @@ class HomeFragment : Fragment() {
             }
             binding.rvHomeFLatest5Community.apply {
                 layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                adapter = latest3CommunityRVAdapter
+                adapter = latest5CommunityRVAdapter
             }
         }
     }
@@ -259,9 +252,10 @@ class HomeFragment : Fragment() {
     }
 
     private suspend fun getLatest5Community() : List<Community> = withContext(Dispatchers.IO) {
-        val result: Response<List<Community>>? = recruitRepository.getLatest5Community()
+        val result: Response<List<Community>>? = recruitRepository.getAllCommunity()
         if (result != null) {
-            return@withContext result.body()!!
+            val tempResult = result.body()?.filter { it.reportCnt <= 3 }?.take(5)
+            return@withContext tempResult!!
         } else {
             Log.d("AAAAA", "HOME FRAGMENT_getLatest5Community : null")
             return@withContext emptyList()
