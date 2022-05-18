@@ -62,6 +62,7 @@ class ReviewListRVAdapter : RecyclerView.Adapter<ReviewListRVAdapter.ViewHolder>
                     item.recPlayer.toString() + "명"
                 itemView.findViewById<TextView>(R.id.tv_reviewL_desc).text = item.content
             }else{
+                itemView.findViewById<ConstraintLayout>(R.id.cl_reviewL_item).visibility = View.GONE
                 itemView.findViewById<FrameLayout>(R.id.blindReview).visibility = View.VISIBLE
             }
 
