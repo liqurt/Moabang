@@ -3,6 +3,7 @@ package com.ssafy.moabang.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.kakao.sdk.user.UserApiClient
@@ -12,6 +13,7 @@ import com.ssafy.moabang.data.model.dto.Comment
 import com.ssafy.moabang.data.model.dto.CommentUpdateRequest
 import com.ssafy.moabang.data.model.repository.CommunityRepository
 import com.ssafy.moabang.databinding.ListCommentBinding
+import com.ssafy.moabang.src.util.ReportDialog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,7 +23,7 @@ class CommentRVAdapter : RecyclerView.Adapter<CommentRVAdapter.CommentRVAdapterV
     var communityRepository = CommunityRepository()
     lateinit var data: MutableList<Comment>
 
-    inner class CommentRVAdapterViewHolder(private val binding: ListCommentBinding) :
+    inner class CommentRVAdapterViewHolder(var binding: ListCommentBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bindInfo(comment: Comment) {
@@ -70,6 +72,10 @@ class CommentRVAdapter : RecyclerView.Adapter<CommentRVAdapter.CommentRVAdapterV
                 binding.btCommentRemove.visibility = ViewGroup.GONE
                 binding.btCommentEdit.visibility = ViewGroup.GONE
                 binding.btCommentReport.visibility = View.VISIBLE
+                binding.btCommentReport.setOnClickListener {
+                    val dialog = ReportDialog(binding.root.context, data[adapterPosition].coid, "댓글", data[adapterPosition].content)
+                    dialog.show()
+                }
             }
         }
 

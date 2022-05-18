@@ -14,6 +14,7 @@ import com.ssafy.moabang.config.GlobalApplication.Companion.sp
 import com.ssafy.moabang.data.model.dto.*
 import com.ssafy.moabang.data.model.repository.CommunityRepository
 import com.ssafy.moabang.databinding.ActivityCommunityDetailBinding
+import com.ssafy.moabang.src.util.ReportDialog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -96,6 +97,8 @@ class CommunityDetailActivity : AppCompatActivity() {
             } else {
                 binding.btCommuItemFReport.visibility = View.VISIBLE
                 binding.rUDButtons.visibility = View.GONE
+
+                binding.btCommuItemFReport.setOnClickListener { report() }
             }
 
             setAdapter()
@@ -196,5 +199,14 @@ class CommunityDetailActivity : AppCompatActivity() {
 
     private fun isMine(): Boolean {
         return community.user.uid == sp.getInt("uid")
+    }
+
+
+    private fun report(){
+        // TODO
+        // 게시글 신고
+        Toast.makeText(this, "게시글 신고 미 구현", Toast.LENGTH_SHORT).show()
+        val dialog = ReportDialog(this, community.rid, "게시글", community.content)
+        dialog.show()
     }
 }

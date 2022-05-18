@@ -1,10 +1,12 @@
 package com.ssafy.moabang.adapter
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.iarcuschin.simpleratingbar.SimpleRatingBar
@@ -17,6 +19,7 @@ import com.ssafy.moabang.databinding.ListReviewItemBinding
 import com.ssafy.moabang.src.theme.ReviewActivity
 import com.ssafy.moabang.src.theme.ThemeReviewFragment
 import com.ssafy.moabang.src.util.CustomDialog
+import com.ssafy.moabang.src.util.ReportDialog
 
 class ReviewListRVAdapter: RecyclerView.Adapter<ReviewListRVAdapter.ViewHolder>() {
     var data: MutableList<ReviewResponse> = mutableListOf()
@@ -87,12 +90,13 @@ class ReviewListRVAdapter: RecyclerView.Adapter<ReviewListRVAdapter.ViewHolder>(
         }
 
         // TODO: 신고 버튼 눌렀을때 처리
+        // 리뷰 신고
         holder.itemView.findViewById<TextView>(R.id.tv_reviewL_report).setOnClickListener {
             // 이미 신고한 리뷰일때
-            CustomDialog(holder.itemView.context)
-                .setContent("이미 신고한 리뷰입니다.")
-                .setNegativeButtonText("")
-                .build().show()
+//            CustomDialog(holder.itemView.context)
+//                .setContent("이미 신고한 리뷰입니다.")
+//                .setNegativeButtonText("")
+//                .build().show()
 
             // 처음 신고하는 리뷰일때
             CustomDialog(holder.itemView.context)
@@ -100,8 +104,8 @@ class ReviewListRVAdapter: RecyclerView.Adapter<ReviewListRVAdapter.ViewHolder>(
                 .setNegativeButtonText("취소")
                 .setPositiveButtonText("신고하기")
                 .setOnPositiveClickListener{
-                    // TODO: 신고 기능 구현
-                    // 누적 신고 수가 n개 미만일 때, n개 이상일 때 다르게 처리해야함
+                    val dialog = ReportDialog(holder.itemView.context, data[holder.adapterPosition].rid, "리뷰", data[holder.adapterPosition].content)
+                    dialog.show()
                 }.build().show()
         }
     }
