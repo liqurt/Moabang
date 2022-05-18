@@ -25,7 +25,7 @@
     background-color: #faecec;
     /* 팝업이 열릴때 스르륵 열리는 효과 */
     animation: modal-show 0.3s;
-    
+    position: relative;
     overflow-y:  auto; /*자동 스크롤*/
 }
 .modal > section::-webkit-scrollbar {
@@ -44,22 +44,24 @@
 }
 
 .modal > section > header {
-    width: 100%;
+    width: 1000px;
+    height: 60px;
     float: left;
-    position: relative;
+    position: fixed;
+    z-index: 100;
     padding: 16px 64px 16px 16px;
-    background-color: grey;
+    background-color: #d4c3ed;
     font-weight: 700;
 }
 .modal > section > header button {
     padding: 6px 12px;
     color: black;
-    float: left;
     background-color: #FFFFFF;
     border-radius: 5px;
     font-size: 13px;
 }
 .modal > section > main {
+    margin-top: 50px;
     padding: 16px;
     border-bottom: 1px solid #dee2e6;
     border-top: 1px solid #dee2e6;

@@ -7,15 +7,18 @@ const BoardWrite = ({ setShowList }) => {
     const [header, setHeader] = useState("-1");
     const [content, setContent] = useState("");
     const [title, setTitle] = useState("");
-    
+    const [titleCnt, setTitleCnt] = useState(0);
+    const [contentCnt, setContentCnt] = useState(0);
     
     const HeaderSelectHandler = (event) => {
         setHeader(event.target.value);
     }
     const ContentHandler = (event) => {
         setContent(event.target.value);
+        setContentCnt(event.target.value.length);
     }
     const TitleHandler = (event) => {
+        setTitleCnt(event.target.value.length)
         setTitle(event.target.value)
     }
     const WriteCancelBtn = () => {
@@ -61,6 +64,7 @@ const BoardWrite = ({ setShowList }) => {
                     icon: 'success',
                     title: "작성 성공."
                 })
+                setShowList(e => !e);
             }).catch(error => {
                 Swal.fire({
                     icon: 'fail',
@@ -68,19 +72,23 @@ const BoardWrite = ({ setShowList }) => {
                 })
                 console.error(error);
             });
-            setShowList(e => !e);
+            
         }
         //작성 클릭 시 리스트로 넘어감
         
 
     }
+    const goCommunity = () => {
+        window.location.href = `/board`;
+    }
     return (
         <div className='Board-Write-Main'>
-            <div id='Board-Write-Main-Title'>커뮤니티</div>
+            <div id='Board-Write-Main-Title' onClick={goCommunity}>커뮤니티</div>
             <div className='boardWrite-container'>
                 <div className='boardTitle'>
                     <span id='boardWriteText'>제목<span id='TextStar'>*</span></span> 
-                    <input className='inputTitle' placeholder='제목을 입력해주세요' type="text" onChange={TitleHandler} value={title}></input>
+                    <input className='inputTitle' maxLength='50' placeholder='제목을 입력해주세요' type="text" onChange={TitleHandler} value={title}></input>
+                    <span>{titleCnt}/50</span>
                 </div>
                 <div className='boardHeader'>
                     <span id='boardWriteText'>게시판<span id='TextStar'>*</span></span>
@@ -92,7 +100,8 @@ const BoardWrite = ({ setShowList }) => {
                 </div>
                 <div className='boardContent'>
                     <span id='boardWriteText'>내용<span id='TextStar'>*</span></span> 
-                    <textarea className='inputContent' type="text" placeholder='내용을 입력해 주세요'  value={content} onChange={ContentHandler}></textarea>
+                    <textarea className='inputContent' maxLength='200' type="text" placeholder='내용을 입력해 주세요'  value={content} onChange={ContentHandler}></textarea>
+                    <span>{contentCnt}/200</span>
                 </div>
                 <button className='boardWriteBtn '  onClick={WriteSummitBtn}>확인</button>
                 <button className='boardCancelBtn' onClick={WriteCancelBtn}>취소</button>
