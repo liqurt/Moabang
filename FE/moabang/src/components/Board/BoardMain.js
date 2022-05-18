@@ -41,7 +41,6 @@ const BoardMain = () => {
 
     }
     const Categoryhandler = (e) => {
-        console.log(e.target.value);
         setCategory(e.target.value);
     }
 

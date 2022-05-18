@@ -6,7 +6,6 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 
 const CommentList = ({ commentList,setCheckComment }) => {
-    console.log(commentList);
     const [page, setPage] = useState(1);
     const [pageCnt, setPageCnt] = useState(45);
     
@@ -27,9 +26,8 @@ const CommentList = ({ commentList,setCheckComment }) => {
         
     }, [commentList]);
     
-    
+    //댓글 삭제
     const CommentDeleteBtn = (e) => {
-        console.log(e.target.value);
         axios.delete(`/community/comment/delete/${e.target.value}`, {
             headers: {
                 'Authorization': localStorage.getItem("myToken")
@@ -43,42 +41,102 @@ const CommentList = ({ commentList,setCheckComment }) => {
             
         })
     }
+    //댓글 신고하기
+    const ReportComment = (cid) => {
+        const Report = Swal.fire({
+            input: 'textarea',
+            inputLabel: '신고',
+            inputPlaceholder: '신고 사유를 입력해 주세요',
+            inputAttributes: {
+                'aria-label': 'Type your message here'
+            },
+            showCancelButton: true,
+            confirmButtonText: '확인',
+            cancelButtonText:'취소',
+        }).then((res) => {
+            console.log(res);
+            if (res.isConfirmed) {
+                axios.post('/report/create',
+                    {
+                        category: 2,
+                        reason: res.value,
+                        target_id: cid.target.value,
+                
+                    },
+                    {
+                        headers: {
+                            'Authorization': localStorage.getItem("myToken")
+                        }
+                    }
+                ).then((response) => {
+                    console.log(response);
+                    if (response.data) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: "신고 되었습니다."
+                        })
+                    } else {
+                        Swal.fire({
+                            icon: 'success',
+                            title: "이미 신고 하였습니다.."
+                        })
+                    }
+                    
+                })
+            }
+
+        })
+        
+
+    }
+    //프로필 유무에 따른 이미지
+    const ShowImg = ({ profile }) => {
+
+        if (profile === null) {
+            return <img id='CommentImg1' src="https://cdn.discordapp.com/attachments/963307192025485326/975564975617744946/unknown.png" alt='profile'  ></img>
+        } else {
+            return <img id='CommentImg2' src={profile} alt='profile'  ></img>
+        }
+    }
 
 
     return (
         <div className='Comment-Container'>
             {
                 currentPosts(commentList).map((item, index) => {
-                    if (item.userProfile === null) {
+                    if (item.reportCnt >= 1) {
+                        
                         return (
                             <div className='Comment' key={index}>
-                                <img id='CommentImg1' src="https://cdn.discordapp.com/attachments/963307192025485326/975564975617744946/unknown.png" alt='profile'  ></img>
-                                
-                                <span id='CommentUserName'>{item.userName}</span>
-                                <span id='CommentDate'>{item.regDate}</span>
-                                {
-                                    localStorage.getItem('username') === item.userName ?
-                                        <button id='CommentDeleteBtn' value={item.coid} onClick={CommentDeleteBtn}>삭제</button>
-                                        :
-                                        <span></span>
-                                }
-                                <div id='CommentContent'>{item.content}</div>
+                                <div>이 댓글은 블라인드 처리 되었습니다</div>
                                 <hr id='hrSize'></hr>
-                            </div> 
+                            </div>
                         )
                     } else {
                         return (
                             <div className='Comment' key={index}>
-                                <img id='CommentImg2' src={item.userProfile} alt='profile'  ></img>
-                                
+                                <ShowImg profile={item.userProfile} />
                                 <span id='CommentUserName'>{item.userName}</span>
                                 <span id='CommentDate'>{item.regDate}</span>
+                                {
+                                    localStorage.getItem('email') === item.email ?
+                                        <button id='CommentDeleteBtn' value={item.coid} onClick={CommentDeleteBtn}>삭제</button>
+                                        :
+                                        <span></span>
+                                }
+                                {
+                                    localStorage.getItem('email') === item.email ?
+                                        <span></span>
+                                        :
+                                        <button id='CommentReport' value={item.coid} onClick={ReportComment}>신고하기</button>
+                                }
+                                
                                 <div id='CommentContent'>{item.content}</div>
                                 <hr id='hrSize'></hr>
-                                
-                            </div> 
+                            </div>
                         )
                     }
+
                     
                     
                 })
