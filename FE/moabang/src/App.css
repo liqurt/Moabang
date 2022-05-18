@@ -52,7 +52,10 @@
 
 .top-button{
     position: fixed;
-    bottom: 90px;
+    bottom: 10vh;
     right: 10vh;
     z-index: 1000;
+}
+.App{
+    background-color: #E5E5E5;
 }

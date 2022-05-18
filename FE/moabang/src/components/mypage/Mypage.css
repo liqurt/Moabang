@@ -5,12 +5,13 @@
 }
 .profile-card-img
 {
+    vertical-align: middle;
     width: 30vh;
     height: 30vh;
-    border: 1px rgb(0, 0, 0) solid;
-    border-radius: 30vh ; 
-    text-align: left;
-    
+    border-radius: 70%;
+    margin-bottom: 3vh;
+    max-width: 30vh;
+    max-height: 30vh;
 }
 .flex-column{
     background-color: rgb(255, 255, 255);
@@ -26,4 +27,11 @@
 {
     color: #8785A2;
     
+}
+
+.content-card,
+.flex-column,
+.profile-card{
+    box-shadow: 0 6px 10px 0 rgba(0,0,0,0.2), 0 6px 10px 0 rgba(0,0,0,0.19);
+    background-color: #FFFFFF;
 }

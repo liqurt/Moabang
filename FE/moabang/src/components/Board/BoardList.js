@@ -3,13 +3,12 @@ import "./BoardCSS/BoardList.css";
 import Paging from './BoardPaging';
 
 const BoardList = ({ boardList }) => {
-     //페이징 처리
+    //페이징 처리
     const [page, setPage] = useState(1);
     const [pageCnt, setPageCnt] = useState(45);
-    
+
     const handlePageChange = (page) => {
         setPage(page);
-        
     };
 
     const indexOfLast = page * 10;
@@ -21,8 +20,8 @@ const BoardList = ({ boardList }) => {
     }
 
     useEffect(() => {
-        setPageCnt((cnt) =>cnt = boardList.length );
-        
+        setPageCnt((cnt) => cnt = boardList.length);
+
     }, [boardList]);
 
 
@@ -31,19 +30,19 @@ const BoardList = ({ boardList }) => {
         console.log(e)
         window.location.href = `/board/detail/?rid=${e.rid}`;
     }
-    
+
     return (
         <div className='List-container'>
             <table >
                 <thead>
                     <tr>
-                    <th>번호</th><th>제목</th><th>날짜</th><th>구분</th>
+                        <th>번호</th><th>제목</th><th>날짜</th><th>구분</th>
                     </tr>
                 </thead>
                 <tbody>
                     {
                         currentPosts(boardList).map((item, index) => (
-                            <tr key={index} onClick={()=>(goBoardDetail(item))}>
+                            <tr key={index} onClick={() => (goBoardDetail(item))}>
                                 <td>{index + 1}</td>
                                 <td>{item.title}</td>
                                 <td>{item.updateDate.split('T', 1)}</td>
@@ -54,7 +53,7 @@ const BoardList = ({ boardList }) => {
                 </tbody>
             </table>
             <div>
-                <Paging page={page} count={pageCnt} setPage={handlePageChange }/>
+                <Paging page={page} count={pageCnt} setPage={handlePageChange} />
             </div>
         </div>
     );
