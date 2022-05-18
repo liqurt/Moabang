@@ -19,4 +19,5 @@ public class CommunityRes {
     private long communityId;
     private String userProfile;
     private String userName;
+    private int reportCnt;
 }
