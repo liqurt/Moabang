@@ -4,6 +4,9 @@ import './Carousels.css'
 import { Card } from 'react-bootstrap';
 import axios from 'axios';
 import Myloc_Card from './Myloc_Card';
+import left_arrow from '../../../../image/left-arrow.png'
+import right_arrow from '../../../../image/right-arrow.png'
+
 
 const Carousels = () => {
 
@@ -48,6 +51,30 @@ const Carousels = () => {
         sort_cafe();
     }, [cafeData]);
 
+    function SampleNextArrow(props) {
+        const { className, style, onClick } = props;
+        return (
+            <img
+                className={className}
+                // style={{ ...style, display: "block", background: "red" }}
+                src={right_arrow}
+                onClick={onClick}
+            />
+        );
+    }
+
+    function SamplePrevArrow(props) {
+        const { className, style, onClick } = props;
+        return (
+            <img
+                className={className}
+                // style={{ ...style, display: "block", background: "green" }}
+                src={left_arrow}
+                onClick={onClick}
+            />
+        );
+    }
+
     //slick carousel 설정
     const settings = {
         dots: false,             // 스크롤바 아래 점으로 페이지네이션 여부
@@ -58,6 +85,8 @@ const Carousels = () => {
         arrows: true,
         draggable: false, 	//드래그 가능 여부 
         autoplay: true,
+        nextArrow: <SampleNextArrow />,
+        prevArrow: <SamplePrevArrow />
     };
 
     //좌표간 직선거리(Km) 함수
@@ -85,10 +114,10 @@ const Carousels = () => {
     }
 
     return (
-        <div className="container">
+        <div className="carousels-container">
 
             <div className='my-loc'>
-                <p> 내 근처 방탈출 카페 해위</p>
+                <p> 내 근처 방탈출 카페</p>
             </div>
 
             <Slider {...settings}>

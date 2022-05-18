@@ -1,11 +1,16 @@
-
+.carousels-container{
+  /* border: 1vh solid #8785A2; */
+  margin:3vh 20vh 0vh 20vh;
+  padding: 2vh 4vh 2vh 4vh;
+  border-radius: 2vh;
+  box-shadow: 0 6px 10px 0 rgba(0,0,0,0.2), 0 6px 10px 0 rgba(0,0,0,0.19);
+  background-color: #FFFFFF;
+}
 .slick-slide {
-    height: fit-content;
-    border: 1vh solid #8785A2;
+    padding: 1vh;
     box-sizing: border-box;
     font-family: 'BMJUA';
     margin-bottom: 15px;
-    
   }
   
   .slick-slide .card .card-img {
@@ -14,19 +19,11 @@
 
   .my-loc p{
       text-align: left;
-      margin: 5vh 0 3vh 10px;
-      font-size: 20px;
+      margin: 1vh 0 3vh 2vh;
       font-family: 'BMJUA';
   }
   .card-text{
-    text-overflow: ellipsis;
+    overflow: hidden;
+      text-overflow: ellipsis; 
+      white-space: nowrap; 
   }
-
-
-  @font-face {
-    font-family: 'BMJUA';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-

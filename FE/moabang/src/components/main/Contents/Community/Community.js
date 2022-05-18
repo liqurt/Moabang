@@ -8,6 +8,7 @@ const Community = () => {
 
     const Token = localStorage.getItem('myToken');
     const [community, setCommunity] = useState([]);
+    const [notice, setNotice] = useState([]);
 
     //카페 전체 데이터 배열에 저장
     function getCommunityData() {
@@ -49,10 +50,13 @@ const Community = () => {
         <div className='new_list'>
             <div className='new_community'>
                 <p> 커뮤니티 새 글 </p>
-                <a href='#community'>더보기</a>
+                <a href='/board'>더보기</a>
             </div>
             <ListGroup as="ol" className='list_group'>
-                {community.slice(0, 5).map((data) => {
+                {community.filter((data) => data.header == "공지").slice(0, 3).map((data) => {
+                    return <List_item data={data} key={data.rid} />;
+                })}
+                {community.filter((data) => data.header != "공지").slice(0, 8).map((data) => {
                     return <List_item data={data} key={data.rid} />;
                 })}
             </ListGroup>

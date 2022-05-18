@@ -1,25 +1,44 @@
 import React from 'react';
-import { Card, Col, Badge } from 'react-bootstrap';
+import { Card, Badge } from 'react-bootstrap';
+import './Content_3.css'
 
 const Content_3 = (props) => {
 
 
     return (
         <div>
+
             {props.data ? <Card >
                 {props.data.playDate ?
                     <Card.Body>
-                        <Card.Title><Badge pill >{props.data.active}</Badge>{props.data.tname}</Card.Title>
-                        <Card.Subtitle>{props.data.cname}</Card.Subtitle>
-                        <Card.Text>{props.data.content}</Card.Text>
+                        <Badge bg="dark" className='review-badge'  >
+                            {props.data.active}
+                        </Badge>
+                        <Card.Title className='review-title'>
+                            {props.data.tname}
+                        </Card.Title>
+
+                        <Card.Subtitle className='review-subtitle'>{props.data.cname}</Card.Subtitle>
+                        <Card.Text className='review-content'>{props.data.content}</Card.Text>
                         <Card.Footer className='card-footer'>
                             <small className="text-muted">{props.data.playDate}</small>
                         </Card.Footer>
                     </Card.Body>
                     :
                     <Card.Body>
-                        <Card.Title><Badge pill >{props.data.header}</Badge>{props.data.title}</Card.Title>
-                        <Card.Text>{props.data.content}</Card.Text>
+                        <Badge className='community-badge'  >{props.data.header}</Badge>
+                        <Card.Title className='community-title'>
+                            {props.data.title}
+                        </Card.Title>
+
+                        <Card.Text className='community-content'>{props.data.content}</Card.Text>
+                        <Card.Footer className='card-footer'>
+                            <small className="text-muted">
+                                {"작성일 : "}
+                                {props.data.createDate.substring(0, 10) + " "}
+                                {props.data.createDate.substring(11, 19) + " "}
+                            </small>
+                        </Card.Footer>
                     </Card.Body>
                 }
             </Card> :

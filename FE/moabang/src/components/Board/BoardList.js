@@ -3,13 +3,12 @@ import "./BoardCSS/BoardList.css";
 import Paging from './BoardPaging';
 
 const BoardList = ({ boardList }) => {
-     //페이징 처리
+    //페이징 처리
     const [page, setPage] = useState(1);
     const [pageCnt, setPageCnt] = useState(45);
-    
+
     const handlePageChange = (page) => {
         setPage(page);
-        
     };
     console.log(boardList);
     const indexOfLast = page * 10;
@@ -21,8 +20,8 @@ const BoardList = ({ boardList }) => {
     }
 
     useEffect(() => {
-        setPageCnt((cnt) =>cnt = boardList.length );
-        
+        setPageCnt((cnt) => cnt = boardList.length);
+
     }, [boardList]);
 
 
@@ -33,7 +32,7 @@ const BoardList = ({ boardList }) => {
     }
     const changeDate = (date) => {
         let res = date.replace('T', ' ');
-        let right = res.split('.', 1); 
+        let right = res.split('.', 1);
         console.log(right);
         return right;
     }
@@ -42,13 +41,13 @@ const BoardList = ({ boardList }) => {
             <table >
                 <thead>
                     <tr>
-                    <th>번호</th><th>제목</th><th>날짜</th><th>구분</th><th>작성자</th>
+                        <th>번호</th><th>제목</th><th>날짜</th><th>구분</th><th>작성자</th>
                     </tr>
                 </thead>
                 <tbody>
                     {
                         currentPosts(boardList).map((item, index) => (
-                            <tr key={index} onClick={()=>(goBoardDetail(item))}>
+                            <tr key={index} onClick={() => (goBoardDetail(item))}>
                                 <td>{index + 1}</td>
                                 <td>{item.title}<span id='BoardListCommentCount'>[{item.count}]</span></td>
                                 <td>{changeDate(item.updateDate)}</td>
@@ -60,7 +59,7 @@ const BoardList = ({ boardList }) => {
                 </tbody>
             </table>
             <div>
-                <Paging page={page} count={pageCnt} setPage={handlePageChange }/>
+                <Paging page={page} count={pageCnt} setPage={handlePageChange} />
             </div>
         </div>
     );
