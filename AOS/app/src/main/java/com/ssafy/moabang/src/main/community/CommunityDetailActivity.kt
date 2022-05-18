@@ -83,7 +83,7 @@ class CommunityDetailActivity : AppCompatActivity() {
             binding.tvCommuItemFTitle.text = community.title
             Glide.with(this)
                 .load(community.user.pimg)
-                .placeholder(R.drawable.door)
+                .placeholder(R.drawable.icon_profile)
                 .into(binding.civCommuItemF)
 
             binding.btCommuItemFWriteComment.setOnClickListener { commentWrite() }

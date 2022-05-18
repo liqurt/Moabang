@@ -27,7 +27,7 @@ class CommentRVAdapter : RecyclerView.Adapter<CommentRVAdapter.CommentRVAdapterV
         fun bindInfo(comment: Comment) {
             Glide.with(binding.root.context)
                 .load(comment.userProfile)
-                .placeholder(R.drawable.door)
+                .placeholder(R.drawable.icon_profile)
                 .centerCrop()
                 .into(binding.civCommentItem)
             binding.tvCommentItemAuthor.text = comment.userName
