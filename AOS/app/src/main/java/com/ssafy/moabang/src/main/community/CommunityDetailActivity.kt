@@ -252,9 +252,6 @@ class CommunityDetailActivity : AppCompatActivity() {
 
 
     private fun report(){
-        // TODO
-        // 게시글 신고
-        Toast.makeText(this, "게시글 신고 미 구현", Toast.LENGTH_SHORT).show()
         val dialog = ReportDialog(this, community.rid, 1, community.content!!)
         dialog.show()
     }

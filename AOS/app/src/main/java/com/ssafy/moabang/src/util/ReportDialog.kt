@@ -2,6 +2,8 @@ package com.ssafy.moabang.src.util
 
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Toast
@@ -27,6 +29,7 @@ class ReportDialog(var context: Context, var target_id: Int, var from: Int, var 
     }
 
     private fun initView() {
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.apply {
             setContentView(binding.root)
             setCancelable(false)
