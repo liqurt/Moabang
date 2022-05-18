@@ -68,34 +68,50 @@ class CommunityDetailActivity : AppCompatActivity() {
     private fun initView() {
         if (mode == "read") {
             if(community.reportCnt <= 3){
+                // 카테고리
+                binding.tvCommuItemFHeader.visibility = View.VISIBLE
+                binding.spCommuItemFHeader.visibility = View.INVISIBLE
+
+                // 제목
+                binding.tvCommuItemFTitle.visibility = View.VISIBLE
+                binding.etCommuItemFTitle.visibility = View.INVISIBLE
+                binding.textInputLayout.visibility = View.INVISIBLE
+
+                // 본문
+                binding.tvCommuItemFContent.isEnabled = false
+
+                // 하단 버튼
+                binding.btCommuWriteCancel.visibility = View.GONE
+                binding.btCommuWriteWrite.visibility = View.GONE
+
+                // 댓글
                 binding.rComment.visibility = View.VISIBLE
-                binding.rArticleInfo.visibility = View.VISIBLE
-                binding.rContent.visibility = View.VISIBLE
-                binding.rUDButtons.visibility = View.VISIBLE
-                binding.wArticleInfo.visibility = View.GONE
-                binding.wContent.visibility = View.GONE
-                binding.wCButtons.visibility = View.GONE
+
 
 
                 binding.tvCommuItemFAuthor.text = community.user.nickname
-                binding.tvCommuItemFContent.text = community.content
+                binding.tvCommuItemFContent.setText(community.content)
+                binding.tvCommuItemFContent.isEnabled = false
                 binding.tvCommuItemFHeader.text = community.header
                 binding.tvCommuItemFTitle.text = community.title
                 Glide.with(this)
                     .load(community.user.pimg)
-                    .placeholder(R.drawable.door)
+                    .placeholder(R.drawable.icon_profile)
                     .into(binding.civCommuItemF)
 
                 binding.btCommuItemFWriteComment.setOnClickListener { commentWrite() }
 
                 if (isMine()) {
                     binding.btCommuItemFReport.visibility = View.GONE
-                    binding.rUDButtons.visibility = View.VISIBLE
+                    binding.btCommuItemFEdit.visibility = View.VISIBLE
+                    binding.btCommuItemFRemove.visibility = View.VISIBLE
+
                     binding.btCommuItemFRemove.setOnClickListener { removeCommunity() }
                     binding.btCommuItemFEdit.setOnClickListener { modeChangeToEdit() }
                 } else {
                     binding.btCommuItemFReport.visibility = View.VISIBLE
-                    binding.rUDButtons.visibility = View.GONE
+                    binding.btCommuItemFEdit.visibility = View.GONE
+                    binding.btCommuItemFRemove.visibility = View.GONE
 
                     binding.btCommuItemFReport.setOnClickListener { report() }
                 }
@@ -107,19 +123,38 @@ class CommunityDetailActivity : AppCompatActivity() {
             }
 
         } else if (mode == "write" || mode == "edit") {
+            // 카테고리
+            binding.tvCommuItemFHeader.visibility = View.INVISIBLE
+            binding.spCommuItemFHeader.visibility = View.VISIBLE
+
+            // 제목
+            binding.tvCommuItemFTitle.visibility = View.INVISIBLE
+            binding.etCommuItemFTitle.visibility = View.VISIBLE
+            binding.textInputLayout.visibility = View.VISIBLE
+
+            // 본문
+            binding.tvCommuItemFContent.isEnabled = true
+
+            // 하단 버튼
+            binding.btCommuWriteWrite.visibility = View.VISIBLE
+            binding.btCommuWriteCancel.visibility = View.VISIBLE
+            binding.btCommuWriteCancel.setOnClickListener {
+                finish()
+            }
+
+            // 댓글
             binding.rComment.visibility = View.GONE
-            binding.rArticleInfo.visibility = View.GONE
-            binding.rContent.visibility = View.GONE
-            binding.rUDButtons.visibility = View.GONE
-            binding.wArticleInfo.visibility = View.VISIBLE
-            binding.wContent.visibility = View.VISIBLE
-            binding.wCButtons.visibility = View.VISIBLE
+
+            // 상단 버튼
             binding.btCommuItemFReport.visibility = View.GONE
+            binding.btCommuItemFEdit.visibility = View.GONE
+            binding.btCommuItemFRemove.visibility = View.GONE
+
 
             val headerAdapter = ArrayAdapter.createFromResource(
                 this,
                 R.array.community_header,
-                android.R.layout.simple_spinner_item
+                R.layout.spinner_text
             ).also { adapter ->
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 binding.spCommuItemFHeader.adapter = adapter
@@ -142,7 +177,7 @@ class CommunityDetailActivity : AppCompatActivity() {
                     headerAdapter.getPosition(community.header)
                 )
                 binding.etCommuItemFTitle.setText(binding.tvCommuItemFTitle.text)
-                binding.etCommuItemFContent.setText(binding.tvCommuItemFContent.text)
+                binding.tvCommuItemFContent.setText(binding.tvCommuItemFContent.text)
                 binding.btCommuWriteWrite.setOnClickListener { edit() }
             }
 
@@ -168,7 +203,7 @@ class CommunityDetailActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             val header = binding.spCommuItemFHeader.selectedItem.toString()
             val title = binding.etCommuItemFTitle.text.toString()
-            val content = binding.etCommuItemFContent.text.toString()
+            val content = binding.tvCommuItemFContent.text.toString()
             val recruitCreateRequest = RecruitCreateRequest(content, header, title)
             val result = communityRepository.insertCommunity(recruitCreateRequest)
             finish()
@@ -193,7 +228,7 @@ class CommunityDetailActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             val header = binding.spCommuItemFHeader.selectedItem.toString()
             val title = binding.etCommuItemFTitle.text.toString()
-            val content = binding.etCommuItemFContent.text.toString()
+            val content = binding.tvCommuItemFContent.text.toString()
             val rid = community.rid
             val recruitCreateRequest = RecruitCreateRequest(content, header, title)
             val result = communityRepository.updateCommunity(rid, recruitCreateRequest)

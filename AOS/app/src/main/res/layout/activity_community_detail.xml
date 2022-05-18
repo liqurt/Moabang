@@ -65,9 +65,9 @@
             android:id="@+id/textInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="16dp"
             android:background="#00FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -137,46 +137,23 @@
         <!-- 상단 메뉴 끝 -->
 
         <!--  본문  -->
-        <!--    <TextView-->
-        <!--        android:id="@+id/tv_commuItemF_content"-->
-        <!--        android:layout_width="match_parent"-->
-        <!--        android:layout_height="wrap_content"-->
-        <!--        android:text=""-->
-        <!--        android:textColor="@color/moabang_gray"-->
-        <!--        android:textSize="16dp" />-->
-
-        <!--    <com.google.android.material.textfield.TextInputLayout-->
-        <!--        android:id="@+id/textInputLayout2"-->
-        <!--        android:layout_width="match_parent"-->
-        <!--        android:layout_height="wrap_content"-->
-        <!--        tools:layout_editor_absoluteX="10dp"-->
-        <!--        tools:layout_editor_absoluteY="10dp">-->
-
-        <!--        <com.google.android.material.textfield.TextInputEditText-->
-        <!--            android:id="@+id/et_commuItemF_content"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:hint="내용"-->
-        <!--            android:textColor="@color/moabang_gray"-->
-        <!--            tools:ignore="TouchTargetSizeCheck" />-->
-        <!--    </com.google.android.material.textfield.TextInputLayout>-->
-
         <EditText
             android:id="@+id/tv_commuItemF_content"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_margin="16dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/content_border"
             android:gravity="start"
+            android:textColor="@color/moabang_gray"
             android:hint="내용을 입력하세요."
             android:padding="16dp"
-            android:textSize="12dp"
+            android:textSize="14dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_commuItemF_title" />
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
 
         <!-- 본문 끝 -->
 
@@ -239,7 +216,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="8dp">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/et_commuItemF_comment"
