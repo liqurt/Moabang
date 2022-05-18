@@ -44,6 +44,14 @@
     color: gray;
 }
 
+#BoardRepotyBtn{
+    margin-left: 50%;
+    background-color: #FFFFFF;
+    color: grey;
+    padding: 5px 7px;
+    border: none;
+}
+
 #hr1{
     width: 80%;
     margin-left: 10%;

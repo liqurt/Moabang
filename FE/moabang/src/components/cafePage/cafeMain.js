@@ -15,9 +15,6 @@ const CafeMain = () => {
             .then(response => {
                 setCafeData(response.data);
                 setCafeCount(response.data.length);
-                console.log(response);
-
-
             });
     }
 
