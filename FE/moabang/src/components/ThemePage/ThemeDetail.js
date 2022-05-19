@@ -117,11 +117,18 @@ const ThemeDetail = (props) => {
         ).then(response => {
             props.setTListRender(e => !e);
             setIsLike(e => e = !e);
-            Swal.fire({
-                icon: 'success',
-                title: response.data
-            })
-
+            if (response.data === "좋아요 success") {
+                Swal.fire({
+                    icon: 'success',
+                    title: '찜 성공'
+                })
+            } else {
+                Swal.fire({
+                    icon: 'success',
+                    title: '찜 취소'
+                })
+            }
+            
         }).catch(error => {
             console.error(error);
         });
