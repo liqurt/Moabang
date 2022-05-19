@@ -5,10 +5,9 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import icon_like_after from '../../image/icon_like_after.png'
 import icon_like_before from '../../image/icon_like_before.png'
-
 import "./ThemeCSS/Theme.css"
 import "../cafePage/Modal/ModalList.css"//난이도와 인원제한 사진 CSS를 가져오기 위한 import
-import logo from '../../image/Main_logo.png';
+import empty_img from '../../image/empty_img.png';
 
 
 const ThemeList = (props) => {
@@ -87,7 +86,7 @@ const ThemeList = (props) => {
     }
 
     const ChangeImg = (event) => {
-        event.target.src = logo
+        event.target.src = empty_img
     }
     return (
         <div className='detailList' >

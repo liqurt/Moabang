@@ -1,15 +1,12 @@
-body{
-    color: #000;
-}
+
 .fw-bold{
-    display: flex;
+    display: grid;
+    grid-template-columns: 0.3fr 2fr 0.3fr;
     /* border: 0.1vh solid #8785A2; */
-    width: 80vh;
     
 }
 
 .header {
-    width: 20%;
     /* border: 0.1vh solid #8785A2; */
     text-align: left;
     padding-left: 2vh;
@@ -18,11 +15,16 @@ body{
     font-family: DungGeunMo;
 }
 .title {
-    width: 100%;
     /* border: 0.1vh solid #8785A2; */
     text-align: center;
     overflow: hidden;
     text-overflow: ellipsis; 
     white-space: nowrap; 
     font-family: Jalnan;
+}
+.new_badge{
+    width: 45px;
+    height: 25px;
+    padding: 5px;
+    margin: 1vh 0vh 0vh 2vh;
 }

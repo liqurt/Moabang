@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import ModalMain from './Modal/ModalMain';
 import CafeDetail from './CafeDatail';
-import logo from '../../image/Main_logo.png';
+import empty_img from '../../image/empty_img.png';
 import "./CafeCSS/Cafe.css"
 
 const CafeList = (props) => {
@@ -21,7 +21,7 @@ const CafeList = (props) => {
     };
 
     const onErrorImg = (e) => {
-        e.target.src = logo;
+        e.target.src = empty_img;
     }
 
     return (

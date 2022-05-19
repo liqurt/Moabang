@@ -1,20 +1,11 @@
 import React from 'react';
 import { Card, Badge } from 'react-bootstrap';
 import './Theme_Card.css'
-import logo from '../../../../image/Main_logo.png';
-import activity_1 from '../../../../image/activity_1.png';
-import activity_2 from '../../../../image/activity_2.png';
-import difficulty_on from '../../../../image/difficulty_on.png';
-import difficulty_off from '../../../../image/difficulty_off.png';
-import genre from '../../../../image/genre.png';
-import rplayer from '../../../../image/rplayer.png';
-import time from '../../../../image/time.png';
-import type_1 from '../../../../image/type.png';
+import empty_img from '../../../../image/empty_img.png';
 
 const Theme_Card = (props) => {
     const onErrorImg = (e) => {
-        e.target.src = logo;
-        // e.target.className = 'pop-theme-card-img-default';
+        e.target.src = empty_img;
     }
     return (
         <Card className='pop-theme-card' >

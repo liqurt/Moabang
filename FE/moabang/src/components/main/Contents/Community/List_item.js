@@ -36,19 +36,19 @@ const List_item = (props) => {
 
         <ListGroup.Item
             as="li"
-            className="d-flex justify-content-between align-items-start"
+            className="list_group"
         >
             <div className="ms-2 me-auto">
                 <div className="fw-bold">
                     <p className='header'>{props.data.header}</p>
                     <p className=' title'>{props.data.title}</p>
+                    {
+                        during_date() ?
+                            <Badge className='new_badge' bg="primary" pill> new </Badge> :
+                            <Badge className='new_badge' hidden="true"></Badge>
+                    }
                 </div>
             </div>
-            {
-                during_date() ?
-                    <Badge bg="primary" pill> new </Badge> :
-                    <Badge hidden="true"></Badge>
-            }
         </ListGroup.Item>
     );
 };
