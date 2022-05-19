@@ -43,9 +43,9 @@
 
 #### 🖼와이어프레임
 
-<img src="./image/wireframe.png" width="50%" hegiht="50%"></img>
+<img src="./image/Wireframe.png" width="50%" hegiht="50%"></img>
 
-<img src="./image/wireframe2.png" width="50%" hegiht="50%"></img>
+<img src="./image/Wireframe2.png" width="50%" hegiht="50%"></img>
 
 
 
