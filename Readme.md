@@ -43,9 +43,9 @@
 
 #### 🖼와이어프레임
 
-<img src="./image/Wireframe.png" width="50%" hegiht="50%"></img>
+<img src="./image/Wireframe.PNG" width="50%" hegiht="50%"></img>
 
-<img src="./image/Wireframe2.png" width="50%" hegiht="50%"></img>
+<img src="./image/Wireframe2.PNG" width="50%" hegiht="50%"></img>
 
 
 
@@ -61,7 +61,7 @@
 
    Web
 
-   <img src="./image/Web_Cafe_Screen.png" width="50%" hegiht="50%"></img>
+   <img src="./image/Web_Cafe_Screen.PNG" width="50%" hegiht="50%"></img>
 
 - 구글 맵(Android), 카카오 맵(Web) 등 Maps의 기능을 활용해 해당 테마의 위치 정보 및 카페 정보를 알려줍니다!
 
@@ -71,7 +71,7 @@
 
   Web
 
-  <img src="./image/Web_Cafe_Map.png" width="50%" hegiht="50%"></img>
+  <img src="./image/Web_Cafe_Map.PNG" width="50%" hegiht="50%"></img>
 
 - 카페에 속해있는 테마 정보를 볼 수 있습니다!
 
@@ -81,7 +81,7 @@
    
    Web
    
-   <img src="./image/Web_Cafe_Detail.png" width="50%" hegiht="50%"></img>
+   <img src="./image/Web_Cafe_Detail.PNG" width="50%" hegiht="50%"></img>
 
 ### 🏆테마 정보.
 
@@ -93,7 +93,7 @@
 
   Web
 
-  <img src="./image/Web_Theme_Main.png" width="50%" hegiht="50%"></img>
+  <img src="./image/Web_Theme_Main.PNG" width="50%" hegiht="50%"></img>
 
 - 테마별 필터를 적용해서 원하는 항목의 테마를 볼 수 있어요.
 
@@ -103,7 +103,7 @@
 
   Web
 
-  <img src="./image/Web_Theme_Fillter.png" width="70%" hegiht="50%"></img>
+  <img src="./image/Web_Theme_Fillter.PNG" width="70%" hegiht="50%"></img>
 
 - 해당 테마 클릭시 테마의 상세 내용 및 리뷰를 볼 수 있어요!
 
@@ -113,7 +113,7 @@
 
   Web
   
-  <img src="./image/Web_Theme_Detail.png" width="70%" hegiht="50%"></img>
+  <img src="./image/Web_Theme_Detail.PNG" width="70%" hegiht="50%"></img>
   
   - 해당 홈페이지로 이동하여 직접 예약을 하거나 정보를 볼 수 있어요! (Web의 경우에는 해당 사이트로 새 탭을 띄움.)
   
@@ -129,7 +129,7 @@
 
   Web(리뷰 쓰기, 리뷰 보기)
 
-  <img src="./image/Web_Theme_Review.png" width="70%" hegiht="50%"></img>
+  <img src="./image/Web_Theme_Review.PNG" width="70%" hegiht="50%"></img>
 
 - 이용한 테마에 대한 리뷰를 작성, 수정, 삭제를 할 수 있어요
 
@@ -145,7 +145,7 @@
 
   Web
   
-  <img src="./image/Web_Theme_compare.png" width="70%" hegiht="50%"></img>
+  <img src="./image/Web_Theme_compare.PNG" width="70%" hegiht="50%"></img>
   
   - 비교하기에 넣은 리스트에 최대3개까지 항목을 비교하여 최적의 선택을 할 수 있어요!
   
@@ -155,7 +155,7 @@
     
     Web
     
-    <img src="./image/Web_MyPage_compare.png" width="70%" hegiht="50%"></img>
+    <img src="./image/Web_MyPage_compare.PNG" width="70%" hegiht="50%"></img>
 
 ### 🏆커뮤니티.
 
@@ -167,7 +167,7 @@
 
   Web
 
-  <img src="./image/Web_Community_Main.png" width="70%" hegiht="50%"></img>
+  <img src="./image/Web_Community_Main.PNG" width="70%" hegiht="50%"></img>
 
 - 게시글 작성 및 수정을 할 수 있어요!
 
@@ -177,7 +177,7 @@
 
   Web
 
-  <img src="./image/Web_Community_write.png" width="70%" hegiht="50%"></img>
+  <img src="./image/Web_Community_write.PNG" width="70%" hegiht="50%"></img>
 
 - 게시글 댓글을 통해 다른 유저와 소통 할 수있어요!
   
@@ -187,7 +187,7 @@
   
   Web
   
-  <img src="./image/Web_Comment.png" width="70%" hegiht="50%"></img>
+  <img src="./image/Web_Comment.PNG" width="70%" hegiht="50%"></img>
 
 ### 🏆마이 페이지
 
@@ -201,7 +201,7 @@
 
   Web
 
-  <img src="./image/Web_MyPage_write.png" width="70%" hegiht="50%"></img>
+  <img src="./image/Web_MyPage_write.PNG" width="70%" hegiht="50%"></img>
 
   테마 비교
 
@@ -211,7 +211,7 @@
 
   Web
   
-  <img src="./image/Web_MyPage_compare.png" width="70%" hegiht="50%"></img>
+  <img src="./image/Web_MyPage_compare.PNG" width="70%" hegiht="50%"></img>
   
   찜한 테마
   
@@ -221,7 +221,7 @@
   
   Web
   
-  <img src="./image/Web_MyPage_Like.png" width="70%" hegiht="50%"></img>
+  <img src="./image/Web_MyPage_Like.PNG" width="70%" hegiht="50%"></img>
   
   이용한 테마
   
@@ -231,7 +231,7 @@
   
   Web
   
-  <img src="./image/Web_MyPage_used.png" width="70%" hegiht="50%"></img>
+  <img src="./image/Web_MyPage_used.PNG" width="70%" hegiht="50%"></img>
 
 ## 🌈개발 환경
 
@@ -272,7 +272,7 @@
 
 ## 🌈서비스 아키텍처
 
-![Moabang_Architecture](./image/Moabang_Architecture.png)
+![Moabang_Architecture](./image/Moabang_Architecture.PNG)
 
 
 
@@ -411,7 +411,7 @@ feature/data/blahblah
 
 ## 🌈ERD
 
-![ERD](./image/moabang_ERD.png)
+![ERD](./image/moabang_ERD.PNG)
 
 
 

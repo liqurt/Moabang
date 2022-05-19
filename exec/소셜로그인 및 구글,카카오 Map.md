@@ -1,12 +1,12 @@
 1. 카카오 디벨로퍼에서 애플리케이션 추가하기
 
-<img src="../image/kakao1.png" height="200">
+<img src="../image/kakao1.PNG" height="200">
 
-<img src="../image/kakao3.png" height="200">
+<img src="../image/kakao3.PNG" height="200">
 
 2. SpringBoot의 application.properties에 kakao.key 부분을 REST API 키로 바꿔준다.
 
-   <img src="../image/kakao2.png">
+   <img src="../image/kakao2.PNG">
 
 3. Android 소셜 로그인을 위해 xxx부분을 네이티브 앱 키로 바꿔준다.
 
