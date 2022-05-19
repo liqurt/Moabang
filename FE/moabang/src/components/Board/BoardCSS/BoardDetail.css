@@ -76,6 +76,7 @@
     color: rgb(122, 122, 122);
     width: 70%;
     margin-left: 15%;
+    margin-top: 15px;
 }
 #hr3{
     color: rgb(122, 122, 122);
@@ -94,7 +95,7 @@
     text-align: left;
     white-space: pre-wrap;
     width: 68%;
-    
+    margin-top: 15px;
     margin-left: 16%;
     
 }
@@ -122,6 +123,7 @@
     border: 1px solid rgb(122, 122, 122);
     margin-left: 10px;
     border-radius: 3px;
+    margin-top: 15px;
 
 }
 

@@ -82,11 +82,8 @@ const BoardDetail = () => {
                             'Authorization': localStorage.getItem("myToken")
                         }
                     }).then(res => {
-                        Swal.fire({
-                            icon: 'success',
-                            title: "수정 성공."
-                        })
-                        window.location.href = `/board`;
+                        
+                        window.location.href = `/board/detail/?rid=${board.rid}`;
                     })
                     
                 }     

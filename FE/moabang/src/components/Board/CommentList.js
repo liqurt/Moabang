@@ -28,18 +28,30 @@ const CommentList = ({ commentList,setCheckComment }) => {
     
     //댓글 삭제
     const CommentDeleteBtn = (e) => {
-        axios.delete(`/community/comment/delete/${e.target.value}`, {
-            headers: {
-                'Authorization': localStorage.getItem("myToken")
+        Swal.fire({
+            title: '댓글을 삭제 하시겠습니까?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '예',
+            cancelButtonText:'아니요',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete(`/community/comment/delete/${e.target.value}`, {
+                    headers: {
+                        'Authorization': localStorage.getItem("myToken")
+                    }
+                }).then(res => {
+                    
+                    setCheckComment(e => e = !e);
+                    
+                })
+                
             }
-        }).then(res => {
-            Swal.fire({
-                icon: 'success',
-                title: "삭제 성공."
-            })
-            setCheckComment(e => e = !e);
-            
+                
         })
+        
     }
     //댓글 신고하기
     const ReportComment = (cid) => {
