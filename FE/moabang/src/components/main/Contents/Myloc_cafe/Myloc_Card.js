@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Button } from 'react-bootstrap';
-import logo from '../../../../image/Main_logo.png';
+import empty_img from '../../../../image/empty_img.png';
 import './Myloc_Card.css';
 
 const Myloc_Card = (props) => {
@@ -22,7 +22,7 @@ const Myloc_Card = (props) => {
     }
 
     const onErrorImg = (e) => {
-        e.target.src = logo;
+        e.target.src = empty_img;
         e.target.className = "loc-card-img-default";
     }
     return (

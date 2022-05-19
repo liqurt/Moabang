@@ -4,12 +4,12 @@
     padding: 2vh;
     margin-left: 20vh;
     box-shadow: 0 6px 19px 0 rgba(0,0,0,0.2), 0 8px 16px 0 rgba(0,0,0,0.19);
-    height: 90vh;
+    
 }
 
 .list_group{
-    /* border: 1vh solid #8785A2; */
-    border-radius: 0vh 0vh 2vh 2vh;
+    border: 0.1vh solid #8785A2;
+    /* border-radius: 0vh 0vh 2vh 2vh; */
 }
 
 .new_community p{
