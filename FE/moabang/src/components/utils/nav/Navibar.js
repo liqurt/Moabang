@@ -11,7 +11,6 @@ const Navibar = () => {
             localStorage.removeItem('username');
             localStorage.removeItem('email');
             localStorage.removeItem('p_img');
-            console.log("토큰 삭제");
             document.location.href = '/';
         }
     };

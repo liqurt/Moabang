@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState ,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import "./BoardCSS/BoardWrite.css";
 import "./BoardCSS/BoardDetail.css"
@@ -42,16 +42,16 @@ const BoardDetail = () => {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: '예',
-            cancelButtonText:'아니요',
+            cancelButtonText: '아니요',
         }).then((result) => {
             if (result.isConfirmed) {
                 setCheckUpdate(e => !e);
-            }     
+            }
         })
     }
 
     const WriteSummitBtn = () => {
-        
+
         //서버로 작성 내용 보내준다
         if (title == "") {
             Swal.fire('제목이 없습니다');
@@ -69,34 +69,34 @@ const BoardDetail = () => {
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 confirmButtonText: '예',
-                cancelButtonText:'아니요',
+                cancelButtonText: '아니요',
             }).then((result) => {
                 if (result.isConfirmed) {
                     axios.put(`/community/update/${board.rid}`, {
                         content: content,
                         header: header,
                         title: title,
-                    
+
                     }, {
                         headers: {
                             'Authorization': localStorage.getItem("myToken")
                         }
                     }).then(res => {
-                        
+
                         window.location.href = `/board/detail/?rid=${board.rid}`;
                     })
-                    
-                }     
+
+                }
             })
-            
+
         }
         //작성 클릭 시 리스트로 넘어감
-        
+
 
     }
 
     //게시글 상세 정보 가져오기
-    const getBoard = async() => {
+    const getBoard = async () => {
         await axios.get(`/community/read/${getParameterByName('rid')}`,
             {
                 headers: {
@@ -112,16 +112,16 @@ const BoardDetail = () => {
             setDate(res.data.updateDate.replace('T', ' '))
             setPimg(res.data.user.pimg);
             setEmail(res.data.user.email)
-		}).catch(error => {
-			console.error(error);
-		});
+        }).catch(error => {
+            console.error(error);
+        });
     }
     useEffect(() => {
         getBoard();
         getCommentList();
     }, [checkComment]);
 
-    
+
 
     const UpdateBtn = () => {
         setCheckUpdate(e => !e);
@@ -139,7 +139,7 @@ const BoardDetail = () => {
             cancelButtonText: '취소'
         }).then((result) => {
             if (result.value) {
-                
+
                 axios.delete(`/community/delete/${board.rid}`,
                     {
                         headers: {
@@ -151,16 +151,16 @@ const BoardDetail = () => {
                 }).catch(error => {
                     console.error(error);
                 });
-                
+
             }
         })
-        
+
     }
     const goList = () => {
         window.location.href = `/board`;
     }
 
-    
+
     //===============================================
     //밑으로 댓글 기능
     const [commentList, setCommentList] = useState([]);
@@ -182,13 +182,13 @@ const BoardDetail = () => {
                 title: "댓글 작성."
             })
             setComment("");
-            setCheckComment(e=>e=!e);
+            setCheckComment(e => e = !e);
         })
 
     }
     //댓글 리스트 가져오기
     const getCommentList = () => {
-        axios.get(`/community/comment/list/${getParameterByName('rid')}`, 
+        axios.get(`/community/comment/list/${getParameterByName('rid')}`,
             {
                 headers: {
                     'Authorization': localStorage.getItem("myToken")
@@ -201,17 +201,17 @@ const BoardDetail = () => {
 
     //입력 받은 댓글
     const CountTail = (event) => {
-        setComment(event.target.value);//댓글
-        setTailCnt(event.target.value.length);// 댓글 수
+        setComment(event.target.value);         //댓글
+        setTailCnt(event.target.value.length);  // 댓글 수
     }
 
     const SelectImg = ({ profile }) => {
         if (profile === null) {
-            return<img id='BoardDetailImg' alt='profile' src="https://cdn.discordapp.com/attachments/963307192025485326/975564975617744946/unknown.png"/>
+            return <img id='BoardDetailImg' alt='profile' src="https://cdn.discordapp.com/attachments/963307192025485326/975564975617744946/unknown.png" />
         } else {
-            return <img id='BoardDetailImg' alt='profile' src={pimg}/>
+            return <img id='BoardDetailImg' alt='profile' src={pimg} />
         }
-        
+
     }
     //위에 커뮤니티 누를시 커뮤니티 리스트 페이질 이동
     const goCommunity = () => {
@@ -229,7 +229,7 @@ const BoardDetail = () => {
             },
             showCancelButton: true,
             confirmButtonText: '확인',
-            cancelButtonText:'취소',
+            cancelButtonText: '취소',
         }).then((res) => {
             if (res.isConfirmed) {
                 axios.post('/report/create',
@@ -237,7 +237,7 @@ const BoardDetail = () => {
                         category: 1,
                         reason: res.value,
                         target_id: getParameterByName('rid'),
-                
+
                     },
                     {
                         headers: {
@@ -256,16 +256,16 @@ const BoardDetail = () => {
                             title: "이미 신고 하였습니다.."
                         })
                     }
-                    
+
                 })
             }
 
         })
     }
     return (
-        <div className='BoardDetailTotal'> 
+        <div className='BoardDetailTotal'>
             <div id='BoardDetailMainText' onClick={goCommunity}>커뮤니티</div>
-            
+
             {checkUpdate ?
                 <div className='BoardDetailContainer'>
                     <hr id='hr1'></hr>
@@ -292,7 +292,7 @@ const BoardDetail = () => {
                     {
                         localStorage.getItem('email') === email ?
                             <span>
-                                <button className='BoardDetailWriteBtn '  onClick={UpdateBtn}>수정</button>
+                                <button className='BoardDetailWriteBtn ' onClick={UpdateBtn}>수정</button>
                                 <button className='BoardDetailCancelBtn' onClick={DeleteBtn}>삭제</button>
                             </span>
                             :
@@ -302,21 +302,21 @@ const BoardDetail = () => {
                     <div>
                         <div className='tailMain'>댓글<span id='comCnt'>{commentList.length}</span></div>
                         <div className='tailForm'>
-                            <textarea id='tailContent'  maxLength='100' onChange={CountTail} value={comment}></textarea>
+                            <textarea id='tailContent' maxLength='100' onChange={CountTail} value={comment}></textarea>
                             <span id='tailCnt'>{tailCnt}/100자</span>
                             <button id='tailWriteBtn' onClick={CreateTail}>등록</button>
                         </div>
                     </div>
-                    <CommentList commentList={commentList} setCheckComment={setCheckComment}/>
+                    <CommentList commentList={commentList} setCheckComment={setCheckComment} />
 
                 </div>
-                    
-                
+
+
                 :
                 <div className='Board-Write-Main'>
                     <div className='boardWrite-container'>
                         <div className='boardTitle'>
-                            <span id='boardWriteText'>제목<span id='TextStar'>*</span></span> 
+                            <span id='boardWriteText'>제목<span id='TextStar'>*</span></span>
                             <input className='inputTitle' placeholder='제목을 입력해주세요' type="text" onChange={TitleHandler} value={title}></input>
                         </div>
                         <div className='boardHeader'>
@@ -328,18 +328,18 @@ const BoardDetail = () => {
                             </select>
                         </div>
                         <div className='boardContent'>
-                            <span id='boardWriteText'>내용<span id='TextStar'>*</span></span> 
-                            <textarea className='inputContent' type="text" placeholder='내용을 입력해 주세요'  value={content} onChange={ContentHandler}></textarea>
+                            <span id='boardWriteText'>내용<span id='TextStar'>*</span></span>
+                            <textarea className='inputContent' type="text" placeholder='내용을 입력해 주세요' value={content} onChange={ContentHandler}></textarea>
                         </div>
-                        <button className='boardWriteBtn '  onClick={WriteSummitBtn}>확인</button>
+                        <button className='boardWriteBtn ' onClick={WriteSummitBtn}>확인</button>
                         <button className='boardCancelBtn' onClick={WriteCancelBtn}>취소</button>
                     </div>
                 </div>
-                
+
             }
-            
+
         </div>
-    );    
+    );
 }
 
 export default BoardDetail;

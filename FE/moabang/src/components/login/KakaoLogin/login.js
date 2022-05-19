@@ -5,7 +5,6 @@ const { Kakao } = window;
 export const API_HOST = process.env.REACT_APP_API_HOST;
 
 const LoginWithKakao = () => {
-  console.log("카카오 로그인 시작");
   const scope = "profile_nickname,profile_image, account_email";
 
 
@@ -19,7 +18,6 @@ const LoginWithKakao = () => {
 
       var ACCESS_TOKEN = window.Kakao.Auth.getAccessToken();
 
-      console.log("ACCESS_TOKEN : " + ACCESS_TOKEN);
 
       axios.post('/user/klogin', {
 
@@ -29,24 +27,17 @@ const LoginWithKakao = () => {
         }
       })
         .then((res) => {
-          console.log(res);
-          console.log(res.data.nickname);
-          console.log(res.data.email);
-          console.log(res.data.p_img);
           localStorage.setItem('myToken', res.headers.authorization)
           localStorage.setItem('username', res.data.nickname)
           localStorage.setItem('email', res.data.email)
           localStorage.setItem('p_img', res.data.p_img)
-          console.log("로그인 성공");
           document.location.href = '/'
         })
         .catch((error) => {
-          console.error(error);
-          alert("카카오 로그인 에러?");
+          alert("Error : 로그인을 다시 시도해주세요");
         });
     },
     fail: function (error) {
-      console.log(error);
     },
   });
 };

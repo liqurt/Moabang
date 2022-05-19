@@ -4,7 +4,6 @@ import './Content_3.css'
 
 const Content_3 = (props) => {
 
-    console.log(props)
     const goCommunityDetail = (e) => {
         window.location.href = `/board/detail/?rid=${props.data.rid}`;
     }

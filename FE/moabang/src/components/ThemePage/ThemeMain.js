@@ -14,7 +14,6 @@ const ThemeMain = () => {
 
     const [tListRender, setTListRender] = useState(false);
 
-    // console.log(localStorage.getItem("myToken"));
     async function getThemeData() {
         await axios.get('/cafe/theme/list',
             {

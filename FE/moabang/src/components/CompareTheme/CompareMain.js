@@ -23,7 +23,6 @@ const CompareMain = () => {
 			}
 		).then(res => {
 			setTheme(res.data);
-			console.log(theme);
 		}).catch(error => {
 			console.error(error);
 		});
@@ -33,30 +32,29 @@ const CompareMain = () => {
 		getThemeList();
 
 	}, [compareRerender]);
-	
+
 	//================================================
 	//거리 구하기
 	const [lat, setLat] = useState("");
-    const [lon, setLon] = useState("");
+	const [lon, setLon] = useState("");
 	//좌표간 직선거리(Km) 함수
 	function getDistanceFromLatLonInKm(lat1, lng1, lat2, lng2) {
 		function deg2rad(deg) {
 			return deg * (Math.PI / 180)
 		}
-		var R = 6371; // Radius of the earth in km 
-		var dLat = deg2rad(lat2 - lat1); // deg2rad below 
+		var R = 6371; 						// Radius of the earth in km 
+		var dLat = deg2rad(lat2 - lat1); 	// deg2rad below 
 		var dLon = deg2rad(lng2 - lng1);
 		var a =
 			Math.sin(dLat / 2) * Math.sin(dLat / 2) +
 			Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
 			Math.sin(dLon / 2) * Math.sin(dLon / 2);
 		var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-		var d = R * c; // Distance in km 
+		var d = R * c; 						// Distance in km 
 		return d;
 	}
 	//현재위치 좌표값 설정
 	navigator.geolocation.getCurrentPosition((position) => {
-		// console.log(position.coords.latitude, position.coords.longitude);
 		setLat(position.coords.latitude);
 		setLon(position.coords.longitude);
 		//km단위로 출력 
@@ -66,7 +64,7 @@ const CompareMain = () => {
 		<div className='CompareMain-container'>
 			<div className='CompareMain-selList'>
 				{selCompare.map((item, index) => (
-					<CompareSelList theme={item} key={index} selCompare={selCompare} setSelCompare={setSelCompare}/>
+					<CompareSelList theme={item} key={index} selCompare={selCompare} setSelCompare={setSelCompare} />
 				))}
 			</div>
 			<div className='chartAndList'>
@@ -88,11 +86,11 @@ const CompareMain = () => {
 					</BarChart>
 
 				</div>
-			
+
 				<div className='CompareMainThemeList'>
 					<div id='text1'>비교하기({selCompare.length}/4)</div>
 					{theme.map((item, index) => (
-						<CompareThemeList theme={item} key={index} selCompare={selCompare} setSelCompare={setSelCompare} setCompareRerender={setCompareRerender}/>
+						<CompareThemeList theme={item} key={index} selCompare={selCompare} setSelCompare={setSelCompare} setCompareRerender={setCompareRerender} />
 					))}
 				</div>
 			</div>
