@@ -272,7 +272,7 @@
 
 ## 🌈서비스 아키텍처
 
-![image-20220519215723125](./image/architecture.png)
+![Moabang_Architecture](./image/Moabang_Architecture.png)
 
 
 
