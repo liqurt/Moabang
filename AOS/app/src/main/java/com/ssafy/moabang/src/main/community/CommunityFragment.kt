@@ -42,8 +42,8 @@ class CommunityFragment : Fragment() {
 //        setAllCommunity()
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
         setAllCommunity()
     }
 
