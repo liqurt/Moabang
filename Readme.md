@@ -43,9 +43,9 @@
 
 #### 🖼와이어프레임
 
-![wireframe1](./image/wireframe.png)
+<img src="./image/wireframe.png" width="50%" hegiht="50%"></img>
 
-![wireframe2](./image/wireframe2.png)
+<img src="./image/wireframe2.png" width="50%" hegiht="50%"></img>
 
 
 
@@ -61,7 +61,7 @@
 
    Web
 
-   <img src="./image/Web_Cafe_Screen.png" width="70%" hegiht="50%"></img>
+   <img src="./image/Web_Cafe_Screen.png" width="50%" hegiht="50%"></img>
 
 - 구글 맵(Android), 카카오 맵(Web) 등 Maps의 기능을 활용해 해당 테마의 위치 정보 및 카페 정보를 알려줍니다!
 
@@ -71,7 +71,7 @@
 
   Web
 
-  <img src="./image/Web_Cafe_Map.png" width="70%" hegiht="50%"></img>
+  <img src="./image/Web_Cafe_Map.png" width="50%" hegiht="50%"></img>
 
 - 카페에 속해있는 테마 정보를 볼 수 있습니다!
 
@@ -81,7 +81,7 @@
    
    Web
    
-   <img src="./image/Web_Cafe_Detail.png" width="70%" hegiht="50%"></img>
+   <img src="./image/Web_Cafe_Detail.png" width="50%" hegiht="50%"></img>
 
 ### 🏆테마 정보.
 
@@ -93,7 +93,7 @@
 
   Web
 
-  <img src="./image/Web_Theme_Main.png" width="70%" hegiht="50%"></img>
+  <img src="./image/Web_Theme_Main.png" width="50%" hegiht="50%"></img>
 
 - 테마별 필터를 적용해서 원하는 항목의 테마를 볼 수 있어요.
 
