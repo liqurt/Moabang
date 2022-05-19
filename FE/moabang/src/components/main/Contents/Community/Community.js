@@ -3,12 +3,12 @@ import './Community.css'
 import { ListGroup } from 'react-bootstrap';
 import List_item from '../Community/List_item';
 import axios from 'axios';
+import chat from '../../../../image/chat.gif';
 
 const Community = () => {
 
     const Token = localStorage.getItem('myToken');
     const [community, setCommunity] = useState([]);
-    const [notice, setNotice] = useState([]);
 
     //카페 전체 데이터 배열에 저장
     function getCommunityData() {
@@ -49,6 +49,7 @@ const Community = () => {
     return (
         <div className='new_list'>
             <div className='new_community'>
+                <img className='chat' src={chat}></img>
                 <p> 커뮤니티 새 글 </p>
                 <a href='/board'>더보기</a>
             </div>

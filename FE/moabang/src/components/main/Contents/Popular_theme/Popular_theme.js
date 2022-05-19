@@ -6,6 +6,7 @@ import axios from 'axios';
 import Theme_Card from './Theme_Card';
 import left_arrow from '../../../../image/left-arrow.png'
 import right_arrow from '../../../../image/right-arrow.png'
+import fire from '../../../../image/fire.gif';
 
 const Popular_theme = () => {
 
@@ -83,23 +84,20 @@ const Popular_theme = () => {
         arrows: true,
         draggable: false, 	//드래그 가능 여부 
         autoplay: true,
-        fade: true,
         nextArrow: <SampleNextArrow />,
         prevArrow: <SamplePrevArrow />
     };
     return (
-        <div>
-            <div className="pop">
-                <div className='pop-theme'>
-                    <p> 인기 테마 </p>
-                </div>
-                <Slider {...settings}>
-                    {themeData.slice(0, 6).map((data) => {
-                        return <Theme_Card data={data} key={data.cid} />;
-                    })}
-                </Slider >
+        <div className="pop">
+            <div className='pop-theme'>
+                <img className='fire' src={fire}></img>
+                <p> 인기 테마 </p>
             </div>
-
+            <Slider {...settings}>
+                {themeData.slice(0, 6).map((data) => {
+                    return <Theme_Card data={data} key={data.cid} />;
+                })}
+            </Slider >
         </div>
     );
 };

@@ -6,7 +6,7 @@ import axios from 'axios';
 import Myloc_Card from './Myloc_Card';
 import left_arrow from '../../../../image/left-arrow.png'
 import right_arrow from '../../../../image/right-arrow.png'
-
+import run from '../../../../image/run.gif';
 
 const Carousels = () => {
 
@@ -77,6 +77,9 @@ const Carousels = () => {
 
     //slick carousel 설정
     const settings = {
+        centerMode: true,
+        centerPadding: "0px",
+        focusOnSelect: true,
         dots: false,             // 스크롤바 아래 점으로 페이지네이션 여부
         infinite: true, 	    //무한 반복 옵션	 
         slidesToShow: 3,		// 한 화면에 보여질 컨텐츠 개수
@@ -117,6 +120,7 @@ const Carousels = () => {
         <div className="carousels-container">
 
             <div className='my-loc'>
+                <img className='run' src={run}></img>
                 <p> 내 근처 방탈출 카페</p>
             </div>
 

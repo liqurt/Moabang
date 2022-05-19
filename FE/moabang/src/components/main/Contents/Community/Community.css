@@ -1,9 +1,10 @@
 .new_list{
-    margin: 7vh 0 0 14vh;
-    /* border: 0.1vh solid #8785A2; */
-    height: fit-content;
+    border: 0.1vh solid #8785A2;
     border-radius: 2vh;
-    box-shadow: 0 6px 10px 0 rgba(0,0,0,0.2), 0 6px 10px 0 rgba(0,0,0,0.19);
+    padding: 2vh;
+    margin-left: 20vh;
+    box-shadow: 0 6px 19px 0 rgba(0,0,0,0.2), 0 8px 16px 0 rgba(0,0,0,0.19);
+    height: 90vh;
 }
 
 .list_group{
@@ -13,20 +14,24 @@
 
 .new_community p{
     float: left;
-    margin: 2vh 0 3vh 4vh;
-    font-family: 'BMJUA';
-    /* border: 0.1vh solid #8785A2; */
+    margin: 2vh 0vh 0vh 0vh;
+    font-family: 'ONE-Mobile-POP';
+    font-size: 35px;
 }
 .new_community a{
+    float: left;
     margin: 2vh 0 3vh 4vh;
-    font-size: 2vh;
-    font-family: 'BMJUA';
+    font-size: 25px;
+    font-family: 'ONE-Mobile-POP';
     /* border: 0.1vh solid #8785A2; */
 }
 .new_community{
-    display: inline-flex;
+    display: flex;
     /* border: 1vh solid #8785A2; */
     background-color: #FFFFFF;
     border-radius: 2vh 2vh 0vh 0vh;
-    width: 80vh;
+}
+.new_community .chat{
+    width: 14vh;
+    padding: 1vh 1vh 1vh 1vh;
 }

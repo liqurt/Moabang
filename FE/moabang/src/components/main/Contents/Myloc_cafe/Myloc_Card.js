@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, Button } from 'react-bootstrap';
 import logo from '../../../../image/Main_logo.png';
+import './Myloc_Card.css';
 
 const Myloc_Card = (props) => {
 
@@ -22,10 +23,12 @@ const Myloc_Card = (props) => {
 
     const onErrorImg = (e) => {
         e.target.src = logo;
+        e.target.className = "loc-card-img-default";
     }
     return (
-        <Card className='card'>
-            <Card.Img className='card-img' variant="top" src={props.data.img} onError={onErrorImg} />
+        <Card className='loc-card'>
+            <Card.Img className='loc-card-img' variant="top" src={props.data.img} onError={onErrorImg} />
+            <hr class="foo" />
             <Card.Body className='card-body'>
                 <Card.Title className='card-title'>{props.data.cname}</Card.Title>
                 <Card.Text className='card-text'>

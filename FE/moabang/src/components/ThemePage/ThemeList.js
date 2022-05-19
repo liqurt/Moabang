@@ -3,10 +3,12 @@ import Modal from './Modal';
 import ThemeDetail from './ThemeDetail';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import icon_like_after from '../../image/icon_like_after.png'
+import icon_like_before from '../../image/icon_like_before.png'
 
 import "./ThemeCSS/Theme.css"
 import "../cafePage/Modal/ModalList.css"//난이도와 인원제한 사진 CSS를 가져오기 위한 import
-
+import logo from '../../image/Main_logo.png';
 
 
 const ThemeList = (props) => {
@@ -15,7 +17,7 @@ const ThemeList = (props) => {
     const heartChange = (event) => {
         //좋아요 버튼
         console.log(event.target.alt)
-        axios.get(`/theme/${event.target.alt}/like/`,
+        axios.get(`/theme/${event.target.className}/like/`,
             {
                 headers: {
                     'Authorization': localStorage.getItem("myToken")
@@ -30,7 +32,7 @@ const ThemeList = (props) => {
         }).catch(error => {
             console.error(error);
         });
-        
+
     }
 
 
@@ -52,20 +54,20 @@ const ThemeList = (props) => {
     const DifficultyKeyImg = (diff) => {
         const result = [];
         for (let i = 0; i < diff; i++) {
-            result.push(<img key={i}  id='DiffKey' src='https://www.emojiall.com/images/240/htc/1f511.png' alt='keyimg' />)
+            result.push(<img key={i} id='DiffKey' src='https://www.emojiall.com/images/240/htc/1f511.png' alt='keyimg' />)
         }
         return result;
 
     }
     //사람 개수 최소
     const ConanMin = (min) => {
-        const num = parseInt(min.substr(-3,1));
+        const num = parseInt(min.substr(-3, 1));
         const result = [];
         for (let i = 0; i < num; i++) {
-            result.push(<img key={i}  id='Conan' src='https://us.123rf.com/450wm/iconmama/iconmama1512/iconmama151200208/49892585-%EC%9D%B8%EA%B0%84-%EC%95%84%EC%9D%B4%EC%BD%98.jpg?ver=6' alt='conanMin' />)
+            result.push(<img key={i} id='Conan' src='https://us.123rf.com/450wm/iconmama/iconmama1512/iconmama151200208/49892585-%EC%9D%B8%EA%B0%84-%EC%95%84%EC%9D%B4%EC%BD%98.jpg?ver=6' alt='conanMin' />)
         }
         return result;
-        
+
     }
     //사람 개수 최대
     const ConanMax = (max) => {
@@ -86,31 +88,31 @@ const ThemeList = (props) => {
     }
 
     const ChangeImg = (event) => {
-        event.target.src="https://cdn.discordapp.com/attachments/963307192025485326/975564975617744946/unknown.png"
+        event.target.src = logo
     }
     return (
         <div className='detailList' >
             {Theme.map((item, index) => (
-                
+
                 <div className='detail-container' key={index} >
                     <img className='ThemeImg' onError={ChangeImg} alt='profile' src={item.img} onClick={() => {
                         openModal();
                         setModalData(item);
                     }} />
                     <div className="heartImg">
-                        {item.islike ?  
-                            <img className="heart " onClick={heartChange} alt={item.tid}
-                                src='https://mblogthumb-phinf.pstatic.net/20140709_176/wsm0030_1404859139443xgQQv_PNG/PicsArt_1404831829726.png?type=w800' /> :
-                            <img className="heart " onClick={heartChange} alt={item.tid}
-                                src='https://mblogthumb-phinf.pstatic.net/20140709_15/wsm0030_1404859141585ixxmQ_PNG/1404859141390_PicsArt_1404833054881.png?type=w2' />
+                        {item.islike ?
+                            <img className="heart "
+                                src={icon_like_after} /> :
+                            <img className="heart "
+                                src={icon_like_before} />
                         }
                         {
                             item.count < 100 ?
-                                <div id='likeCnt'>{item.count}</div>:
-                                <div id='likeCnt'>100+</div>
+                                <div id='likeCnt' onClick={heartChange} className={item.tid} >{item.count}</div> :
+                                <div id='likeCnt' onClick={heartChange} className={item.tid} >100+</div>
                         }
                     </div>
-                    
+
                     <div className='ThemeInfo'>
                         <div id='ThemeName' >{item.tname}</div>
                         <div id='ThemeType' >{item.type}</div>
@@ -120,19 +122,19 @@ const ThemeList = (props) => {
                         <div id='ThemeDiff'>{DifficultyKeyImg(item.difficulty)}</div>
                         <div id='ThemeTime' >{item.time}</div>
                         <div id='ThemeGrade' >{starScore()} {item.grade}</div>
-                        
+
                     </div>
-                    
+
                 </div>
             ))}
 
             <Modal open={modalOpen} close={closeModal} header="Modal heading">
-                <ThemeDetail Theme={modalData} setTListRender={props.setTListRender}/>
+                <ThemeDetail Theme={modalData} setTListRender={props.setTListRender} />
             </Modal>
-            
-            
-            
-            
+
+
+
+
         </div>
     )
 

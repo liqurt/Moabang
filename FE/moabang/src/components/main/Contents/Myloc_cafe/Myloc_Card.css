@@ -1,0 +1,28 @@
+
+.loc-card{
+    text-align: center;
+    object-fit: cover;
+    background-color: #FFE2E2;
+    
+}
+
+.loc-card-img {
+    padding: 1vh;
+    height: 30vh;
+    object-fit: initial;
+    background-color: #FFE2E2;
+    border-radius: 2vh 2vh 2vh 2vh;
+  }
+
+.loc-card-img-default {
+    padding: 1vh;
+    height: 30vh;
+    object-fit: scale-down;
+    background-color: #FFE2E2;
+    border-radius: 2vh 2vh 2vh 2vh;
+  }
+
+hr { 
+    margin: 0;
+    border: 0.2vh solid #FFC7C7;
+}

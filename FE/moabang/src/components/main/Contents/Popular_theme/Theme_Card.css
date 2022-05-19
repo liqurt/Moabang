@@ -1,3 +1,25 @@
 .pop-theme-card-img{
-  height: 57vh;
+  height: 47vh;
+}
+.pop-theme-card{
+  position: relative;
+}
+
+.pop-theme-card-img hr{
+  border: 0;
+  width: 50%;
+  height: 10px;
+  background: orange;
+}
+
+
+.pop-theme-card-title{
+    font-family: "Son";
+    font-size: 45px;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    white-space: nowrap; 
+}
+.pop-theme-card-subtitle{
+
 }
