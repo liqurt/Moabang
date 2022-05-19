@@ -2,19 +2,30 @@ import React from 'react';
 import Carousels from './Contents/Myloc_cafe/Carousels';
 import PopularTheme from './Contents/Popular_theme/Popular_theme';
 import Community from './Contents/Community/Community';
-import Chart from './Contents/Chart/Charts';
+import { Row, Col } from 'react-bootstrap';
 import './mainpage.css'
 
 const mainpage = () => {
 
     return (
         <div className='mainpage'>
-            <Carousels />
+            <Row className='list_chart'>
+                <Col sm={15}>
+
+                    <Carousels />
+                </Col>
+            </Row>
             {/* <PopularTheme /> */}
-            <div className='list_chart'>
-                <Community className='community' />
-                <PopularTheme className='populartheme' />
-            </div>
+            <Row className='list_chart'>
+                <Col sm={7}>
+
+                    <Community className='community' />
+                </Col>
+                <Col sm={4}>
+
+                    <PopularTheme className='populartheme' />
+                </Col>
+            </Row>
 
         </div>
     );

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Mypage.css'
-import { Card, Tab, Row, Nav, Col, Accordion, Pagination, Tabs } from 'react-bootstrap';
+import { Card, Tab, Row, Nav, Col, Tabs } from 'react-bootstrap';
 import Content_1 from '../mypage/my_contents/Content_1'
 import Content_2 from '../mypage/my_contents/Content_2'
 import Content_3 from '../mypage/my_contents/Content_3'
@@ -76,7 +76,6 @@ const Mypage = () => {
             })
             .catch((error) => {
                 console.error(error);
-                // alert("error");
             });
     }
 
@@ -152,16 +151,13 @@ const Mypage = () => {
             <Tab.Container id="left-tabs-example" defaultActiveKey="first">
                 <Row>
                     <Col sm={4}>
-                        <Card className='profile-card' >
-                            <Card.Body className='profile-card-body'>
-                                <img src={localStorage.getItem('p_img')} alt="Avatar" className='profile-card-img' />
-                                {/* <Card.Img className='profile-card-img' variant="top" src={localStorage.getItem('p_img')} /> */}
-                                <Card.Title className='profile-card-username'>{localStorage.getItem('username')}</Card.Title>
-                                <Card.Text className='profile-card-email'>
-                                    {localStorage.getItem('email')}
-                                </Card.Text>
-                            </Card.Body>
-                        </Card>
+                        <Card.Body className='profile-card-body'>
+                            <img src={localStorage.getItem('p_img')} alt="Avatar" className='profile-card-img' />
+                            <Card.Title className='profile-card-username'>{localStorage.getItem('username')}</Card.Title>
+                            <Card.Text className='profile-card-email'>
+                                {localStorage.getItem('email')}
+                            </Card.Text>
+                        </Card.Body>
                         <Nav variant="tabs" className="flex-column">
                             <Nav.Item className='profile-tab-item-1'>
                                 <Nav.Link className='profile-tab-item-1-text' eventKey="first">
@@ -180,7 +176,7 @@ const Mypage = () => {
                             </Nav.Item>
                         </Nav>
                     </Col>
-                    <Col sm={8}>
+                    <Col sm={7}>
                         <Tab.Content>
                             <Tab.Pane eventKey="first">
                                 <Card className='content-card' >

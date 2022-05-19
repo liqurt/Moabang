@@ -17,21 +17,6 @@ const loginpage = () => {
         <div className='login'>
             <img className='logo' src={logo}></img>
             <KakaoLogin />
-            {/* <NaverLogin />
-            <GoogleLogin
-                className="google-button"
-                clientId={Google_clinet_id}
-                buttonText="구글 로그인" // 버튼에 뜨는 텍스트
-                onSuccess={onSuccessGoogle}
-                onFailure={onFailureGoogle}
-                isSignedIn={true}
-            // cookiePolicy={"single_host_origin"}
-            />
-            <p></p>
-            {/* <button onClick={onLogout}>로그아웃</button> */}
-            {/* <button type="button" onClick={onLogout}>
-            logout
-        </button> */}
         </div>
     );
 };

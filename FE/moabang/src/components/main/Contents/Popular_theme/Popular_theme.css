@@ -2,24 +2,28 @@
     /* border: 0vh solid #ffffff; */
     box-sizing: border-box;
     font-family: 'BMJUA';
-    margin-bottom: 15px;
+    margin-bottom: 5vh;
   }
-
+  
+  .pop-theme{
+      display: flex;
+      
+  }
 .pop-theme p{
     text-align: left;
-    margin: 2vh 0 3vh 4vh;
-    font-family: 'BMJUA';
+    margin: 2vh 0 0vh 0vh;
+    font-size: 35px;
+    font-family: 'ONE-Mobile-POP';
+    
+}
+.pop-theme .fire{
+    width: 8vh;
+    padding: 2vh;
 }
 .pop{
-    width: 55vh;
-    margin: 7vh 0 7vh 10vh;
-    padding: 1vh 4vh 1vh 4vh;
-    /* border: 1vh solid #8785A2; */
+    padding: 1vh 5vh 1vh 5vh;
+    border: 0.1vh solid #8785A2;
     background-color: #FFFFFF;
-    box-shadow: 0 6px 10px 0 rgba(0,0,0,0.2), 0 6px 10px 0 rgba(0,0,0,0.19);
+    box-shadow: 0 6px 19px 0 rgba(0,0,0,0.2), 0 8px 16px 0 rgba(0,0,0,0.19);
     border-radius: 2vh;
 }
-  .theme-info{
-    width: max;
-    height: 68vh;
-  }

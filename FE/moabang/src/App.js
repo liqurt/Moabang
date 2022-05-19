@@ -25,11 +25,11 @@ function App() {
 
   const handleFollow = () => {
     setScrollY(window.pageYOffset);
-    if (ScrollY > 100) {
-      // 100 이상이면 버튼이 보이게
+    if (ScrollY > 200) {
+      // 200 이상이면 버튼이 보이게
       setBtnStatus(false);
     } else {
-      // 100 이하면 버튼이 사라지게
+      // 200 이하면 버튼이 사라지게
       setBtnStatus(true);
     }
   }

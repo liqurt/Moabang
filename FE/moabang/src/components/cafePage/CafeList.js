@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import ModalMain from './Modal/ModalMain';
 import CafeDetail from './CafeDatail';
-
+import logo from '../../image/Main_logo.png';
 import "./CafeCSS/Cafe.css"
 
 const CafeList = (props) => {
@@ -20,32 +20,36 @@ const CafeList = (props) => {
         setModalOpen(false);
     };
 
+    const onErrorImg = (e) => {
+        e.target.src = logo;
+    }
+
     return (
         <div className='cafedetailList' >
             {cafe.map((item, index) => (
-                
+
                 <div className='cafe-detail-container' key={index} onClick={() => {
                     openModal();
                     setModalData(item);
                 }}>
-                    <img className='cafeImg' alt='profile' src={item.img}/>
-                    
+                    <img className='cafeImg' alt='profile' src={item.img} onError={onErrorImg} />
+
                     <div className='cafeInfo'>
                         <div id='cafeName' >{item.cname}</div>
                         <div id='cafeAdd'>{item.location}</div>
                         <div id='cafeNumber'>{item.cphone}</div>
                     </div>
-                    
+
                 </div>
             ))}
 
             <ModalMain open={modalOpen} close={closeModal} header="Modal heading">
                 <CafeDetail cafe={modalData} />
             </ModalMain>
-            
-            
-            
-            
+
+
+
+
         </div>
     )
 
