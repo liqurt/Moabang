@@ -43,9 +43,9 @@
 
 #### 🖼와이어프레임
 
-<img src="./image/Wireframe.PNG" width="50%" hegiht="50%"></img>
+<img src="./image/wireframe.PNG" width="50%" hegiht="50%"></img>
 
-<img src="./image/Wireframe2.PNG" width="50%" hegiht="50%"></img>
+<img src="./image/wireframe2.PNG" width="50%" hegiht="50%"></img>
 
 
 
@@ -145,7 +145,7 @@
 
   Web
   
-  <img src="./image/Web_Theme_compare.PNG" width="70%" hegiht="50%"></img>
+  <img src="./image/Web_Theme_Compare.PNG" width="70%" hegiht="50%"></img>
   
   - 비교하기에 넣은 리스트에 최대3개까지 항목을 비교하여 최적의 선택을 할 수 있어요!
   
@@ -155,7 +155,7 @@
     
     Web
     
-    <img src="./image/Web_MyPage_compare.PNG" width="70%" hegiht="50%"></img>
+    <img src="./image/Web_MyPage_Compare.PNG" width="70%" hegiht="50%"></img>
 
 ### 🏆커뮤니티.
 
@@ -177,7 +177,7 @@
 
   Web
 
-  <img src="./image/Web_Community_write.PNG" width="70%" hegiht="50%"></img>
+  <img src="./image/Web_Community_Write.PNG" width="70%" hegiht="50%"></img>
 
 - 게시글 댓글을 통해 다른 유저와 소통 할 수있어요!
   
@@ -211,7 +211,7 @@
 
   Web
   
-  <img src="./image/Web_MyPage_compare.PNG" width="70%" hegiht="50%"></img>
+  <img src="./image/Web_MyPage_Compare.PNG" width="70%" hegiht="50%"></img>
   
   찜한 테마
   
