@@ -5,8 +5,8 @@
     <font
         android:fontStyle="normal"
         android:fontWeight="400"
-        android:font="@font/nanumsquareroundr"
-        app:font="@font/nanumsquareroundr"
+        android:font="@font/elice"
+        app:font="@font/elice"
         app:fontStyle="normal"
         app:fontWeight="500"/>
 
@@ -14,8 +14,8 @@
     <font
         android:fontStyle="normal"
         android:fontWeight="700"
-        android:font="@font/nanumsquareroundr"
-        app:font="@font/nanumsquareroundr"
+        android:font="@font/elice"
+        app:font="@font/elice"
         app:fontStyle="normal"
         app:fontWeight="1000"/>
 

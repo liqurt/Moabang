@@ -77,7 +77,7 @@
         android:id="@+id/reportCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="24dp"
         android:text="취소"
         android:textColor="@color/moabang_pink"
         android:textSize="14dp"
