@@ -41,7 +41,7 @@ const List_item = (props) => {
             <div className="ms-2 me-auto">
                 <div className="fw-bold">
                     <p className='header'>{props.data.header}</p>
-                    <p className='title'>{props.data.title}</p>
+                    <p className=' title'>{props.data.title}</p>
                 </div>
             </div>
             {
