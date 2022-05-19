@@ -153,11 +153,7 @@ const ThemeDetail = (props) => {
                         <img className="Detailheart " onClick={heartChange} alt={Theme.tid} src='https://mblogthumb-phinf.pstatic.net/20140709_15/wsm0030_1404859141585ixxmQ_PNG/1404859141390_PicsArt_1404833054881.png?type=w2' />
 
                     }
-                    {
-                        Theme.count < 100 ?
-                            <div id='likeCnt'>{Theme.count}</div> :
-                            <div id='likeCnt'>100+</div>
-                    }
+                    
                 </div>
 
                 <img className='TDetailImg' alt='profile' src={Theme.img} />
