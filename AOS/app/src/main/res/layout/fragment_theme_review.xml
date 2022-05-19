@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:text="리뷰 통계"
         android:textColor="@color/moabang_gray"
         android:textSize="24dp"
@@ -25,16 +25,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="4dp"
         android:max="5"
         android:numStars="5"
         app:layout_constraintBottom_toBottomOf="@+id/tv_themeRVF_title"
         app:layout_constraintStart_toEndOf="@+id/tv_themeRVF_title"
         app:srb_borderColor="@color/moabang_pink"
         app:srb_fillColor="@color/moabang_pink"
+        app:srb_isIndicator="true"
         app:srb_numberOfStars="5"
         app:srb_rating="0"
-        app:srb_isIndicator="true"
         app:srb_starSize="25dp"
         app:srb_stepSize="0.5" />
 
@@ -44,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="4dp"
-        android:text="리뷰가 없습니다."
+        android:text="리뷰 없음"
         android:textAlignment="viewStart"
         android:textColor="@color/moabang_gray"
         android:textSize="18dp"
@@ -58,7 +57,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -68,6 +67,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:orientation="horizontal">
 
             <TextView
@@ -110,6 +110,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:orientation="horizontal">
 
             <TextView
@@ -136,7 +137,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="평균 소요시간"
-                android:textSize="16dp"
+                android:textSize="14dp"
                 android:textColor="@color/moabang_pink" />
 
             <TextView

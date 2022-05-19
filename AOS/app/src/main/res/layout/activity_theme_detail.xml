@@ -123,7 +123,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="4dp"
+                android:layout_marginBottom="8dp"
                 android:text="장르"
                 android:textColor="@color/moabang_gray"
                 android:textSize="14dp"
@@ -310,9 +310,10 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:padding="8dp"
             android:background="@drawable/rounded_rectangle"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
+            android:padding="8dp"
             android:weightSum="4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -332,7 +333,7 @@
             <View
                 android:layout_width="2dp"
                 android:layout_height="22dp"
-                android:background="@color/moabang_pink"/>
+                android:background="@color/moabang_pink" />
 
             <TextView
                 android:id="@+id/tv_themeDA_review"
@@ -348,7 +349,7 @@
             <View
                 android:layout_width="2dp"
                 android:layout_height="22dp"
-                android:background="@color/moabang_pink"/>
+                android:background="@color/moabang_pink" />
 
             <TextView
                 android:id="@+id/tv_themeDA_compare"
@@ -365,7 +366,7 @@
             <View
                 android:layout_width="2dp"
                 android:layout_height="22dp"
-                android:background="@color/moabang_pink"/>
+                android:background="@color/moabang_pink" />
 
             <TextView
                 android:id="@+id/tv_themeDA_cafe"

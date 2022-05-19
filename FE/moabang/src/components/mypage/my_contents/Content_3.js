@@ -4,7 +4,10 @@ import './Content_3.css'
 
 const Content_3 = (props) => {
 
-
+    console.log(props)
+    const goCommunityDetail = (e) => {
+        window.location.href = `/board/detail/?rid=${props.data.rid}`;
+    }
     return (
         <div>
 
@@ -27,7 +30,7 @@ const Content_3 = (props) => {
                     :
                     <Card.Body>
                         <Badge className='community-badge'  >{props.data.header}</Badge>
-                        <Card.Title className='community-title'>
+                        <Card.Title className='community-title' onClick={goCommunityDetail}>
                             {props.data.title}
                         </Card.Title>
 

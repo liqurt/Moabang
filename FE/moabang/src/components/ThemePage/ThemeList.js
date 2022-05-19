@@ -14,7 +14,7 @@ const ThemeList = (props) => {
     const Theme = props.Theme;
     const heartChange = (event) => {
         //좋아요 버튼
-        console.log(event.target.alt)
+        console.log(event.target)
         axios.get(`/theme/${event.target.className}/like/`,
             {
                 headers: {
@@ -22,11 +22,20 @@ const ThemeList = (props) => {
                 }
             }
         ).then(response => {
+            console.log(response);
             props.setTListRender(e => !e);
-            Swal.fire({
-                icon: 'success',
-                title: response.data
-            })
+            if (response.data === "좋아요 success") {
+                Swal.fire({
+                    icon: 'success',
+                    title: '찜 성공'
+                })
+            } else {
+                Swal.fire({
+                    icon: 'success',
+                    title: '찜 취소'
+                })
+            }
+            
         }).catch(error => {
             console.error(error);
         });

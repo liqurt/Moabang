@@ -166,7 +166,7 @@
                 android:layout_weight="1"
                 android:text="난이도"
                 android:textColor="@color/moabang_pink"
-                android:textSize="12dp" />
+                android:textSize="11dp" />
 
             <TextView
                 android:id="@+id/tv_tCompare_diff"
@@ -175,7 +175,7 @@
                 android:layout_weight="1"
                 android:text="5"
                 android:textColor="@color/moabang_gray"
-                android:textSize="12dp" />
+                android:textSize="11dp" />
 
             <TextView
                 android:id="@+id/tCompare_player"
@@ -184,7 +184,7 @@
                 android:layout_weight="1"
                 android:text="인원"
                 android:textColor="@color/moabang_pink"
-                android:textSize="12dp" />
+                android:textSize="11dp" />
 
             <TextView
                 android:id="@+id/tv_tCompare_player"
@@ -193,7 +193,7 @@
                 android:layout_weight="1"
                 android:text="2~4"
                 android:textColor="@color/moabang_gray"
-                android:textSize="12dp" />
+                android:textSize="11dp" />
 
         </LinearLayout>
 
@@ -209,7 +209,7 @@
                 android:layout_weight="1"
                 android:text="타입"
                 android:textColor="@color/moabang_pink"
-                android:textSize="12dp" />
+                android:textSize="11dp" />
 
             <TextView
                 android:id="@+id/tv_tCompare_type"
@@ -218,7 +218,7 @@
                 android:layout_weight="1"
                 android:text="자물쇠"
                 android:textColor="@color/moabang_gray"
-                android:textSize="12dp" />
+                android:textSize="11dp" />
 
             <TextView
                 android:id="@+id/tCompare_active"
@@ -227,7 +227,7 @@
                 android:layout_weight="1"
                 android:text="활동성"
                 android:textColor="@color/moabang_pink"
-                android:textSize="12dp" />
+                android:textSize="11dp" />
 
             <TextView
                 android:id="@+id/tv_tCompare_active"
@@ -236,8 +236,7 @@
                 android:layout_weight="1"
                 android:text="보통"
                 android:textColor="@color/moabang_gray"
-                android:textSize="12dp"
-                tools:layout_editor_absoluteX="335dp" />
+                android:textSize="11dp"/>
         </LinearLayout>
     </LinearLayout>
 

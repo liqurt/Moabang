@@ -4,5 +4,5 @@
         android:height="70dp"
         android:width="70dp"
         android:gravity="center"
-        android:drawable="@drawable/web_logo2" />
+        android:drawable="@drawable/ic_launcher" />
 </layer-list>

@@ -34,7 +34,6 @@ class PostReviewListRVAdapter: RecyclerView.Adapter<PostReviewListRVAdapter.View
 
         fun bind(item: ReviewList){
             itemView.findViewById<TextView>(R.id.tv_pritem_tname).text = item.tname
-            itemView.findViewById<TextView>(R.id.tv_pritem_cname).text = item.cname
             itemView.findViewById<TextView>(R.id.tv_pritem_regDate).text = item.regDate.split("T")[0]
 
             val img = itemView.findViewById<ImageView>(R.id.iv_pritem_img)

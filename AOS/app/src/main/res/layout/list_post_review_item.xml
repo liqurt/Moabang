@@ -22,17 +22,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_pritem_cname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="코드케이 홍대점"
-        android:textColor="@color/moabang_pink"
-        android:textSize="14dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_pritem_tname"
-        app:layout_constraintStart_toEndOf="@+id/tv_pritem_tname" />
-
-    <TextView
         android:id="@+id/tv_pritem_regDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
