@@ -12,7 +12,7 @@
 
    <img src="../image/Android_Kakao_LocalProperties.png">
 
-4. Android 소셜 로그인을 위해 local.properties 에 네이티브 앱 키를 추가
+4. Android 소셜 로그인을 위해 manifest 에 네이티브 앱 키를 추가
 
    <img src="../image/Android_KakaoLogin_Manifest.png">
 
