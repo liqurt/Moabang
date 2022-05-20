@@ -67,6 +67,9 @@ class CommunityRVAdapter : RecyclerView.Adapter<CommunityRVAdapter.CommunityRVAd
                     binding.tvCommuFAuthor.visibility = View.GONE
                 }
             }else{
+                Glide.with(binding.civCommuF).load(community.user.pimg)
+                    .placeholder(R.drawable.icon_profile).into(binding.civCommuF)
+                binding.tvCommuFAuthor.text = community.user.nickname
                 binding.tvCommuFTitle.text = "※ 신고된 게시물입니다 ※"
                 binding.tvCommuFTime.visibility = View.GONE
                 binding.commuFComment.visibility = View.GONE
