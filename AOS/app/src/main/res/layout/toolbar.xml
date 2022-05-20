@@ -20,8 +20,11 @@
             android:id="@+id/iv_toolbar_icon"
             android:layout_width="30dp"
             android:layout_height="34dp"
-            android:layout_marginStart="8dp"
-            android:background="@drawable/icon_back" />
+            android:background="@drawable/icon_back"
+            android:backgroundTint="@color/moabang_pink"
+            android:drawableTint="@color/moabang_pink"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="11dp" />
 
             <TextView
                 android:id="@+id/tv_toolbar_title"

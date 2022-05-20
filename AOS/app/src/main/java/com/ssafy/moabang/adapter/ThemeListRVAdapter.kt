@@ -98,7 +98,7 @@ class ThemeListRVAdapter: RecyclerView.Adapter<ThemeListRVAdapter.ViewHolder>() 
             }
             CoroutineScope(Dispatchers.Main).launch{
 
-                holder.itemView.findViewById<TextView>(R.id.tv_themeL_like_count).text = (data[position].count).toString() + "♡"
+                holder.itemView.findViewById<TextView>(R.id.tv_themeL_like_count).text = "+" + (data[position].count).toString()
                 Repository.get().setThemeLike(data[position].tid, data[position].islike)
                 ThemeViewModel().themeLike(data[position].tid)
             }
