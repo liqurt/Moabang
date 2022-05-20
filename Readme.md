@@ -57,7 +57,7 @@
 - 주변에 있는 방탈출 카페 정보(위치 및 거리, 카페 이름 등)를 보기 쉽게 알려줍니다
 
    App
-   <img src="./image/Android_Cafe_Screen.png" width="300" hegiht="100"></img>
+   <img src="./image/Android_Cafe_Screen.jpg" width="300" hegiht="100"></img>
 
    Web
 
@@ -67,7 +67,7 @@
 
   App
 
-  <img src="./image/Android_Cafe_Detail_1.png" width="300" hegiht="100"></img><img src="./image/Android_Map_Marker.png" width="300" hegiht="100"></img><img src="./image/Android_Map_Init_My_Location.png" width="300" hegiht="100"></img>
+  <img src="./image/Android_Cafe_Detail_1.jpg" width="300" hegiht="100"></img><img src="./image/Android_cafe_map.jpg" width="300" hegiht="100"></img>
 
   Web
 
@@ -77,7 +77,7 @@
 
    App
    
-   <img src="./image/Android_Cafe_Detail_2.png" width="300" hegiht="100"></img>
+   <img src="./image/Android_Cafe_Detail_2.jpg" width="300" hegiht="100"></img>
    
    Web
    
@@ -89,7 +89,7 @@
 
   App
 
-  <img src="./image/Android_Theme_Hide_Used.png" width="300" hegiht="100"></img>
+  <img src="./image/Android_theme_list.jpg" width="300" hegiht="100"></img>
 
   Web
 
@@ -99,7 +99,7 @@
 
   App
 
-  <img src="./image/Android_Theme_fillter.png" width="300" hegiht="100"></img>
+  <img src="./image/Android_theme_filter.jpg" width="300" hegiht="100"></img>
 
   Web
 
@@ -109,7 +109,7 @@
 
   App
 
-  <img src="./image/Android_Theme_Detail_1.png" width="300" hegiht="100"></img>
+  <img src="./image/Android_theme_detail.jpg" width="300" hegiht="100"></img>
 
   Web
   
@@ -117,7 +117,7 @@
   
   - 해당 홈페이지로 이동하여 직접 예약을 하거나 정보를 볼 수 있어요! (Web의 경우에는 해당 사이트로 새 탭을 띄움.)
   
-    <img src="./image/Android_Theme_Detail_2.jpg" width="300" hegiht="100"></img>
+    <img src="./image/Android_Webview.jpg" width="300" hegiht="100"></img>
 
 ### 📃리뷰 정보
 
@@ -125,7 +125,7 @@
 
   App
 
-  <img src="./image/Android_Theme_Review_List.png" width="300" hegiht="100"></img>
+  <img src="./image/Android_Review.jpg" width="300" hegiht="100"></img>
 
   Web(리뷰 쓰기, 리뷰 보기)
 
@@ -133,7 +133,7 @@
 
 - 이용한 테마에 대한 리뷰를 작성, 수정, 삭제를 할 수 있어요
 
-  <img src="./image/Android_Theme_Review_Edit_2.png" width="300" hegiht="100"></img>
+  <img src="./image/Android_Edit_Review.jpg" width="300" hegiht="100"></img>
 
 ### 📃**테마  비교**
 
@@ -141,7 +141,7 @@
 
   App
 
-  <img src="./image/Android_Theme_Compare_1.png" width="300" hegiht="100"></img>
+  <img src="./image/Android_theme_to_compare.jpg" width="300" hegiht="100"></img>
 
   Web
   
@@ -151,7 +151,7 @@
   
     App
     
-    <img src="./image/Android_MyPage_Compare_1.png" width="300" hegiht="100"></img>
+    <img src="./image/Android_theme_compare.jpg" width="300" hegiht="100"></img>
     
     Web
     
@@ -163,7 +163,7 @@
 
   App
 
-  <img src="./image/Android_Community.png" width="300" hegiht="100"></img>
+  <img src="./image/Android_Community.jpg" width="300" hegiht="100"></img>
 
   Web
 
@@ -173,7 +173,7 @@
 
   App
 
-  <img src="./image/Android_Community_Write_Article.png" width="300" hegiht="100"></img> 
+  <img src="./image/Android_Community_Write_Article.jpg" width="300" hegiht="100"></img> 
 
   Web
 
@@ -183,7 +183,7 @@
   
   App
   
-  <img src="./image/Android_Community_Write_Comment_2.png" width="300" hegiht="100"></img>
+  <img src="./image/Android_Community_Comment.jpg" width="300" hegiht="100"></img>
   
   Web
   
@@ -197,7 +197,7 @@
 
   App
 
-  <img src="./image/Android_MyPage_Wrote_Article.png" width="300" hegiht="100"></img>
+  <img src="./image/Android_post_review.jpg" width="300" hegiht="100"></img>
 
   Web
 
@@ -207,7 +207,7 @@
 
   App
 
-  <img src="./image/Android_MyPage_Compare_1.png" width="300" hegiht="100"></img>
+  <img src="./image/Android_theme_compare.jpg" width="300" hegiht="100"></img>
 
   Web
   
@@ -217,7 +217,7 @@
   
   App
   
-  <img src="./image/Android_MyPage_Like_List.png" width="300" hegiht="100"></img>
+  <img src="./image/Android_theme_like.jpg" width="300" hegiht="100"></img>
   
   Web
   
@@ -227,7 +227,7 @@
   
   App
   
-  <img src="./image/Android_MyPage_Used_List.png" width="300" hegiht="100"></img>
+  <img src="./image/Android_theme_done.jpg" width="300" hegiht="100"></img>
   
   Web
   
