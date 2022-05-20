@@ -135,7 +135,7 @@
             android:id="@+id/ll_pritem"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:orientation="vertical"
@@ -155,7 +155,7 @@
                     android:layout_weight="1"
                     android:text="체감 난이도"
                     android:textColor="@color/moabang_pink"
-                    android:textSize="12dp"
+                    android:textSize="11.5dp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -165,7 +165,7 @@
                     android:layout_weight="1"
                     android:text="5"
                     android:textColor="@color/moabang_gray"
-                    android:textSize="12dp" />
+                    android:textSize="11.5dp" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -173,7 +173,7 @@
                     android:layout_weight="1"
                     android:text="소요시간"
                     android:textColor="@color/moabang_pink"
-                    android:textSize="12dp"
+                    android:textSize="11.5dp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -183,7 +183,7 @@
                     android:layout_weight="1"
                     android:text="63"
                     android:textColor="@color/moabang_gray"
-                    android:textSize="12dp" />
+                    android:textSize="11.5dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -198,7 +198,7 @@
                     android:layout_weight="1"
                     android:text="체감 활동성"
                     android:textColor="@color/moabang_pink"
-                    android:textSize="12dp"
+                    android:textSize="11.5dp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -208,7 +208,7 @@
                     android:layout_weight="1"
                     android:text="보통"
                     android:textColor="@color/moabang_gray"
-                    android:textSize="12dp" />
+                    android:textSize="11.5dp" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -216,7 +216,7 @@
                     android:layout_weight="1"
                     android:text="사용 힌트수"
                     android:textColor="@color/moabang_pink"
-                    android:textSize="12dp"
+                    android:textSize="11.5dp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -226,7 +226,7 @@
                     android:layout_weight="1"
                     android:text="3개"
                     android:textColor="@color/moabang_gray"
-                    android:textSize="12dp" />
+                    android:textSize="11.5dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -240,7 +240,7 @@
                     android:layout_weight="1"
                     android:text="추천 인원"
                     android:textColor="@color/moabang_pink"
-                    android:textSize="12dp"
+                    android:textSize="11.5dp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -250,7 +250,7 @@
                     android:layout_weight="1"
                     android:text="3명"
                     android:textColor="@color/moabang_gray"
-                    android:textSize="12dp" />
+                    android:textSize="11.5dp" />
 
                 <TextView
                     android:layout_width="0dp"
