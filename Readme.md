@@ -259,7 +259,7 @@
 |                           Android                            | Version |
 | :----------------------------------------------------------: | :-----: |
 | <img src="https://img.shields.io/badge/Android%20Studio-3DDC84.svg?style=for-the-badge&logo=android-studio&logoColor=white" alt="Android Studio" style="zoom:80%;" /> | BumbleBee 2021.1.1 Patch2 |
-
+| <img src="https://simpleicons.org/icons/kakao.svg" alt="Android Studio" style="zoom:80%;" /> | KakaoSDK 2.9.0 |
 |                            CI/CD                             |
 | :----------------------------------------------------------: |
 | ![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white) |
