@@ -10,11 +10,11 @@
 
 3. Android 소셜 로그인을 위해 xxx부분을 네이티브 앱 키로 바꿔준다.
 
-4. React 소셜 로그인을 위해 xxx부분을 JavaScript키로 바꿔준다.
+4. React 소셜 로그인을 위해 .env부분을 JavaScript키로 바꿔준다.
 
    <img src="../image/react1.png">
 
-5. React의 xxx 부분에 kakao map을 활용하기 위해서 바꿔준다.
+5. React의 .env 부분에 kakao map을 활용하기 위해서 바꿔준다.
 
    <img src="../image/react2.png">
 
