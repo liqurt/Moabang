@@ -233,7 +233,7 @@ class MyLikeActivity : AppCompatActivity() {
         val list = if(!::filteredList.isInitialized || filteredList.isEmpty()) originalList else filteredList
         searchList = ArrayList<Theme>()
         for (item in list) {
-            if (item.tname.contains(searchText)) {
+            if (item.tname.lowercase().contains(searchText.lowercase())) {
                 searchList.add(item)
             }
         }
