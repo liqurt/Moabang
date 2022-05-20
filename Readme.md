@@ -258,7 +258,7 @@
 
 |                           Android                            | Version |
 | :----------------------------------------------------------: | :-----: |
-| <img src="https://img.shields.io/badge/Android%20Studio-3DDC84.svg?style=for-the-badge&logo=android-studio&logoColor=white" alt="Android Studio" style="zoom:80%;" /> |         |
+| <img src="https://img.shields.io/badge/Android%20Studio-3DDC84.svg?style=for-the-badge&logo=android-studio&logoColor=white" alt="Android Studio" style="zoom:80%;" /> | BumbleBee 2021.1.1 Patch2 |
 
 |                            CI/CD                             |
 | :----------------------------------------------------------: |
