@@ -119,7 +119,7 @@ class MyDoneActivity : AppCompatActivity() {
     fun searchFilter(searchText: String) {
         searchList = ArrayList<DoneThemeResponse>()
         for (item in list) {
-            if (item.tname.contains(searchText)) {
+            if (item.tname.lowercase().contains(searchText.lowercase())) {
                 searchList.add(item)
             }
         }
