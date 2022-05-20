@@ -3,8 +3,8 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useEffect, useState } from 'react';
 
-const CompareThemeList = ({ theme,selCompare, setSelCompare,setCompareRerender }) => {
-    
+const CompareThemeList = ({ theme, selCompare, setSelCompare, setCompareRerender }) => {
+
     const [showBtn, setShowBtn] = useState(true);
     const checkShowBtn = () => {
         for (let i = 0; i < selCompare.length; i++) {
@@ -18,23 +18,22 @@ const CompareThemeList = ({ theme,selCompare, setSelCompare,setCompareRerender }
 
     useEffect(() => (
         checkShowBtn()
-    ),[selCompare]);
+    ), [selCompare]);
 
     const addCompare = () => {
         //부모한태 추가된 테마를 넘겨주면 된다.
         if (selCompare.length == 4) return;
         for (let i = 0; i < selCompare.length; i++) {
             if (selCompare[i].tid === theme.tid) {
-                console.log("이미 포함되어 있습니다.");
                 return;
             }
         }
-        
+
         setSelCompare(e => (
             [...e, theme]
-        ));    
-        
-        
+        ));
+
+
     }
     const deleteCompare = () => {
         //비교하기 리스트에서 삭제
@@ -62,10 +61,10 @@ const CompareThemeList = ({ theme,selCompare, setSelCompare,setCompareRerender }
             {
                 showBtn ? <button id='addListBtn' onClick={addCompare}>추가</button> :
                     <span></span>
-                
-            
+
+
             }
-            
+
         </div>
     );
 }

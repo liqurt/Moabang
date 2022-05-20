@@ -48,15 +48,11 @@ const Mypage = () => {
         })
             .then((res) => {
 
-                // setThemeData(res.data);
-                // setSortData(res.data.length);
-                console.log(res);
                 setMyReview(res.data);
 
             })
             .catch((error) => {
                 console.error(error);
-                // alert("error");
             });
     }
     //유저가 찜한 테마 데이터 배열에 저장
@@ -69,7 +65,6 @@ const Mypage = () => {
         })
             .then((res) => {
 
-                console.log(res);
                 setMyLike(res.data);
                 setMyLikeCnt(res.data.length);
 
@@ -89,16 +84,11 @@ const Mypage = () => {
         })
             .then((res) => {
 
-                // setThemeData(res.data);
-                // setSortData(res.data.length);
-                console.log(res);
                 setMyCommunity(res.data.communityList);
                 setReviewList(res.data.reviewList);
 
             })
             .catch((error) => {
-                console.error(error);
-                // alert("error");
             });
     }
 

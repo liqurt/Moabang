@@ -20,7 +20,6 @@ const Content_1 = (props) => {
             .then((res) => {
                 //좋아요 취소 success
                 //좋아요 success
-                console.log(res);
                 if (likeBtn) {
                     Swal.fire({
                         icon: 'error',

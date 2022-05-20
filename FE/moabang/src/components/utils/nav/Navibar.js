@@ -11,7 +11,6 @@ const Navibar = () => {
             localStorage.removeItem('username');
             localStorage.removeItem('email');
             localStorage.removeItem('p_img');
-            console.log("토큰 삭제");
             document.location.href = '/';
         }
     };
@@ -47,7 +46,7 @@ const Navibar = () => {
                     <Nav.Link href="/cafe">카페</Nav.Link>
                     <Nav.Link href="/board">커뮤니티</Nav.Link>
                     <Nav.Link href="/compare">비교하기</Nav.Link>
-                    <Nav.Link href="https://drive.google.com/uc?export=download&id=12Vb7eHOqJiGvC90cWkBu9ycjzidQubfC&confirm=t">앱 다운로드</Nav.Link>
+                    <Nav.Link href="https://drive.google.com/uc?export=download&id=1i8-_ZBc8zjDpszzp8VDiQ1fhcM9qCbSS&confirm=t">앱 다운로드</Nav.Link>
                 </Nav>
             </Container>
         </Navbar>

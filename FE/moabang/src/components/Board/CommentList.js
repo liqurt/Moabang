@@ -5,13 +5,13 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
-const CommentList = ({ commentList,setCheckComment }) => {
+const CommentList = ({ commentList, setCheckComment }) => {
     const [page, setPage] = useState(1);
     const [pageCnt, setPageCnt] = useState(45);
-    
+
     const handlePageChange = (page) => {
         setPage(page);
-        
+
     };
     const indexOfLast = page * 5;
     const indexOfFirst = indexOfLast - 5;
@@ -22,10 +22,10 @@ const CommentList = ({ commentList,setCheckComment }) => {
     }
 
     useEffect(() => {
-        setPageCnt((cnt) =>cnt = commentList.length );
-        
+        setPageCnt((cnt) => cnt = commentList.length);
+
     }, [commentList]);
-    
+
     //댓글 삭제
     const CommentDeleteBtn = (e) => {
         Swal.fire({
@@ -35,7 +35,7 @@ const CommentList = ({ commentList,setCheckComment }) => {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: '예',
-            cancelButtonText:'아니요',
+            cancelButtonText: '아니요',
         }).then((result) => {
             if (result.isConfirmed) {
                 axios.delete(`/community/comment/delete/${e.target.value}`, {
@@ -43,15 +43,15 @@ const CommentList = ({ commentList,setCheckComment }) => {
                         'Authorization': localStorage.getItem("myToken")
                     }
                 }).then(res => {
-                    
+
                     setCheckComment(e => e = !e);
-                    
+
                 })
-                
+
             }
-                
+
         })
-        
+
     }
     //댓글 신고하기
     const ReportComment = (cid) => {
@@ -64,16 +64,15 @@ const CommentList = ({ commentList,setCheckComment }) => {
             },
             showCancelButton: true,
             confirmButtonText: '확인',
-            cancelButtonText:'취소',
+            cancelButtonText: '취소',
         }).then((res) => {
-            console.log(res);
             if (res.isConfirmed) {
                 axios.post('/report/create',
                     {
                         category: 2,
                         reason: res.value,
                         target_id: cid.target.value,
-                
+
                     },
                     {
                         headers: {
@@ -81,7 +80,6 @@ const CommentList = ({ commentList,setCheckComment }) => {
                         }
                     }
                 ).then((response) => {
-                    console.log(response);
                     if (response.data) {
                         Swal.fire({
                             icon: 'success',
@@ -93,12 +91,12 @@ const CommentList = ({ commentList,setCheckComment }) => {
                             title: "이미 신고 하였습니다.."
                         })
                     }
-                    
+
                 })
             }
 
         })
-        
+
 
     }
     //프로필 유무에 따른 이미지
@@ -117,7 +115,7 @@ const CommentList = ({ commentList,setCheckComment }) => {
             {
                 currentPosts(commentList).map((item, index) => {
                     if (item.reportCnt >= 1) {
-                        
+
                         return (
                             <div className='Comment' key={index}>
                                 <div>이 댓글은 블라인드 처리 되었습니다</div>
@@ -142,19 +140,19 @@ const CommentList = ({ commentList,setCheckComment }) => {
                                         :
                                         <button id='CommentReport' value={item.coid} onClick={ReportComment}>신고하기</button>
                                 }
-                                
+
                                 <div id='CommentContent'>{item.content}</div>
                                 <hr id='hrSize'></hr>
                             </div>
                         )
                     }
 
-                    
-                    
+
+
                 })
             }
             <div>
-                <Paging page={page} count={pageCnt} setPage={handlePageChange }/>
+                <Paging page={page} count={pageCnt} setPage={handlePageChange} />
             </div>
         </div>
     )

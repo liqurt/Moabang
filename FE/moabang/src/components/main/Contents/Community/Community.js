@@ -20,7 +20,6 @@ const Community = () => {
         })
             .then((res) => {
 
-                console.log(res.data);
                 setCommunity(res.data);
 
 
