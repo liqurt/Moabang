@@ -8,9 +8,11 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="moabang_pink">#FFC7C7</color>
+    <color name="moabang_pink">#DBA8A8</color>
     <color name="moabang_lightPink">#FFE2E2</color>
     <color name="moabang_lightGray">#F6F6F6</color>
-    <color name="moabang_gray">#8785A2</color>
+    <color name="moabang_gray">#666478</color>
+    <color name="moabang_pink2">#FFC7C7</color>
+    <color name="moabang_gray2">#8785A2</color>
 
 </resources>
