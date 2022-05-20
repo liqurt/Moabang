@@ -54,7 +54,10 @@ class MyPageFragment : Fragment() {
             }
             binding.tvMypageFTry.text = it.size.toString()
             binding.tvMypageFDone.text = cnt.toString()
-            binding.tvMypageFSuccess.text = String.format("%.1f", cnt.toDouble()/it.size * 100)
+
+            var srate = if(it.size == 0) 0
+            else cnt.toDouble()/it.size * 100
+            binding.tvMypageFSuccess.text = String.format("%.1f", srate)
         }
     }
 
