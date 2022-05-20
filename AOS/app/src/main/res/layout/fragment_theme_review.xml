@@ -77,7 +77,8 @@
                 android:layout_weight="1"
                 android:text="체감 난이도"
                 android:textColor="@color/moabang_pink"
-                android:textSize="16dp" />
+                android:textSize="16dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_themeRVF_diff"
@@ -94,8 +95,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="탈출 성공률"
+                android:textColor="@color/moabang_pink"
                 android:textSize="16dp"
-                android:textColor="@color/moabang_pink" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_themeRVF_success"
@@ -119,8 +121,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="체감 활동성"
+                android:textColor="@color/moabang_pink"
                 android:textSize="16dp"
-                android:textColor="@color/moabang_pink" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_themeRVF_active"
@@ -137,8 +140,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="평균 소요시간"
+                android:textColor="@color/moabang_pink"
                 android:textSize="14dp"
-                android:textColor="@color/moabang_pink" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_themeRVF_time"
@@ -161,8 +165,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="추천 인원"
+                android:textColor="@color/moabang_pink"
                 android:textSize="16dp"
-                android:textColor="@color/moabang_pink" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_themeRVF_player"
@@ -179,8 +184,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="평균 힌트수"
+                android:textColor="@color/moabang_pink"
                 android:textSize="16dp"
-                android:textColor="@color/moabang_pink" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_themeRVF_hint"

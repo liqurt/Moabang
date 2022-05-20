@@ -147,6 +147,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -156,7 +157,8 @@
                     android:layout_weight="1"
                     android:text="체감 난이도"
                     android:textColor="@color/moabang_pink"
-                    android:textSize="12dp" />
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_reviewL_diff"
@@ -174,7 +176,8 @@
                     android:layout_weight="1"
                     android:text="소요시간"
                     android:textColor="@color/moabang_pink"
-                    android:textSize="12dp" />
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_reviewL_time"
@@ -189,6 +192,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -198,7 +202,8 @@
                     android:layout_weight="1"
                     android:text="체감 활동성"
                     android:textColor="@color/moabang_pink"
-                    android:textSize="12dp" />
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_reviewL_active"
@@ -216,7 +221,8 @@
                     android:layout_weight="1"
                     android:text="사용 힌트수"
                     android:textColor="@color/moabang_pink"
-                    android:textSize="12dp" />
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_reviewL_hint"
@@ -231,6 +237,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -240,7 +247,8 @@
                     android:layout_weight="1"
                     android:text="추천 인원"
                     android:textColor="@color/moabang_pink"
-                    android:textSize="12dp" />
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_reviewL_player"

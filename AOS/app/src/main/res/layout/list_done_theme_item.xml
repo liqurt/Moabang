@@ -21,12 +21,14 @@
     <TextView
         android:id="@+id/tv_doneL_tname"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="20dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="4dp"
         android:text="테마 이름"
         android:textColor="@color/moabang_gray"
-        android:textSize="20dp"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMaxTextSize="16dp"
+        android:autoSizeMinTextSize="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/iv_doneL_img"
         app:layout_constraintTop_toTopOf="parent" />
